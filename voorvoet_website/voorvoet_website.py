@@ -1,11 +1,12 @@
 # Main application file for the Reflex web app
 import reflex as rx
 
-from pages.test import bistro_page
+from .pages.home_page import home_page
 from .theme import theme
 
 app = rx.App(
     stylesheets=[
+        "https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css",
         "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
         "/styles.css",
     ],
@@ -16,13 +17,8 @@ app = rx.App(
     
 )
 
-# app.add_page(index, route="/", title="VoorVoet – Podotherapeut Enschede")
-# app.add_page(vergoedingen, route="/vergoedingen", title="Vergoedingen – VoorVoet")
-# app.add_page(locatie, route="/locatie", title="Locatie – VoorVoet")
-# app.add_page(contact, route="/contact", title="Contact – VoorVoet")
-
 app.add_page(
-    component=bistro_page, 
+    component=home_page, 
     route="/", 
     title="VoorVoet - Praktijk voor Podotherapie",
 )

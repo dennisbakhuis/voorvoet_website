@@ -16,4 +16,4 @@ assets/external/
 .web
 *.db
 
-local/
+.local/

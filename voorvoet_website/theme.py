@@ -1,6 +1,6 @@
 import reflex as rx
 
-colors = {
+COLORS = {
     "voorvoet": {
         "50":  "#ecfdf5",
         "100": "#d1fae5",
@@ -10,8 +10,15 @@ colors = {
     }
 }
 
+PRIMARY     = "#0f766e"
+ACCENT      = "#111827"
+LIGHT       = "#ffffff"
+MUTED       = "#efefef"
+DARK        = "#111827"
+
+
 theme = rx.theme(
     appearance="light",
-    colors=colors,
+    colors=COLORS,
     has_background=True,
 )
