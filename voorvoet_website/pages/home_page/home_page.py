@@ -1,7 +1,9 @@
 import reflex as rx
 
-from .section_who_is_voorvoet import section_who_is_voorvoet
 from .section_hero import hero_section
+from .section_who_is_voorvoet import section_who_is_voorvoet
+from .section_order_insoles import section_order_insoles
+from .section_introduction import section_introduction
 
 from ..shared_components import footer, header, modal
 
@@ -169,7 +171,7 @@ def contact_section() -> rx.Component:
                     ),
                     button(
                         "Maak een afspraak",
-                        on_click=WebsiteState.open_modal("Afspraak maken", "Neem contact op voor een afspraak")
+                        on_click=WebsiteState.open_modal("Afspraak maken", "Neem contact op voor een afspraak")  # type: ignore
                     ),
                     spacing="6",
                     align="start"
@@ -262,6 +264,8 @@ def home_page() -> rx.Component:
         header(),
         hero_section(),
         section_who_is_voorvoet(),
+        section_order_insoles(),
+        section_introduction(),
         services_section(),
         kim_section(),
         contact_section(),

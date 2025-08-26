@@ -3,13 +3,13 @@ import reflex as rx
 from ...components import column, container, regular_text, section, section_title
 
 
-def section_who_is_voorvoet() -> rx.Component:
+def section_introduction() -> rx.Component:
     return section(
         container(
             rx.box(
                 column(
                     rx.image(
-                        src="/images/podotherapeut_enschede_kim_bakhuis_van_voorvoet_praktijk_voor_podotherapie.jpg", 
+                        src="/images/podotherapeut_enschede_kim_bakhuis_loopt_op_strand_voorvoet_praktijk_voor_podotherapie.jpg", 
                         width="333px",
                         height="auto",
                         border_radius="4px",
@@ -22,11 +22,11 @@ def section_who_is_voorvoet() -> rx.Component:
                     margin_bottom="2rem"
                 ),
                 column(
-                    section_title("Podotherapeut Enschede", margin_bottom="1rem"),
-                    regular_text("Wij zijn een kleinschalige praktijk in de buurt van de Zuiderval. Wij geloven sterk in de kracht van een persoonlijke benadering voor een succesvolle behandeling. Onze praktijk is uitgerust met de nieuwste technologieën en methoden, waardoor wij in staat zijn om een goede en specifieke diagnose te stellen en een behandelplan op maat aan te bieden, zodat jij weer goed vooruit kunt!", 
+                    section_title("Even voorstellen", margin_bottom="1rem"),
+                    regular_text("Mijn naam is Kim Bakhuis, podotherapeut en eigenaar van VoorVoet. In 2004 studeerde ik af als fysiotherapeut en na 3 jaar kwam ik in aanraking met podotherapie. Dit vak sprak me zo aan dat ik besloot me te laten omscholen. Inmiddels heb ik ruim 16 jaar werkervaring opgedaan in dit mooie vak. De laatste jaren kriebelde het en heb ik besloten om in 2023 mijn eigen praktijk op te zetten.", 
                                text_align="left", 
                                margin_bottom="1rem"),
-                    regular_text("Wij werken samen met andere medische disciplines zoals bijvoorbeeld huisartsen, medisch pedicures en fysiotherapeuten om de beste zorg te bieden aan onze patiënten. Onze praktijk is toegankelijk voor iedereen - van kinderen tot actievelingen met blessures en ouderen met voet- of voetgerelateerde klachten.", 
+                    regular_text("Door mijn vooropleiding, verschillende scholingen en jarenlange ervaring heb ik een brede kijk op voet- en voetgerelateerde problemen. Het is belangrijk om me goed in te kunnen leven en mijn uiterste best te doen om je zo goed mogelijk te helpen met jouw hulpvraag. Dat kan in de vorm van advies, behandeling en waar nodig de vervaardiging van ortheses, nagelbeugels of steunzolen. Vanuit mijn praktische instelling werk ik graag samen met andere disciplines om het beste resultaat voor jou te boeken. Privé ben ik een erg actief persoon die houdt van wandelen, hardlopen en Crossfit. Daarnaast daag ik mijzelf graag uit door (grot)duiken en speleo tripjes.", 
                                text_align="left"),
                     padding_left=["0", "0", "0", "2rem"],
                     # padding_right="2rem",
