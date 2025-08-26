@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:voorvoet.nl)",
+      "Bash(python:*)",
+      "Bash(reflex compile:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

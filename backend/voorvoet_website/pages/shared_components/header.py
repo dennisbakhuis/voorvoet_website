@@ -8,9 +8,9 @@ from ...components import container
 
 def header() -> rx.Component:
     nav_links = [
-        ("Blog", "#about"),
-        ("Informatie", "#services"),
-        ("Vergoedingen", "#kim"),
+        ("Blog", "#blog"),
+        ("Informatie", "#informatie"),
+        ("Vergoedingen", "#vergoedingen"),
         ("Contact", "#contact"),
     ]
 
@@ -35,7 +35,6 @@ def header() -> rx.Component:
                 src="/images/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
                 width="300px",
                 height="90px",
-                
             ),
             # Navigation items on the right side
             rx.hstack(
@@ -45,9 +44,8 @@ def header() -> rx.Component:
                     aria_label="menu",
                     on_click=WebsiteState.toggle_nav,  # type: ignore
                     display=["inline-flex", "inline-flex", "none"],
-                    color=DARK,
+                    color=LIGHT,
                     bg="transparent",
-                    size="4",  # Twice as big (default is "2")
                 ),
                 align="center",
                 justify="end",
@@ -55,10 +53,10 @@ def header() -> rx.Component:
             align="center",
             justify="between",
             width="100%",
-            padding_right="12px",
         ),
         max_width="1200px",
         margin_x="auto",
+        padding_x=["12px", "16px", "24px"],
     )
 
     # Create the fixed header bar

@@ -1,27 +1,51 @@
-# Button component
+# Button component based on voorvoet.nl CTA button
 import reflex as rx
-from ..theme import PRIMARY, LIGHT, ACCENT
+from ..theme import BUTTON_PRIMARY_BG, BUTTON_PRIMARY_TEXT, BUTTON_PRIMARY_HOVER
 
 
-def button(label: str, href: str | None = None, on_click=None, variant: str = "solid") -> rx.Component:
-    base = dict(
-        px="20px",
-        py="12px",
-        border_radius="9999px",
-        font_weight="600",
-        transition="all .2s ease",
-        cursor="pointer",
-        display="inline-flex",
-        align_items="center",
-        gap="8px",
-        white_space="nowrap",
-    )
-    if variant == "solid":
-        base.update(bg=LIGHT, color=ACCENT, _hover={"bg": PRIMARY, "color": LIGHT})  # type: ignore
-    elif variant == "primary":
-        base.update(bg=PRIMARY, color=LIGHT, _hover={"opacity": 0.9})  # type: ignore
+def button(
+    label: str, 
+    href: str | None = None, 
+    on_click=None
+) -> rx.Component:
+    
+    base_styles = {
+        "border_radius": "3px",
+        "font_weight": "700",
+        "font_size": "24px",
+        "padding_x": "0.8em",
+        "padding_y": "0.1em",
+        "transition": "all 0.2s ease",
+        "cursor": "pointer",
+        "display": "inline-flex",
+        "align_items": "center",
+        "justify_content": "center",
+        "text_decoration": "none",
+        "border": "none",
+        "white_space": "nowrap",
+    }
+    
+    base_styles.update({
+        "bg": BUTTON_PRIMARY_BG,
+        "color": BUTTON_PRIMARY_TEXT,
+        "box_shadow": "0 4px 12px rgba(5, 168, 162, 0.3)",
+        "_hover": {
+            "bg": BUTTON_PRIMARY_HOVER,
+            "box_shadow": "0 6px 16px rgba(5, 168, 162, 0.4)"
+        }
+    })  # type: ignore
+    
+    button_content = rx.text(label)
+    
+    if href:
+        return rx.link(
+            button_content,
+            href=href,
+            **base_styles,  # type: ignore
+        )
     else:
-        base.update(bg="transparent", border=f"1px solid {LIGHT}", color=LIGHT, _hover={"bg": LIGHT, "color": ACCENT})  # type: ignore
-
-    element = rx.link(rx.hstack(rx.text(label),), href=href) if href else rx.box(rx.text(label))
-    return rx.box(element, on_click=on_click, **base)  # type: ignore
+        return rx.box(
+            button_content,
+            on_click=on_click,
+            **base_styles,  # type: ignore
+        )

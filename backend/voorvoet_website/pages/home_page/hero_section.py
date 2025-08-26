@@ -49,7 +49,7 @@ def hero_section() -> rx.Component:
                         line_height="1.15",
                         font_size=["2rem", "2.25rem", "2.7rem", "3rem"],
                     ),
-                    spacing="3",
+                    spacing="2",
                     align="center",
                 ),
                 display="flex",
@@ -59,6 +59,7 @@ def hero_section() -> rx.Component:
             ),
             grid_row="1",
             width="100%",
+            z_index=1, 
         ),
 
         container(

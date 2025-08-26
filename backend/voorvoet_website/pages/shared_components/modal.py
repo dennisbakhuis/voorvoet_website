@@ -19,7 +19,7 @@ def modal() -> rx.Component:
                 on_change=WebsiteState.set_modal_input,  # type: ignore
                 max_length=2000,
             ),
-            rx.hstack(button("Open", href="#"), justify="center", mt="12px"),
+            rx.hstack(button("Open", href="#", variant="primary"), justify="center", mt="12px"),
             width=["90vw", "480px"],
             max_width="600px",
             bg=LIGHT,

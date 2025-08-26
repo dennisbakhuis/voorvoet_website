@@ -10,19 +10,11 @@ COLORS = {
     }
 }
 
-PRIMARY     = "#05a8a2"  # Exact teal color from voorvoet.nl
+PRIMARY     = "#0f766e"
 ACCENT      = "#111827"
 LIGHT       = "#ffffff"
 MUTED       = "#efefef"
 DARK        = "#111827"
-
-# Button specific colors based on voorvoet.nl CTA button 
-BUTTON_PRIMARY_BG = "#05a8a2"  # Exact teal color matching the title
-BUTTON_PRIMARY_TEXT = "#ffffff"
-BUTTON_PRIMARY_HOVER = "#05847c"  # Exact hover color from voorvoet.nl
-
-# Footer color
-FOOTER_BG = "#dcedec"  # Footer background color from voorvoet.nl
 
 
 theme = rx.theme(

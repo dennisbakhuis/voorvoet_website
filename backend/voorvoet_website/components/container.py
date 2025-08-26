@@ -7,7 +7,7 @@ def container(*children, **styles) -> rx.Component:
         width="100%",
         max_width="1200px",
         margin_x="auto",
-        padding_x=["0", "0", "0"],
+        padding_x=["5%", "5%", "10%"],
     )
     base.update(styles)
     return rx.box(*children, **base)  # type: ignore
