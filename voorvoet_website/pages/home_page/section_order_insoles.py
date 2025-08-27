@@ -20,6 +20,6 @@ def section_order_insoles() -> rx.Component:
                 button_link=""
             )
         ),
-        id="about",
+        id="order-insoles",
         alternate_bg=True
     )

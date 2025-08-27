@@ -18,5 +18,5 @@ def section_introduction() -> rx.Component:
                 image_position="left"
             )
         ),
-        id="about"
+        id="introduction"
     )
