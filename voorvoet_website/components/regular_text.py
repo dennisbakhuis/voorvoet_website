@@ -1,13 +1,16 @@
 # Regular text component for body content
 import reflex as rx
-from ..theme import DARK
+from ..theme import Colors
 
 
 def regular_text(text: str, **props) -> rx.Component:
-    return rx.text(
-        text,
-        font_size="18px",  # Slightly bigger than standard 16px
-        line_height="1.6",
-        color=DARK,
-        **props
-    )
+    # Set default values that can be overridden by props
+    defaults = {
+        "font_size": "18px",  # Slightly bigger than standard 16px
+        "line_height": "1.6", 
+        "color": Colors.text["heading"],
+    }
+    # Merge defaults with props, props take precedence
+    defaults.update(props)
+    
+    return rx.text(text, **defaults)

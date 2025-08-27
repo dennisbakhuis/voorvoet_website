@@ -20,7 +20,8 @@ def section_who_is_voorvoet() -> rx.Component:
                     display="flex",
                     justify_content="center",
                     align_items="center",
-                    margin_bottom="2rem"
+                    margin_bottom="2rem",
+                    size=["100%", "100%", "100%", "40%", "40%"],
                 ),
                 column(
                     section_title("Podotherapeut Enschede", margin_bottom="1rem"),
@@ -30,19 +31,12 @@ def section_who_is_voorvoet() -> rx.Component:
                     regular_text("Wij werken samen met andere medische disciplines zoals bijvoorbeeld huisartsen, medisch pedicures en fysiotherapeuten om de beste zorg te bieden aan onze patiënten. Onze praktijk is toegankelijk voor iedereen - van kinderen tot actievelingen met blessures en ouderen met voet- of voetgerelateerde klachten.", 
                                text_align="left"),
                     padding_left=["0", "0", "0", "2rem"],
-                    # padding_right="2rem",
-                    # margin_bottom=["2rem", "2rem", "2rem", "0"]
+                    size=["100%", "100%", "100%", "60%", "60%"],
                 ),
                 display=["block", "block", "block", "flex"],
                 gap="1.0rem",
-                align_items="center",
-                max_width="1200px",
-                margin_x="auto",
-                width="100%",
-                padding_x=["2rem", "2rem", "2rem", "2rem", "2rem"]
+                align_items="center"
             )
         ),
-        id="about",
-        bg="white",
-        padding_y="5em"
+        id="about"
     )

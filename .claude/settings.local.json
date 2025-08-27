@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:voorvoet.nl)",
       "Bash(python:*)",
-      "Bash(reflex compile:*)"
+      "Bash(reflex compile:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []

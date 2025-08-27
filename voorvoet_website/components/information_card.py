@@ -1,6 +1,6 @@
 import reflex as rx
 
-from ..theme import DARK
+from ..theme import Colors
 from .button import button
 
 
@@ -13,7 +13,7 @@ def information_card(title: str, description: str, icon: str, bg_color="white", 
             "border_radius": "12px",
             "padding": "2rem",
             "box_shadow": "0 4px 6px rgba(0, 0, 0, 0.05)",
-            "border": "1px solid #f3f4f6",
+            "border": f"1px solid {Colors.borders['light']}",
             "transition": "all 0.3s ease",
             "_hover": {
                 "transform": "translateY(-4px)",
@@ -30,17 +30,17 @@ def information_card(title: str, description: str, icon: str, bg_color="white", 
         rx.vstack(
             rx.vstack(
                 rx.box(
-                    rx.html(f'<i class="fa {icon}" style="color: {DARK}; font-size: 4.5rem;"></i>'),
+                    rx.html(f'<i class="fa {icon}" style="color: {Colors.text["heading"]}; font-size: 4.5rem;"></i>'),
                     display="flex",
                     justify_content="center",
                     align_items="center",
                     margin_bottom="1rem",
                 ),
-                rx.text(title, font_size="20px", font_weight="600", color=DARK, text_align="center"),
+                rx.text(title, font_size="20px", font_weight="600", color=Colors.text["heading"], text_align="center"),
                 rx.text(
                     description, 
                     text_align="center", 
-                    color=DARK, 
+                    color=Colors.text["heading"], 
                     line_height="1.6",
                     font_size="18px"
                 ),

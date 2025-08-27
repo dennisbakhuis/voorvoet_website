@@ -67,6 +67,5 @@ def section_information() -> rx.Component:
             )
         ),
         id="services",
-        bg="#dcedec",
-        padding_y="5em",
+        alternate_bg=True
     )

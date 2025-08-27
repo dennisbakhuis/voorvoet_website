@@ -8,7 +8,7 @@ from .regular_text import regular_text
 from .responsive_grid import responsive_grid
 from .section import section
 from .section_title import section_title
-from .sub_title import sub_title
+from .section_sub_title import section_sub_title
 
 
 __all__ = [
@@ -21,5 +21,5 @@ __all__ = [
     "responsive_grid",
     "section",
     "section_title",
-    "sub_title",
+    "section_sub_title",
 ]

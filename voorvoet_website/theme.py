@@ -1,32 +1,28 @@
-import reflex as rx
-
-COLORS = {
-    "voorvoet": {
-        "50":  "#ecfdf5",
-        "100": "#d1fae5",
-        "300": "#6ee7b7",
-        "500": "#10b981",
-        "700": "#047857",
+# Theme settings for this project
+class Colors:
+    primary = {
+        "50":  "#ffffff",  # Brand white
+        "100": "#d1fae5",  # Brand lighter green
+        "300": "#05a8a2",  # Brand light green
+        "500": "#05847c",  # Brand medium green
+        "700": "#005152",  # Brand dark green
     }
-}
-
-PRIMARY     = "#05a8a2"  # Exact teal color from voorvoet.nl
-ACCENT      = "#111827"
-LIGHT       = "#ffffff"
-MUTED       = "#efefef"
-DARK        = "#111827"
-
-# Button specific colors based on voorvoet.nl CTA button 
-BUTTON_PRIMARY_BG = "#05a8a2"  # Exact teal color matching the title
-BUTTON_PRIMARY_TEXT = "#ffffff"
-BUTTON_PRIMARY_HOVER = "#05847c"  # Exact hover color from voorvoet.nl
-
-# Footer color
-FOOTER_BG = "#dcedec"  # Footer background color from voorvoet.nl
-
-
-theme = rx.theme(
-    appearance="light",
-    colors=COLORS,
-    has_background=True,
-)
+    
+    backgrounds = {
+        "white": "#ffffff",        # First (odd) sections are white background
+        "green_light": "#dcedec",  # Alternating (even) sections are ligh green
+    }
+    
+    text = {
+        "heading": "#111827",        # Pure black for main headings
+        "subheading": "#1f2937",     # Slightly less black for subheadings (gray-800)
+        "content": "#131f1e",        # Content with a tiny blend of primary.300 teal
+        "white": "#ffffff",          # White text for buttons
+        "muted": "#666666",          # Muted/gray text for labels
+        "secondary": "#4a4a4a",      # Secondary text for body content
+        "link": "#3b82f6",           # Blue color for links
+    }
+    
+    borders = {
+        "light": "#f3f4f6",          # Light borders for cards
+    }

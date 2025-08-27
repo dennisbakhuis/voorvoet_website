@@ -2,7 +2,7 @@
 import reflex as rx
 
 from ...components import button
-from ...theme import LIGHT
+from ...theme import Colors
 from ...state import WebsiteState
 
 
@@ -22,7 +22,7 @@ def modal() -> rx.Component:
             rx.hstack(button("Open", href="#"), justify="center", mt="12px"),
             width=["90vw", "480px"],
             max_width="600px",
-            bg=LIGHT,
+            bg=Colors.backgrounds["white"],
             border_radius="12px",
         ),
         open=WebsiteState.modal_open,

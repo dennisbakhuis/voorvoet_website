@@ -20,7 +20,9 @@ def section_introduction() -> rx.Component:
                     display="flex",
                     justify_content="center",
                     align_items="center",
-                    margin_bottom="2rem"
+                    margin_bottom="2rem",
+                    size=["100%", "100%", "100%", "40%", "40%"],
+
                 ),
                 column(
                     section_title("Even voorstellen", margin_bottom="1rem"),
@@ -34,13 +36,9 @@ def section_introduction() -> rx.Component:
                 display=["block", "block", "block", "flex"],
                 gap="1.0rem",
                 align_items="center",
-                max_width="1200px",
-                margin_x="auto",
-                width="100%",
-                padding_x=["2rem", "2rem", "2rem", "2rem", "2rem"]
+                size=["100%", "100%", "100%", "40%", "60%"],
+
             )
         ),
-        id="about",
-        bg="white",
-        padding_y="5em"
+        id="about"
     )

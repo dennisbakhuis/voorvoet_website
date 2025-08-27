@@ -1,6 +1,6 @@
 # Button component based on voorvoet.nl CTA button
 import reflex as rx
-from ..theme import BUTTON_PRIMARY_BG, BUTTON_PRIMARY_TEXT, BUTTON_PRIMARY_HOVER
+from ..theme import Colors
 
 
 def button(
@@ -26,11 +26,11 @@ def button(
     }
     
     base_styles.update({
-        "bg": BUTTON_PRIMARY_BG,
-        "color": BUTTON_PRIMARY_TEXT,
+        "bg": Colors.primary['300'],
+        "color": Colors.text['white'],
         "box_shadow": "0 4px 12px rgba(5, 168, 162, 0.3)",
         "_hover": {
-            "bg": BUTTON_PRIMARY_HOVER,
+            "bg": Colors.primary['500'],
             "box_shadow": "0 6px 16px rgba(5, 168, 162, 0.4)"
         }
     })  # type: ignore

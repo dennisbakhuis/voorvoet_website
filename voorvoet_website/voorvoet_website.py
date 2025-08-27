@@ -2,7 +2,7 @@
 import reflex as rx
 
 from .pages.home_page import home_page
-from .theme import theme
+
 
 app = rx.App(
     stylesheets=[
@@ -10,7 +10,6 @@ app = rx.App(
         "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
         "/styles.css",
     ],
-    theme=theme,
     style={
         "font-family": 'Lato, ui-sans-serif, system-ui, sans-serif',
     },

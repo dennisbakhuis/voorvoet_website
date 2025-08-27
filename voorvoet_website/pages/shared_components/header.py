@@ -1,7 +1,7 @@
 # Header used across multiple all pages
 import reflex as rx
 
-from ...theme import ACCENT, DARK, LIGHT, PRIMARY
+from ...theme import Colors
 from ...state import WebsiteState
 from ...components import container
 
@@ -19,10 +19,10 @@ def header() -> rx.Component:
             rx.link(
                 link,
                 href=href,
-                color=DARK,
+                color=Colors.text["heading"],
                 font_size="24px",
                 font_weight="600",
-                _hover={"color": PRIMARY},
+                _hover={"color": Colors.primary["300"]},
             )
             for link, href in nav_links
         ]
@@ -45,7 +45,7 @@ def header() -> rx.Component:
                     aria_label="menu",
                     on_click=WebsiteState.toggle_nav,  # type: ignore
                     display=["inline-flex", "inline-flex", "none"],
-                    color=DARK,
+                    color=Colors.text["heading"],
                     bg="transparent",
                     size="4",  # Twice as big (default is "2")
                 ),
@@ -57,8 +57,6 @@ def header() -> rx.Component:
             width="100%",
             padding_right="12px",
         ),
-        max_width="1200px",
-        margin_x="auto",
     )
 
     # Create the fixed header bar
@@ -84,7 +82,7 @@ def header() -> rx.Component:
                             href=href,
                             width="100%",
                             text_align="right",
-                            color=LIGHT,
+                            color=Colors.text["white"],
                             py="8px",
                             on_click=WebsiteState.toggle_nav,  # type: ignore
                         )
@@ -92,15 +90,13 @@ def header() -> rx.Component:
                     ],
                     gap="10px",
                 ),
-                max_width="1200px",
-                margin_x="auto",
                 padding_x=["12px", "16px", "24px"],
             ),
             position="fixed",
             top="60px",
             left="0",
             width="100%",
-            bg=ACCENT,
+            bg=Colors.text["heading"],
             py="16px",
             z_index="19",
         ),

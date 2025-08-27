@@ -1,7 +1,7 @@
 import reflex as rx
 
-from ...components import section, container, column, section_title, regular_text, button
-from ...theme import DARK
+from ...components import section, container, column, section_title, section_sub_title, regular_text, button
+from ...theme import Colors
 
 
 def location_map_section(
@@ -34,8 +34,8 @@ def location_map_section(
     )
     
     info_column = column(
-        rx.heading(title, size="6", color=DARK, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
-        rx.text(address, font_weight="600", color=DARK, margin_bottom="1rem", text_align=["center", "center", "left", "left", "left"]),
+        section_title(title, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
+        regular_text(address, font_weight="700", color=Colors.text["subheading"], margin_bottom="1rem", text_align=["center", "center", "left", "left", "left"]),
         regular_text(description, text_align=["center", "center", "left", "left", "left"], margin_bottom="1.5rem"),
         rx.box(
             button(
@@ -65,9 +65,6 @@ def location_map_section(
             display=["block", "block", "none", "none", "none"],
             gap="2rem",
             align_items="center",
-            max_width="1200px",
-            margin_x="auto",
-            width="100%",
         ),
         # Medium/large/xl screens: flex layout (alternating sides)
         rx.box(
@@ -75,11 +72,8 @@ def location_map_section(
             display=["none", "none", "flex", "flex", "flex"],
             gap="2rem",
             align_items="center",
-            max_width="1200px",
-            margin_x="auto",
-            width="100%",
         ),
-        margin_bottom="4rem"
+        margin_top="3rem",
     )
 
 
@@ -96,7 +90,6 @@ def section_locations() -> rx.Component:
                 regular_text(
                     "VoorVoet heeft twee praktijklocaties in Enschede. Beide locaties zijn uitgerust met moderne faciliteiten en bieden een professionele omgeving voor uw behandeling.",
                     text_align=["center", "center", "left", "left", "left"],
-                    margin_bottom="3rem",
                     width="100%"
                 ),
                 
@@ -125,7 +118,5 @@ def section_locations() -> rx.Component:
                 width="100%"
             )
         ),
-        id="locations",
-        bg="white",
-        padding_y="5em"
+        id="locations"
     )

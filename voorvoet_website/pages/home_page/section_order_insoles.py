@@ -38,14 +38,9 @@ def section_order_insoles() -> rx.Component:
                 display=["block", "block", "block", "flex"],
                 flex_direction=["column", "column", "column", "row-reverse"],
                 gap="1.0rem",
-                align_items="center",
-                max_width="1200px",
-                margin_x="auto",
-                width="100%",
-                padding_x=["2rem", "2rem", "2rem", "2rem", "2rem"]
+                align_items="center"
             )
         ),
         id="about",
-        bg="#dcedec",
-        padding_y="5em"
+        alternate_bg=True
     )
