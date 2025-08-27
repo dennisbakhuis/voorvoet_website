@@ -3,6 +3,7 @@ from .button import button
 from .column import column
 from .container import container
 from .icon_list_item import icon_list_item
+from .information_card import information_card
 from .regular_text import regular_text
 from .responsive_grid import responsive_grid
 from .section import section
@@ -15,6 +16,7 @@ __all__ = [
     "button",
     "column",
     "icon_list_item",
+    "information_card",
     "regular_text",
     "responsive_grid",
     "section",

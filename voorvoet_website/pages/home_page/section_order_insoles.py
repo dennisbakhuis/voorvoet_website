@@ -10,7 +10,8 @@ def section_order_insoles() -> rx.Component:
                 column(
                     rx.image(
                         src="/images/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.jpg", 
-                        width="333px",
+                        width="100%",
+                        max_width="333px",
                         height="auto",
                         border_radius="4px",
                         box_shadow="0 4px 12px rgba(0, 0, 0, 0.15)",

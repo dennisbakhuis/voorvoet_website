@@ -1,7 +1,7 @@
 # Footer for the whole site
 import reflex as rx
 
-from ...components import column, container, icon_list_item, section
+from ...components import container, section
 from ...theme import FOOTER_BG
 
 
@@ -15,11 +15,12 @@ def footer() -> rx.Component:
                     rx.image(
                         src="images/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg", 
                         alt="VoorVoet - Praktijk voor podotherapie",
-                        width="300px",
+                        width="100%",
+                        max_width="300px",
                         margin_top="-25px"
                     ),
                     display="flex",
-                    justify_content=["center", "center", "center", "flex-start", "flex-start"],
+                    justify_content=["center", "center", "center", "center", "flex-start"],
                     flex=["none", "none", "none", "0 0 30%", "0 0 30%"],
                     margin_bottom=["2rem", "2rem", "2rem", "0", "0"]
                 ),
@@ -162,7 +163,7 @@ def footer() -> rx.Component:
                     ),
                     display="flex",
                     justify_content="center",
-                    flex="1"
+                    flex="1",
                 ),
                 rx.box(
                     rx.link(
@@ -172,7 +173,8 @@ def footer() -> rx.Component:
                     ),
                     display="flex",
                     justify_content="center",
-                    flex="1"
+                    flex="1",
+                    margin_top=["1rem", "1rem", "0", "0", "0"],
                 ),
                 rx.box(
                     rx.link(
@@ -183,12 +185,14 @@ def footer() -> rx.Component:
                         text_align="center",
                         text_decoration="none",
                         _hover={"text_decoration": "underline", "color": "#047857"},
-                        is_external=True
+                        is_external=True,
+                        margin_top=["1rem", "1rem", "0", "0", "0"],
+
                     ),
                     display="flex",
                     justify_content="center",
                     align_items="center",
-                    flex="1"
+                    flex="1",
                 ),
                 display=["block", "block", "flex"],
                 align_items="center",
@@ -199,5 +203,5 @@ def footer() -> rx.Component:
         bg=FOOTER_BG,
         id="footer",
         padding_top="4rem",
-        padding_bottom="1rem"
+        padding_bottom="1.5rem"
     )

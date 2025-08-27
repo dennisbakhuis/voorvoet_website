@@ -10,7 +10,8 @@ def section_introduction() -> rx.Component:
                 column(
                     rx.image(
                         src="/images/podotherapeut_enschede_kim_bakhuis_loopt_op_strand_voorvoet_praktijk_voor_podotherapie.jpg", 
-                        width="333px",
+                        width="100%",
+                        max_width="333px",
                         height="auto",
                         border_radius="4px",
                         box_shadow="0 4px 12px rgba(0, 0, 0, 0.15)",
@@ -29,8 +30,6 @@ def section_introduction() -> rx.Component:
                     regular_text("Door mijn vooropleiding, verschillende scholingen en jarenlange ervaring heb ik een brede kijk op voet- en voetgerelateerde problemen. Het is belangrijk om me goed in te kunnen leven en mijn uiterste best te doen om je zo goed mogelijk te helpen met jouw hulpvraag. Dat kan in de vorm van advies, behandeling en waar nodig de vervaardiging van ortheses, nagelbeugels of steunzolen. Vanuit mijn praktische instelling werk ik graag samen met andere disciplines om het beste resultaat voor jou te boeken. Privé ben ik een erg actief persoon die houdt van wandelen, hardlopen en Crossfit. Daarnaast daag ik mijzelf graag uit door (grot)duiken en speleo tripjes.", 
                                text_align="left"),
                     padding_left=["0", "0", "0", "2rem"],
-                    # padding_right="2rem",
-                    # margin_bottom=["2rem", "2rem", "2rem", "0"]
                 ),
                 display=["block", "block", "block", "flex"],
                 gap="1.0rem",

@@ -5,7 +5,7 @@ from ...components import container
 from .section_hero_cta import hero_cta_box
 
 
-def hero_section() -> rx.Component:
+def section_hero() -> rx.Component:
     return rx.box(
         rx.image(
             src="/images/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpeg",
@@ -79,6 +79,5 @@ def hero_section() -> rx.Component:
         height=["70dvh", "78dvh", "86dvh", "92dvh"],
         max_height=["640px", "720px", "840px", "920px"],
         min_height="520px",
-        max_width="100vw",
         overflow="hidden",
     )
