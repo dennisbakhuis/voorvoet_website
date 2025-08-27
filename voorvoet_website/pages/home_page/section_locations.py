@@ -1,6 +1,6 @@
 import reflex as rx
 
-from ...components import section, container, column, section_title, section_sub_title, regular_text, button
+from ...components import section, container, column, section_title, regular_text, button
 from ...theme import Colors
 
 
