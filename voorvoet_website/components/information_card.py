@@ -1,6 +1,6 @@
 import reflex as rx
 
-from ..theme import Colors
+from ..theme import Colors, FontSizes
 from .button import button
 
 
@@ -36,13 +36,13 @@ def information_card(title: str, description: str, icon: str, bg_color="white", 
                     align_items="center",
                     margin_bottom="1rem",
                 ),
-                rx.text(title, font_size="20px", font_weight="600", color=Colors.text["heading"], text_align="center"),
+                rx.text(title, font_size=FontSizes.card_title, font_weight="600", color=Colors.text["heading"], text_align="center"),
                 rx.text(
                     description, 
                     text_align="center", 
                     color=Colors.text["heading"], 
                     line_height="1.6",
-                    font_size="18px"
+                    font_size=FontSizes.regular
                 ),
                 spacing="3",
                 align="center",

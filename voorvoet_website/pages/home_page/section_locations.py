@@ -53,20 +53,16 @@ def location_map_section(
         justify_content="center"
     )
     
-    # For smallest 2 breakpoints: always map first, then text
-    mobile_columns = [map_column, info_column]  # Always map first when stacked
-    # For largest 3 breakpoints: alternating sides (map+text, text+map)
+    mobile_columns = [map_column, info_column]
     desktop_columns = [info_column, map_column] if reverse_order else [map_column, info_column]
     
     return rx.box(
-        # Mobile/small: stacked layout (always map first)
         rx.box(
             *mobile_columns,
             display=["block", "block", "none", "none", "none"],
             gap="2rem",
             align_items="center",
         ),
-        # Medium/large/xl screens: flex layout (alternating sides)
         rx.box(
             *desktop_columns,
             display=["none", "none", "flex", "flex", "flex"],
@@ -93,7 +89,6 @@ def section_locations() -> rx.Component:
                     width="100%"
                 ),
                 
-                # Location 1: Eeftinksweg (map left, info right)
                 location_map_section(
                     title="Locatie Eeftinksweg",
                     address="Eeftinksweg 13, 7541 WE Enschede",
@@ -103,7 +98,6 @@ def section_locations() -> rx.Component:
                     reverse_order=False
                 ),
                 
-                # Location 2: Beethovenlaan (map right, info left)  
                 location_map_section(
                     title="Locatie Beethovenlaan",
                     address="Beethovenlaan 10, 7522 HJ Enschede",

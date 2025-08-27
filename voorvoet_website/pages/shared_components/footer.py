@@ -2,7 +2,7 @@
 import reflex as rx
 
 from ...components import container, section, regular_text
-from ...theme import Colors
+from ...theme import Colors, FontSizes
 
 
 def footer() -> rx.Component:
@@ -34,18 +34,18 @@ def footer() -> rx.Component:
                             color=Colors.text["muted"],
                             font_weight="700",
                             text_decoration="underline",
-                            font_size="20px",
+                            font_size=FontSizes.regular,
                             margin_bottom="0.15rem"
                         ),
-                        rx.text("Eeftinksweg 13", color=Colors.text["secondary"], font_size="20px"),
-                        rx.text("7541 WE Enschede", color=Colors.text["secondary"], font_size="20px", margin_bottom="0.20rem"),
+                        regular_text("Eeftinksweg 13", color=Colors.text["secondary"]),
+                        regular_text("7541 WE Enschede", color=Colors.text["secondary"], margin_bottom="0.20rem"),
                         rx.box(
-                            rx.text("Maandag", color=Colors.text["secondary"], display="inline-block", width="100px", font_size="20px"),
-                            rx.text("8.00 - 17.00", color=Colors.text["secondary"], display="inline-block", font_size="20px", margin_left="10px"),
+                            regular_text("Maandag", color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text("8.00 - 17.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         rx.box(
-                            rx.text("Donderdag", color=Colors.text["secondary"], display="inline-block", width="100px", font_size="20px"),
-                            rx.text("8.00 - 17.00", color=Colors.text["secondary"], display="inline-block", font_size="20px", margin_left="10px"),
+                            regular_text("Donderdag", color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text("8.00 - 17.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                             margin_bottom="0.15rem"
                         ),
                         # Locatie Beethovenlaan with opening hours
@@ -54,23 +54,23 @@ def footer() -> rx.Component:
                             color=Colors.text["muted"],
                             font_weight="700",
                             text_decoration="underline",
-                            font_size="20px",
+                            font_size=FontSizes.regular,
                             margin_top="1rem",
                             margin_bottom="0.15rem"
                         ),
-                        rx.text("Beethovenlaan 10", color=Colors.text["secondary"], font_size="20px"),
-                        rx.text("7522 HJ Enschede", color=Colors.text["secondary"], font_size="20px", margin_bottom="0.20rem"),
+                        regular_text("Beethovenlaan 10", color=Colors.text["secondary"]),
+                        regular_text("7522 HJ Enschede", color=Colors.text["secondary"], margin_bottom="0.20rem"),
                         rx.box(
-                            rx.text("Dinsdag", color=Colors.text["secondary"], display="inline-block", width="100px", font_size="20px"),
-                            rx.text("8.30 - 19.30", color=Colors.text["secondary"], display="inline-block", font_size="20px", margin_left="10px"),
+                            regular_text("Dinsdag", color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text("8.30 - 19.30", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         rx.box(
-                            rx.text("Woensdag", color=Colors.text["secondary"], display="inline-block", width="100px", font_size="20px"),
-                            rx.text("8.30 - 17.00", color=Colors.text["secondary"], display="inline-block", font_size="20px", margin_left="10px"),
+                            regular_text("Woensdag", color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text("8.30 - 17.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         rx.box(
-                            rx.text("Vrijdag", color=Colors.text["secondary"], display="inline-block", width="100px", font_size="20px"),
-                            rx.text("8.00 - 13.00", color=Colors.text["secondary"], display="inline-block", font_size="20px", margin_left="10px"),
+                            regular_text("Vrijdag", color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text("8.00 - 13.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         flex="1",
                         text_align=["center", "center", "left", "left", "left"],
@@ -87,7 +87,7 @@ def footer() -> rx.Component:
                                     "+31 (0) 6 577 509 97",
                                     href="tel:+31657750997",
                                     color=Colors.text["secondary"],
-                                    font_size="22px",
+                                    font_size=FontSizes.body_accent,
                                     text_decoration="none",
                                     _hover={"text_decoration": "underline", "color": Colors.primary["700"]}
                                 ),
@@ -101,7 +101,7 @@ def footer() -> rx.Component:
                                     "info@voorvoet.nl",
                                     href="mailto:info@voorvoet.nl",
                                     color=Colors.text["secondary"],
-                                    font_size="22px",
+                                    font_size=FontSizes.body_accent,
                                     text_decoration="none",
                                     _hover={"text_decoration": "underline", "color": Colors.primary["700"]}
                                 ),
@@ -115,27 +115,27 @@ def footer() -> rx.Component:
                         # Business details
                         rx.box(
                             rx.box(
-                                rx.text("KvK nummer", color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px", font_size="20px"),
-                                rx.text("87984814", color=Colors.text["secondary"], display="inline-block", font_size="20px"),
+                                regular_text("KvK nummer", color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
+                                regular_text("87984814", color=Colors.text["secondary"], display="inline-block"),
                                 margin_bottom="0.5rem"
                             ),
                             rx.box(
-                                rx.text("Praktijkcode", color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px", font_size="20px"),
-                                rx.text("26000993", color=Colors.text["secondary"], display="inline-block", font_size="20px"),
+                                regular_text("Praktijkcode", color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
+                                regular_text("26000993", color=Colors.text["secondary"], display="inline-block"),
                                 margin_bottom="0.5rem"
                             ),
                             rx.box(
-                                rx.text("Bankrekening", color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px", font_size="20px"),
-                                rx.text("NL18 KNAB 0515 1858 84", color=Colors.text["secondary"], display="inline-block", font_size="20px"),
+                                regular_text("Bankrekening", color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
+                                regular_text("NL18 KNAB 0515 1858 84", color=Colors.text["secondary"], display="inline-block"),
                             ),
                             flex="1",
                             margin_bottom="2rem"
                         ),
                         # Links at bottom
                         rx.box(
-                            rx.link("Credits", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size="20px", margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
-                            rx.link("Privacy beleid", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size="20px", margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
-                            rx.link("Algemene voorwaarden", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size="20px", text_align=["center", "center", "left", "left", "left"])
+                            rx.link("Credits", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
+                            rx.link("Privacy beleid", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
+                            rx.link("Algemene voorwaarden", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, text_align=["center", "center", "left", "left", "left"])
                         ),
                         display="flex",
                         flex_direction="column",
@@ -181,7 +181,7 @@ def footer() -> rx.Component:
                         "© Made with ❤️ by Dennis",
                         href="https://linkedin.com/in/dennisbakuis",
                         color=Colors.text["muted"],
-                        font_size="20px",
+                        font_size=FontSizes.regular,
                         text_align="center",
                         text_decoration="none",
                         _hover={"text_decoration": "underline", "color": Colors.primary["700"]},

@@ -1,6 +1,6 @@
 # Button component based on voorvoet.nl CTA button
 import reflex as rx
-from ..theme import Colors
+from ..theme import Colors, FontSizes
 
 
 def button(
@@ -12,7 +12,7 @@ def button(
     base_styles = {
         "border_radius": "3px",
         "font_weight": "700",
-        "font_size": "24px",
+        "font_size": FontSizes.button,
         "padding_x": "0.8em",
         "padding_y": "0.1em",
         "transition": "all 0.2s ease",

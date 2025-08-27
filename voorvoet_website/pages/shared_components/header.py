@@ -1,7 +1,7 @@
 # Header used across multiple all pages
 import reflex as rx
 
-from ...theme import Colors
+from ...theme import Colors, FontSizes
 from ...state import WebsiteState
 from ...components import container
 
@@ -20,7 +20,7 @@ def header() -> rx.Component:
                 link,
                 href=href,
                 color=Colors.text["heading"],
-                font_size="24px",
+                font_size=FontSizes.nav_link,
                 font_weight="600",
                 _hover={"color": Colors.primary["300"]},
             )
