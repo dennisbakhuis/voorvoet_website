@@ -36,4 +36,67 @@ class FontSizes:
     card_title = "20px"
     body_accent = "20px"
     small = ["16px", "18px", "22px", "24px"]  # icon_list_item text used in CTA
+
+
+class Spacing:
+    # Container and section spacing
+    container_padding = ["1rem", "1.5rem", "2rem"]
+    section_vertical = "5rem"
+    
+    # Common responsive spacing patterns
+    responsive_2rem = ["0", "0", "0", "2rem"]
+    responsive_2rem_left = ["0", "0", "0", "2rem"]
+    responsive_2rem_right = ["0", "0", "0", "2rem"]
+    
+    # Grid and layout spacing
+    grid_gap = "2rem"
+    section_gap = "1rem"
+    card_spacing = "3rem"
+    
+    # Component spacing
+    image_margin_bottom = "2rem"
+    text_margin_bottom = "1rem"
+    button_margin_top = "1.5rem"
+
+
+class Layout:
+    # Image sizing
+    image_max_width = "333px"
+    image_border_radius = "4px"
+    image_box_shadow = "0 4px 12px rgba(0, 0, 0, 0.15)"
+    
+    # Column sizing patterns
+    image_column_size = ["100%", "100%", "100%", "40%", "40%"]
+    text_column_size = ["100%", "100%", "100%", "60%", "60%"]
+    
+    # Responsive display patterns
+    mobile_only = ["block", "block", "none", "none", "none"]
+    desktop_only = ["none", "none", "flex", "flex", "flex"]
+    responsive_flex = ["block", "block", "block", "flex"]
+    
+    # Container constraints
+    max_width = "1200px"
+    card_max_width = "350px"
+    card_min_width = "280px"
+
+
+# Utility functions for common responsive patterns
+def responsive_padding(direction: str = "right") -> list[str]:
+    """Generate responsive padding for left or right direction"""
+    if direction == "right":
+        return ["0", "0", "0", "2rem"]
+    elif direction == "left":
+        return ["0", "0", "0", "2rem"]
+    else:
+        return ["0", "0", "0", "0"]
+
+
+def responsive_padding_both(left: bool = False, right: bool = False) -> dict:
+    """Generate responsive padding for both directions"""
+    result = {}
+    if left:
+        result["padding_left"] = responsive_padding("left")
+    if right:
+        result["padding_right"] = responsive_padding("right")
+    return result
     

@@ -1,6 +1,6 @@
 import reflex as rx
 
-from ..theme import Colors, FontSizes
+from ..theme import Colors, FontSizes, Layout
 from .button import button
 
 
@@ -61,8 +61,8 @@ def information_card(title: str, description: str, icon: str, bg_color="white", 
         ),
         height="100%",
         width="100%",
-        max_width="350px",
-        min_width="280px",
+        max_width=Layout.card_max_width,
+        min_width=Layout.card_min_width,
         display="flex",
         **box_styles,  # type: ignore
     )
