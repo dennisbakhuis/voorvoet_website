@@ -200,7 +200,10 @@ def footer() -> rx.Component:
                 padding_top="1rem"
             )
         ),
-        alternate_bg=True,
         id="footer",
-        padding_bottom="0.5rem"
+        padding_bottom="0.5rem",
+        background_color=Colors.backgrounds["green_light"],
+        clip_top="gentle_2",
+        divider_color=Colors.backgrounds['white'],
+
     )

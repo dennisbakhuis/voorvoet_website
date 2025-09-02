@@ -1,6 +1,7 @@
 import reflex as rx
 
 from ...components import container, section, information_cards_grid, CardConfig
+from ...theme import Colors
 
 
 def section_information() -> rx.Component:
@@ -71,5 +72,9 @@ def section_information() -> rx.Component:
             )
         ),
         id="services",
-        alternate_bg=True
+        background_color= Colors.backgrounds["green_light"],
+        divider_color=Colors.backgrounds["white"],
+        clip_top="gentle_4",
+        clip_bottom="gentle_1"
+
     )

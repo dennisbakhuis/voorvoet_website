@@ -49,11 +49,11 @@ def image_text_section(
         ),
         size=Layout.image_column_size,
         padding_right=responsive_padding("right") if image_position == "left" else ["0", "0", "0", "0"],
-        padding_left=responsive_padding("left") if image_position == "right" else ["0", "0", "0", "0"],
         display="flex",
         justify_content="center",
         align_items="center",
         margin_bottom=Spacing.image_margin_bottom,
+        order=["1", "1", "1", "1"] if image_position == "left" else ["1", "1", "1", "2"],
     )
     
     # Create text content
@@ -77,7 +77,8 @@ def image_text_section(
         text_content.append(
             rx.box(
                 button(button_text, href=button_link),
-                margin_top=Spacing.button_margin_top
+                margin_top=Spacing.button_margin_top,
+                text_align="center"
             )
         )
     
@@ -86,14 +87,12 @@ def image_text_section(
         *text_content,
         size=Layout.text_column_size,
         padding_left=responsive_padding("left") if image_position == "left" else ["0", "0", "0", "0"],
-        padding_right=responsive_padding("right") if image_position == "right" else ["0", "0", "0", "0"],
+        order=["2", "2", "2", "2"] if image_position == "left" else ["2", "2", "2", "1"],
     )
     
-    # Order columns based on image position
-    if image_position == "left":
-        columns = [image_column, text_column]
-    else:
-        columns = [text_column, image_column]
+    # Always put image first in DOM for consistent mobile stacking
+    # Use CSS order to control desktop layout
+    columns = [image_column, text_column]
     
     # Create the responsive layout
     return rx.box(

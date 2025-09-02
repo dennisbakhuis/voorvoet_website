@@ -18,5 +18,5 @@ def section_who_is_voorvoet() -> rx.Component:
                 image_position="left"
             )
         ),
-        id="who-is-voorvoet"
+        id="who-is-voorvoet",
     )

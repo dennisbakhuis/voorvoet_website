@@ -77,7 +77,8 @@ def section_hero() -> rx.Component:
         ),
         # Section styling
         padding_top="0",
-        padding_bottom="0",  # Override default section padding for hero
         position="relative",
-        overflow="hidden"
+        overflow="hidden",
+        clip_bottom="gentle_1",
+        divider_color=Colors.backgrounds['white']
     )

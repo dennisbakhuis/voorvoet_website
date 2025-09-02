@@ -1,6 +1,7 @@
 # Section "Order insoles" on the home page
 import reflex as rx
 from ...components import container, section, image_text_section
+from ...theme import Colors
 
 
 def section_order_insoles() -> rx.Component:
@@ -17,9 +18,12 @@ def section_order_insoles() -> rx.Component:
                 paragraphs=paragraphs,
                 image_position="right",
                 button_text="Extra paar bestellen",
-                button_link=""
+                button_link="#"
             )
         ),
-        id="order-insoles",
-        alternate_bg=True
+        id="order-insoles", 
+        background_color=Colors.backgrounds["green_light"],
+        divider_color=Colors.backgrounds["white"],
+        clip_top="gentle_2",
+        clip_bottom="gentle_3"
     )

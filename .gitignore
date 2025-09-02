@@ -17,3 +17,4 @@ assets/external/
 *.db
 
 .local/
+.claude/
