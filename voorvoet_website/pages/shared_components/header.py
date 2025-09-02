@@ -7,14 +7,22 @@ from ...components import container
 
 
 def header() -> rx.Component:
-    nav_links = [
+    # Define navigation links based on current page
+    home_nav_links = [
         ("Blog", "#about"),
-        ("Informatie", "#services"),
+        ("Informatie", "/informatie/"),
+        ("Vergoedingen", "#kim"),
+        ("Contact", "#contact"),
+    ]
+    
+    information_nav_links = [
+        ("Home", "/"),
+        ("Blog", "#about"),
         ("Vergoedingen", "#kim"),
         ("Contact", "#contact"),
     ]
 
-    def nav_items():
+    def nav_items(nav_links):
         return [
             rx.link(
                 link,
@@ -39,7 +47,11 @@ def header() -> rx.Component:
             ),
             # Navigation items on the right side
             rx.hstack(
-                rx.hstack(*nav_items(), gap="20px", display=["none", "none", "flex"]),
+                rx.cond(
+                    WebsiteState.current_page == "/informatie/",
+                    rx.hstack(*nav_items(information_nav_links), gap="20px", display=["none", "none", "flex"]),
+                    rx.hstack(*nav_items(home_nav_links), gap="20px", display=["none", "none", "flex"])
+                ),
                 rx.icon_button(
                     "menu",
                     aria_label="menu",
@@ -75,20 +87,38 @@ def header() -> rx.Component:
         WebsiteState.nav_open,
         rx.box(
             container(
-                rx.vstack(
-                    *[
-                        rx.link(
-                            link,
-                            href=href,
-                            width="100%",
-                            text_align="right",
-                            color=Colors.text["white"],
-                            py="8px",
-                            on_click=WebsiteState.toggle_nav,  # type: ignore
-                        )
-                        for link, href in nav_links
-                    ],
-                    gap="10px",
+                rx.cond(
+                    WebsiteState.current_page == "/informatie/",
+                    rx.vstack(
+                        *[
+                            rx.link(
+                                link,
+                                href=href,
+                                width="100%",
+                                text_align="right",
+                                color=Colors.text["white"],
+                                py="8px",
+                                on_click=WebsiteState.toggle_nav,  # type: ignore
+                            )
+                            for link, href in information_nav_links
+                        ],
+                        gap="10px",
+                    ),
+                    rx.vstack(
+                        *[
+                            rx.link(
+                                link,
+                                href=href,
+                                width="100%",
+                                text_align="right",
+                                color=Colors.text["white"],
+                                py="8px",
+                                on_click=WebsiteState.toggle_nav,  # type: ignore
+                            )
+                            for link, href in home_nav_links
+                        ],
+                        gap="10px",
+                    ),
                 ),
                 padding_x=["12px", "16px", "24px"],
             ),

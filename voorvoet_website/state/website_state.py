@@ -10,6 +10,10 @@ class WebsiteState(rx.State):
     modal_desc: str = ""
     modal_input: str = ""
 
+    @rx.var
+    def current_page(self) -> str:
+        return self.router.url.path
+
     def toggle_nav(self):
         self.nav_open = not self.nav_open
 

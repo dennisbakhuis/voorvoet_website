@@ -10,7 +10,7 @@ from .section_locations import section_locations
 from ..shared_components import footer, header, modal
 
 
-def home_page() -> rx.Component:
+def page_home() -> rx.Component:
     return rx.fragment(
         header(),
         section_hero(),

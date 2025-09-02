@@ -1,6 +1,8 @@
 # Pages used by the Reflex application
-from .home_page import home_page
+from .home import page_home
+from .information import page_information
 
 __all__ = [
-    "home_page",
+    "page_home",
+    "page_information",
 ]
