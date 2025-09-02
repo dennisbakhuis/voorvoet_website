@@ -9,10 +9,32 @@ class WebsiteState(rx.State):
     modal_title: str = ""
     modal_desc: str = ""
     modal_input: str = ""
+    
+    current_page_path: str = "/"
+    
+    def set_page_path(self, path: str):
+        self.current_page_path = path
+    
+    def nav_to_home(self):
+        self.current_page_path = "/"
+        return rx.redirect("/")
+        
+    def nav_to_blog(self):
+        self.current_page_path = "/blog/"
+        return rx.redirect("/blog/")
+        
+    def nav_to_informatie(self):
+        self.current_page_path = "/informatie/"
+        return rx.redirect("/informatie/")
+        
+    def nav_to_vergoeding(self):
+        self.current_page_path = "/vergoeding/"
+        return rx.redirect("/vergoeding/")
+        
+    def nav_to_contact(self):
+        self.current_page_path = "/contact/"
+        return rx.redirect("/contact/")
 
-    @rx.var
-    def current_page(self) -> str:
-        return self.router.url.path
 
     def toggle_nav(self):
         self.nav_open = not self.nav_open

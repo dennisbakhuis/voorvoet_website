@@ -6,7 +6,7 @@ from ..shared_components import footer, header, modal
 from ...state import WebsiteState
 
 
-def page_information() -> rx.Component:
+def page_vergoeding() -> rx.Component:
     return rx.fragment(
         header(),
         section_hero(),

@@ -7,51 +7,72 @@ from ...components import container
 
 
 def header() -> rx.Component:
-    # Define navigation links based on current page
-    home_nav_links = [
-        ("Blog", "#about"),
-        ("Informatie", "/informatie/"),
-        ("Vergoedingen", "#kim"),
-        ("Contact", "#contact"),
+    nav_items = [
+        rx.cond(
+            WebsiteState.current_page_path != "/",
+            rx.link("Home", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_home, cursor="pointer"),  #type: ignore
+            rx.fragment()
+        ),
+        rx.cond(
+            WebsiteState.current_page_path != "/blog/",
+            rx.link("Blog", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_blog, cursor="pointer"),  #type: ignore
+            rx.fragment()
+        ),
+        rx.cond(
+            WebsiteState.current_page_path != "/informatie/",
+            rx.link("Informatie", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_informatie, cursor="pointer"),  #type: ignore
+            rx.fragment()
+        ),
+        rx.cond(
+            WebsiteState.current_page_path != "/vergoeding/",
+            rx.link("Vergoedingen", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_vergoeding, cursor="pointer"),  #type: ignore
+            rx.fragment()
+        ),
+        rx.cond(
+            WebsiteState.current_page_path != "/contact/",
+            rx.link("Contact", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_contact, cursor="pointer"),  #type: ignore
+            rx.fragment()
+        ),
     ]
     
-    information_nav_links = [
-        ("Home", "/"),
-        ("Blog", "#about"),
-        ("Vergoedingen", "#kim"),
-        ("Contact", "#contact"),
+    mobile_nav_items = [
+        rx.cond(
+            WebsiteState.current_page_path != "/",
+            rx.link("Home", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_home], cursor="pointer"),  #type: ignore
+            rx.fragment()
+        ),
+        rx.cond(
+            WebsiteState.current_page_path != "/blog/",
+            rx.link("Blog", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_blog], cursor="pointer"),  #type: ignore
+            rx.fragment()
+        ),
+        rx.cond(
+            WebsiteState.current_page_path != "/informatie/",
+            rx.link("Informatie", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_informatie], cursor="pointer"),  #type: ignore
+            rx.fragment()
+        ),
+        rx.cond(
+            WebsiteState.current_page_path != "/vergoeding/",
+            rx.link("Vergoedingen", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_vergoeding], cursor="pointer"),  #type: ignore
+            rx.fragment()
+        ),
+        rx.cond(
+            WebsiteState.current_page_path != "/contact/",
+            rx.link("Contact", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_contact], cursor="pointer"),  #type: ignore
+            rx.fragment()
+        ),
     ]
 
-    def nav_items(nav_links):
-        return [
-            rx.link(
-                link,
-                href=href,
-                color=Colors.text["heading"],
-                font_size=FontSizes.nav_link,
-                font_weight="600",
-                _hover={"color": Colors.primary["300"]},
-            )
-            for link, href in nav_links
-        ]
-
-    # Create the main header container with max width constraint
     header_container = container(
         rx.hstack(
-            # Logo on the left side
             rx.image(
                 src="/images/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
                 width="300px",
                 height="90px",
                 
             ),
-            # Navigation items on the right side
             rx.hstack(
-                rx.cond(
-                    WebsiteState.current_page == "/informatie/",
-                    rx.hstack(*nav_items(information_nav_links), gap="20px", display=["none", "none", "flex"]),
-                    rx.hstack(*nav_items(home_nav_links), gap="20px", display=["none", "none", "flex"])
-                ),
+                rx.hstack(*nav_items, gap="20px", display=["none", "none", "flex"]),
                 rx.icon_button(
                     "menu",
                     aria_label="menu",
@@ -59,7 +80,7 @@ def header() -> rx.Component:
                     display=["inline-flex", "inline-flex", "none"],
                     color=Colors.text["heading"],
                     bg="transparent",
-                    size="4",  # Twice as big (default is "2")
+                    size="4",
                 ),
                 align="center",
                 justify="end",
@@ -71,7 +92,6 @@ def header() -> rx.Component:
         ),
     )
 
-    # Create the fixed header bar
     bar = rx.box(
         header_container,
         position="fixed",
@@ -82,43 +102,13 @@ def header() -> rx.Component:
         style={"backdropFilter": "saturate(180%) blur(6px)"},
     )
 
-    # Create mobile menu
     mobile_menu = rx.cond(
         WebsiteState.nav_open,
         rx.box(
             container(
-                rx.cond(
-                    WebsiteState.current_page == "/informatie/",
-                    rx.vstack(
-                        *[
-                            rx.link(
-                                link,
-                                href=href,
-                                width="100%",
-                                text_align="right",
-                                color=Colors.text["white"],
-                                py="8px",
-                                on_click=WebsiteState.toggle_nav,  # type: ignore
-                            )
-                            for link, href in information_nav_links
-                        ],
-                        gap="10px",
-                    ),
-                    rx.vstack(
-                        *[
-                            rx.link(
-                                link,
-                                href=href,
-                                width="100%",
-                                text_align="right",
-                                color=Colors.text["white"],
-                                py="8px",
-                                on_click=WebsiteState.toggle_nav,  # type: ignore
-                            )
-                            for link, href in home_nav_links
-                        ],
-                        gap="10px",
-                    ),
+                rx.vstack(
+                    *mobile_nav_items,
+                    gap="10px",
                 ),
                 padding_x=["12px", "16px", "24px"],
             ),

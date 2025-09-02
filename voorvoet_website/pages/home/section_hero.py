@@ -7,7 +7,6 @@ from .section_hero_cta import hero_cta_box
 
 def section_hero() -> rx.Component:
     return section(
-        # Background images
         rx.image(
             src="/images/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpeg",
             object_fit="cover",
@@ -24,13 +23,6 @@ def section_hero() -> rx.Component:
             mix_blend_mode="screen",
             pointer_events="none",
         ),
-        rx.box(
-            position="absolute",
-            inset="0",
-            bg="linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.22) 100%)",
-            pointer_events="none",
-        ),
-        # Content container
         container(
             rx.box(
                 rx.vstack(
@@ -67,7 +59,6 @@ def section_hero() -> rx.Component:
                 padding_x=["1rem", "0"],
                 padding_bottom=["1rem", "1.25rem", "1.5rem", "1.75rem", "2rem"],
             ),
-            # GRID + sizing
             position="relative",
             display="grid",
             grid_template_rows="1fr auto",
@@ -75,7 +66,6 @@ def section_hero() -> rx.Component:
             max_height=["640px", "720px", "840px", "920px"],
             min_height="520px",
         ),
-        # Section styling
         padding_top="0",
         position="relative",
         overflow="hidden",
