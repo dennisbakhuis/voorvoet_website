@@ -16,6 +16,7 @@ def image_text_section(
     image_position: str = "left",  # "left" or "right"
     button_text: Optional[str] = None,
     button_link: Optional[str] = None,
+    image_max_width: Optional[str] = None,  # Override for image max width
     **section_props
 ) -> rx.Component:
     """
@@ -28,10 +29,10 @@ def image_text_section(
         image_position: "left" or "right" - where to position the image
         button_text: Optional button text
         button_link: Optional button link
+        image_max_width: Optional override for image max width (defaults to Layout.image_max_width)
         **section_props: Additional props passed to the container
     """
     
-    # Handle single paragraph or multiple paragraphs
     if isinstance(paragraphs, str):
         paragraph_list = [paragraphs]
     else:
@@ -42,13 +43,13 @@ def image_text_section(
         rx.image(
             src=image_src,
             width="100%",
-            max_width=Layout.image_max_width,
+            max_width=image_max_width or Layout.image_max_width,
             height="auto",
             border_radius=Layout.image_border_radius,
             box_shadow=Layout.image_box_shadow,
         ),
         size=Layout.image_column_size,
-        padding_right=responsive_padding("right") if image_position == "left" else ["0", "0", "0", "0"],
+        padding_right="2rem",
         display="flex",
         justify_content="center",
         align_items="center",
@@ -86,15 +87,15 @@ def image_text_section(
     text_column = column(
         *text_content,
         size=Layout.text_column_size,
-        padding_left=responsive_padding("left") if image_position == "left" else ["0", "0", "0", "0"],
+        padding_right="2rem",
         order=["2", "2", "2", "2"] if image_position == "left" else ["2", "2", "2", "1"],
+        display="flex",
+        flex_direction="column",
+        justify_content="center",
     )
     
-    # Always put image first in DOM for consistent mobile stacking
-    # Use CSS order to control desktop layout
     columns = [image_column, text_column]
     
-    # Create the responsive layout
     return rx.box(
         *columns,
         display=Layout.responsive_flex,

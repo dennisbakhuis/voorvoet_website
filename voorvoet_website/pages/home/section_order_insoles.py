@@ -13,7 +13,7 @@ def section_order_insoles() -> rx.Component:
     return section(
         container(
             image_text_section(
-                image_src="/images/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.jpg",
+                image_src="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.jpg",
                 title="Bestel een extra paar zolen online",
                 paragraphs=paragraphs,
                 image_position="right",

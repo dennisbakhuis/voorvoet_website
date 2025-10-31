@@ -9,7 +9,7 @@ def section_hero() -> rx.Component:
     return section(
         # Background images
         rx.image(
-            src="/images/podotherapie_enschede_wandeling_in_het_bos_zonder_hielpijn_voorvoet_podotherapie_enschede.jpg",
+            src="/images/page_information/podotherapie_enschede_wandeling_in_het_bos_zonder_hielpijn_voorvoet_podotherapie_enschede.jpg",
             object_fit="cover",
             position="absolute",
             inset="0",
@@ -20,14 +20,15 @@ def section_hero() -> rx.Component:
         rx.box(
             position="absolute",
             inset="0",
-            bg="linear-gradient(270deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
+            bg="linear-gradient(270deg, rgba(255,255,255,.35) 0%, rgba(16,185,129,.35) 100%)",
             mix_blend_mode="screen",
             pointer_events="none",
         ),      
+        background_color=Colors.backgrounds['green_light'],
         padding_top="0",
-        height="500px",
+        height="600px",
         position="relative",
         overflow="hidden",
-        clip_bottom="gentle_1",
+        clip_bottom="gentle_3",
         divider_color=Colors.backgrounds['white']
     )

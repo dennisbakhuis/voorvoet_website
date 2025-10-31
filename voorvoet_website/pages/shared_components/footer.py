@@ -13,7 +13,7 @@ def footer() -> rx.Component:
                 # Logo column (30%)
                 rx.box(
                     rx.image(
-                        src="/images/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg", 
+                        src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg", 
                         alt="VoorVoet - Praktijk voor podotherapie",
                         width="100%",
                         max_width="300px",
@@ -157,7 +157,7 @@ def footer() -> rx.Component:
             rx.box(
                 rx.box(
                     rx.link(
-                        rx.image(src="/images/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png", height="60px"),
+                        rx.image(src="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png", height="60px"),
                         href="https://www.podotherapie.nl/",
                         is_external=True
                     ),
@@ -167,7 +167,7 @@ def footer() -> rx.Component:
                 ),
                 rx.box(
                     rx.link(
-                        rx.image(src="/images/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png", height="60px"),
+                        rx.image(src="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png", height="60px"),
                         href="https://www.kwaliteitsregisterparamedici.nl/kwaliteitsregister/paramedici/33997",
                         is_external=True
                     ),

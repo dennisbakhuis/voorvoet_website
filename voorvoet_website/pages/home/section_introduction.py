@@ -12,7 +12,7 @@ def section_introduction() -> rx.Component:
     return section(
         container(
             image_text_section(
-                image_src="/images/podotherapeut_enschede_kim_bakhuis_loopt_op_strand_voorvoet_praktijk_voor_podotherapie.jpg",
+                image_src="/images/page_home/podotherapeut_enschede_kim_bakhuis_loopt_op_strand_voorvoet_praktijk_voor_podotherapie.jpg",
                 title="Even voorstellen",
                 paragraphs=paragraphs,
                 image_position="left"

@@ -1,5 +1,6 @@
 # Components used across the Reflex web app
 from .button import button
+from .centered_image import centered_image
 from .column import column
 from .container import container
 from .icon_list_item import icon_list_item
@@ -17,6 +18,7 @@ from .section_sub_title import section_sub_title
 __all__ = [
     "container",
     "button",
+    "centered_image",
     "column",
     "icon_list_item",
     "image_text_section",

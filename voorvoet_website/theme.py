@@ -50,7 +50,7 @@ class Spacing:
     
     # Grid and layout spacing
     grid_gap = "2rem"
-    section_gap = "1rem"
+    section_gap = "2rem"
     card_spacing = "3rem"
     
     # Component spacing

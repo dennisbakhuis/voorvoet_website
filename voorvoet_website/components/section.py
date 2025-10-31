@@ -43,8 +43,13 @@ def section(
 ) -> rx.Component:
     CLIP_PADDING_COMPENSATION = "3rem"
     
-    padding_top = f"calc({Spacing.section_vertical} + {CLIP_PADDING_COMPENSATION})" if clip_top else Spacing.section_vertical
-    padding_bottom = f"calc({Spacing.section_vertical} + {CLIP_PADDING_COMPENSATION})" if clip_bottom else Spacing.section_vertical
+    # Calculate default padding, but allow override from styles
+    default_padding_top = f"calc({Spacing.section_vertical} + {CLIP_PADDING_COMPENSATION})" if clip_top else Spacing.section_vertical
+    default_padding_bottom = f"calc({Spacing.section_vertical} + {CLIP_PADDING_COMPENSATION})" if clip_bottom else Spacing.section_vertical
+    
+    # Use provided padding if specified, otherwise use calculated defaults
+    padding_top = styles.pop("padding_top", default_padding_top)
+    padding_bottom = styles.pop("padding_bottom", default_padding_bottom)
     
     defaults = {"width": "100%", "padding_top": padding_top, "padding_bottom": padding_bottom, "bg": background_color, "position": "relative"}
     defaults.update(styles)

@@ -66,7 +66,7 @@ def header() -> rx.Component:
     header_container = container(
         rx.hstack(
             rx.image(
-                src="/images/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
+                src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
                 width="300px",
                 height="90px",
                 

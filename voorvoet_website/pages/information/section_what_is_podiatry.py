@@ -1,22 +1,22 @@
-# Section "Who is Voorvoet?" on the home page  
+# Section "What is podiatry" on the information page
 import reflex as rx
 from ...components import container, section, image_text_section
 
 
 def section_what_is_podiatry() -> rx.Component:
     paragraphs = [
-        "Wij zijn een kleinschalige praktijk in de buurt van de Zuiderval. Wij geloven sterk in de kracht van een persoonlijke benadering voor een succesvolle behandeling. Onze praktijk is uitgerust met de nieuwste technologieën en methoden, waardoor wij in staat zijn om een goede en specifieke diagnose te stellen en een behandelplan op maat aan te bieden, zodat jij weer goed vooruit kunt!",
-        "Wij werken samen met andere medische disciplines zoals bijvoorbeeld huisartsen, medisch pedicures en fysiotherapeuten om de beste zorg te bieden aan onze patiënten. Onze praktijk is toegankelijk voor iedereen - van kinderen tot actievelingen met blessures en ouderen met voet- of voetgerelateerde klachten."
+        "Podotherapie richt zicht op het onderzoeken en behandelen van klachten in de onderste extremiteit. Denk hierbij aan voetklachten, maar ook klachten in knieën, heupen of de lage rug. Ervaar je pijnklachten? De podotherapeut doet onderzoek de oorzaak van je pijnklachten en zoekt vervolgens naar de best passende oplossing. Dat kan een op maat gemaakte zool zijn, maar ook schoenadvies, oefeningen, een orthese, nagelbeugel of een tijdelijke behandeling zoals taping of het aanleggen van vilt. Kort gezegd, voor bijna alle klachten die voet- of voetstand gerelateerd zijn, kijkt de podotherapeut naar een passende oplossing."
     ]
     
     return section(
         container(
             image_text_section(
-                image_src="/images/podotherapeut_enschede_kim_bakhuis_van_voorvoet_praktijk_voor_podotherapie.jpg",
-                title="Podotherapeut Enschede",
+                image_src="/images/page_information/skelet_botjes_voet_voorvoet_praktijk_voor_podotherapie_enschede.jpg",
+                title="Wat is podotherapie nou eigenlijk?",
                 paragraphs=paragraphs,
-                image_position="left"
+                image_position="right",
+                image_max_width="450px",
             )
         ),
-        id="who-is-voorvoet",
+        id="what-is-podiatry"
     )

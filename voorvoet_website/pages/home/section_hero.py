@@ -8,7 +8,7 @@ from .section_hero_cta import hero_cta_box
 def section_hero() -> rx.Component:
     return section(
         rx.image(
-            src="/images/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpeg",
+            src="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpeg",
             object_fit="cover",
             position="absolute",
             inset="0",
