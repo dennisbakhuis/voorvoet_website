@@ -5,7 +5,7 @@ from ..theme import Colors, FontSizes
 
 def icon_list_item(icon: str, text: str, **props) -> rx.Component:
     return rx.hstack(
-        rx.html(f'<i class="fa {icon}" style="color: {Colors.text["content"]}; font-size: 8px; margin-top: 6px;"/>'),
+        rx.html(f'<i class="fa {icon}" style="color: {Colors.text["content"]}; font-size: 18px; margin-top: 6px;"/>'),
         rx.text(
             text,
             font_size=FontSizes.regular,

@@ -2,6 +2,8 @@
 import reflex as rx
 from ...components import container, section, section_title, regular_text, button
 from ...theme import Colors, FontSizes
+from ...state.website_state import WebsiteState
+from ...config import config
 
 
 def section_contact_form() -> rx.Component:
@@ -30,6 +32,8 @@ def section_contact_form() -> rx.Component:
                         ),
                         rx.input(
                             placeholder="Voornaam",
+                            value=WebsiteState.contact_first_name,
+                            on_change=WebsiteState.set_contact_first_name,  # type: ignore
                             width="100%",
                             padding="0.75rem 0.75rem",
                             height="auto",
@@ -54,6 +58,8 @@ def section_contact_form() -> rx.Component:
                         ),
                         rx.input(
                             placeholder="Achternaam",
+                            value=WebsiteState.contact_last_name,
+                            on_change=WebsiteState.set_contact_last_name,  # type: ignore
                             width="100%",
                             padding="0.75rem 0.75rem",
                             height="auto",
@@ -84,7 +90,8 @@ def section_contact_form() -> rx.Component:
                     ),
                     rx.radio(
                         ["Bel mij terug", "Vraag per email"],
-                        default_value="Bel mij terug",
+                        value=WebsiteState.contact_request_type,
+                        on_change=WebsiteState.set_contact_request_type,
                         direction="column",
                         spacing="2",
                         color=Colors.text["content"],
@@ -93,42 +100,107 @@ def section_contact_form() -> rx.Component:
                     margin_bottom="1.5rem",
                 ),
 
-                # Phone number field
-                rx.box(
+                # Conditional phone number or email field
+                rx.cond(
+                    WebsiteState.contact_request_type == "Bel mij terug",
+                    # Phone number field
                     rx.box(
-                        rx.text(
-                            "Telefoonnummer (mobiel of vast) ",
-                            rx.text("*", color="red", display="inline"),
+                        rx.box(
+                            rx.text(
+                                "Telefoonnummer (mobiel of vast) ",
+                                rx.text("*", color="red", display="inline"),
+                                font_size=FontSizes.regular,
+                                color=Colors.text["heading"],
+                                font_weight="500",
+                                display="inline",
+                            ),
+                            rx.tooltip(
+                                rx.html('<i class="fa fa-info-circle" style="color: #3b82f6;"/>'),
+                                content="Het telefoonnummer moet precies 10 cijfers bevatten",
+                                style={
+                                    "backgroundColor": "white",
+                                    "color": Colors.text["content"],
+                                    "border": f"1px solid {Colors.primary['500']}",
+                                    "padding": "0.5rem 0.75rem",
+                                    "borderRadius": "4px",
+                                    "boxShadow": "0 2px 8px rgba(0, 0, 0, 0.1)",
+                                },
+                            ),
+                            display="flex",
+                            align_items="center",
+                            gap="0.5rem",
+                            margin_bottom="0.5rem",
+                        ),
+                        rx.el.input(
+                            placeholder="0612345678",
+                            value=WebsiteState.contact_phone_value,
+                            on_change=WebsiteState.set_contact_phone_number,
+                            on_blur=WebsiteState.on_phone_blur,
+                            custom_attrs={"oninput": "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"},
+                            width="100%",
+                            padding="0.75rem 0.75rem",
+                            height="auto",
+                            min_height="50px",
+                            border_radius="4px",
                             font_size=FontSizes.regular,
-                            color=Colors.text["heading"],
-                            font_weight="500",
-                            display="inline",
+                            background="white",
+                            color=Colors.text["content"],
+                            type="tel",
+                            input_mode="numeric",
+                            max_length=10,
+                            border=rx.cond(
+                                WebsiteState.should_show_phone_error,
+                                "3px solid red",
+                                f"1px solid {Colors.borders['light']}",
+                            ),
                         ),
-                        rx.tooltip(
-                            rx.html('<i class="fa fa-info-circle" style="color: #3b82f6;"/>'),
-                            content="Het telefoonnummer moet precies 10 cijfers bevatten",
+                        margin_bottom="1.5rem",
+                    ),
+                    # Email field
+                    rx.box(
+                        rx.box(
+                            rx.text(
+                                "E-mailadres ",
+                                rx.text("*", color="red", display="inline"),
+                                font_size=FontSizes.regular,
+                                color=Colors.text["heading"],
+                                font_weight="500",
+                                display="inline",
+                            ),
+                            rx.tooltip(
+                                rx.html('<i class="fa fa-info-circle" style="color: #3b82f6;"/>'),
+                                content="Vul een geldig e-mailadres in",
+                                style={
+                                    "backgroundColor": "white",
+                                    "color": Colors.text["content"],
+                                    "border": f"1px solid {Colors.primary['500']}",
+                                    "padding": "0.5rem 0.75rem",
+                                    "borderRadius": "4px",
+                                    "boxShadow": "0 2px 8px rgba(0, 0, 0, 0.1)",
+                                },
+                            ),
+                            display="flex",
+                            align_items="center",
+                            gap="0.5rem",
+                            margin_bottom="0.5rem",
                         ),
-                        display="flex",
-                        align_items="center",
-                        gap="0.5rem",
-                        margin_bottom="0.5rem",
+                        rx.input(
+                            placeholder="voorbeeld@email.nl",
+                            value=WebsiteState.contact_email,
+                            on_change=WebsiteState.set_contact_email,  # type: ignore
+                            width="100%",
+                            padding="0.75rem 0.75rem",
+                            height="auto",
+                            min_height="50px",
+                            border_radius="4px",
+                            border=f"1px solid {Colors.borders['light']}",
+                            font_size=FontSizes.regular,
+                            background="white",
+                            color=Colors.text["content"],
+                            type="email",
+                        ),
+                        margin_bottom="1.5rem",
                     ),
-                    rx.input(
-                        placeholder="0612345678",
-                        width="100%",
-                        padding="0.75rem 0.75rem",
-                        height="auto",
-                        min_height="50px",
-                        border_radius="4px",
-                        border=f"1px solid {Colors.borders['light']}",
-                        font_size=FontSizes.regular,
-                        background="white",
-                        color=Colors.text["content"],
-                        type="tel",
-                        max_length=10,
-                        pattern="[0-9]{10}",
-                    ),
-                    margin_bottom="1.5rem",
                 ),
 
                 # Description textarea
@@ -143,6 +215,8 @@ def section_contact_form() -> rx.Component:
                     ),
                     rx.text_area(
                         placeholder="Jouw beschrijving...",
+                        value=WebsiteState.contact_description,
+                        on_change=WebsiteState.set_contact_description,  # type: ignore
                         width="100%",
                         min_height="120px",
                         padding="0.75rem",
@@ -159,30 +233,85 @@ def section_contact_form() -> rx.Component:
                     margin_bottom="1.5rem",
                 ),
 
-                # Cloudflare Turnstile captcha
-                rx.box(
-                    rx.text(
-                        "Beveiliging tegen robots",
-                        font_size=FontSizes.regular,
-                        color=Colors.text["heading"],
-                        font_weight="500",
-                        margin_bottom="0.5rem",
-                    ),
-                    # Placeholder for Cloudflare Turnstile widget
+                # Cloudflare Turnstile captcha (conditionally rendered)
+                rx.cond(
+                    config.is_turnstile_enabled(),
                     rx.box(
+                        # Cloudflare Turnstile widget
+                        # Site key is loaded from TURNSTILE_SITE_KEY environment variable
                         rx.html(
-                            """
-                            <div class="cf-turnstile" data-sitekey="0x4AAAAAAAxxxxxxxxxx" data-theme="light"></div>
+                            f"""
+                            <div class="cf-turnstile"
+                                 data-sitekey="{config.get_turnstile_site_key()}"
+                                 data-theme="light"
+                                 data-callback="onTurnstileSuccess"
+                                 style="margin-bottom: 1.5rem;">
+                            </div>
+                            <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                            <script>
+                                function onTurnstileSuccess(token) {{
+                                    console.log('Turnstile verification successful');
+                                    // Note: Token handling would need to be implemented via backend endpoint
+                                    // For now, this is a placeholder for the callback
+                                }}
+                            </script>
                             """
                         ),
-                        margin_bottom="1.5rem",
                     ),
+                    rx.fragment(),  # Empty fragment when Turnstile is disabled
                 ),
 
                 # Submit button (right-aligned on desktop, full width on mobile)
                 rx.box(
-                    button(
-                        label="Verstuur het verzoek",
+                    rx.cond(
+                        WebsiteState.form_submitting,
+                        # Loading state button
+                        rx.box(
+                            rx.html("⏳ "),
+                            rx.text("Versturen...", display="inline"),
+                            border_radius="3px",
+                            font_weight="700",
+                            font_size=FontSizes.button,
+                            padding_x="0.8em",
+                            padding_y="0.1em",
+                            cursor="wait",
+                            display="inline-flex",
+                            align_items="center",
+                            justify_content="center",
+                            text_decoration="none",
+                            border="none",
+                            white_space="nowrap",
+                            bg=Colors.borders["light"],
+                            color=Colors.text["muted"],
+                            opacity="0.7",
+                        ),
+                        rx.cond(
+                            WebsiteState.can_submit_form,
+                            # Active button
+                            button(
+                                label="Verstuur het verzoek",
+                                on_click=WebsiteState.submit_contact_form,
+                            ),
+                            # Disabled button
+                            rx.box(
+                                rx.text("Verstuur het verzoek"),
+                                border_radius="3px",
+                                font_weight="700",
+                                font_size=FontSizes.button,
+                                padding_x="0.8em",
+                                padding_y="0.1em",
+                                cursor="not-allowed",
+                                display="inline-flex",
+                                align_items="center",
+                                justify_content="center",
+                                text_decoration="none",
+                                border="none",
+                                white_space="nowrap",
+                                bg=Colors.borders["light"],
+                                color=Colors.text["muted"],
+                                opacity="0.6",
+                            ),
+                        ),
                     ),
                     display="flex",
                     justify_content=["center", "center", "flex-end", "flex-end", "flex-end"],

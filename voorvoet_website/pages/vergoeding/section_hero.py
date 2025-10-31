@@ -9,7 +9,7 @@ def section_hero() -> rx.Component:
     return section(
         # Background images
         rx.image(
-            src="/images/podotherapie_enschede_wandeling_in_het_bos_zonder_hielpijn_voorvoet_podotherapie_enschede.jpg",
+            src="/images/page_reimbursements/Hielpijn_hielspoor_plantaire_fasciits_tarieven.jpg",
             object_fit="cover",
             position="absolute",
             inset="0",
@@ -23,7 +23,7 @@ def section_hero() -> rx.Component:
             bg="linear-gradient(270deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
             mix_blend_mode="screen",
             pointer_events="none",
-        ),      
+        ),
         padding_top="0",
         height="500px",
         position="relative",

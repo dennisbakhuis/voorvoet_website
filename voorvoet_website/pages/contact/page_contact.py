@@ -5,6 +5,7 @@ from .section_starter import section_starter
 from .section_contact_form import section_contact_form
 
 from ..shared_components import footer, header, modal
+from ...components import toast
 from ...state import WebsiteState
 
 
@@ -16,4 +17,5 @@ def page_contact() -> rx.Component:
 
         footer(),
         modal(),
+        toast(),
     )
