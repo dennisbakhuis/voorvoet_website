@@ -25,10 +25,10 @@ def _create_divider(divider_data: dict, divider_color: str, position: str) -> rx
     return rx.box(
         rx.html(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{divider_data["viewBox"]}" preserveAspectRatio="none"><path d="{divider_data["path"]}" class="shape-fill"></path></svg>'),
         position="absolute",
-        **{position: "0", "left": "0", "width": "100%", "overflow": "hidden", "line_height": "0"},  # type: ignore
+        **{position: "-1px", "left": "0", "width": "100%", "overflow": "hidden", "line_height": "0"},  # type: ignore
         **({"transform": "rotate(180deg)"} if position == "bottom" else {}),
         **{
-            "& svg": {"position": "relative", "display": "block", "width": "calc(100% + 1.3px)", "height": "73px"},
+            "& svg": {"position": "relative", "display": "block", "width": "calc(100% + 3px)", "height": "75px"},
             "& .shape-fill": {"fill": divider_color}
         }
     )
