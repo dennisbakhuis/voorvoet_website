@@ -10,6 +10,7 @@ from .information_cards_section import information_cards_grid, CardConfig
 from .location_map_section import location_section, LocationConfig
 from .regular_text import regular_text
 from .responsive_grid import responsive_grid
+from .risk_level_card import risk_level_card
 from .section import section
 from .section_title import section_title
 from .section_sub_title import section_sub_title
@@ -29,6 +30,7 @@ __all__ = [
     "LocationConfig",
     "regular_text",
     "responsive_grid",
+    "risk_level_card",
     "section",
     "section_title",
     "section_sub_title",

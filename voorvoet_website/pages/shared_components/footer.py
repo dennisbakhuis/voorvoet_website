@@ -13,7 +13,7 @@ def footer() -> rx.Component:
                 # Logo column (30%)
                 rx.box(
                     rx.image(
-                        src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg", 
+                        src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
                         alt="VoorVoet - Praktijk voor podotherapie",
                         width="100%",
                         max_width="300px",
@@ -179,7 +179,7 @@ def footer() -> rx.Component:
                 rx.box(
                     rx.link(
                         "© Made with ❤️ by Dennis",
-                        href="https://linkedin.com/in/dennisbakuis",
+                        href="https://linkedin.com/in/dennisbakhuis",
                         color=Colors.text["muted"],
                         font_size=FontSizes.regular,
                         text_align="center",
