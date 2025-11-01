@@ -85,9 +85,9 @@ class WebsiteState(rx.State):
         self.current_page_path = "/informatie/"
         return rx.redirect("/informatie/")
         
-    def nav_to_vergoeding(self):
-        self.current_page_path = "/vergoeding/"
-        return rx.redirect("/vergoeding/")
+    def nav_to_reimbursements(self):
+        self.current_page_path = "/reimbursements/"
+        return rx.redirect("/reimbursements/")
         
     def nav_to_contact(self):
         self.current_page_path = "/contact/"

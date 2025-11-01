@@ -19,7 +19,7 @@ class Colors:
         "content": "#131f1e",        # Content with a tiny blend of primary.300 teal
         "white": "#ffffff",          # White text for buttons
         "muted": "#666666",          # Muted/gray text for labels
-        "placeholder": "#888888",    # Lighter text for placeholders
+        "placeholder": "#888888",    # Lighter text for placeholders (not working, set through styles.css)
         "secondary": "#4a4a4a",      # Secondary text for body content
         "link": "#3b82f6",           # Blue color for links
     }

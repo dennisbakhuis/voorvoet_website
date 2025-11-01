@@ -1,7 +1,7 @@
 # Main application file for the Reflex web app
 import reflex as rx
 
-from .pages import page_home, page_blog, page_information, page_vergoeding, page_contact
+from .pages import page_home, page_blog, page_information, page_reimbursements, page_contact
 
 
 app = rx.App(
@@ -35,9 +35,9 @@ app.add_page(
 )
 
 app.add_page(
-    component=page_vergoeding, 
-    route="/vergoeding/", 
-    title="VoorVoet - Vergoedingen - Praktijk voor Podotherapie",
+    component=page_reimbursements,
+    route="/reimbursements/",
+    title="VoorVoet - Reimbursements - Praktijk voor Podotherapie",
 )
 
 app.add_page(

@@ -2,7 +2,7 @@
 import reflex as rx
 from typing import Optional
 from ...components import container, section, section_title, regular_text, icon_list_item, column
-from ...theme import Colors, Layout, Spacing, responsive_padding
+from ...theme import Colors, Layout, Spacing
 
 
 def section_veel_voorkomende_klachten() -> rx.Component:
@@ -23,7 +23,7 @@ def section_veel_voorkomende_klachten() -> rx.Component:
         margin_bottom=Spacing.image_margin_bottom,
         order=["1", "1", "1", "2"],
     )
-    
+
     # Create text column with title, paragraph, and bullet list
     text_column = column(
         section_title("Veel voorkomende klachten", margin_bottom=Spacing.text_margin_bottom),
@@ -52,7 +52,7 @@ def section_veel_voorkomende_klachten() -> rx.Component:
         flex_direction="column",
         justify_content="center",
     )
-    
+
     return section(
         container(
             rx.box(

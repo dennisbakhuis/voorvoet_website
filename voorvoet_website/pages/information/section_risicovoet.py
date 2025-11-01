@@ -86,7 +86,7 @@ def section_risicovoet() -> rx.Component:
                 "Heeft u podotherapeutische hulpmiddelen* nodig om te zorgen dat de voetstand-, de voetfunctie of de drukverdeling onder uw voeten beter wordt? Deze worden niet vanuit de basisverzekering gedekt. Mogelijk krijgt u wel een vergoeding vanuit uw aanvullende verzekering. Kijk voor mogelijke vergoedingen van podotherapeutische hulpmiddelen in de ",
                 rx.link(
                     "polis van uw aanvullende verzekering",
-                    href="/vergoeding/",
+                    href="/reimbursements/",
                     color=Colors.text["link"],
                     text_decoration="underline",
                     _hover={"color": Colors.primary["700"]}

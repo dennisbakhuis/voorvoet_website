@@ -2,7 +2,7 @@
 import reflex as rx
 from typing import Optional, Union
 
-from ..theme import Colors, FontSizes, Layout, Spacing, responsive_padding
+from ..theme import Layout, Spacing
 from .column import column
 from .section_title import section_title
 from .regular_text import regular_text
@@ -21,7 +21,7 @@ def image_text_section(
 ) -> rx.Component:
     """
     Generic image-text layout component that eliminates duplication across sections.
-    
+
     Args:
         image_src: Path to the image
         title: Section title
@@ -32,12 +32,12 @@ def image_text_section(
         image_max_width: Optional override for image max width (defaults to Layout.image_max_width)
         **section_props: Additional props passed to the container
     """
-    
+
     if isinstance(paragraphs, str):
         paragraph_list = [paragraphs]
     else:
         paragraph_list = paragraphs
-    
+
     # Create image column
     image_column = column(
         rx.image(
@@ -56,12 +56,12 @@ def image_text_section(
         margin_bottom=Spacing.image_margin_bottom,
         order=["1", "1", "1", "1"] if image_position == "left" else ["1", "1", "1", "2"],
     )
-    
+
     # Create text content
     text_content = [
         section_title(title, margin_bottom=Spacing.text_margin_bottom)
     ]
-    
+
     # Add paragraphs
     for i, paragraph in enumerate(paragraph_list):
         margin_bottom = Spacing.text_margin_bottom if i < len(paragraph_list) - 1 else "0"
@@ -72,7 +72,7 @@ def image_text_section(
                 margin_bottom=margin_bottom
             )
         )
-    
+
     # Add button if provided
     if button_text and button_link:
         text_content.append(
@@ -82,8 +82,8 @@ def image_text_section(
                 text_align="center"
             )
         )
-    
-    # Create text column  
+
+    # Create text column
     text_column = column(
         *text_content,
         size=Layout.text_column_size,
@@ -93,9 +93,9 @@ def image_text_section(
         flex_direction="column",
         justify_content="center",
     )
-    
+
     columns = [image_column, text_column]
-    
+
     return rx.box(
         *columns,
         display=Layout.responsive_flex,

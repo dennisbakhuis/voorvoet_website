@@ -24,8 +24,8 @@ def header() -> rx.Component:
             rx.fragment()
         ),
         rx.cond(
-            WebsiteState.current_page_path != "/vergoeding/",
-            rx.link("Vergoedingen", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_vergoeding, cursor="pointer"),  #type: ignore
+            WebsiteState.current_page_path != "/reimbursements/",
+            rx.link("Vergoedingen", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_reimbursements, cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
@@ -52,8 +52,8 @@ def header() -> rx.Component:
             rx.fragment()
         ),
         rx.cond(
-            WebsiteState.current_page_path != "/vergoeding/",
-            rx.link("Vergoedingen", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_vergoeding], cursor="pointer"),  #type: ignore
+            WebsiteState.current_page_path != "/reimbursements/",
+            rx.link("Vergoedingen", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_reimbursements], cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
