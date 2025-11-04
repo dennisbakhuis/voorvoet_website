@@ -17,6 +17,16 @@ class PostObject(BaseModel):
     label: str | None = None
     url: str | None = None
 
+    def to_dict(self):
+        return {
+            "type": self.type,
+            "content": self.content,
+            "src": self.src,
+            "alt": self.alt,
+            "label": self.label,
+            "url": self.url,
+        }
+
 
 class PostMarkdown(PostObject):
     """Represents markdown content"""

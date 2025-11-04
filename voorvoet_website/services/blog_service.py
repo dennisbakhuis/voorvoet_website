@@ -12,12 +12,14 @@ from .content_parser import parse_markdown_content
 # Cache for loaded posts
 _posts_cache: list[BlogPost] | None = None
 
+FALLBACK_DATE = datetime(2023, 2, 1)  # Start date of VoorVoet
+
 
 def _get_blog_content_dir() -> Path:
     """Get the path to the blog content directory"""
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
-    return project_root / "voorvoet_website" / "pages" / "blog" / "blog_content"
+    return project_root / "voorvoet_website" / "blog_content"
 
 
 def calculate_read_time(content: str) -> int:
@@ -105,7 +107,7 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         filename = file_path.stem
 
         # Parse date
-        date_str = metadata.get('date', '')
+        date_str = str(metadata.get('date', ''))
         try:
             date = datetime.strptime(date_str, '%Y-%m-%d')
         except ValueError:
@@ -114,7 +116,7 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
                 date = datetime.strptime(date_str, '%d-%m-%Y')
             except ValueError:
                 print(f"Warning: Could not parse date '{date_str}' in {filename}")
-                date = datetime.now()
+                date = FALLBACK_DATE
 
         # Format date in Dutch
         months_nl = {
@@ -125,8 +127,11 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         formatted_date = f"{date.day} {months_nl[date.month]} {date.year}"
 
         # Calculate reading time (optional - only if not specified in metadata)
-        read_time = metadata.get('read_time')
-        if read_time is None:
+        try:
+            read_time = int(str(metadata.get('read_time', "")))
+            if read_time <= 0:
+                raise ValueError("Blog post read_time not set correctly")
+        except:
             read_time = calculate_read_time(content)
 
         # Get author (optional)
@@ -150,20 +155,19 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         # Preprocess markdown content to resolve image paths
         processed_content = preprocess_markdown_images(content, filename)
 
-        # Parse content into objects and convert to dicts for Reflex compatibility
-        content_objects_models = parse_markdown_content(processed_content)
-        content_objects = [obj.model_dump() for obj in content_objects_models]
+        # Parse content into objects
+        content_objects = parse_markdown_content(processed_content)
 
         # Create BlogPost object
         blog_post = BlogPost(
-            title=metadata.get('title', 'Untitled'),
-            slug=metadata.get('slug', filename),
-            summary=metadata.get('summary', ''),
-            author=author,
+            title=str(metadata.get('title', 'Untitled')),
+            slug=str(metadata.get('slug', filename)),
+            summary=str(metadata.get('summary', '')),
+            author=str(author),
             date=date,
             formatted_date=formatted_date,
-            thumbnail=thumbnail_filename,
-            thumbnail_alt=metadata.get('thumbnail_alt', ''),
+            thumbnail=str(thumbnail_filename),
+            thumbnail_alt=str(metadata.get('thumbnail_alt', '')),
             content=processed_content,
             filename=filename,
             thumbnail_url=thumbnail_path,

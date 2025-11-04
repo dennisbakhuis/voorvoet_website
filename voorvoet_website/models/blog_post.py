@@ -1,9 +1,9 @@
 # Blog post data model
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any
 
-from typing import Any
+from .post_objects import ContentObject
 
 
 class BlogPost(BaseModel):
@@ -24,9 +24,17 @@ class BlogPost(BaseModel):
     filename: str           # e.g., "001_podotherapeut_of_podoloog"
     thumbnail_url: str      # Full resolved URL to thumbnail (with fallback)
     read_time: Optional[int] = None  # Optional: estimated reading time in minutes
-    content_objects: list[dict[str, Any]] = Field(default_factory=list)  # Parsed content objects as dicts
+    content_objects: list[ContentObject] = Field(default_factory=list)  # Parsed content objects as dicts
 
     @property
     def url(self) -> str:
         """Get the URL for this blog post"""
         return f"/blog/{self.slug}/"
+
+    @property
+    def content_objects_dict(self) -> list[dict]:
+        """Get a list of contect objects as a dict."""
+        return [
+            item.to_dict()
+            for item in self.content_objects
+        ]
