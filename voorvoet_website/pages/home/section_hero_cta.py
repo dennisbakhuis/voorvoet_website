@@ -2,9 +2,11 @@
 import reflex as rx
 from ...components import button, section_sub_title, icon_list_item
 from ...theme import Colors
+from ...config import config
 
 
 def hero_cta_box() -> rx.Component:
+    link_plan_portal = config.link_plan_portal
     return rx.box(
         rx.vstack(
             section_sub_title("Direct digitaal een afspraak maken!", text_align="center"),
@@ -21,7 +23,7 @@ def hero_cta_box() -> rx.Component:
                 justify_content="center"
             ),
             rx.box(
-                button("Maak een afspraak", href="#afspraak"),
+                button("Maak een afspraak", href=link_plan_portal),
                 width="100%",
                 display="flex",
                 justify_content="center"

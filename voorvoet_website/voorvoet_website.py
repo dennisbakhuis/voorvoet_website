@@ -1,7 +1,8 @@
 # Main application file for the Reflex web app
 import reflex as rx
 
-from .pages import page_home, page_blog, page_information, page_reimbursements, page_contact
+from .pages import page_home, page_blog, page_blog_post, page_information, page_reimbursements, page_contact
+from .state import BlogState
 
 
 app = rx.App(
@@ -23,9 +24,17 @@ app.add_page(
 )
 
 app.add_page(
-    component=page_blog, 
-    route="/blog/", 
+    component=page_blog,
+    route="/blog/",
     title="VoorVoet - Blog - Praktijk voor Podotherapie",
+    on_load=BlogState.load_posts,
+)
+
+app.add_page(
+    component=page_blog_post,
+    route="/blog/[slug]",
+    title="VoorVoet - Blog - Praktijk voor Podotherapie",
+    on_load=BlogState.load_post_by_slug,
 )
 
 app.add_page(

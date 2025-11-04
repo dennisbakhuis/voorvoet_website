@@ -1,109 +1,78 @@
-# Application configuration
-import os
 from typing import Optional
 from pathlib import Path
-
-# Load environment variables from .env file
-try:
-    from dotenv import load_dotenv
-    # Load .env from the project root
-    env_path = Path(__file__).parent.parent / ".env"
-    load_dotenv(dotenv_path=env_path)
-except ImportError:
-    # python-dotenv not installed, environment variables must be set manually
-    pass
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Config:
+class Config(BaseSettings):
     """Application configuration loaded from environment variables"""
 
-    @staticmethod
-    def get_turnstile_site_key() -> str:
-        """Get Cloudflare Turnstile site key from environment
+    model_config = SettingsConfigDict(
+        env_file=str(Path(__file__).parent.parent / ".env"),
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
 
-        Returns the site key for client-side Turnstile widget rendering.
-        Get your key from: https://dash.cloudflare.com/
-        """
-        key = os.getenv("TURNSTILE_SITE_KEY", "")
-        if not key:
-            # Return a placeholder for development
-            return "YOUR_SITE_KEY_HERE"
-        return key
+    # Cloudflare Turnstile settings
+    turnstile_site_key: str = Field(
+        default="YOUR_SITE_KEY_HERE",
+        description="Site key for client-side Turnstile widget rendering. Get from: https://dash.cloudflare.com/",
+    )
+    turnstile_secret_key: Optional[str] = Field(
+        default=None,
+        description="Secret key for server-side token verification. Keep secret!",
+    )
+    turnstile_enabled: bool = Field(
+        default=True,
+        description="Enable/disable Turnstile verification. Useful for local development.",
+    )
 
-    @staticmethod
-    def get_turnstile_secret_key() -> Optional[str]:
-        """Get Cloudflare Turnstile secret key from environment
+    # SMTP settings
+    smtp_host: str = Field(
+        default="smtp.protonmail.ch",
+        description="SMTP server hostname for sending emails",
+    )
+    smtp_port: int = Field(
+        default=587,
+        description="SMTP server port number (587 for STARTTLS)",
+    )
+    smtp_username: Optional[str] = Field(
+        default=None,
+        description="Username for SMTP authentication (typically your email address)",
+    )
+    smtp_password: Optional[str] = Field(
+        default=None,
+        description="Password for SMTP authentication (use app-specific password for Proton Mail)",
+    )
+    smtp_from_email: Optional[str] = Field(
+        default=None,
+        description="Email address to use in the 'From' field",
+    )
+    smtp_to_email: Optional[str] = Field(
+        default=None,
+        description="Email address where contact form submissions should be sent",
+    )
 
-        Returns the secret key for server-side token verification.
-        This should be kept secret and never exposed to the client.
-        """
-        return os.getenv("TURNSTILE_SECRET_KEY")
+    # External links
+    link_plan_portal: Optional[str] = Field(
+        default=None,
+        description="URL to the planning portal",
+    )
 
-    @staticmethod
-    def is_turnstile_enabled() -> bool:
-        """Check if Turnstile verification is enabled
-
-        Returns True if Turnstile should be used, False otherwise.
-        Useful for disabling bot protection during local development.
-        Defaults to True if not specified.
-        """
-        enabled = os.getenv("TURNSTILE_ENABLED", "true").lower()
-        return enabled in ("true", "1", "yes")
-
-    @staticmethod
-    def get_smtp_host() -> str:
-        """Get SMTP server host from environment
-
-        Returns the SMTP server hostname for sending emails.
-        Defaults to Proton Mail's SMTP server.
-        """
-        return os.getenv("SMTP_HOST", "smtp.protonmail.ch")
-
-    @staticmethod
-    def get_smtp_port() -> int:
-        """Get SMTP server port from environment
-
-        Returns the SMTP server port number.
-        Defaults to 587 (STARTTLS).
-        """
-        return int(os.getenv("SMTP_PORT", "587"))
-
-    @staticmethod
-    def get_smtp_username() -> Optional[str]:
-        """Get SMTP username from environment
-
-        Returns the username for SMTP authentication.
-        Typically your Proton Mail email address.
-        """
-        return os.getenv("SMTP_USERNAME")
-
-    @staticmethod
-    def get_smtp_password() -> Optional[str]:
-        """Get SMTP password from environment
-
-        Returns the password for SMTP authentication.
-        For Proton Mail, use an app-specific password.
-        This should be kept secret and never exposed to the client.
-        """
-        return os.getenv("SMTP_PASSWORD")
-
-    @staticmethod
-    def get_smtp_from_email() -> Optional[str]:
-        """Get SMTP 'from' email address from environment
-
-        Returns the email address to use in the 'From' field.
-        Should match your SMTP account email.
-        """
-        return os.getenv("SMTP_FROM_EMAIL")
-
-    @staticmethod
-    def get_smtp_to_email() -> Optional[str]:
-        """Get notification recipient email from environment
-
-        Returns the email address where contact form submissions
-        should be sent.
-        """
-        return os.getenv("SMTP_TO_EMAIL")
+    # Blog settings
+    blog_show_author: bool = Field(
+        default=False,
+        description="Show author name on blog posts",
+    )
+    blog_show_publication_date: bool = Field(
+        default=False,
+        description="Show publication date on blog posts",
+    )
+    blog_show_reading_time: bool = Field(
+        default=False,
+        description="Show estimated reading time on blog posts",
+    )
 
 
 # Singleton instance

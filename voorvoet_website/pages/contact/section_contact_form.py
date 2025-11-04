@@ -7,6 +7,28 @@ from ...config import config
 
 
 def section_contact_form() -> rx.Component:
+    # Custom styles for form elements
+    form_styles = {
+        # Placeholder text styling for form inputs
+        "input::placeholder, textarea::placeholder": {
+            "color": "#888888 !important",
+            "opacity": "1 !important",
+        },
+        # Textarea font size override
+        ".rt-TextAreaRoot .rt-TextAreaInput": {
+            "font-size": "18px !important",
+            "line-height": "1.6 !important",
+        },
+        # Radio button text size override
+        ".rt-RadioGroupRoot .rt-Text": {
+            "font-size": "18px !important",
+        },
+        # Tooltip font size override
+        ".rt-TooltipContent, .rt-TooltipContent *, [role='tooltip'], [role='tooltip'] *": {
+            "font-size": "16px !important",
+        },
+    }
+
     return section(
         container(
             section_title("Contact"),
@@ -235,14 +257,14 @@ def section_contact_form() -> rx.Component:
 
                 # Cloudflare Turnstile captcha (conditionally rendered)
                 rx.cond(
-                    config.is_turnstile_enabled(),
+                    config.turnstile_enabled,
                     rx.box(
                         # Cloudflare Turnstile widget
                         # Site key is loaded from TURNSTILE_SITE_KEY environment variable
                         rx.html(
                             f"""
                             <div class="cf-turnstile"
-                                 data-sitekey="{config.get_turnstile_site_key()}"
+                                 data-sitekey="{config.turnstile_site_key}"
                                  data-theme="light"
                                  data-callback="onTurnstileSuccess"
                                  style="margin-bottom: 1.5rem;">
@@ -324,6 +346,7 @@ def section_contact_form() -> rx.Component:
                 border_radius="8px",
                 box_shadow="0 4px 12px rgba(0, 0, 0, 0.1)",
                 max_width="700px",
+                style=form_styles,
             ),
         ),
         background_color=Colors.backgrounds["white"],

@@ -114,7 +114,7 @@ class ContactForm:
             return False
 
         # Require Turnstile verification token only if enabled
-        if config.is_turnstile_enabled() and not self.turnstile_token:
+        if config.turnstile_enabled and not self.turnstile_token:
             return False
 
         # Validate based on request type

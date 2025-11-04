@@ -54,12 +54,12 @@ def send_contact_form_email(form: ContactForm) -> bool:
         bool: True if email was sent successfully, False otherwise
     """
     # Get SMTP configuration
-    smtp_host = config.get_smtp_host()
-    smtp_port = config.get_smtp_port()
-    smtp_username = config.get_smtp_username()
-    smtp_password = config.get_smtp_password()
-    from_email = config.get_smtp_from_email()
-    to_email = config.get_smtp_to_email()
+    smtp_host = config.smtp_host
+    smtp_port = config.smtp_port
+    smtp_username = config.smtp_username
+    smtp_password = config.smtp_password
+    from_email = config.smtp_from_email
+    to_email = config.smtp_to_email
 
     # Validate configuration
     if not all([smtp_username, smtp_password, from_email, to_email]):
