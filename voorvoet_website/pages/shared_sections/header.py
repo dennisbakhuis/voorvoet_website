@@ -3,7 +3,7 @@ import reflex as rx
 
 from ...theme import Colors, FontSizes
 from ...states import WebsiteState
-from ...components import container
+from ...components import container, language_switcher
 
 
 def header() -> rx.Component:
@@ -92,6 +92,7 @@ def header() -> rx.Component:
             ),
             rx.hstack(
                 rx.hstack(*nav_items, gap="20px", display=["none", "none", "flex"]),
+                language_switcher(),
                 rx.box(
                     rx.icon("menu", size=28),
                     on_click=WebsiteState.toggle_nav,  # type: ignore
@@ -108,6 +109,7 @@ def header() -> rx.Component:
                 ),
                 align="center",
                 justify="end",
+                gap="12px",
             ),
             align="center",
             justify="between",

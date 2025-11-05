@@ -7,23 +7,57 @@ components with their respective routes and state handlers.
 
 Routes
 ------
-/ : Home page
-/blog/ : Blog listing page
-/blog/[slug] : Individual blog post pages
-/informatie/ : Information page
-/reimbursements/ : Insurance reimbursements page
-/contact/ : Contact form page
+Language-prefixed routes (nl, de, en):
+/[lang] : Home page (nl, de, en)
+/[lang]/blog/ : Blog listing page
+/[lang]/blog/[slug] : Individual blog post pages
+/[lang]/informatie/ : Information page
+/[lang]/reimbursements/ : Insurance reimbursements page
+/[lang]/contact/ : Contact form page
+
+Root redirects (automatically redirect to /nl/...):
+/ → /nl
+/blog/ → /nl/blog/
+/informatie/ → /nl/informatie/
+/reimbursements/ → /nl/reimbursements/
+/contact/ → /nl/contact/
 
 Notes
 -----
 The app uses Lato as the primary font family and includes Font Awesome icons
 for UI elements. Custom styles are defined in /styles.css.
+All routes support language prefixes for multi-language support.
 """
 
 import reflex as rx
 
 from .pages import page_home, page_blog, page_blog_post, page_information, page_reimbursements, page_contact
-from .states import BlogState, ContactState
+from .states import BlogState, WebsiteState
+
+
+def redirect_to_nl_home() -> rx.Component:
+    """Redirect root path to Dutch home page."""
+    return rx.fragment()
+
+
+def redirect_to_nl_blog() -> rx.Component:
+    """Redirect root blog path to Dutch blog page."""
+    return rx.fragment()
+
+
+def redirect_to_nl_informatie() -> rx.Component:
+    """Redirect root informatie path to Dutch informatie page."""
+    return rx.fragment()
+
+
+def redirect_to_nl_reimbursements() -> rx.Component:
+    """Redirect root reimbursements path to Dutch reimbursements page."""
+    return rx.fragment()
+
+
+def redirect_to_nl_contact() -> rx.Component:
+    """Redirect root contact path to Dutch contact page."""
+    return rx.fragment()
 
 
 app = rx.App(
@@ -38,40 +72,76 @@ app = rx.App(
 
 )
 
+# Redirect root paths to /nl/...
+app.add_page(
+    component=redirect_to_nl_home,
+    route="/",
+    on_load=lambda: rx.redirect("/nl"),
+)
+
+app.add_page(
+    component=redirect_to_nl_blog,
+    route="/blog/",
+    on_load=lambda: rx.redirect("/nl/blog/"),
+)
+
+app.add_page(
+    component=redirect_to_nl_informatie,
+    route="/informatie/",
+    on_load=lambda: rx.redirect("/nl/informatie/"),
+)
+
+app.add_page(
+    component=redirect_to_nl_reimbursements,
+    route="/reimbursements/",
+    on_load=lambda: rx.redirect("/nl/reimbursements/"),
+)
+
+app.add_page(
+    component=redirect_to_nl_contact,
+    route="/contact/",
+    on_load=lambda: rx.redirect("/nl/contact/"),
+)
+
+# Dynamic language-prefixed routes using [lang] parameter
 app.add_page(
     component=page_home,
-    route="/",
+    route="/[lang]",
     title="VoorVoet - Praktijk voor Podotherapie",
+    on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
     component=page_blog,
-    route="/blog/",
-    title="VoorVoet - Blog - Praktijk voor Podotherapie",
-    on_load=BlogState.load_posts,
+    route="/[lang]/blog/",
+    title="VoorVoet - Blog",
+    on_load=BlogState.load_posts,  # type: ignore
 )
 
 app.add_page(
     component=page_blog_post,
-    route="/blog/[slug]",
-    title="VoorVoet - Blog - Praktijk voor Podotherapie",
-    on_load=BlogState.load_post_by_slug,
+    route="/[lang]/blog/[slug]",
+    title="VoorVoet - Blog",
+    on_load=BlogState.load_post_by_slug,  # type: ignore
 )
 
 app.add_page(
     component=page_information,
-    route="/informatie/",
-    title="VoorVoet - Informatie - Praktijk voor Podotherapie",
+    route="/[lang]/informatie/",
+    title="VoorVoet - Informatie",
+    on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
     component=page_reimbursements,
-    route="/reimbursements/",
-    title="VoorVoet - Reimbursements - Praktijk voor Podotherapie",
+    route="/[lang]/reimbursements/",
+    title="VoorVoet - Vergoedingen",
+    on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
     component=page_contact,
-    route="/contact/",
-    title="VoorVoet - Contact - Praktijk voor Podotherapie",
+    route="/[lang]/contact/",
+    title="VoorVoet - Contact",
+    on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )

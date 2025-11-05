@@ -18,6 +18,7 @@ from .icon_list_item import icon_list_item
 from .image_text_section import image_text_section
 from .information_card import information_card
 from .information_cards_section import information_cards_grid, CardConfig
+from .language_switcher import language_switcher
 from .location_map_section import location_section, LocationConfig
 from .markdown_content import markdown_content
 from .modal import modal
@@ -51,6 +52,7 @@ __all__ = [
     "information_card",
     "information_cards_grid",
     "CardConfig",
+    "language_switcher",
     "location_section",
     "LocationConfig",
     "markdown_content",
