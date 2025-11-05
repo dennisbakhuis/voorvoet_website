@@ -1,15 +1,30 @@
-# Section "Order insoles" on the home page
+"""Order insoles section promoting extra insole purchases."""
 import reflex as rx
 from ...components import container, section, image_text_section
 from ...theme import Colors
 
 
 def section_order_insoles() -> rx.Component:
+    """
+    Create the section for ordering extra pairs of insoles.
+
+    This section promotes the option to order additional pairs of orthopedic
+    insoles online for use with different shoes. It features an image-text
+    layout with outdoor shoes imagery and explains the benefits of having
+    multiple pairs and the practice's collaborative approach.
+
+    Returns
+    -------
+    rx.Component
+        A section component with an image-text layout on a light green
+        background, displaying shoe imagery on the right and promotional
+        text on the left, with a call-to-action button.
+    """
     paragraphs = [
         "Een extra paar steunzolen kan handig zijn om bijvoorbeeld met een ander paar schoenen te gebruiken, bijvoorbeeld in sport- of wandelschoenen. Dit scheelt niet alleen gedoe met wisselen maar verlengt ook de levensduur van de podotherapeutische zolen.",
         "Wij werken samen met andere medische disciplines zoals bijvoorbeeld huisartsen, medisch pedicures en fysiotherapeuten om de beste zorg te bieden aan onze patiënten. Onze praktijk is toegankelijk voor iedereen - van kinderen tot actievelingen met blessures en ouderen met voet- of voetgerelateerde klachten."
     ]
-    
+
     return section(
         container(
             image_text_section(
@@ -21,7 +36,7 @@ def section_order_insoles() -> rx.Component:
                 button_link="#"
             )
         ),
-        id="order-insoles", 
+        id="order-insoles",
         background_color=Colors.backgrounds["green_light"],
         divider_color=Colors.backgrounds["white"],
         clip_top="gentle_2",

@@ -1,10 +1,25 @@
-# Section "Podiatry is for everyone" on the information page
+"""Section explaining podiatry services for different age groups."""
 import reflex as rx
 from ...components import container, section, section_title, section_sub_title, regular_text, centered_image, icon_list_item
 from ...theme import Colors
 
 
 def section_for_everyone() -> rx.Component:
+    """
+    Create the 'Podiatry is for everyone' section.
+
+    Explains how podiatry can help people of all ages including children,
+    athletes/active individuals, and elderly patients. Each subsection
+    details specific complaints and how podiatry addresses them for that
+    demographic group.
+
+    Returns
+    -------
+    rx.Component
+        A section component with green background containing subsections
+        for children, athletes, and elderly patients with relevant
+        information and visual examples.
+    """
     return section(
         container(
             rx.vstack(

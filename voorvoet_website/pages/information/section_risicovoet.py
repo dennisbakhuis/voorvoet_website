@@ -1,10 +1,28 @@
-# Section "What is podiatry" on the information page
+"""Section explaining risk foot classification and care."""
 import reflex as rx
 from ...components import container, section, image_text_section, section_sub_title, regular_text, centered_image, risk_level_card
 from ...theme import Colors
 
 
 def section_risicovoet() -> rx.Component:
+    """
+    Create the risk foot (risicovoet) information section.
+
+    Explains what constitutes a risk foot (factors like neuropathy,
+    reduced blood flow, limited mobility, foot deformities) and the
+    associated complications. Details the five risk classifications
+    (zorgprofielen 0-4) used to determine treatment coverage from
+    basic health insurance. Describes the treatment approach including
+    foot care advice, shoe recommendations, pressure-distributing insoles,
+    and orthoses.
+
+    Returns
+    -------
+    rx.Component
+        A section component containing detailed information about risk
+        foot classifications, risk factors, treatment approaches, and
+        insurance coverage for each risk level (0-4).
+    """
     paragraphs_1 = [
         "Met een risicovoet wordt bedoeld dat er een aantal factoren aanwezig zijn die de kans op het ontstaan van wonden vergroten, en daarbij ook alle mogelijke complicaties zoals een slechte genezing of zelfs amputatie. De risicofactoren voor het ontstaan van deze problemen zijn o.a. gevoelsstoornissen (neuropathie), verminderde doorbloeding (angiopathie), verminderde beweeglijkheid en/of een afwijkende voetstand. Dit kan leiden tot overmatige druk en wrijving waardoor er eelt, likdoorns, blaren of wonden kunnen ontstaan.",
         "Bij een verminderd gevoel in de voeten wordt dit minder snel of helemaal niet opgemerkt. Bij een slechte doorbloeding zal de wond ook slecht of niet genezen. Een combinatie van deze factoren kan leiden tot grote problemen en in het uiterste geval een amputatie. Dat willen we natuurlijk allemaal het liefst voorkomen.",

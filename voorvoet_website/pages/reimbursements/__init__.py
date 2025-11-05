@@ -1,3 +1,4 @@
+"""Reimbursements page module."""
 from .page_reimbursements import page_reimbursements
 from .section_reimbursement_table import section_reimbursement_table
 

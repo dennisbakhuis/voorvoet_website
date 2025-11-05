@@ -1,4 +1,4 @@
-# Footer for the whole site
+"""Footer component for the entire site."""
 import reflex as rx
 
 from ...components import container, section, regular_text
@@ -6,11 +6,34 @@ from ...theme import Colors, FontSizes
 
 
 def footer() -> rx.Component:
+    """
+    Create the site-wide footer with practice information and links.
+
+    The footer displays comprehensive practice information including:
+    - Logo
+    - Two location addresses with opening hours
+    - Contact information (phone and email)
+    - Business details (KvK, practice code, bank account)
+    - Professional affiliations (logos)
+    - Legal links (privacy policy, terms)
+    - Copyright notice
+
+    Returns
+    -------
+    rx.Component
+        A section component containing the complete footer layout with
+        responsive design for mobile, tablet, and desktop viewports.
+
+    Notes
+    -----
+    The footer uses a responsive layout that:
+    - Stacks vertically on mobile devices
+    - Transitions to side-by-side layout on larger screens
+    - Includes gentle wave clip-path styling at the top
+    """
     return section(
         container(
-            # Main footer layout: 30% logo / 70% content (which splits into 50%/50%)
             rx.box(
-                # Logo column (30%)
                 rx.box(
                     rx.image(
                         src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
@@ -24,11 +47,8 @@ def footer() -> rx.Component:
                     flex=["none", "none", "none", "0 0 30%", "0 0 30%"],
                     margin_bottom=["2rem", "2rem", "2rem", "0", "0"]
                 ),
-                # Content area (70% - splits into 50%/50%)
                 rx.box(
-                    # Location column
                     rx.box(
-                        # Locatie Eeftinksweg with opening hours
                         regular_text(
                             "Locatie Eeftinksweg",
                             color=Colors.text["muted"],
@@ -48,7 +68,6 @@ def footer() -> rx.Component:
                             regular_text("8.00 - 17.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                             margin_bottom="0.15rem"
                         ),
-                        # Locatie Beethovenlaan with opening hours
                         regular_text(
                             "Locatie Beethovenlaan",
                             color=Colors.text["muted"],
@@ -77,9 +96,7 @@ def footer() -> rx.Component:
                         margin_bottom=["2rem", "2rem", "0", "0", "0"],
                         padding_x=["20px", "20px", "20px", "20px", "20px"],
                     ),
-                    # Contact, Company & Links column
                     rx.box(
-                        # Contact info
                         rx.box(
                             rx.hstack(
                                 rx.html(f'<i class="fa fa-phone" style="color: {Colors.text["secondary"]}; font-size: 20px;"/>'),
@@ -112,7 +129,6 @@ def footer() -> rx.Component:
                             spacing="1rem",
                             margin_bottom="2rem"
                         ),
-                        # Business details
                         rx.box(
                             rx.box(
                                 regular_text("KvK nummer", color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
@@ -131,7 +147,6 @@ def footer() -> rx.Component:
                             flex="1",
                             margin_bottom="2rem"
                         ),
-                        # Links at bottom
                         rx.box(
                             rx.link("Credits", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
                             rx.link("Privacy beleid", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
@@ -142,18 +157,15 @@ def footer() -> rx.Component:
                         flex="1",
                         text_align=["center", "center", "left", "left", "left"]
                     ),
-                    # Content area layout: stacked on mobile/small tablet, side-by-side from tablet+
                     display=["block", "block", "flex", "flex", "flex"],
                     gap=["0", "0", "2rem", "2rem", "2rem"],
                     flex=["none", "none", "none", "0 0 70%", "0 0 70%"]
                 ),
-                # Main container layout: stacked on mobile/small tablet/tablet, side-by-side on desktop+
                 display=["block", "block", "block", "flex", "flex"],
                 gap=["0", "0", "0", "2rem", "2rem"],
                 align_items=["center", "center", "center", "flex-start", "flex-start"],
                 text_align=["center", "center", "center", "left", "left"]
             ),
-            # Bottom section with logos and copyright
             rx.box(
                 rx.box(
                     rx.link(

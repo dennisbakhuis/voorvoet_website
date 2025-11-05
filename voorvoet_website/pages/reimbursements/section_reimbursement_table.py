@@ -1,3 +1,4 @@
+"""Section displaying insurance reimbursement information in a searchable table."""
 import reflex as rx
 import json
 from pathlib import Path
@@ -7,15 +8,27 @@ from ...components import section, container, section_title
 
 
 def load_reimbursement_data() -> tuple[list[str], list[list[str]]]:
-    """Load reimbursement data from JSON file and convert to list of lists"""
+    """
+    Load reimbursement data from JSON file and convert to table format.
+
+    Reads the 2025 reimbursement data from the data directory and transforms
+    it from JSON dictionary format to a list of lists suitable for display
+    in a data table component.
+
+    Returns
+    -------
+    tuple[list[str], list[list[str]]]
+        A tuple containing:
+        - Column headers as a list of strings
+        - Table rows as a list of lists, where each inner list represents
+          one row with [verzekeraar, pakket, vergoeding]
+    """
     data_path = Path(__file__).parent.parent.parent / "data" / "reimbursements" / "reimbursements_2025.json"
     with open(data_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    # Define column headers
     columns = ["Verzekeraar", "Pakket", "Vergoeding"]
 
-    # Convert remaining rows from dict to list format
     rows = [
         [item["verzekeraar"], item["pakket"], item["vergoeding"]]
         for item in data[1:]
@@ -25,12 +38,23 @@ def load_reimbursement_data() -> tuple[list[str], list[list[str]]]:
 
 
 def section_reimbursement_table() -> rx.Component:
-    """Section displaying the reimbursement table with search functionality"""
+    """
+    Create the reimbursement table section.
 
-    # Load the data
+    Displays a comprehensive, searchable table of insurance providers
+    and their reimbursement amounts for podiatry services in 2025.
+    The table includes built-in search, sort, and pagination functionality
+    for easy navigation. Features alternating row colors (white and light
+    green) for better readability.
+
+    Returns
+    -------
+    rx.Component
+        A section component containing a data table with insurance
+        reimbursement information and a disclaimer note.
+    """
     columns, data = load_reimbursement_data()
 
-    # Custom CSS for the data table
     table_styles = {
         ".gridjs-th": {
             "background-color": f"{Colors.primary['500']} !important",
@@ -49,7 +73,6 @@ def section_reimbursement_table() -> rx.Component:
         container(
             section_title("Overzicht Vergoedingen 2025"),
 
-            # Data table with built-in search, sort, and pagination
             rx.box(
                 rx.data_table(
                     data=data,
@@ -65,7 +88,6 @@ def section_reimbursement_table() -> rx.Component:
                 style=table_styles,
             ),
 
-            # Note below table
             rx.box(
                 rx.text(
                     "Let op: Deze informatie is indicatief. Controleer altijd de exacte voorwaarden bij uw zorgverzekeraar.",

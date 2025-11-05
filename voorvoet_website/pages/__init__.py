@@ -1,4 +1,4 @@
-# Pages used by the Reflex application
+"""Module holding all pages for the website."""
 from .home import page_home
 from .blog import page_blog, page_blog_post
 from .information import page_information

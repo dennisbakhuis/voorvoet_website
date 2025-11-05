@@ -1,11 +1,26 @@
-# Section "Bedrijfspodotherapie" on the information page
+"""Section explaining company podiatry services."""
 import reflex as rx
 from ...components import container, section, section_title, regular_text, icon_list_item, column
 from ...theme import Colors, Layout, Spacing
 
 
 def section_bedrijfspodotherapie() -> rx.Component:
-    # Create image column (left side)
+    """
+    Create the company podiatry section.
+
+    Explains bedrijfspodotherapie (company/workplace podiatry) as a
+    specialized form of podiatry focused on preventing and treating foot
+    complaints arising from work environments. Details services including
+    workplace assessments, footwear advice, custom work insoles, treatment,
+    exercises, and preventive measures to reduce absenteeism and improve
+    employee productivity.
+
+    Returns
+    -------
+    rx.Component
+        A section component with green background containing detailed
+        information about company podiatry services and benefits.
+    """
     image_column = column(
         rx.image(
             src="/images/page_information/bedrijfs_podotherapie_pijnlijke_voeten_hielpijn_voorvoet_podotherapie_enschede.jpg",
@@ -23,8 +38,7 @@ def section_bedrijfspodotherapie() -> rx.Component:
         margin_bottom=Spacing.image_margin_bottom,
         order=["1", "1", "1", "1"],
     )
-    
-    # Create text column (right side)
+
     text_column = column(
         section_title("Bedrijfspodotherapie via VoorVoet podotherapie Enschede", margin_bottom=Spacing.text_margin_bottom),
         regular_text(

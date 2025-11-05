@@ -1,3 +1,4 @@
+"""Blog page composition with all sections."""
 import reflex as rx
 
 from .section_hero import section_hero
@@ -9,6 +10,17 @@ from ...components import modal
 
 
 def page_blog() -> rx.Component:
+    """
+    Create the complete blog page with all sections.
+
+    The blog page is composed of: header, hero banner, starter text,
+    blog list grid, footer, and modal components.
+
+    Returns
+    -------
+    rx.Component
+        A fragment containing all sections of the blog page in order.
+    """
     return rx.fragment(
         header(),
         section_hero(),

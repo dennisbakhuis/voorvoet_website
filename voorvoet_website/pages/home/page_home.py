@@ -1,3 +1,4 @@
+"""Home page composition with all sections."""
 import reflex as rx
 
 from .section_hero import section_hero
@@ -12,6 +13,18 @@ from ...components import modal
 
 
 def page_home() -> rx.Component:
+    """
+    Create the complete home page with all sections.
+
+    The home page is composed of multiple sections arranged vertically:
+    header, hero, about practice, ordering insoles, introduction,
+    information cards, locations, footer, and modal.
+
+    Returns
+    -------
+    rx.Component
+        A fragment containing all sections of the home page in order.
+    """
     return rx.fragment(
         header(),
         section_hero(),

@@ -1,3 +1,4 @@
+"""Information page composition with all sections."""
 import reflex as rx
 
 from .section_hero import section_hero
@@ -14,6 +15,19 @@ from ...components import modal
 
 
 def page_information() -> rx.Component:
+    """
+    Create the complete information page with all sections.
+
+    The information page provides comprehensive details about podiatry services,
+    including what podiatry is, who it's for, treatment processes, common
+    complaints, company podiatry services, and risk foot classifications.
+
+    Returns
+    -------
+    rx.Component
+        A fragment containing all sections of the information page including
+        header, hero, informational sections, footer, and modal components.
+    """
     return rx.fragment(
         header(),
         section_hero(),

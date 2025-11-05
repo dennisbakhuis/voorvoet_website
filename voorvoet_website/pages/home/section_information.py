@@ -1,3 +1,4 @@
+"""Information cards section displaying practice services and details."""
 import reflex as rx
 
 from ...components import container, section, information_cards_grid, CardConfig
@@ -5,7 +6,25 @@ from ...theme import Colors
 
 
 def section_information() -> rx.Component:
-    # Define card configurations
+    """
+    Create the information section with service and practice detail cards.
+
+    This section displays a grid of information cards covering:
+    - What a podotherapist does
+    - Common complaints treated
+    - Insurance reimbursement information
+    - Treatment process overview
+    - Business-specific services
+    - Target audience information
+
+    Each card includes an icon, title, description, and link button.
+
+    Returns
+    -------
+    rx.Component
+        A section component with a responsive grid of information cards
+        on a light green background with wave-style clip paths.
+    """
     cards = [
         CardConfig(
             title="Wat doet een podotherapeut?",
@@ -62,7 +81,7 @@ def section_information() -> rx.Component:
             button_link="/doelgroep"
         )
     ]
-    
+
     return section(
         container(
             information_cards_grid(

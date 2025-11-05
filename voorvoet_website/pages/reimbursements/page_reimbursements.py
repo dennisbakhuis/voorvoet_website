@@ -1,3 +1,4 @@
+"""Reimbursements page composition with all sections."""
 import reflex as rx
 
 from .section_hero import section_hero
@@ -10,6 +11,20 @@ from ...state import WebsiteState
 
 
 def page_reimbursements() -> rx.Component:
+    """
+    Create the complete reimbursements page with all sections.
+
+    The reimbursements page provides information about insurance coverage
+    and costs for podiatry services, including a comprehensive searchable
+    table of insurance providers and their reimbursement amounts for 2025.
+
+    Returns
+    -------
+    rx.Component
+        A fragment containing all sections of the reimbursements page
+        including header, hero, starter text, reimbursement table,
+        footer, and modal components.
+    """
     return rx.fragment(
         header(),
         section_hero(),

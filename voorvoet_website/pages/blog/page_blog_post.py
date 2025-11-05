@@ -1,4 +1,4 @@
-# Individual blog post page
+"""Individual blog post page displaying full content."""
 import reflex as rx
 from ...state import BlogState
 from ...theme import Colors, FontSizes
@@ -10,27 +10,33 @@ from ...config import config
 
 def page_blog_post() -> rx.Component:
     """
-    Individual blog post page
-    Shows the full blog post content with title, metadata, and rendered markdown
+    Create the individual blog post page with full content.
+
+    Displays the complete blog post including title, metadata (author,
+    date, reading time based on config), rendered markdown content,
+    and a back link to the blog overview.
+
+    Returns
+    -------
+    rx.Component
+        A fragment containing header, hero, blog post content section,
+        footer, and modal components.
     """
     return rx.fragment(
         header(),
         section_hero(),
 
-        # Main section with title, content, and back link
         section(
             container(
                 rx.cond(
                     BlogState.current_post,
                     rx.vstack(
-                        # Title
                         rx.heading(
                             BlogState.current_post.title,  # type: ignore (rx.cond not detected by type-checker)
                             size="9",
                             color=Colors.text['heading'],
                         ),
 
-                        # Metadata row (only shown if at least one setting is enabled)
                         rx.cond(
                             config.blog_show_author | config.blog_show_publication_date | config.blog_show_reading_time,
                             rx.hstack(
@@ -87,10 +93,8 @@ def page_blog_post() -> rx.Component:
                             ),
                         ),
 
-                        # Blog content with custom styling
                         markdown_content(BlogState.current_post),  # type: ignore (rx.cond not detected by type-checker)
 
-                        # Back to blog link
                         rx.link(
                             rx.text("← Terug naar blog overzicht"),
                             href="/blog/",
@@ -109,7 +113,6 @@ def page_blog_post() -> rx.Component:
                         width="100%",
                     ),
 
-                    # Fallback if no post were found
                     rx.text(
                         "Blogpost niet gevonden",
                         color=Colors.text['muted'],

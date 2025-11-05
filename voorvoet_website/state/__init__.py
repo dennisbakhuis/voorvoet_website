@@ -1,4 +1,4 @@
-# States for the Reflex application
+"""States module."""
 from .website_state import WebsiteState
 from .blog_state import BlogState
 from .contact_state import ContactState

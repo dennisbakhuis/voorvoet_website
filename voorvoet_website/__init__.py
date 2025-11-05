@@ -1,1 +1,1 @@
-# Main web application module
+"""Main web application module."""

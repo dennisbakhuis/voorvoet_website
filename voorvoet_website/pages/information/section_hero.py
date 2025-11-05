@@ -1,34 +1,33 @@
-# Hero section for the home page
+"""Hero section for the information page."""
 import reflex as rx
 
 from ...theme import Colors
-from ...components import section
+from ...components import section, hero_banner
 
 
 def section_hero() -> rx.Component:
+    """
+    Create the information page hero section with background image.
+
+    The hero section displays a full-width background image with a gradient
+    overlay, without any text content overlay. Features a forest walking image.
+
+    Returns
+    -------
+    rx.Component
+        A section component containing a hero banner with only the
+        background image and gradient overlay.
+    """
     return section(
-        # Background images
-        rx.image(
-            src="/images/page_information/podotherapie_enschede_wandeling_in_het_bos_zonder_hielpijn_voorvoet_podotherapie_enschede.jpg",
-            object_fit="cover",
-            position="absolute",
-            inset="0",
-            width="100%",
-            height="100%",
-            filter="brightness(1.05) saturate(1.06)",
+        hero_banner(
+            image_src="/images/page_information/podotherapie_enschede_wandeling_in_het_bos_zonder_hielpijn_voorvoet_podotherapie_enschede.jpg",
+            gradient="linear-gradient(270deg, rgba(255,255,255,.35) 0%, rgba(16,185,129,.35) 100%)",
+            content=None,
         ),
-        rx.box(
-            position="absolute",
-            inset="0",
-            bg="linear-gradient(270deg, rgba(255,255,255,.35) 0%, rgba(16,185,129,.35) 100%)",
-            mix_blend_mode="screen",
-            pointer_events="none",
-        ),      
         background_color=Colors.backgrounds['green_light'],
         padding_top="0",
-        height="600px",
         position="relative",
-        overflow="hidden",
+        height="500px",
         clip_bottom="gentle_3",
         divider_color=Colors.backgrounds['white']
     )

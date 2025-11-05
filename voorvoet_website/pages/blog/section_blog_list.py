@@ -1,18 +1,25 @@
-# Blog list section - displays grid of blog posts
+"""Blog list section displaying grid of blog post cards."""
 import reflex as rx
 from ...state import BlogState
 from ...theme import Colors, FontSizes
-from ...components import container, blog_card
+from ...components import container, blog_card, section
 
 
 def section_blog_list() -> rx.Component:
     """
-    Display a grid of blog post cards
+    Display a grid of blog post cards.
 
-    Returns:
-        Reflex component with blog post grid
+    Creates a responsive layout that shows all blog posts in a vertical stack.
+    Each blog post card alternates its layout (flipped) for visual variety.
+    Displays an empty state message when no posts are available.
+
+    Returns
+    -------
+    rx.Component
+        A section component containing either a vstack of blog cards or
+        an empty state message when no posts exist.
     """
-    return rx.section(
+    return section(
         container(
             rx.cond(
                 BlogState.has_posts,
@@ -24,7 +31,6 @@ def section_blog_list() -> rx.Component:
                     spacing="5",
                     width="100%",
                 ),
-                # Empty state if no posts
                 rx.vstack(
                     rx.text(
                         "Nog geen blogposts beschikbaar.",

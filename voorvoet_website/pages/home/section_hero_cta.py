@@ -1,4 +1,4 @@
-# Hero CTA box component
+"""Hero call-to-action box component for appointment booking."""
 import reflex as rx
 from ...components import button, section_sub_title, icon_list_item
 from ...theme import Colors
@@ -6,7 +6,20 @@ from ...config import config
 
 
 def hero_cta_box() -> rx.Component:
-    link_plan_portal = config.link_plan_portal
+    """
+    Create a call-to-action box for the hero section.
+
+    The CTA box displays a title, list of benefits (no referral needed,
+    quick professional help, fastest route to specialist), and a button
+    to book an appointment. The box has a light green background with
+    rounded corners and shadow.
+
+    Returns
+    -------
+    rx.Component
+        A styled box component containing the CTA content with title,
+        benefit list, and appointment booking button.
+    """
     return rx.box(
         rx.vstack(
             section_sub_title("Direct digitaal een afspraak maken!", text_align="center"),
@@ -23,7 +36,7 @@ def hero_cta_box() -> rx.Component:
                 justify_content="center"
             ),
             rx.box(
-                button("Maak een afspraak", href=link_plan_portal),
+                button("Maak een afspraak", href=config.link_plan_portal),
                 width="100%",
                 display="flex",
                 justify_content="center"

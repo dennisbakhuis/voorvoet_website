@@ -1,74 +1,78 @@
-# Hero section for the home page
+"""Hero section for the home page with title, subtitle, and CTA."""
 import reflex as rx
 from ...theme import Colors
-from ...components import container, section
+from ...components import container, section, hero_banner
 from .section_hero_cta import hero_cta_box
 
 
 def section_hero() -> rx.Component:
-    return section(
-        rx.image(
-            src="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpeg",
-            object_fit="cover",
-            position="absolute",
-            inset="0",
-            width="100%",
+    """
+    Create the home page hero section with tagline and call-to-action.
+
+    The hero section displays a full-width background image with a gradient
+    overlay, featuring the main tagline "Voetklachten? Loop er niet mee door!"
+    and a call-to-action box for booking appointments.
+
+    Returns
+    -------
+    rx.Component
+        A section component containing the hero banner with overlaid content
+        including the main heading, subtitle, and CTA box positioned at the
+        bottom of the hero area.
+    """
+    hero_content = container(
+        rx.box(
+            rx.vstack(
+                rx.text(
+                    "Voetklachten?",
+                    color=Colors.primary["300"],
+                    font_weight="900",
+                    text_align="center",
+                    line_height="1.05",
+                    font_size=["3rem", "4rem", "5rem", "6rem"],
+                ),
+                rx.text(
+                    "Loop er niet mee door!",
+                    color=Colors.text["heading"],
+                    text_align="center",
+                    opacity="0.95",
+                    font_weight="600",
+                    line_height="1.15",
+                    font_size=["2rem", "2.25rem", "2.7rem", "3rem"],
+                ),
+                spacing="2",
+                align="center",
+            ),
+            display="flex",
+            align_items="center",
+            justify_content="center",
             height="100%",
-            filter="brightness(1.05) saturate(1.06)",
+            grid_row="1",
         ),
         rx.box(
-            position="absolute",
-            inset="0",
-            bg="linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
-            mix_blend_mode="screen",
-            pointer_events="none",
+            hero_cta_box(),
+            grid_row="2",
+            padding_x=["1rem", "0"],
+            padding_bottom=["0.5rem", "0.75rem", "1rem", "1rem", "1rem"],
+            margin_bottom=["4rem","4rem","4rem","4rem","4rem"]
         ),
-        container(
-            rx.box(
-                rx.vstack(
-                    rx.text(
-                        "Voetklachten?",
-                        color=Colors.primary["300"],
-                        font_weight="900",
-                        text_align="center",
-                        line_height="1.05",
-                        font_size=["3rem", "4rem", "5rem", "6rem"],
-                    ),
-                    rx.text(
-                        "Loop er niet mee door!",
-                        color=Colors.text["heading"],
-                        text_align="center",
-                        opacity="0.95",
-                        font_weight="600",
-                        line_height="1.15",
-                        font_size=["2rem", "2.25rem", "2.7rem", "3rem"],
-                    ),
-                    spacing="2",
-                    align="center",
-                ),
-                display="flex",
-                align_items="center",
-                justify_content="center",
-                height="100%",
-                grid_row="1",
-                z_index=1,
-            ),
-            rx.box(
-                hero_cta_box(),
-                grid_row="2",
-                padding_x=["1rem", "0"],
-                padding_bottom=["1rem", "1.25rem", "1.5rem", "1.75rem", "2rem"],
-            ),
-            position="relative",
-            display="grid",
-            grid_template_rows="1fr auto",
-            height=["70dvh", "78dvh", "86dvh", "92dvh"],
-            max_height=["640px", "720px", "840px", "920px"],
-            min_height="520px",
+        position="relative",
+        z_index="2",
+        display="grid",
+        grid_template_rows="1fr auto",
+        height="100%",
+    )
+
+    return section(
+        hero_banner(
+            image_src="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpeg",
+            gradient="linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
+            content=hero_content,
         ),
         padding_top="0",
+        padding_bottom=["3rem", "3rem", "3rem", "3rem"],
         position="relative",
-        overflow="hidden",
+        min_height=["calc(56dvh + 6rem)", "calc(62dvh + 6rem)", "calc(69dvh + 6rem)", "calc(74dvh + 6rem)"],
         clip_bottom="gentle_1",
         divider_color=Colors.backgrounds['white']
     )

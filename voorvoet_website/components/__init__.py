@@ -1,9 +1,14 @@
-"""Components used across the Reflex web app"""
+"""Components module used across the Reflex web app"""
 from .blog_card import blog_card
 from .button import button
 from .centered_image import centered_image
 from .column import column
 from .container import container
+from .form_button import form_button
+from .form_input import form_input
+from .form_label import form_label
+from .form_textarea import form_textarea
+from .hero_banner import hero_banner
 from .icon_list_item import icon_list_item
 from .image_text_section import image_text_section
 from .information_card import information_card
@@ -26,6 +31,11 @@ __all__ = [
     "centered_image",
     "column",
     "container",
+    "form_button",
+    "form_input",
+    "form_label",
+    "form_textarea",
+    "hero_banner",
     "icon_list_item",
     "image_text_section",
     "information_card",

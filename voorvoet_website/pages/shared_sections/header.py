@@ -1,4 +1,4 @@
-# Header used across multiple all pages
+"""Header component used across all pages."""
 import reflex as rx
 
 from ...theme import Colors, FontSizes
@@ -7,6 +7,25 @@ from ...components import container
 
 
 def header() -> rx.Component:
+    """
+    Create the site-wide header with navigation and mobile menu.
+
+    The header includes the logo, desktop navigation links, and a mobile menu
+    toggle button. Navigation items are conditionally displayed based on the
+    current page path to avoid showing links to the current page.
+
+    Returns
+    -------
+    rx.Component
+        A fragment containing the fixed header bar and mobile menu overlay.
+
+    Notes
+    -----
+    The header uses Reflex state (WebsiteState) to:
+    - Track the current page path for conditional nav rendering
+    - Handle navigation between pages
+    - Toggle the mobile menu visibility
+    """
     nav_items = [
         rx.cond(
             WebsiteState.current_page_path != "/",
@@ -73,14 +92,19 @@ def header() -> rx.Component:
             ),
             rx.hstack(
                 rx.hstack(*nav_items, gap="20px", display=["none", "none", "flex"]),
-                rx.icon_button(
-                    "menu",
-                    aria_label="menu",
+                rx.box(
+                    rx.icon("menu", size=28),
                     on_click=WebsiteState.toggle_nav,  # type: ignore
                     display=["inline-flex", "inline-flex", "none"],
                     color=Colors.text["heading"],
-                    bg="transparent",
-                    size="4",
+                    cursor="pointer",
+                    padding="8px",
+                    border_radius="4px",
+                    transition="all 0.2s ease",
+                    _hover={
+                        "bg": Colors.primary["50"],
+                        "color": Colors.primary["500"]
+                    },
                 ),
                 align="center",
                 justify="end",

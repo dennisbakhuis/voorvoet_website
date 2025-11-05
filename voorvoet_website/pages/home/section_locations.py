@@ -1,10 +1,23 @@
+"""Locations section displaying practice addresses and maps."""
 import reflex as rx
 
 from ...components import section, container, location_section, LocationConfig
 
 
 def section_locations() -> rx.Component:
-    # Define location data
+    """
+    Create the locations section with practice address details.
+
+    This section displays information about both VoorVoet practice locations
+    in Enschede (Eeftinksweg and Beethovenlaan), including addresses,
+    descriptions, opening hours, embedded Google Maps, and route links.
+
+    Returns
+    -------
+    rx.Component
+        A section component containing location cards with maps and details
+        for both practice locations arranged in an alternating layout.
+    """
     locations = [
         LocationConfig(
             title="Locatie Eeftinksweg",
@@ -23,7 +36,7 @@ def section_locations() -> rx.Component:
             reverse_order=True
         )
     ]
-    
+
     return section(
         container(
             location_section(

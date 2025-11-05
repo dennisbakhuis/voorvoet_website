@@ -1,3 +1,4 @@
+"""Introductory text section for the blog page."""
 import reflex as rx
 
 from ...theme import Colors
@@ -5,6 +6,18 @@ from ...components import section, container, section_title, regular_text
 
 
 def section_starter() -> rx.Component:
+    """
+    Create the introductory section for the blog page.
+
+    Displays a welcoming title and introductory text explaining the purpose
+    of the blog and what type of content visitors can expect to find.
+
+    Returns
+    -------
+    rx.Component
+        A section component with white background containing the title
+        and introductory text about foot health and podiatry topics.
+    """
     return section(
         container(
             section_title(

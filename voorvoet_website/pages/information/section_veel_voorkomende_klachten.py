@@ -1,12 +1,24 @@
-# Section "Veel voorkomende klachten" on the information page
+"""Section listing common foot and related complaints."""
 import reflex as rx
-from typing import Optional
 from ...components import container, section, section_title, regular_text, icon_list_item, column
 from ...theme import Colors, Layout, Spacing
 
 
 def section_veel_voorkomende_klachten() -> rx.Component:
-    # Create image column
+    """
+    Create the common complaints section.
+
+    Lists frequently encountered complaints in podiatry practice including
+    foot pain, heel pain, forefoot complaints, ankle issues, tendon
+    inflammations, calluses, ingrown toenails, foot deformities, and
+    related pain in legs, knees, hips, or back caused by foot problems.
+
+    Returns
+    -------
+    rx.Component
+        A section component with an image-text layout displaying common
+        complaints that can be treated with podiatry.
+    """
     image_column = column(
         rx.image(
             src="/images/page_information/anatomie-voet-hielpijn_voorvoet_podotherapie_enschede.jpg",
@@ -24,7 +36,6 @@ def section_veel_voorkomende_klachten() -> rx.Component:
         order=["1", "1", "1", "2"],
     )
 
-    # Create text column with title, paragraph, and bullet list
     text_column = column(
         section_title("Veel voorkomende klachten", margin_bottom=Spacing.text_margin_bottom),
         regular_text(
