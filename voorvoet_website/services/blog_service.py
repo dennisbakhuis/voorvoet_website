@@ -155,7 +155,7 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         # Preprocess markdown content to resolve image paths
         processed_content = preprocess_markdown_images(content, filename)
 
-        # Parse content into objects
+        # Parse content into dictionaries
         content_objects = parse_markdown_content(processed_content)
 
         # Create BlogPost object

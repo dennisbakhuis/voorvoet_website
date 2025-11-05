@@ -102,7 +102,7 @@ def markdown_content(post: BlogPost) -> rx.Component:
     """
     return rx.box(
         rx.foreach(
-            post.content_objects_dict,
+            post.content_objects,
             render_content_object,
         ),
         width="100%",

@@ -1,12 +1,11 @@
-# Content parser for blog posts - parses markdown into structured content objects
+# Content parser for blog posts - parses markdown into structured content dictionaries
 import re
+from typing import Any
 
-from ..models import PostMarkdown, PostImage, PostButton, ContentObject
 
-
-def parse_markdown_content(markdown_content: str) -> list[ContentObject]:
+def parse_markdown_content(markdown_content: str) -> list[dict[str, Any]]:
     """
-    Parse markdown content into structured content objects
+    Parse markdown content into structured content dictionaries
 
     This extracts images and buttons as separate objects, keeping all other
     markdown content together in a single markdown object.
@@ -15,9 +14,9 @@ def parse_markdown_content(markdown_content: str) -> list[ContentObject]:
         markdown_content: Preprocessed markdown content with resolved image paths
 
     Returns:
-        List of content objects (PostMarkdown, PostImage, PostButton)
+        List of content dictionaries with 'type' key (markdown, image, or button)
     """
-    content_objects: list[ContentObject] = []
+    content_objects: list[dict[str, Any]] = []
 
     # Find all images and buttons with their positions
     image_pattern = r'!\[([^\]]*)\]\(([^)]+)\)'
@@ -58,20 +57,25 @@ def parse_markdown_content(markdown_content: str) -> list[ContentObject]:
         if current_pos < element['start']:
             markdown_text = markdown_content[current_pos:element['start']].strip()
             if markdown_text:
-                content_objects.append(PostMarkdown(content=markdown_text))
+                content_objects.append({
+                    'type': 'markdown',
+                    'content': markdown_text,
+                })
 
-        # Add the special element (image or button)
+        # Add the special element (image or button) - already in dict format
         if element['type'] == 'image':
-            content_objects.append(PostImage(
-                src=element['src'],
-                alt=element['alt'],
-                caption=element['caption']
-            ))
+            content_objects.append({
+                'type': 'image',
+                'src': element['src'],
+                'alt': element['alt'],
+                'caption': element['caption'],
+            })
         elif element['type'] == 'button':
-            content_objects.append(PostButton(
-                label=element['label'],
-                url=element['url']
-            ))
+            content_objects.append({
+                'type': 'button',
+                'label': element['label'],
+                'url': element['url'],
+            })
 
         current_pos = element['end']
 
@@ -79,10 +83,16 @@ def parse_markdown_content(markdown_content: str) -> list[ContentObject]:
     if current_pos < len(markdown_content):
         markdown_text = markdown_content[current_pos:].strip()
         if markdown_text:
-            content_objects.append(PostMarkdown(content=markdown_text))
+            content_objects.append({
+                'type': 'markdown',
+                'content': markdown_text,
+            })
 
     # If no special elements were found, add all content as markdown
     if not content_objects and markdown_content.strip():
-        content_objects.append(PostMarkdown(content=markdown_content.strip()))
+        content_objects.append({
+            'type': 'markdown',
+            'content': markdown_content.strip(),
+        })
 
     return content_objects

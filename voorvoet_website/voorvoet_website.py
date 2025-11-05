@@ -2,7 +2,7 @@
 import reflex as rx
 
 from .pages import page_home, page_blog, page_blog_post, page_information, page_reimbursements, page_contact
-from .state import BlogState
+from .state import BlogState, ContactState
 
 
 app = rx.App(

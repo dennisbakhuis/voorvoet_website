@@ -2,7 +2,7 @@
 import reflex as rx
 from ...components import container, section, section_title, regular_text, button
 from ...theme import Colors, FontSizes
-from ...state.website_state import WebsiteState
+from ...state.contact_state import ContactState
 from ...config import config
 
 
@@ -54,8 +54,8 @@ def section_contact_form() -> rx.Component:
                         ),
                         rx.input(
                             placeholder="Voornaam",
-                            value=WebsiteState.contact_first_name,
-                            on_change=WebsiteState.set_contact_first_name,  # type: ignore
+                            value=ContactState.contact_first_name,
+                            on_change=ContactState.set_contact_first_name,  # type: ignore
                             width="100%",
                             padding="0.75rem 0.75rem",
                             height="auto",
@@ -80,8 +80,8 @@ def section_contact_form() -> rx.Component:
                         ),
                         rx.input(
                             placeholder="Achternaam",
-                            value=WebsiteState.contact_last_name,
-                            on_change=WebsiteState.set_contact_last_name,  # type: ignore
+                            value=ContactState.contact_last_name,
+                            on_change=ContactState.set_contact_last_name,  # type: ignore
                             width="100%",
                             padding="0.75rem 0.75rem",
                             height="auto",
@@ -112,8 +112,8 @@ def section_contact_form() -> rx.Component:
                     ),
                     rx.radio(
                         ["Bel mij terug", "Vraag per email"],
-                        value=WebsiteState.contact_request_type,
-                        on_change=WebsiteState.set_contact_request_type,
+                        value=ContactState.contact_request_type,
+                        on_change=ContactState.set_contact_request_type,
                         direction="column",
                         spacing="2",
                         color=Colors.text["content"],
@@ -124,7 +124,7 @@ def section_contact_form() -> rx.Component:
 
                 # Conditional phone number or email field
                 rx.cond(
-                    WebsiteState.contact_request_type == "Bel mij terug",
+                    ContactState.contact_request_type == "Bel mij terug",
                     # Phone number field
                     rx.box(
                         rx.box(
@@ -155,9 +155,9 @@ def section_contact_form() -> rx.Component:
                         ),
                         rx.el.input(
                             placeholder="0612345678",
-                            value=WebsiteState.contact_phone_value,
-                            on_change=WebsiteState.set_contact_phone_number,
-                            on_blur=WebsiteState.on_phone_blur,
+                            value=ContactState.contact_phone_value,
+                            on_change=ContactState.set_contact_phone_number,
+                            on_blur=ContactState.on_phone_blur,
                             custom_attrs={"oninput": "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"},
                             width="100%",
                             padding="0.75rem 0.75rem",
@@ -171,7 +171,7 @@ def section_contact_form() -> rx.Component:
                             input_mode="numeric",
                             max_length=10,
                             border=rx.cond(
-                                WebsiteState.should_show_phone_error,
+                                ContactState.should_show_phone_error,
                                 "3px solid red",
                                 f"1px solid {Colors.borders['light']}",
                             ),
@@ -208,8 +208,8 @@ def section_contact_form() -> rx.Component:
                         ),
                         rx.input(
                             placeholder="voorbeeld@email.nl",
-                            value=WebsiteState.contact_email,
-                            on_change=WebsiteState.set_contact_email,  # type: ignore
+                            value=ContactState.contact_email,
+                            on_change=ContactState.set_contact_email,  # type: ignore
                             width="100%",
                             padding="0.75rem 0.75rem",
                             height="auto",
@@ -237,8 +237,8 @@ def section_contact_form() -> rx.Component:
                     ),
                     rx.text_area(
                         placeholder="Jouw beschrijving...",
-                        value=WebsiteState.contact_description,
-                        on_change=WebsiteState.set_contact_description,  # type: ignore
+                        value=ContactState.contact_description,
+                        on_change=ContactState.set_contact_description,  # type: ignore
                         width="100%",
                         min_height="120px",
                         padding="0.75rem",
@@ -286,7 +286,7 @@ def section_contact_form() -> rx.Component:
                 # Submit button (right-aligned on desktop, full width on mobile)
                 rx.box(
                     rx.cond(
-                        WebsiteState.form_submitting,
+                        ContactState.form_submitting,
                         # Loading state button
                         rx.box(
                             rx.html("⏳ "),
@@ -308,11 +308,11 @@ def section_contact_form() -> rx.Component:
                             opacity="0.7",
                         ),
                         rx.cond(
-                            WebsiteState.can_submit_form,
+                            ContactState.can_submit_form,
                             # Active button
                             button(
                                 label="Verstuur het verzoek",
-                                on_click=WebsiteState.submit_contact_form,
+                                on_click=ContactState.submit_contact_form,
                             ),
                             # Disabled button
                             rx.box(
