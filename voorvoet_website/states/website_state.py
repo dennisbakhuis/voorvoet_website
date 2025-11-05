@@ -77,63 +77,68 @@ class WebsiteState(rx.State):
 
     def nav_to_home(self):
         """
-        Navigate to the home page.
+        Navigate to the home page with current language.
 
         Returns
         -------
         rx.event
             Redirect event to the home page
         """
-        self.current_page_path = "/"
-        return rx.redirect("/")
+        path = f"/{self.current_language}"
+        self.current_page_path = path
+        return rx.redirect(path)
 
     def nav_to_blog(self):
         """
-        Navigate to the blog page.
+        Navigate to the blog page with current language.
 
         Returns
         -------
         rx.event
             Redirect event to the blog page
         """
-        self.current_page_path = "/blog/"
-        return rx.redirect("/blog/")
+        path = f"/{self.current_language}/blog/"
+        self.current_page_path = path
+        return rx.redirect(path)
 
     def nav_to_informatie(self):
         """
-        Navigate to the information page.
+        Navigate to the information page with current language.
 
         Returns
         -------
         rx.event
             Redirect event to the information page
         """
-        self.current_page_path = "/informatie/"
-        return rx.redirect("/informatie/")
+        path = f"/{self.current_language}/informatie/"
+        self.current_page_path = path
+        return rx.redirect(path)
 
     def nav_to_reimbursements(self):
         """
-        Navigate to the reimbursements page.
+        Navigate to the reimbursements page with current language.
 
         Returns
         -------
         rx.event
             Redirect event to the reimbursements page
         """
-        self.current_page_path = "/reimbursements/"
-        return rx.redirect("/reimbursements/")
+        path = f"/{self.current_language}/reimbursements/"
+        self.current_page_path = path
+        return rx.redirect(path)
 
     def nav_to_contact(self):
         """
-        Navigate to the contact page.
+        Navigate to the contact page with current language.
 
         Returns
         -------
         rx.event
             Redirect event to the contact page
         """
-        self.current_page_path = "/contact/"
-        return rx.redirect("/contact/")
+        path = f"/{self.current_language}/contact/"
+        self.current_page_path = path
+        return rx.redirect(path)
 
     def toggle_nav(self):
         """Toggle the mobile navigation menu open/closed state."""

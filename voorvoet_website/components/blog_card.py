@@ -3,6 +3,7 @@ import reflex as rx
 from ..models import BlogPost
 from ..theme import Colors, FontSizes, Layout
 from ..config import config
+from ..states import BlogState
 
 
 def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
@@ -172,7 +173,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
                 "transform": "translateY(-2px)",
             },
         ),
-        href="/blog/" + post.slug,
+        href=f"/{BlogState.current_language}/blog/" + post.slug,
         text_decoration="none",
         _hover={"text_decoration": "none"},
     )

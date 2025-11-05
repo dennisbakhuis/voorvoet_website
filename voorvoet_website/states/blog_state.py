@@ -9,9 +9,10 @@ from typing import Optional
 
 from ..models import BlogPost
 from ..services import blog_service
+from .website_state import WebsiteState
 
 
-class BlogState(rx.State):
+class BlogState(WebsiteState):
     """
     State manager for blog functionality.
 
@@ -44,7 +45,11 @@ class BlogState(rx.State):
 
         Reads markdown files from the blog content directory and parses them
         into BlogPost objects. Only loads once per session to improve performance.
+        Also detects the current language from the route.
         """
+        # Detect language from route first
+        self.detect_language_from_route()
+
         if not self.posts_loaded:
             self.all_posts = blog_service.load_all_posts()
             self.posts_loaded = True
@@ -56,7 +61,8 @@ class BlogState(rx.State):
         Retrieves the slug from Reflex's dynamic routing (automatically
         available as self.slug for routes like /blog/[slug]). First attempts
         to find the post in the cached posts list, then falls back to loading
-        directly from the file system if not found.
+        directly from the file system if not found. Also detects the current
+        language from the route.
 
         Notes
         -----
@@ -64,6 +70,9 @@ class BlogState(rx.State):
         routing system and is accessible as self.slug when this method
         is called from a route with a [slug] parameter.
         """
+        # Detect language from route first
+        self.detect_language_from_route()
+
         slug = self.slug
 
         if not slug:

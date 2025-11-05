@@ -22,7 +22,7 @@ def hero_cta_box() -> rx.Component:
     """
     return rx.box(
         rx.vstack(
-            section_sub_title("Direct digitaal een afspraak maken!", text_align="center"),
+            section_sub_title("Maak direct digitaal een afspraak!", text_align="center"),
             rx.box(
                 rx.vstack(
                     icon_list_item("fa-check-square-o", "Geen verwijzing nodig!"),

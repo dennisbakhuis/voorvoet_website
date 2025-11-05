@@ -6,6 +6,31 @@ from ...states import WebsiteState
 from ...components import container, language_switcher
 
 
+TRANSLATIONS = {
+    "nl": {
+        "home": "Home",
+        "blog": "Blog",
+        "informatie": "Informatie",
+        "vergoedingen": "Vergoedingen",
+        "contact": "Contact",
+    },
+    "de": {
+        "home": "Home",
+        "blog": "Blog",
+        "informatie": "Informationen",
+        "vergoedingen": "Erstattungen",
+        "contact": "Kontakt",
+    },
+    "en": {
+        "home": "Home",
+        "blog": "Blog",
+        "informatie": "Information",
+        "vergoedingen": "Reimbursements",
+        "contact": "Contact",
+    },
+}
+
+
 def header() -> rx.Component:
     """
     Create the site-wide header with navigation and mobile menu.
@@ -25,59 +50,91 @@ def header() -> rx.Component:
     - Track the current page path for conditional nav rendering
     - Handle navigation between pages
     - Toggle the mobile menu visibility
+    - Provide translated navigation labels
     """
+    # Helper function to get translation based on current language
+    def get_translation(key: str) -> rx.Var:
+        return rx.cond(
+            WebsiteState.current_language == "nl",
+            TRANSLATIONS["nl"][key],
+            rx.cond(
+                WebsiteState.current_language == "de",
+                TRANSLATIONS["de"][key],
+                TRANSLATIONS["en"][key]
+            )
+        )
+
+    # Helper function to check if we're on a specific page (language-aware)
+    def is_not_on_page(page_suffix: str) -> rx.Var:
+        """Check if current path does not match the given page."""
+        if page_suffix == "":  # Home page
+            # Check if we're NOT on home (path should be exactly /nl, /de, or /en)
+            is_home = (
+                (WebsiteState.current_page_path == "/nl") |
+                (WebsiteState.current_page_path == "/de") |
+                (WebsiteState.current_page_path == "/en")
+            )
+            return rx.cond(is_home, False, True)
+        else:
+            # Check if current path does NOT end with the page suffix
+            return rx.cond(
+                WebsiteState.current_page_path.endswith(page_suffix),
+                False,
+                True
+            )
+
     nav_items = [
         rx.cond(
-            WebsiteState.current_page_path != "/",
-            rx.link("Home", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_home, cursor="pointer"),  #type: ignore
+            is_not_on_page(""),
+            rx.link(get_translation("home"), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_home, cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
-            WebsiteState.current_page_path != "/blog/",
-            rx.link("Blog", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_blog, cursor="pointer"),  #type: ignore
+            is_not_on_page("/blog/"),
+            rx.link(get_translation("blog"), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_blog, cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
-            WebsiteState.current_page_path != "/informatie/",
-            rx.link("Informatie", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_informatie, cursor="pointer"),  #type: ignore
+            is_not_on_page("/informatie/"),
+            rx.link(get_translation("informatie"), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_informatie, cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
-            WebsiteState.current_page_path != "/reimbursements/",
-            rx.link("Vergoedingen", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_reimbursements, cursor="pointer"),  #type: ignore
+            is_not_on_page("/reimbursements/"),
+            rx.link(get_translation("vergoedingen"), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_reimbursements, cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
-            WebsiteState.current_page_path != "/contact/",
-            rx.link("Contact", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_contact, cursor="pointer"),  #type: ignore
+            is_not_on_page("/contact/"),
+            rx.link(get_translation("contact"), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_contact, cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
     ]
 
     mobile_nav_items = [
         rx.cond(
-            WebsiteState.current_page_path != "/",
-            rx.link("Home", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_home], cursor="pointer"),  #type: ignore
+            is_not_on_page(""),
+            rx.link(get_translation("home"), width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_home], cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
-            WebsiteState.current_page_path != "/blog/",
-            rx.link("Blog", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_blog], cursor="pointer"),  #type: ignore
+            is_not_on_page("/blog/"),
+            rx.link(get_translation("blog"), width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_blog], cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
-            WebsiteState.current_page_path != "/informatie/",
-            rx.link("Informatie", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_informatie], cursor="pointer"),  #type: ignore
+            is_not_on_page("/informatie/"),
+            rx.link(get_translation("informatie"), width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_informatie], cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
-            WebsiteState.current_page_path != "/reimbursements/",
-            rx.link("Vergoedingen", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_reimbursements], cursor="pointer"),  #type: ignore
+            is_not_on_page("/reimbursements/"),
+            rx.link(get_translation("vergoedingen"), width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_reimbursements], cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
-            WebsiteState.current_page_path != "/contact/",
-            rx.link("Contact", width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_contact], cursor="pointer"),  #type: ignore
+            is_not_on_page("/contact/"),
+            rx.link(get_translation("contact"), width="100%", text_align="right", color=Colors.text["white"], py="8px", on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_contact], cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
     ]

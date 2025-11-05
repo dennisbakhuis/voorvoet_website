@@ -9,9 +9,7 @@ paragraphs, images, buttons, and lists.
 import re
 from typing import Any
 from pathlib import Path
-import mistletoe
-from mistletoe import Document
-from mistletoe.block_token import Heading, Paragraph, List as MarkdownList, BlockToken
+from mistletoe.block_token import Document, Heading, Paragraph, List as MarkdownList, BlockToken, ListItem
 from mistletoe.span_token import RawText, Image, Link
 
 
@@ -81,10 +79,14 @@ def parse_blog_content(
 
     content_objects: list[dict[str, Any]] = []
 
-    for child in doc.children:
-        obj = _process_block_token(child, filename, buttons, project_root)
-        if obj:
-            content_objects.append(obj)
+    # Document.children is always a list of BlockToken objects
+    children = doc.children if doc.children is not None else []
+    for child in children:
+        # Type guard: ensure we only process BlockToken instances
+        if isinstance(child, BlockToken):
+            obj = _process_block_token(child, filename, buttons, project_root)
+            if obj:
+                content_objects.append(obj)
 
     return content_objects
 
@@ -115,7 +117,8 @@ def _process_block_token(
         Content object dictionary or None if token should be skipped
     """
     if isinstance(token, Heading):
-        content = _render_span_tokens(token.children, filename, buttons, project_root)
+        children = token.children if token.children is not None else []
+        content = _render_span_tokens(children, filename, buttons, project_root)
         if content.strip():
             return {
                 'type': 'heading',
@@ -124,7 +127,8 @@ def _process_block_token(
             }
 
     elif isinstance(token, Paragraph):
-        content = _render_span_tokens(token.children, filename, buttons, project_root)
+        children = token.children if token.children is not None else []
+        content = _render_span_tokens(children, filename, buttons, project_root)
 
         # Check if this paragraph contains a button placeholder
         button_match = re.match(r'^BUTTON_PLACEHOLDER_(\d+)$', content.strip())
@@ -138,8 +142,9 @@ def _process_block_token(
                 }
 
         # Check if this paragraph is just an image
-        if len(token.children) == 1 and isinstance(token.children[0], Image):
-            image = token.children[0]
+        children_list = list(children)
+        if len(children_list) == 1 and isinstance(children_list[0], Image):
+            image = children_list[0]
             return _process_image(image, filename, project_root)
 
         # Regular paragraph
@@ -151,10 +156,13 @@ def _process_block_token(
 
     elif isinstance(token, MarkdownList):
         items = []
-        for item in token.children:
-            item_content = _render_span_tokens(item.children, filename, buttons, project_root)
-            if item_content.strip():
-                items.append(item_content)
+        list_children = token.children if token.children is not None else []
+        for item in list_children:
+            if hasattr(item, 'children'):
+                item_children = item.children if item.children is not None else []
+                item_content = _render_span_tokens(item_children, filename, buttons, project_root)
+                if item_content.strip():
+                    items.append(item_content)
 
         if items:
             is_ordered = token.start is not None
@@ -192,7 +200,8 @@ def _process_image(image: Image, filename: str, project_root: Path) -> dict[str,
         Image content object with src, alt, and caption
     """
     src = image.src
-    alt = _render_span_tokens(image.children, filename, [], project_root) if image.children else ""
+    image_children = image.children if image.children is not None else []
+    alt = _render_span_tokens(image_children, filename, [], project_root) if image_children else ""
 
     # Resolve relative image paths
     if not (src.startswith('http://') or src.startswith('https://') or src.startswith('/')):
@@ -214,7 +223,7 @@ def _process_image(image: Image, filename: str, project_root: Path) -> dict[str,
 
 
 def _render_span_tokens(
-    tokens: list,
+    tokens: Any,  # Can be Iterable or list from mistletoe
     filename: str,
     buttons: list[dict[str, str]],
     project_root: Path,
@@ -245,14 +254,17 @@ def _render_span_tokens(
             result.append(token.content)
         elif isinstance(token, Image):
             # Images in paragraphs - keep markdown format for now
-            alt = _render_span_tokens(token.children, filename, buttons, project_root) if token.children else ""
+            img_children = token.children if token.children is not None else []
+            alt = _render_span_tokens(img_children, filename, buttons, project_root) if img_children else ""
             result.append(f"![{alt}]({token.src})")
         elif isinstance(token, Link):
-            text = _render_span_tokens(token.children, filename, buttons, project_root) if token.children else ""
+            link_children = token.children if token.children is not None else []
+            text = _render_span_tokens(link_children, filename, buttons, project_root) if link_children else ""
             result.append(f"[{text}]({token.target})")
         elif hasattr(token, 'children'):
             # Recursive for nested tokens
-            result.append(_render_span_tokens(token.children, filename, buttons, project_root))
+            nested_children = token.children if token.children is not None else []
+            result.append(_render_span_tokens(nested_children, filename, buttons, project_root))
         else:
             # Fallback: try to get content attribute
             result.append(getattr(token, 'content', str(token)))
