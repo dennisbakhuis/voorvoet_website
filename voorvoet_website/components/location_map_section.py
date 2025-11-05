@@ -1,4 +1,4 @@
-# Reusable location map section component
+"""Reusable location map section component."""
 import reflex as rx
 from typing import List, Dict, Any
 
@@ -10,7 +10,25 @@ from .button import button
 
 
 class LocationConfig:
-    """Configuration class for location data"""
+    """
+    Configuration class for location data.
+
+    Attributes
+    ----------
+    title : str
+        Location title text.
+    address : str
+        Physical address of the location.
+    description : str
+        Description text for the location.
+    map_embed : str
+        HTML embed code for the map (e.g., Google Maps iframe).
+    route_link : str
+        URL for route planning link.
+    reverse_order : bool
+        Whether to reverse the order of map and info columns on desktop.
+        Default is False.
+    """
     def __init__(
         self,
         title: str,
@@ -36,9 +54,40 @@ def location_map_item(
     route_link: str,
     reverse_order: bool = False
 ) -> rx.Component:
-    """Create a single location section with map and info"""
-    
-    # Map column
+    """
+    Create a single location section with embedded map and information.
+
+    Creates a responsive two-column layout with an embedded map on one side
+    and location information (title, address, description, button) on the
+    other. The layout stacks on mobile and displays side-by-side on desktop.
+    Column order can be reversed for alternating layouts.
+
+    Parameters
+    ----------
+    title : str
+        Location title text.
+    address : str
+        Physical address of the location.
+    description : str
+        Description text for the location.
+    map_embed : str
+        HTML embed code for the map (typically an iframe from Google Maps).
+    route_link : str
+        URL for route planning (e.g., Google Maps directions link).
+    reverse_order : bool, optional
+        Whether to reverse the order of map and info columns on desktop.
+        Default is False (map on left, info on right).
+
+    Returns
+    -------
+    rx.Component
+        A Reflex box component containing the location map layout.
+
+    Notes
+    -----
+    On mobile, the map always appears first (on top) regardless of
+    reverse_order setting.
+    """
     map_column = column(
         rx.box(
             rx.html(map_embed),
@@ -57,8 +106,7 @@ def location_map_item(
         align_items="center",
         margin_bottom=Spacing.image_margin_bottom
     )
-    
-    # Info column
+
     info_column = column(
         section_title(
             title, 
@@ -89,20 +137,17 @@ def location_map_item(
         flex_direction="column",
         justify_content="center"
     )
-    
-    # Column ordering for mobile/desktop
-    mobile_columns = [map_column, info_column]  # Always map first when stacked
+
+    mobile_columns = [map_column, info_column]
     desktop_columns = [info_column, map_column] if reverse_order else [map_column, info_column]
-    
+
     return rx.box(
-        # Mobile/small: stacked layout (always map first)
         rx.box(
             *mobile_columns,
             display=Layout.mobile_only,
             gap=Spacing.grid_gap,
             align_items="center",
         ),
-        # Medium/large/xl screens: flex layout (alternating sides)
         rx.box(
             *desktop_columns,
             display=Layout.desktop_only,
@@ -120,16 +165,29 @@ def location_section(
     **section_props
 ) -> rx.Component:
     """
-    Create a complete location section with multiple locations
-    
-    Args:
-        title: Section title
-        description: Section description
-        locations: List of LocationConfig objects
-        **section_props: Additional props passed to the section
+    Create a complete location section with multiple locations.
+
+    Creates a vertical stack containing a section title, description,
+    and multiple location map items. Each location is generated from
+    a LocationConfig object and can have alternating layouts.
+
+    Parameters
+    ----------
+    title : str
+        Section title text.
+    description : str
+        Section description text.
+    locations : list[LocationConfig]
+        List of LocationConfig objects defining location content and layout.
+    **section_props : dict
+        Additional style properties to apply to the section.
+        These will override the default styles.
+
+    Returns
+    -------
+    rx.Component
+        A Reflex vstack component containing the complete location section.
     """
-    
-    # Build location items
     location_items = []
     for location in locations:
         location_items.append(

@@ -7,8 +7,8 @@ from .section_introduction import section_introduction
 from .section_information import section_information
 from .section_locations import section_locations
 
-from ..shared_components import footer, header, modal
-from ...state import WebsiteState
+from ..shared_sections import footer, header
+from ...components import modal
 
 
 def page_home() -> rx.Component:

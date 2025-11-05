@@ -1,4 +1,4 @@
-# BlogPost data model definition
+"""BlogPost data model definition."""
 from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional, Any, Literal

@@ -1,4 +1,4 @@
-# Risk level card component for displaying zorgprofiel information
+"""Risk level card component for displaying zorgprofiel information."""
 import reflex as rx
 from ..theme import Colors, FontSizes
 
@@ -10,28 +10,46 @@ def risk_level_card(
     description: str,
 ) -> rx.Component:
     """
-    Creates a risk level card with colored visual indicator and text description.
+    Create a risk level card with colored visual indicator and description.
 
-    Args:
-        level: The zorgprofiel number (0-4)
-        risk_label: The risk level label (e.g., "Geen risico", "Laag risico")
-        title: The title text (e.g., "Zorgprofiel 0")
-        description: The full description text
+    Creates a responsive card displaying a risk level with a colored square
+    containing the level number and risk label, alongside title and description
+    text. The layout stacks vertically on mobile and horizontally on desktop.
+
+    Parameters
+    ----------
+    level : int
+        The zorgprofiel (care profile) number from 0 to 4.
+        Determines the color gradient: 0=green, 1=yellow, 2=orange, 3=red, 4=dark red.
+    risk_label : str
+        The risk level label text (e.g., "Geen risico", "Laag risico").
+        Displayed below the level number in the colored square.
+    title : str
+        The title text for the card (e.g., "Zorgprofiel 0").
+    description : str
+        The full description text explaining this risk level.
+
+    Returns
+    -------
+    rx.Component
+        A Reflex box component containing the risk level card layout.
+
+    Notes
+    -----
+    The colored square uses SVG with linear gradient backgrounds.
+    Color scheme: 0=green, 1=yellow, 2=orange, 3=red, 4=dark red.
     """
-
-    # Define color gradients for each risk level
     RISK_COLORS = {
-        0: {"start": "#4ade80", "end": "#22c55e"},  # Green
-        1: {"start": "#fbbf24", "end": "#f59e0b"},  # Yellow
-        2: {"start": "#fb923c", "end": "#f97316"},  # Orange
-        3: {"start": "#f87171", "end": "#ef4444"},  # Red
-        4: {"start": "#dc2626", "end": "#b91c1c"},  # Dark Red
+        0: {"start": "#4ade80", "end": "#22c55e"},
+        1: {"start": "#fbbf24", "end": "#f59e0b"},
+        2: {"start": "#fb923c", "end": "#f97316"},
+        3: {"start": "#f87171", "end": "#ef4444"},
+        4: {"start": "#dc2626", "end": "#b91c1c"},
     }
 
     colors = RISK_COLORS.get(level, RISK_COLORS[0])
     gradient_id = f"grad{level}"
 
-    # Create SVG with gradient and text
     svg_content = f"""
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%" style="display: block;">
       <defs>
@@ -47,7 +65,6 @@ def risk_level_card(
     """
 
     return rx.box(
-        # Colored square with number and risk label (centered on mobile, left on desktop)
         rx.box(
             rx.box(
                 rx.html(svg_content),
@@ -60,7 +77,6 @@ def risk_level_card(
             width=["100%", "100%", "180px", "180px", "180px"],
             margin_bottom=["1rem", "1rem", "0", "0", "0"],
         ),
-        # Text content (centered on mobile, left-aligned on desktop)
         rx.box(
             rx.text(
                 title,
@@ -85,7 +101,6 @@ def risk_level_card(
             padding_right=["0", "0", "0", "1rem", "1rem"],
             width=["100%", "100%", "auto", "auto", "auto"],
         ),
-        # Container styling
         display="flex",
         flex_direction=["column", "column", "row", "row", "row"],
         align_items=["center", "center", "center", "center", "center"],

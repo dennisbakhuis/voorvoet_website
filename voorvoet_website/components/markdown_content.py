@@ -1,16 +1,42 @@
-# Markdown content component - renders parsed blog content objects
+"""Markdown content component for rendering parsed blog post content."""
 import reflex as rx
-from ....theme import Colors, FontSizes
-from ....models import BlogPost
+from ..theme import Colors, FontSizes
+from ..models import BlogPost
 
 
 def render_content_object(obj) -> rx.Component:
     """
-    Render a single content object based on its type
-    Used with rx.foreach for dynamic rendering
+    Render a single content object based on its type.
 
-    Args:
-        obj: Dictionary with keys: type, content, src, alt, caption, label, url
+    Dynamically renders different content types (markdown, image, button)
+    from parsed blog post content objects. Used with rx.foreach for
+    dynamic rendering of content lists.
+
+    Parameters
+    ----------
+    obj : dict
+        Dictionary containing content object data with keys:
+        - type : str - Content type ("markdown", "image", or "button")
+        - content : str - Markdown text content (for type="markdown")
+        - src : str - Image source URL (for type="image")
+        - alt : str - Image alt text (for type="image")
+        - caption : str - Image caption (for type="image", optional)
+        - label : str - Button text (for type="button")
+        - url : str - Button link URL (for type="button")
+
+    Returns
+    -------
+    rx.Component
+        A Reflex component appropriate for the content type:
+        - Markdown component for text content
+        - Styled image box with optional caption
+        - Styled button/link component
+
+    Notes
+    -----
+    - Images are displayed centered with rounded corners and shadow
+    - Buttons use the primary color scheme from theme
+    - All styling is consistent with the site theme
     """
     return rx.cond(
         obj["type"] == "markdown",
@@ -92,13 +118,25 @@ def render_content_object(obj) -> rx.Component:
 
 def markdown_content(post: BlogPost) -> rx.Component:
     """
-    Render blog post content from parsed content objects
+    Render complete blog post content from parsed content objects.
 
-    Args:
-        post: BlogPost object with parsed content_objects
+    Iterates through the blog post's content_objects list and renders
+    each object using the appropriate component type.
 
-    Returns:
-        Reflex component with rendered content
+    Parameters
+    ----------
+    post : BlogPost
+        BlogPost object with parsed content_objects list.
+
+    Returns
+    -------
+    rx.Component
+        A Reflex box component containing all rendered content elements.
+
+    Notes
+    -----
+    Content objects are rendered in order using rx.foreach with the
+    render_content_object function.
     """
     return rx.box(
         rx.foreach(

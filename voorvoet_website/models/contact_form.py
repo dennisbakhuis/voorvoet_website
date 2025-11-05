@@ -1,4 +1,4 @@
-# Contact form model
+"""Contact form model."""
 from pydantic import BaseModel, Field, ConfigDict
 from .phone_number import PhoneNumber
 from .email_address import EmailAddress

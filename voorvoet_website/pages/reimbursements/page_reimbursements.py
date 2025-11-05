@@ -4,7 +4,8 @@ from .section_hero import section_hero
 from .section_starter import section_starter
 from .section_reimbursement_table import section_reimbursement_table
 
-from ..shared_components import footer, header, modal
+from ..shared_sections import footer, header
+from ...components import modal
 from ...state import WebsiteState
 
 

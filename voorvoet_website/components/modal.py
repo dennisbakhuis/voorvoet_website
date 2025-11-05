@@ -1,12 +1,32 @@
-# Shared modal component
+"""Modal dialog component for user input and interactions."""
 import reflex as rx
 
-from ...components import button
-from ...theme import Colors
-from ...state import WebsiteState
+from .button import button
+from ..theme import Colors
+from ..state import WebsiteState
 
 
 def modal() -> rx.Component:
+    """
+    Create a modal dialog component with input capabilities.
+
+    This component renders a dialog that can be opened/closed through the
+    WebsiteState. It includes a title, description, text area input, and
+    action buttons.
+
+    Returns
+    -------
+    rx.Component
+        A Reflex dialog component with input field and controls.
+
+    Notes
+    -----
+    The modal state is managed through WebsiteState properties:
+    - modal_open: Controls visibility
+    - modal_title: Dialog heading text
+    - modal_desc: Dialog description text
+    - modal_input: Text area value
+    """
     return rx.dialog.root(
         rx.dialog.trigger(rx.box()),
         rx.dialog.content(

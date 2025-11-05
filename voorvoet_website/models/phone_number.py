@@ -1,4 +1,4 @@
-# Phone number validation model
+"""Phone number validation model."""
 from pydantic import field_validator
 from .validated_field import ValidatedField
 

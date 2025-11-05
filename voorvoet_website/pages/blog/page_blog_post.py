@@ -2,10 +2,9 @@
 import reflex as rx
 from ...state import BlogState
 from ...theme import Colors, FontSizes
-from ...components import container, section
-from ..shared_components import footer, header, modal
+from ...components import container, section, modal, markdown_content
+from ..shared_sections import footer, header
 from .section_hero import section_hero
-from .components import markdown_content
 from ...config import config
 
 

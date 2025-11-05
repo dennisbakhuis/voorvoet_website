@@ -1,18 +1,32 @@
-# Toast notification component
+"""Toast notification component."""
 import reflex as rx
 from ..theme import Colors, FontSizes
 from ..state import WebsiteState
 
 
 def toast() -> rx.Component:
-    """Toast notification component that slides in from the top
+    """
+    Create a toast notification component that slides in from the top.
 
-    Shows success or error messages based on the state.
-    Displays at the top center of the screen and auto-dismisses.
+    Creates a fixed-position notification that appears at the top center
+    of the screen. Shows success or error messages with appropriate colors
+    and icons based on the WebsiteState. Automatically animates in and
+    can be programmatically dismissed.
+
+    Returns
+    -------
+    rx.Component
+        A Reflex box component containing the toast notification.
+
+    Notes
+    -----
+    The toast visibility is controlled by WebsiteState.toast_visible.
+    Message content is from WebsiteState.toast_message.
+    Toast type (success/error) is from WebsiteState.toast_type.
+    Colors: success=brand green, error=red.
     """
     return rx.box(
         rx.box(
-            # Icon
             rx.box(
                 rx.cond(
                     WebsiteState.toast_type == "success",
@@ -29,7 +43,6 @@ def toast() -> rx.Component:
                 height="2rem",
                 flex_shrink="0",
             ),
-            # Message
             rx.box(
                 rx.text(
                     WebsiteState.toast_message,
@@ -46,8 +59,8 @@ def toast() -> rx.Component:
             padding="1rem 1.5rem",
             background=rx.cond(
                 WebsiteState.toast_type == "success",
-                Colors.primary["500"],  # Brand medium green
-                "#ef4444",  # Red for errors
+                Colors.primary["500"],
+                "#ef4444",
             ),
             border_radius="8px",
             box_shadow="0 10px 25px rgba(0, 0, 0, 0.15)",
@@ -61,7 +74,6 @@ def toast() -> rx.Component:
         transform="translateX(-50%)",
         z_index="9999",
         display=rx.cond(WebsiteState.toast_visible, "block", "none"),
-        # Custom CSS for animation
         style={
             "@keyframes slideDown": {
                 "from": {

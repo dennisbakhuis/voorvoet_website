@@ -1,4 +1,4 @@
-# Centered image component for reusable centered image layouts
+"""Centered image component for reusable centered image layouts."""
 import reflex as rx
 from typing import Optional
 from ..theme import Layout
@@ -11,13 +11,28 @@ def centered_image(
     **props
 ) -> rx.Component:
     """
-    Standard centered image component.
-    
-    Args:
-        src: Image source path
-        alt: Alt text for the image
-        max_width: Maximum width of the image (default: 500px)
-        **props: Additional props passed to the image
+    Create a centered image with standard styling and shadow.
+
+    Creates an image component with responsive width, border radius,
+    and box shadow styling. The image is automatically centered and
+    scaled based on its max_width constraint.
+
+    Parameters
+    ----------
+    src : str
+        Image source path or URL.
+    alt : str | None, optional
+        Alternative text for the image for accessibility. Default is None.
+    max_width : str, optional
+        Maximum width of the image. Default is "500px".
+    **props : dict
+        Additional style properties to apply to the image.
+        These will override the default styles.
+
+    Returns
+    -------
+    rx.Component
+        A Reflex image component with centered, styled presentation.
     """
     defaults = {
         "width": "100%",

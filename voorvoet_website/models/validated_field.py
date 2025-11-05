@@ -1,4 +1,4 @@
-# Base class for validated form fields
+"""Base class for validated form fields."""
 from pydantic import BaseModel, ConfigDict
 from abc import ABC, abstractmethod
 

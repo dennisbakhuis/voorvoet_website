@@ -9,7 +9,8 @@ from .section_veel_voorkomende_klachten import section_veel_voorkomende_klachten
 from .section_bedrijfspodotherapie import section_bedrijfspodotherapie
 from .section_risicovoet import section_risicovoet
 
-from ..shared_components import footer, header, modal
+from ..shared_sections import footer, header
+from ...components import modal
 
 
 def page_information() -> rx.Component:

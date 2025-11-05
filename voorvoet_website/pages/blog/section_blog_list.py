@@ -2,8 +2,7 @@
 import reflex as rx
 from ...state import BlogState
 from ...theme import Colors, FontSizes
-from ...components import container
-from .components import blog_card
+from ...components import container, blog_card
 
 
 def section_blog_list() -> rx.Component:

@@ -4,7 +4,8 @@ from .section_hero import section_hero
 from .section_blog_list import section_blog_list
 from .section_starter import section_starter
 
-from ..shared_components import footer, header, modal
+from ..shared_sections import footer, header
+from ...components import modal
 
 
 def page_blog() -> rx.Component:

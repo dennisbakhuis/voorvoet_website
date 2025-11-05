@@ -1,24 +1,39 @@
-# Blog card component for displaying blog post previews
+"""Blog card component for displaying blog post previews."""
 import reflex as rx
-from ....models import BlogPost
-from ....theme import Colors, FontSizes, Layout
-from ....config import config
+from ..models import BlogPost
+from ..theme import Colors, FontSizes, Layout
+from ..config import config
 
 
 def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
     """
-    Display a single blog post card for the listing page in landscape layout
+    Display a blog post card in landscape layout with thumbnail and content.
 
-    Args:
-        post: BlogPost object to display
-        flip: If True, thumbnail is on the right; if False, thumbnail is on the left
+    Creates a clickable card component that displays blog post information
+    including title, summary, metadata (author, date, reading time), and
+    thumbnail image. The thumbnail position can be flipped to alternate sides.
 
-    Returns:
-        Reflex component representing the blog card
+    Parameters
+    ----------
+    post : BlogPost
+        BlogPost object containing all post data and metadata.
+    flip : bool, optional
+        If True, thumbnail appears on the right side; if False, on the left.
+        Default is False.
+
+    Returns
+    -------
+    rx.Component
+        A Reflex link component wrapping the styled blog card.
+
+    Notes
+    -----
+    - Card displays metadata based on config settings (author, date, reading time)
+    - Summary text is clamped to 3 lines with ellipsis
+    - Card has hover effects (shadow and lift)
+    - Thumbnail is a fixed 250x250px square with rounded corners
     """
-    # Content area with title and summary
     content_area = rx.vstack(
-        # Title
         rx.heading(
             post.title,
             size="6",
@@ -26,8 +41,6 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
             margin_bottom="0.5rem",
             line_height="1.3",
         ),
-
-        # Summary
         rx.text(
             post.summary,
             color=Colors.text['content'],
@@ -42,8 +55,6 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
                 "-webkit-box-orient": "vertical",
             },
         ),
-
-        # Metadata row (only shown if at least one setting is enabled)
         rx.cond(
             config.blog_show_author | config.blog_show_publication_date | config.blog_show_reading_time,
             rx.hstack(
@@ -98,8 +109,6 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
                 wrap="wrap",
             ),
         ),
-
-        # Read more link
         rx.text(
             "Lees meer →",
             color=Colors.primary['500'],
@@ -107,7 +116,6 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
             font_size=FontSizes.regular,
             margin_top="auto",
         ),
-
         spacing="3",
         align_items="start",
         justify_content="center",
@@ -115,7 +123,6 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
         flex="1",
     )
 
-    # Thumbnail image - square aspect ratio with rounded corners and shadow
     thumbnail = rx.box(
         rx.image(
             src=post.thumbnail_url,
@@ -132,7 +139,6 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
         box_shadow=Layout.image_box_shadow,
     )
 
-    # Build the card layout based on flip parameter
     card_content = rx.cond(
         flip,
         rx.hstack(
@@ -156,7 +162,6 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
     return rx.link(
         rx.box(
             card_content,
-            # Card styling - no border, clean look
             border_radius="8px",
             background=Colors.backgrounds['white'],
             padding="1.5rem",

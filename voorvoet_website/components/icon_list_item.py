@@ -1,9 +1,31 @@
-# Icon list item component for CTA boxes and lists
+"""Icon list item component for CTA boxes and lists."""
 import reflex as rx
 from ..theme import Colors, FontSizes
 
 
 def icon_list_item(icon: str, text: str, **props) -> rx.Component:
+    """
+    Create a list item with a FontAwesome icon and text.
+
+    Creates a horizontal stack with a FontAwesome icon on the left
+    and text content on the right. The icon is aligned to the top
+    to handle multi-line text properly.
+
+    Parameters
+    ----------
+    icon : str
+        FontAwesome icon class name (e.g., "fa-check", "fa-star").
+    text : str
+        Text content to display next to the icon.
+    **props : dict
+        Additional style properties to apply to the hstack container.
+        These will override the default styles.
+
+    Returns
+    -------
+    rx.Component
+        A Reflex hstack component with icon and text.
+    """
     return rx.hstack(
         rx.html(f'<i class="fa {icon}" style="color: {Colors.text["content"]}; font-size: 18px; margin-top: 6px;"/>'),
         rx.text(

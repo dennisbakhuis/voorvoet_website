@@ -1,4 +1,4 @@
-# Reusable image-text section component to eliminate layout duplication
+"""Reusable image-text section component to eliminate layout duplication."""
 import reflex as rx
 from typing import Optional, Union
 
@@ -13,24 +13,51 @@ def image_text_section(
     image_src: str,
     title: str,
     paragraphs: Union[str, list[str]],
-    image_position: str = "left",  # "left" or "right"
+    image_position: str = "left",
     button_text: Optional[str] = None,
     button_link: Optional[str] = None,
-    image_max_width: Optional[str] = None,  # Override for image max width
+    image_max_width: Optional[str] = None,
     **section_props
 ) -> rx.Component:
     """
-    Generic image-text layout component that eliminates duplication across sections.
+    Create a responsive section with image and text content.
 
-    Args:
-        image_src: Path to the image
-        title: Section title
-        paragraphs: Single paragraph string or list of paragraph strings
-        image_position: "left" or "right" - where to position the image
-        button_text: Optional button text
-        button_link: Optional button link
-        image_max_width: Optional override for image max width (defaults to Layout.image_max_width)
-        **section_props: Additional props passed to the container
+    Creates a flexible two-column layout with an image on one side and
+    text content (title, paragraphs, optional button) on the other.
+    The layout automatically stacks on mobile and displays side-by-side
+    on larger screens. Image position can be controlled via parameter.
+
+    Parameters
+    ----------
+    image_src : str
+        Path or URL to the image to display.
+    title : str
+        Section title text.
+    paragraphs : str | list[str]
+        Single paragraph string or list of paragraph strings.
+        Multiple paragraphs are automatically spaced.
+    image_position : str, optional
+        Position of image relative to text: "left" or "right".
+        Default is "left".
+    button_text : str | None, optional
+        Text for optional call-to-action button. Default is None.
+    button_link : str | None, optional
+        URL for optional call-to-action button. Default is None.
+    image_max_width : str | None, optional
+        Override for image maximum width. If None, uses Layout.image_max_width.
+        Default is None.
+    **section_props : dict
+        Additional style properties to apply to the section container.
+        These will override the default styles.
+
+    Returns
+    -------
+    rx.Component
+        A Reflex box component containing the image-text layout.
+
+    Notes
+    -----
+    Both button_text and button_link must be provided for the button to appear.
     """
 
     if isinstance(paragraphs, str):

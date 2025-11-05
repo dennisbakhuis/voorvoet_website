@@ -1,4 +1,4 @@
-# Email address validation model
+"""Email address validation model."""
 from pydantic import field_validator
 from .validated_field import ValidatedField
 

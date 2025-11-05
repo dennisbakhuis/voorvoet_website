@@ -1,4 +1,4 @@
-# Enhanced column component for flexible layout with responsive helpers
+"""Enhanced column component for flexible layout with responsive helpers."""
 import reflex as rx
 from typing import Union, List, Optional
 
@@ -6,26 +6,45 @@ from ..theme import responsive_padding, Layout, Spacing
 
 
 def column(
-    *children, 
+    *children,
     size: Optional[Union[str, List[str]]] = None,
-    spacing_direction: Optional[str] = None,  # "left", "right", "both", "none"
-    responsive_spacing: Optional[List[str]] = None,  # Custom spacing array
+    spacing_direction: Optional[str] = None,
+    responsive_spacing: Optional[List[str]] = None,
     **props
 ) -> rx.Component:
     """
-    Enhanced column component with responsive spacing helpers
-    
-    Args:
-        *children: Child components
-        size: Column size (single value or responsive array)
-        spacing_direction: Direction for responsive padding ("left", "right", "both", "none")
-        responsive_spacing: Custom responsive spacing array
-        **props: Additional props passed to rx.box
+    Create a flexible column with responsive sizing and spacing.
+
+    Creates a column component with support for responsive width sizing,
+    flexible padding based on direction, and custom spacing arrays.
+    Handles both single values and breakpoint arrays for full responsive control.
+
+    Parameters
+    ----------
+    *children : rx.Component
+        Variable number of child components to render inside the column.
+    size : str | list[str] | None, optional
+        Column size as single value (e.g., "50%") or responsive array
+        (e.g., ["100%", "50%", "33%"]) for different breakpoints.
+        Default is None, which sets width to 100% with flex: 1.
+    spacing_direction : str | None, optional
+        Direction for responsive padding. Valid values are "left", "right",
+        "both", or "none". Default is None (no spacing applied).
+    responsive_spacing : list[str] | None, optional
+        Custom responsive spacing array to override default padding values.
+        Applied based on spacing_direction. Default is None.
+    **props : dict
+        Additional style properties to apply to the column.
+        These will override the computed styles.
+
+    Returns
+    -------
+    rx.Component
+        A Reflex box component configured as a flexible column.
     """
-    
+
     flex_props = {}
-    
-    # Handle size (existing logic)
+
     if size:
         if isinstance(size, list):
             # Responsive sizing: convert each breakpoint size to flex values

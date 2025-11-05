@@ -1,3 +1,4 @@
+"""Information card component for displaying service or feature information."""
 import reflex as rx
 
 from ..theme import Colors, FontSizes, Layout
@@ -5,7 +6,36 @@ from .button import button
 
 
 def information_card(title: str, description: str, icon: str, bg_color="white", show_box=True, button_text="Lees meer", button_link="#") -> rx.Component:
-    # Define box styling conditionally
+    """
+    Create an information card with icon, title, description, and button.
+
+    Creates a styled card component with a FontAwesome icon, title text,
+    description text, and a call-to-action button. The card can be rendered
+    with or without a visible box border and shadow, and includes hover effects.
+
+    Parameters
+    ----------
+    title : str
+        Card title text.
+    description : str
+        Card description text explaining the service or feature.
+    icon : str
+        FontAwesome icon class name (e.g., "fa-heart", "fa-star").
+    bg_color : str, optional
+        Background color for the card. Default is "white".
+    show_box : bool, optional
+        Whether to show the card box border and shadow. If False,
+        renders with transparent background. Default is True.
+    button_text : str, optional
+        Text for the call-to-action button. Default is "Lees meer".
+    button_link : str, optional
+        URL for the call-to-action button. Default is "#".
+
+    Returns
+    -------
+    rx.Component
+        A Reflex box component styled as an information card.
+    """
     box_styles = {}
     if show_box:
         box_styles = {
