@@ -31,15 +31,15 @@ def section_contact_form() -> rx.Component:
     """
     form_styles = {
         "input::placeholder, textarea::placeholder": {
-            "color": "#888888 !important",
+            "color": f"{Colors.text['placeholder']} !important",
             "opacity": "1 !important",
         },
         ".rt-TextAreaRoot .rt-TextAreaInput": {
-            "font-size": "18px !important",
+            "font-size": f"{FontSizes.regular} !important",
             "line-height": "1.6 !important",
         },
         ".rt-RadioGroupRoot .rt-Text": {
-            "font-size": "18px !important",
+            "font-size": f"{FontSizes.regular} !important",
         },
         ".rt-TooltipContent, .rt-TooltipContent *, [role='tooltip'], [role='tooltip'] *": {
             "font-size": "16px !important",

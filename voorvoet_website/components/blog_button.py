@@ -25,7 +25,7 @@ def blog_button(label: str, url: str) -> rx.Component:
 
     Notes
     -----
-    - Uses primary color (#05A8A2) with hover effect to darker shade
+    - Uses primary color with hover effect to darker shade
     - Centered display with 2rem top and bottom margins
     - Bold font (weight 700) for emphasis
     - Drop shadow for depth, enhanced on hover

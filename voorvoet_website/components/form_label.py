@@ -54,7 +54,7 @@ def form_label(
     if tooltip_text:
         label_content.append(
             rx.tooltip(
-                rx.html('<i class="fa fa-info-circle" style="color: #3b82f6;"/>'),
+                rx.html(f'<i class="fa fa-info-circle" style="color: {Colors.text["link"]};"/>'),
                 content=tooltip_text,
                 style={
                     "backgroundColor": "white",

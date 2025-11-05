@@ -1,4 +1,25 @@
-# Main application file for the Reflex web app
+"""Main application entry point for the VoorVoet Reflex web application.
+
+This module initializes the Reflex application and defines all routes for the
+VoorVoet podiatry practice website. It configures global styles, external
+stylesheets (Lato font and Font Awesome icons), and registers all page
+components with their respective routes and state handlers.
+
+Routes
+------
+/ : Home page
+/blog/ : Blog listing page
+/blog/[slug] : Individual blog post pages
+/informatie/ : Information page
+/reimbursements/ : Insurance reimbursements page
+/contact/ : Contact form page
+
+Notes
+-----
+The app uses Lato as the primary font family and includes Font Awesome icons
+for UI elements. Custom styles are defined in /styles.css.
+"""
+
 import reflex as rx
 
 from .pages import page_home, page_blog, page_blog_post, page_information, page_reimbursements, page_contact

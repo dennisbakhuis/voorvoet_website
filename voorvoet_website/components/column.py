@@ -2,7 +2,7 @@
 import reflex as rx
 from typing import Union, List, Optional
 
-from ..theme import responsive_padding, Layout, Spacing
+from ..theme import Layout, Spacing
 
 
 def column(
@@ -66,25 +66,24 @@ def column(
     else:
         flex_props["width"] = "100%"
         flex_props["flex"] = "1"
-    
+
     # Handle responsive spacing
     if spacing_direction and not responsive_spacing:
         if spacing_direction == "left":
-            flex_props["padding_left"] = responsive_padding("left")
+            flex_props["padding_left"] = ["0", "0", "0", "2rem"]
         elif spacing_direction == "right":
-            flex_props["padding_right"] = responsive_padding("right")
+            flex_props["padding_right"] = ["0", "0", "0", "2rem"]
         elif spacing_direction == "both":
-            flex_props["padding_left"] = responsive_padding("left")
-            flex_props["padding_right"] = responsive_padding("right")
-        # "none" or invalid values: no padding applied
-    
+            flex_props["padding_left"] = ["0", "0", "0", "2rem"]
+            flex_props["padding_right"] = ["0", "0", "0", "2rem"]
+
     # Handle custom responsive spacing
     if responsive_spacing:
         if spacing_direction == "left":
             flex_props["padding_left"] = responsive_spacing
         elif spacing_direction == "right":
             flex_props["padding_right"] = responsive_spacing
-    
+
     return rx.box(
         *children,
         **flex_props,
