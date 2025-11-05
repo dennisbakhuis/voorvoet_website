@@ -210,12 +210,17 @@ def section_contact_form() -> rx.Component:
                             placeholder="voorbeeld@email.nl",
                             value=ContactState.contact_email,
                             on_change=ContactState.set_contact_email,  # type: ignore
+                            on_blur=ContactState.on_email_blur,
                             width="100%",
                             padding="0.75rem 0.75rem",
                             height="auto",
                             min_height="50px",
                             border_radius="4px",
-                            border=f"1px solid {Colors.borders['light']}",
+                            border=rx.cond(
+                                ContactState.should_show_email_error,
+                                "3px solid red",
+                                f"1px solid {Colors.borders['light']}",
+                            ),
                             font_size=FontSizes.regular,
                             background="white",
                             color=Colors.text["content"],

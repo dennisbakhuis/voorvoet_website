@@ -35,7 +35,7 @@ class ContactState(rx.State):
     @rx.var
     def contact_email(self) -> str:
         """Get the email value"""
-        return self.contact_form.email
+        return self.contact_form.email.value
 
     @rx.var
     def contact_description(self) -> str:
@@ -56,6 +56,16 @@ class ContactState(rx.State):
     def should_show_phone_error(self) -> bool:
         """Show error if user has touched the field and it's not valid"""
         return self.contact_form.phone.should_show_error()
+
+    @rx.var
+    def is_email_valid(self) -> bool:
+        """Check if email is valid"""
+        return self.contact_form.email.is_valid()
+
+    @rx.var
+    def should_show_email_error(self) -> bool:
+        """Show error if user has touched the email field and it's not valid"""
+        return self.contact_form.email.should_show_error()
 
     @rx.var
     def can_submit_form(self) -> bool:
@@ -94,6 +104,20 @@ class ContactState(rx.State):
             request_type=self.contact_form.request_type,
             phone=new_phone,
             email=self.contact_form.email,
+            description=self.contact_form.description,
+        )
+
+    @rx.event
+    def on_email_blur(self):
+        """Handle email input losing focus"""
+        # Mark the email field as blurred to enable validation error display
+        new_email = self.contact_form.email.mark_blurred()
+        self.contact_form = ContactForm(
+            first_name=self.contact_form.first_name,
+            last_name=self.contact_form.last_name,
+            request_type=self.contact_form.request_type,
+            phone=self.contact_form.phone,
+            email=new_email,
             description=self.contact_form.description,
         )
 

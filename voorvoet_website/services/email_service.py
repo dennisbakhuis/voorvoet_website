@@ -81,7 +81,7 @@ def send_contact_form_email(form: ContactForm) -> bool:
         if form.request_type == "Bel mij terug":
             contact_method = f"Telefoonnummer: {form.phone.value}"
         else:
-            contact_method = f"E-mail: {form.email}"
+            contact_method = f"E-mail: {form.email.value}"
 
         # Plain text version
         text_body = f"""
