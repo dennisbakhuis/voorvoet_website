@@ -1,6 +1,6 @@
 """Individual blog post page displaying full content."""
 import reflex as rx
-from ...state import BlogState
+from ...states import BlogState
 from ...theme import Colors, FontSizes
 from ...components import container, section, modal, markdown_content
 from ..shared_sections import footer, header
@@ -33,7 +33,7 @@ def page_blog_post() -> rx.Component:
                     rx.vstack(
                         rx.heading(
                             BlogState.current_post.title,  # type: ignore (rx.cond not detected by type-checker)
-                            size="9",
+                            font_size=FontSizes.section_title,
                             color=Colors.text['heading'],
                         ),
 

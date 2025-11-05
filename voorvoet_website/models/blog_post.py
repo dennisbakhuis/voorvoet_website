@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Optional, Any, Literal
 
 
-ContentType = Literal["markdown", "image", "button"]
+ContentType = Literal["heading", "paragraph", "markdown", "image", "button", "list"]
 ContentDict = dict[str, Any]
 
 class BlogPost(BaseModel):

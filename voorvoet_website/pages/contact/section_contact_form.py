@@ -11,7 +11,7 @@ from ...components import (
     form_button,
 )
 from ...theme import Colors, FontSizes
-from ...state.contact_state import ContactState
+from ...states.contact_state import ContactState
 from ...config import config
 
 

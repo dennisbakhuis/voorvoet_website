@@ -1,7 +1,7 @@
 """Toast notification component."""
 import reflex as rx
 from ..theme import Colors, FontSizes
-from ..state import WebsiteState
+from ..states import WebsiteState
 
 
 def toast() -> rx.Component:

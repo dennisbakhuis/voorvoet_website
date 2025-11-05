@@ -2,7 +2,7 @@
 import reflex as rx
 
 from .pages import page_home, page_blog, page_blog_post, page_information, page_reimbursements, page_contact
-from .state import BlogState, ContactState
+from .states import BlogState, ContactState
 
 
 app = rx.App(
@@ -14,12 +14,12 @@ app = rx.App(
     style={
         "font-family": 'Lato, ui-sans-serif, system-ui, sans-serif',
     },
-    
+
 )
 
 app.add_page(
-    component=page_home, 
-    route="/", 
+    component=page_home,
+    route="/",
     title="VoorVoet - Praktijk voor Podotherapie",
 )
 
@@ -38,8 +38,8 @@ app.add_page(
 )
 
 app.add_page(
-    component=page_information, 
-    route="/informatie/", 
+    component=page_information,
+    route="/informatie/",
     title="VoorVoet - Informatie - Praktijk voor Podotherapie",
 )
 
@@ -50,7 +50,7 @@ app.add_page(
 )
 
 app.add_page(
-    component=page_contact, 
-    route="/contact/", 
+    component=page_contact,
+    route="/contact/",
     title="VoorVoet - Contact - Praktijk voor Podotherapie",
 )

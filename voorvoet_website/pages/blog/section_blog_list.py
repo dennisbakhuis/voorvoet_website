@@ -1,6 +1,6 @@
 """Blog list section displaying grid of blog post cards."""
 import reflex as rx
-from ...state import BlogState
+from ...states import BlogState
 from ...theme import Colors, FontSizes
 from ...components import container, blog_card, section
 

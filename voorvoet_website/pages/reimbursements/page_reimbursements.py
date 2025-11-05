@@ -7,7 +7,7 @@ from .section_reimbursement_table import section_reimbursement_table
 
 from ..shared_sections import footer, header
 from ...components import modal
-from ...state import WebsiteState
+from ...states import WebsiteState
 
 
 def page_reimbursements() -> rx.Component:

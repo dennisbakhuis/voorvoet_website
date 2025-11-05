@@ -1,142 +1,208 @@
-"""Markdown content component for rendering parsed blog post content."""
+"""Markdown content component for rendering parsed blog post content.
+
+This module provides the main rendering logic for blog post content by
+dynamically selecting the appropriate blog component based on content type.
+All actual rendering is delegated to specialized blog components for
+maintainability and reusability.
+"""
 import reflex as rx
-from ..theme import Colors, FontSizes
 from ..models import BlogPost
+from .blog_heading import blog_heading
+from .blog_paragraph import blog_paragraph
+from .blog_markdown import blog_markdown
+from .blog_image import blog_image
+from .blog_button import blog_button
+from .blog_list import blog_list
 
 
 def render_content_object(obj) -> rx.Component:
     """
     Render a single content object based on its type.
 
-    Dynamically renders different content types (markdown, image, button)
-    from parsed blog post content objects. Used with rx.foreach for
-    dynamic rendering of content lists.
+    Dynamically renders different content types (heading, paragraph, markdown,
+    image, button, list) from parsed blog post content objects. Used with
+    rx.foreach for dynamic rendering of content lists with proper type checking
+    and conditional rendering.
 
     Parameters
     ----------
     obj : dict
         Dictionary containing content object data with keys:
-        - type : str - Content type ("markdown", "image", or "button")
-        - content : str - Markdown text content (for type="markdown")
-        - src : str - Image source URL (for type="image")
-        - alt : str - Image alt text (for type="image")
-        - caption : str - Image caption (for type="image", optional)
-        - label : str - Button text (for type="button")
-        - url : str - Button link URL (for type="button")
+        - type : str - Content type identifier
+        - For type="heading": level (int), content (str)
+        - For type="paragraph": content (str)
+        - For type="markdown": content (str)
+        - For type="image": src (str), alt (str), caption (str, optional)
+        - For type="button": label (str), url (str)
+        - For type="list": ordered (bool), items (list[str])
 
     Returns
     -------
     rx.Component
-        A Reflex component appropriate for the content type:
-        - Markdown component for text content
-        - Styled image box with optional caption
-        - Styled button/link component
+        A Reflex component appropriate for the content type with consistent
+        styling from the site theme
 
     Notes
     -----
-    - Images are displayed centered with rounded corners and shadow
-    - Buttons use the primary color scheme from theme
-    - All styling is consistent with the site theme
+    - Headings use dynamic font sizes based on level (h1-h6)
+    - Paragraphs use standard content text styling
+    - Markdown blocks support full markdown rendering
+    - Images are centered with optional captions and responsive sizing
+    - Buttons use primary color scheme with hover effects
+    - Lists support both ordered (numbered) and unordered (bulleted) formats
     """
     return rx.cond(
-        obj["type"] == "markdown",
-        rx.markdown(
-            obj["content"],
-            color=Colors.text['content'],
-            font_size=FontSizes.regular,
-        ),
+        obj["type"] == "heading",
+        _render_heading(obj),
         rx.cond(
-            obj["type"] == "image",
-            rx.box(
-                rx.image(
-                    src=obj["src"],
-                    alt=obj["alt"],
-                    loading="lazy",
-                ),
-                rx.cond(
-                    obj["caption"],
-                    rx.text(
-                        obj["caption"],
-                        color=Colors.text['muted'],
-                        font_size=FontSizes.regular,
-                        font_style="italic",
-                        text_align="center",
-                        margin_top="0.5rem",
-                    ),
-                ),
-                display="block",
-                margin="2rem auto",
-                max_width="800px",
-                width="100%",
-                style={
-                    "& img": {
-                        "display": "block",
-                        "margin": "0 auto",
-                        "max_width": "100%",
-                        "width": "100%",
-                        "height": "auto",
-                        "border_radius": "8px",
-                        "box_shadow": "0 4px 12px rgba(0, 0, 0, 0.15)",
-                    }
-                }
-            ),
+            obj["type"] == "paragraph",
+            _render_paragraph(obj),
             rx.cond(
-                obj["type"] == "button",
-                rx.box(
-                    rx.link(
-                        rx.text(obj["label"]),
-                        href=obj["url"],
-                        border_radius="3px",
-                        font_weight="700",
-                        font_size=FontSizes.regular,
-                        padding_x="0.8em",
-                        padding_y="0.1em",
-                        transition="all 0.2s ease",
-                        cursor="pointer",
-                        display="inline-flex",
-                        align_items="center",
-                        justify_content="center",
-                        text_decoration="none",
-                        border="none",
-                        white_space="nowrap",
-                        bg=Colors.primary['300'],
-                        color=Colors.text['white'],
-                        box_shadow="0 4px 12px rgba(5, 168, 162, 0.3)",
-                        _hover={
-                            "bg": Colors.primary['500'],
-                            "box_shadow": "0 6px 16px rgba(5, 168, 162, 0.4)"
-                        },
+                obj["type"] == "markdown",
+                _render_markdown(obj),
+                rx.cond(
+                    obj["type"] == "image",
+                    _render_image(obj),
+                    rx.cond(
+                        obj["type"] == "button",
+                        _render_button(obj),
+                        rx.cond(
+                            obj["type"] == "list",
+                            _render_list(obj),
+                        ),
                     ),
-                    display="flex",
-                    justify_content="center",
-                    margin="2rem 0",
                 ),
             ),
         ),
     )
 
 
-def markdown_content(post: BlogPost) -> rx.Component:
+def _render_heading(obj) -> rx.Component:
     """
-    Render complete blog post content from parsed content objects.
-
-    Iterates through the blog post's content_objects list and renders
-    each object using the appropriate component type.
+    Render a heading content object using blog_heading component.
 
     Parameters
     ----------
-    post : BlogPost
-        BlogPost object with parsed content_objects list.
+    obj : dict
+        Heading object with 'level' (1-6) and 'content' keys
 
     Returns
     -------
     rx.Component
-        A Reflex box component containing all rendered content elements.
+        Styled heading component via blog_heading
+    """
+    return blog_heading(obj["content"], obj["level"])
+
+
+def _render_paragraph(obj) -> rx.Component:
+    """
+    Render a paragraph content object using blog_paragraph component.
+
+    Parameters
+    ----------
+    obj : dict
+        Paragraph object with 'content' key containing text/markdown
+
+    Returns
+    -------
+    rx.Component
+        Styled paragraph via blog_paragraph
+    """
+    return blog_paragraph(obj["content"])
+
+
+def _render_markdown(obj) -> rx.Component:
+    """
+    Render a markdown content object using blog_markdown component.
+
+    Parameters
+    ----------
+    obj : dict
+        Markdown object with 'content' key
+
+    Returns
+    -------
+    rx.Component
+        Styled markdown via blog_markdown
+    """
+    return blog_markdown(obj["content"])
+
+
+def _render_image(obj) -> rx.Component:
+    """
+    Render an image content object using blog_image component.
+
+    Parameters
+    ----------
+    obj : dict
+        Image object with 'src', 'alt', and optional 'caption' keys
+
+    Returns
+    -------
+    rx.Component
+        Styled image via blog_image
+    """
+    return blog_image(obj["src"], obj["alt"], obj.get("caption", ""))
+
+
+def _render_button(obj) -> rx.Component:
+    """
+    Render a button content object using blog_button component.
+
+    Parameters
+    ----------
+    obj : dict
+        Button object with 'label' and 'url' keys
+
+    Returns
+    -------
+    rx.Component
+        Styled button via blog_button
+    """
+    return blog_button(obj["label"], obj["url"])
+
+
+def _render_list(obj) -> rx.Component:
+    """
+    Render a list content object using blog_list component.
+
+    Parameters
+    ----------
+    obj : dict
+        List object with 'markdown' key containing list in markdown format
+
+    Returns
+    -------
+    rx.Component
+        Styled list via blog_list
+    """
+    return blog_list(obj.get("markdown", ""))
+
+
+def markdown_content(post: BlogPost) -> rx.Component:
+    """
+    Render complete blog post content from parsed content objects.
+
+    Iterates through the blog post's content_objects list and renders each
+    object using the appropriate component type. Provides the main content
+    display for individual blog post pages.
+
+    Parameters
+    ----------
+    post : BlogPost
+        BlogPost object with parsed content_objects list
+
+    Returns
+    -------
+    rx.Component
+        A Reflex box component containing all rendered content elements in
+        order with consistent styling and spacing
 
     Notes
     -----
-    Content objects are rendered in order using rx.foreach with the
-    render_content_object function.
+    Content objects are rendered dynamically using rx.foreach with the
+    render_content_object function, allowing for flexible content structure
+    and easy addition of new content types.
     """
     return rx.box(
         rx.foreach(

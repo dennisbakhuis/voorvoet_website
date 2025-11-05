@@ -2,7 +2,7 @@
 import reflex as rx
 
 from ...theme import Colors, FontSizes
-from ...state import WebsiteState
+from ...states import WebsiteState
 from ...components import container
 
 
@@ -53,7 +53,7 @@ def header() -> rx.Component:
             rx.fragment()
         ),
     ]
-    
+
     mobile_nav_items = [
         rx.cond(
             WebsiteState.current_page_path != "/",
@@ -88,7 +88,7 @@ def header() -> rx.Component:
                 src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
                 width="300px",
                 height="90px",
-                
+
             ),
             rx.hstack(
                 rx.hstack(*nav_items, gap="20px", display=["none", "none", "flex"]),

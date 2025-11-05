@@ -3,7 +3,7 @@ import reflex as rx
 
 from .button import button
 from ..theme import Colors
-from ..state import WebsiteState
+from ..states import WebsiteState
 
 
 def modal() -> rx.Component:
