@@ -28,10 +28,9 @@ This is a **Reflex** web application for VoorVoet - Praktijk voor Podotherapie (
 
 ## Development Commands
 
-### Running the Application
+### Testing the Application
 ```bash
-reflex run              # Start development server
-reflex run --env prod   # Run in production mode
+reflex compile
 ```
 
 ### Building
@@ -56,7 +55,7 @@ uv add <package>        # Add new dependency
 
 ### State Management
 - Extend `WebsiteState` for new state variables
-- Use event handlers (methods) for state mutations  
+- Use event handlers (methods) for state mutations
 - Modal and navigation state already implemented
 
 ### Styling

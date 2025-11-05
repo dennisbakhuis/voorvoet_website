@@ -160,8 +160,6 @@ class Spacing:
         Bottom margin for blog content blocks.
     blog_image_margin : str
         Margin around blog images.
-    blog_button_margin : str
-        Margin around blog buttons.
     blog_caption_margin_top : str
         Top margin for blog image captions.
     """
@@ -185,7 +183,6 @@ class Spacing:
     blog_heading_margin_bottom = "1rem"
     blog_content_margin_bottom = "1rem"
     blog_image_margin = "2rem auto"
-    blog_button_margin = "2rem 0"
     blog_caption_margin_top = "0.5rem"
 
 
@@ -223,12 +220,6 @@ class Layout:
         Maximum width for blog post images.
     blog_image_border_radius : str
         Border radius for blog post images.
-    blog_button_border_radius : str
-        Border radius for blog buttons.
-    blog_button_padding_x : str
-        Horizontal padding for blog buttons.
-    blog_button_padding_y : str
-        Vertical padding for blog buttons.
     """
 
     image_max_width = "333px"
@@ -248,6 +239,3 @@ class Layout:
 
     blog_image_max_width = "800px"
     blog_image_border_radius = "8px"
-    blog_button_border_radius = "3px"
-    blog_button_padding_x = "0.8em"
-    blog_button_padding_y = "0.1em"

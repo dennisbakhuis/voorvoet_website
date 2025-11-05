@@ -98,7 +98,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
                                 ),
                             ),
                             rx.text(
-                                post.read_time.to(str) + " min leestijd",
+                                post.read_time.to(str) + " min leestijd",  # type: ignore
                                 color=Colors.text['muted'],
                                 font_size="0.85rem",
                             ),

@@ -11,8 +11,8 @@ from .blog_heading import blog_heading
 from .blog_paragraph import blog_paragraph
 from .blog_markdown import blog_markdown
 from .blog_image import blog_image
-from .blog_button import blog_button
 from .blog_list import blog_list
+from .button import button
 
 
 def render_content_object(obj) -> rx.Component:
@@ -147,7 +147,7 @@ def _render_image(obj) -> rx.Component:
 
 def _render_button(obj) -> rx.Component:
     """
-    Render a button content object using blog_button component.
+    Render a button content object using button component.
 
     Parameters
     ----------
@@ -157,9 +157,9 @@ def _render_button(obj) -> rx.Component:
     Returns
     -------
     rx.Component
-        Styled button via blog_button
+        Styled button via button component
     """
-    return blog_button(obj["label"], obj["url"])
+    return button(label=obj["label"], href=obj["url"])
 
 
 def _render_list(obj) -> rx.Component:

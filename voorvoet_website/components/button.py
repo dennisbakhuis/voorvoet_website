@@ -60,7 +60,7 @@ def button(
 
     button_content = rx.text(label)
 
-    if href:
+    if href is not None:
         return rx.link(
             button_content,
             href=href,

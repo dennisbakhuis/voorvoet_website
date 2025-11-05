@@ -1,5 +1,4 @@
 """Components module used across the Reflex web app"""
-from .blog_button import blog_button
 from .blog_card import blog_card
 from .blog_heading import blog_heading
 from .blog_image import blog_image
@@ -32,7 +31,6 @@ from .toast import toast
 
 
 __all__ = [
-    "blog_button",
     "blog_card",
     "blog_heading",
     "blog_image",
