@@ -19,7 +19,7 @@ def _get_blog_content_dir() -> Path:
     """Get the path to the blog content directory"""
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
-    return project_root / "voorvoet_website" / "blog_content"
+    return project_root / "voorvoet_website" / "data" / "blog_content"
 
 
 def calculate_read_time(content: str) -> int:

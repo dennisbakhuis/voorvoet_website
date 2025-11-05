@@ -8,7 +8,7 @@ from ...components import section, container, section_title
 
 def load_reimbursement_data() -> tuple[list[str], list[list[str]]]:
     """Load reimbursement data from JSON file and convert to list of lists"""
-    data_path = Path(__file__).parent.parent.parent / "data" / "vergoedingen_2025.json"
+    data_path = Path(__file__).parent.parent.parent / "data" / "reimbursements" / "reimbursements_2025.json"
     with open(data_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
