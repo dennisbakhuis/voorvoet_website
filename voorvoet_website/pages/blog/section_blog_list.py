@@ -15,24 +15,13 @@ def section_blog_list() -> rx.Component:
     """
     return rx.section(
         container(
-            # Section title
-            rx.heading(
-                "Laatste artikelen",
-                size="9",
-                color=Colors.text['heading'],
-                margin_bottom="3rem",
-                text_align="center",
-            ),
-
-            # Blog posts grid
             rx.cond(
                 BlogState.has_posts,
-                rx.grid(
+                rx.vstack(
                     rx.foreach(
                         BlogState.sorted_posts,
-                        blog_card,
+                        lambda post, index: blog_card(post, flip=index % 2 == 1),
                     ),
-                    columns="3",  # 3 columns
                     spacing="5",
                     width="100%",
                 ),
@@ -43,11 +32,9 @@ def section_blog_list() -> rx.Component:
                         color=Colors.text['muted'],
                         font_size=FontSizes.regular,
                     ),
-                    padding="4rem",
                     align_items="center",
                 ),
             ),
         ),
-        padding_y="4rem",
         background=Colors.backgrounds['white'],
     )
