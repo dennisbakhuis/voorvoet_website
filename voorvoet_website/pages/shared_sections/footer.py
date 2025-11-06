@@ -3,6 +3,59 @@ import reflex as rx
 
 from ...components import container, section, regular_text
 from ...theme import Colors, FontSizes
+from ...states import WebsiteState
+
+
+TRANSLATIONS = {
+    "nl": {
+        "location_eeftinksweg": "Locatie Eeftinksweg",
+        "location_beethovenlaan": "Locatie Beethovenlaan",
+        "monday": "Maandag",
+        "tuesday": "Dinsdag",
+        "wednesday": "Woensdag",
+        "thursday": "Donderdag",
+        "friday": "Vrijdag",
+        "kvk_number": "KvK nummer",
+        "practice_code": "Praktijkcode",
+        "bank_account": "Bankrekening",
+        "credits": "Credits",
+        "privacy_policy": "Privacy beleid",
+        "terms_conditions": "Algemene voorwaarden",
+        "made_with_love": "Gemaakt met ❤️ door Dennis",
+    },
+    "de": {
+        "location_eeftinksweg": "Standort Eeftinksweg",
+        "location_beethovenlaan": "Standort Beethovenlaan",
+        "monday": "Montag",
+        "tuesday": "Dienstag",
+        "wednesday": "Mittwoch",
+        "thursday": "Donnerstag",
+        "friday": "Freitag",
+        "kvk_number": "KvK Nummer",
+        "practice_code": "Praxiscode",
+        "bank_account": "Bankkonto",
+        "credits": "Credits",
+        "privacy_policy": "Datenschutzrichtlinie",
+        "terms_conditions": "Allgemeine Geschäftsbedingungen",
+        "made_with_love": "Mit ❤️ gemacht von Dennis",
+    },
+    "en": {
+        "location_eeftinksweg": "Location Eeftinksweg",
+        "location_beethovenlaan": "Location Beethovenlaan",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "kvk_number": "KvK Number",
+        "practice_code": "Practice Code",
+        "bank_account": "Bank Account",
+        "credits": "Credits",
+        "privacy_policy": "Privacy Policy",
+        "terms_conditions": "Terms & Conditions",
+        "made_with_love": "Made with ❤️ by Dennis",
+    },
+}
 
 
 def footer() -> rx.Component:
@@ -31,6 +84,18 @@ def footer() -> rx.Component:
     - Transitions to side-by-side layout on larger screens
     - Includes gentle wave clip-path styling at the top
     """
+    # Helper function to get translation based on current language
+    def get_translation(key: str) -> rx.Var:
+        return rx.cond(
+            WebsiteState.current_language == "nl",
+            TRANSLATIONS["nl"][key],
+            rx.cond(
+                WebsiteState.current_language == "de",
+                TRANSLATIONS["de"][key],
+                TRANSLATIONS["en"][key]
+            )
+        )
+
     return section(
         container(
             rx.box(
@@ -50,7 +115,7 @@ def footer() -> rx.Component:
                 rx.box(
                     rx.box(
                         regular_text(
-                            "Locatie Eeftinksweg",
+                            get_translation("location_eeftinksweg"),
                             color=Colors.text["muted"],
                             font_weight="700",
                             text_decoration="underline",
@@ -60,16 +125,16 @@ def footer() -> rx.Component:
                         regular_text("Eeftinksweg 13", color=Colors.text["secondary"]),
                         regular_text("7541 WE Enschede", color=Colors.text["secondary"], margin_bottom="0.20rem"),
                         rx.box(
-                            regular_text("Maandag", color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text(get_translation("monday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.00 - 17.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         rx.box(
-                            regular_text("Donderdag", color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text(get_translation("thursday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.00 - 17.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                             margin_bottom="0.15rem"
                         ),
                         regular_text(
-                            "Locatie Beethovenlaan",
+                            get_translation("location_beethovenlaan"),
                             color=Colors.text["muted"],
                             font_weight="700",
                             text_decoration="underline",
@@ -80,15 +145,15 @@ def footer() -> rx.Component:
                         regular_text("Beethovenlaan 10", color=Colors.text["secondary"]),
                         regular_text("7522 HJ Enschede", color=Colors.text["secondary"], margin_bottom="0.20rem"),
                         rx.box(
-                            regular_text("Dinsdag", color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text(get_translation("tuesday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.30 - 19.30", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         rx.box(
-                            regular_text("Woensdag", color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text(get_translation("wednesday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.30 - 17.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         rx.box(
-                            regular_text("Vrijdag", color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text(get_translation("friday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.00 - 13.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         flex="1",
@@ -131,26 +196,26 @@ def footer() -> rx.Component:
                         ),
                         rx.box(
                             rx.box(
-                                regular_text("KvK nummer", color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
+                                regular_text(get_translation("kvk_number"), color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
                                 regular_text("87984814", color=Colors.text["secondary"], display="inline-block"),
                                 margin_bottom="0.5rem"
                             ),
                             rx.box(
-                                regular_text("Praktijkcode", color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
+                                regular_text(get_translation("practice_code"), color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
                                 regular_text("26000993", color=Colors.text["secondary"], display="inline-block"),
                                 margin_bottom="0.5rem"
                             ),
                             rx.box(
-                                regular_text("Bankrekening", color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
+                                regular_text(get_translation("bank_account"), color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
                                 regular_text("NL18 KNAB 0515 1858 84", color=Colors.text["secondary"], display="inline-block"),
                             ),
                             flex="1",
                             margin_bottom="2rem"
                         ),
                         rx.box(
-                            rx.link("Credits", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
-                            rx.link("Privacy beleid", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
-                            rx.link("Algemene voorwaarden", href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, text_align=["center", "center", "left", "left", "left"])
+                            rx.link(get_translation("credits"), href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
+                            rx.link(get_translation("privacy_policy"), href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
+                            rx.link(get_translation("terms_conditions"), href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, text_align=["center", "center", "left", "left", "left"])
                         ),
                         display="flex",
                         flex_direction="column",
@@ -190,7 +255,7 @@ def footer() -> rx.Component:
                 ),
                 rx.box(
                     rx.link(
-                        "© Made with ❤️ by Dennis",
+                        rx.text("© ", get_translation("made_with_love")),
                         href="https://linkedin.com/in/dennisbakhuis",
                         color=Colors.text["muted"],
                         font_size=FontSizes.regular,

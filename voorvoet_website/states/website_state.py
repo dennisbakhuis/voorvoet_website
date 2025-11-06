@@ -4,6 +4,7 @@ This module contains the WebsiteState class which manages the core application
 state including navigation, modal dialogs, and toast notifications.
 """
 import reflex as rx
+from .page_title_translations import PAGE_TITLES
 
 
 class WebsiteState(rx.State):
@@ -225,20 +226,16 @@ class WebsiteState(rx.State):
         This method should be called on page load to synchronize the
         language state with the current route's [lang] parameter.
         """
-        # Get current path and extract language from it
         current_path = self.router.url.path
 
-        # Extract language from path (first segment after /)
         if current_path.startswith("/"):
             path_parts = current_path[1:].split("/")
             if path_parts and len(path_parts) > 0:
                 lang = path_parts[0]
-                # Validate and set language (ensure it's one of the supported languages)
                 if lang in ["nl", "de", "en"]:
                     self.current_language = lang
                     return
 
-        # Default to Dutch if no valid language found
         self.current_language = "nl"
 
     def set_language(self, lang: str):
@@ -270,3 +267,22 @@ class WebsiteState(rx.State):
         target_path = f"/{lang}{base_path}"
 
         return rx.redirect(target_path)
+
+    @rx.var
+    def page_title(self) -> str:
+        """Get the page title in the current language based on current route."""
+        current_path = self.router.url.path
+
+        if "/blog/" in current_path:
+            page_key = "blog"
+        elif "/informatie/" in current_path:
+            page_key = "information"
+        elif "/reimbursements/" in current_path:
+            page_key = "reimbursements"
+        elif "/contact/" in current_path:
+            page_key = "contact"
+        else:
+            page_key = "home"
+
+        # Get title from translations
+        return PAGE_TITLES.get(page_key, {}).get(self.current_language, PAGE_TITLES.get(page_key, {}).get("nl", "VoorVoet"))

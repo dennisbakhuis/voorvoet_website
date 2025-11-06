@@ -4,7 +4,7 @@ from typing import Union
 from ..theme import Colors, FontSizes, Spacing
 
 
-def regular_text(text: Union[str, list[str]], **props) -> rx.Component:
+def regular_text(text: Union[str, list[str], rx.Var], **props) -> rx.Component:
     """
     Create regular body text with consistent styling.
 
@@ -14,10 +14,11 @@ def regular_text(text: Union[str, list[str]], **props) -> rx.Component:
 
     Parameters
     ----------
-    text : str | list[str]
-        Single text string or list of paragraph strings.
+    text : str | list[str] | rx.Var
+        Single text string, list of paragraph strings, or an rx.Var containing text.
         When a list is provided, each string becomes a separate paragraph
         with automatic spacing between them.
+        When an rx.Var is provided (e.g., from translations), it's rendered as-is.
     **props : dict
         Additional style properties to apply to the text.
         These will override the default styles (font_size, line_height, color).
@@ -25,7 +26,7 @@ def regular_text(text: Union[str, list[str]], **props) -> rx.Component:
     Returns
     -------
     rx.Component
-        A Reflex text component (for single string) or box component
+        A Reflex text component (for single string or rx.Var) or box component
         (for list of paragraphs) with standard body text styling.
 
     Notes
@@ -40,6 +41,10 @@ def regular_text(text: Union[str, list[str]], **props) -> rx.Component:
         "color": Colors.text["heading"],
     }
     defaults.update(props)
+
+    # Handle rx.Var (e.g., from translations with rx.cond)
+    if isinstance(text, rx.Var):
+        return rx.text(text, **defaults)  # type: ignore
 
     if isinstance(text, str):
         return rx.text(text, **defaults)  # type: ignore

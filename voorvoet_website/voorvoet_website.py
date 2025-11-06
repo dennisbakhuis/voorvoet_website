@@ -69,7 +69,6 @@ app = rx.App(
     style={
         "font-family": 'Lato, ui-sans-serif, system-ui, sans-serif',
     },
-
 )
 
 # Redirect root paths to /nl/...
@@ -103,45 +102,45 @@ app.add_page(
     on_load=lambda: rx.redirect("/nl/contact/"),
 )
 
-# Dynamic language-prefixed routes using [lang] parameter
+
 app.add_page(
     component=page_home,
     route="/[lang]",
-    title="VoorVoet - Praktijk voor Podotherapie",
+    title=WebsiteState.page_title,  # type: ignore
     on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
     component=page_blog,
     route="/[lang]/blog/",
-    title="VoorVoet - Blog",
+    title=WebsiteState.page_title,  # type: ignore
     on_load=BlogState.load_posts,  # type: ignore
 )
 
 app.add_page(
     component=page_blog_post,
     route="/[lang]/blog/[slug]",
-    title="VoorVoet - Blog",
+    title=WebsiteState.page_title,  # type: ignore
     on_load=BlogState.load_post_by_slug,  # type: ignore
 )
 
 app.add_page(
     component=page_information,
     route="/[lang]/informatie/",
-    title="VoorVoet - Informatie",
+    title=WebsiteState.page_title,  # type: ignore
     on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
     component=page_reimbursements,
     route="/[lang]/reimbursements/",
-    title="VoorVoet - Vergoedingen",
+    title=WebsiteState.page_title,  # type: ignore
     on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
     component=page_contact,
     route="/[lang]/contact/",
-    title="VoorVoet - Contact",
+    title=WebsiteState.page_title,  # type: ignore
     on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )

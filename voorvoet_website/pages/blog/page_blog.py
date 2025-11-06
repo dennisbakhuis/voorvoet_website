@@ -14,7 +14,8 @@ def page_blog() -> rx.Component:
     Create the complete blog page with all sections.
 
     The blog page is composed of: header, hero banner, starter text,
-    blog list grid, footer, and modal components.
+    blog list grid, footer, and modal components. The page title is
+    dynamically set based on the current language.
 
     Returns
     -------
@@ -26,7 +27,6 @@ def page_blog() -> rx.Component:
         section_hero(),
         section_starter(),
         section_blog_list(),
-
         footer(),
         modal(),
     )
