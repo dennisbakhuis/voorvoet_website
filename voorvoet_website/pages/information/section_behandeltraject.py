@@ -1,6 +1,23 @@
 """Section explaining the podiatry treatment process."""
 import reflex as rx
 from ...components import container, section, image_text_section
+from ...utils.translations import get_translation
+
+
+TRANSLATIONS = {
+    "nl": {
+        "title": "Het behandeltraject",
+        "paragraph1": "We beginnen altijd met een uitgebreide intake om de klachten in kaart te brengen. Aan de hand daarvan voeren we een onderzoek uit. Dit kan bestaat veelal uit een inspectie, onderzoek van het looppatroon, een drukmeting en het testen van de functie van de voeten. Ook bekijken we het schoeisel waar je veel op loopt of waarin je juist veel klachten ervaart. Als er een therapie geïndiceerd is, dan bespreken we dat samen en bij akkoord wordt de therapie gestart. In het geval van het aanmeten van podotherapeutische zolen worden de zolen op korte termijn geleverd en vind er als je nieuw bij ons bent altijd een controle afspraak plaats. De therapie is ten allen tijde maatwerk en wordt afgestemd op de individuele situatie.",
+    },
+    "de": {
+        "title": "Der Behandlungsverlauf",
+        "paragraph1": "Wir beginnen immer mit einer ausführlichen Anamnese, um die Beschwerden zu erfassen. Auf dieser Grundlage führen wir eine Untersuchung durch. Diese besteht meist aus einer Inspektion, Untersuchung des Gangmusters, einer Druckmessung und dem Testen der Fußfunktion. Wir betrachten auch das Schuhwerk, in dem Sie viel gehen oder in dem Sie besonders viele Beschwerden haben. Wenn eine Therapie indiziert ist, besprechen wir dies gemeinsam und bei Zustimmung wird die Therapie begonnen. Im Falle des Anpassens von podotherapeutischen Einlagen werden die Einlagen kurzfristig geliefert und wenn Sie neu bei uns sind, findet immer ein Kontrolltermin statt. Die Therapie ist stets maßgeschneidert und wird auf die individuelle Situation abgestimmt.",
+    },
+    "en": {
+        "title": "The treatment process",
+        "paragraph1": "We always start with a comprehensive intake to map out the complaints. Based on that, we conduct an examination. This usually consists of an inspection, examination of the gait pattern, a pressure measurement and testing the function of the feet. We also look at the footwear you walk in a lot or in which you experience many complaints. If a therapy is indicated, we discuss this together and with approval the therapy is started. In the case of fitting podotherapeutic insoles, the insoles are delivered in the short term and if you are new to us, a follow-up appointment always takes place. The therapy is always customized and tailored to the individual situation.",
+    },
+}
 
 
 def section_behandeltraject() -> rx.Component:
@@ -19,14 +36,14 @@ def section_behandeltraject() -> rx.Component:
         step-by-step treatment process at the practice.
     """
     paragraphs = [
-        "We beginnen altijd met een uitgebreide intake om de klachten in kaart te brengen. Aan de hand daarvan voeren we een onderzoek uit. Dit kan bestaat veelal uit een inspectie, onderzoek van het looppatroon, een drukmeting en het testen van de functie van de voeten. Ook bekijken we het schoeisel waar je veel op loopt of waarin je juist veel klachten ervaart. Als er een therapie geïndiceerd is, dan bespreken we dat samen en bij akkoord wordt de therapie gestart. In het geval van het aanmeten van podotherapeutische zolen worden de zolen op korte termijn geleverd en vind er als je nieuw bij ons bent altijd een controle afspraak plaats. De therapie is ten allen tijde maatwerk en wordt afgestemd op de individuele situatie."
+        get_translation(TRANSLATIONS, "paragraph1")
     ]
-    
+
     return section(
         container(
             image_text_section(
                 image_src="/images/page_information/wandelen_zonder_pijn_in_de_voeten_voorvoet_podotherapie_enschede.jpg",
-                title="Het behandeltraject",
+                title=get_translation(TRANSLATIONS, "title"),
                 paragraphs=paragraphs,
                 image_position="left",
                 image_max_width="450px",

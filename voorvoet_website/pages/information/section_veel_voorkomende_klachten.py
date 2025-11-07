@@ -2,6 +2,44 @@
 import reflex as rx
 from ...components import container, section, section_title, regular_text, icon_list_item, column
 from ...theme import Colors, Layout, Spacing
+from ...utils.translations import get_translation
+
+
+TRANSLATIONS = {
+    "nl": {
+        "title": "Veel voorkomende klachten",
+        "intro": "Hieronder staat een algemene lijst van klachten die veel voorkomen in de praktijk. Neem bij twijfel of vragen gerust contact op.",
+        "item1": "Pijn in de voeten, hielpijn, voorvoetklachten, enkelklachten, peesontstekingen, overmatige eeltvorming of likdoorns, ingegroeide teennagels.",
+        "item2": "Voetafwijkingen zoals platvoeten, holvoeten, doorgezakte (voor)voeten, hamer- of klauwtenen.",
+        "item3": "Pijn in de onderbenen, knieën, heupen of rug die veroorzaakt wordt door problemen met de voeten of een afwijkende voetstand.",
+        "item4": "Vermoeide of pijnlijke voeten en/of benen na lang staan of lopen.",
+        "item5": "Peesontstekingen en verrekkingen.",
+        "item6": "Klachten als gevolg van diabetes, reuma of andere aandoeningen die invloed hebben op de voeten.",
+        "item7": "Pijn of ongemak tijdens het lopen of sporten.",
+    },
+    "de": {
+        "title": "Häufige Beschwerden",
+        "intro": "Unten finden Sie eine allgemeine Liste von Beschwerden, die in der Praxis häufig vorkommen. Nehmen Sie bei Zweifeln oder Fragen gerne Kontakt auf.",
+        "item1": "Schmerzen in den Füßen, Fersenschmerzen, Vorfußbeschwerden, Knöchelbeschwerden, Sehnenentzündungen, übermäßige Hornhautbildung oder Hühneraugen, eingewachsene Zehennägel.",
+        "item2": "Fußfehlstellungen wie Plattfüße, Hohlfüße, abgesackte (Vor-)Füße, Hammer- oder Krallenzehen.",
+        "item3": "Schmerzen in den Unterschenkeln, Knien, Hüften oder im Rücken, die durch Fußprobleme oder eine abweichende Fußstellung verursacht werden.",
+        "item4": "Müde oder schmerzende Füße und/oder Beine nach langem Stehen oder Gehen.",
+        "item5": "Sehnenentzündungen und Zerrungen.",
+        "item6": "Beschwerden als Folge von Diabetes, Rheuma oder anderen Erkrankungen, die die Füße beeinflussen.",
+        "item7": "Schmerzen oder Unbehagen beim Gehen oder Sport.",
+    },
+    "en": {
+        "title": "Common complaints",
+        "intro": "Below is a general list of complaints that are common in practice. Please feel free to contact us if you have any doubts or questions.",
+        "item1": "Pain in the feet, heel pain, forefoot complaints, ankle complaints, tendon inflammations, excessive callus formation or corns, ingrown toenails.",
+        "item2": "Foot deformities such as flat feet, hollow feet, collapsed (fore)feet, hammer or claw toes.",
+        "item3": "Pain in the lower legs, knees, hips or back caused by problems with the feet or an abnormal foot position.",
+        "item4": "Tired or painful feet and/or legs after standing or walking for a long time.",
+        "item5": "Tendon inflammations and strains.",
+        "item6": "Complaints as a result of diabetes, rheumatism or other conditions that affect the feet.",
+        "item7": "Pain or discomfort during walking or sports.",
+    },
+}
 
 
 def section_veel_voorkomende_klachten() -> rx.Component:
@@ -37,21 +75,21 @@ def section_veel_voorkomende_klachten() -> rx.Component:
     )
 
     text_column = column(
-        section_title("Veel voorkomende klachten", margin_bottom=Spacing.text_margin_bottom),
+        section_title(get_translation(TRANSLATIONS, "title"), margin_bottom=Spacing.text_margin_bottom),
         regular_text(
-            "Hieronder staat een algemene lijst van klachten die veel voorkomen in de praktijk. Neem bij twijfel of vragen gerust contact op.",
+            get_translation(TRANSLATIONS, "intro"),
             text_align="left",
             margin_bottom="1.5rem",
             color=Colors.text["content"],
         ),
         rx.vstack(
-            icon_list_item("fa-solid fa-circle", "Pijn in de voeten, hielpijn, voorvoetklachten, enkelklachten, peesontstekingen, overmatige eeltvorming of likdoorns, ingegroeide teennagels."),
-            icon_list_item("fa-solid fa-circle", "Voetafwijkingen zoals platvoeten, holvoeten, doorgezakte (voor)voeten, hamer- of klauwtenen."),
-            icon_list_item("fa-solid fa-circle", "Pijn in de onderbenen, knieën, heupen of rug die veroorzaakt wordt door problemen met de voeten of een afwijkende voetstand."),
-            icon_list_item("fa-solid fa-circle", "Vermoeide of pijnlijke voeten en/of benen na lang staan of lopen."),
-            icon_list_item("fa-solid fa-circle", "Peesontstekingen en verrekkingen."),
-            icon_list_item("fa-solid fa-circle", "Klachten als gevolg van diabetes, reuma of andere aandoeningen die invloed hebben op de voeten."),
-            icon_list_item("fa-solid fa-circle", "Pijn of ongemak tijdens het lopen of sporten."),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item1")),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item2")),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item3")),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item4")),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item5")),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item6")),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item7")),
             gap="0.5rem",
             align="start",
             width="100%",

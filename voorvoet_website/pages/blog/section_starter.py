@@ -3,6 +3,23 @@ import reflex as rx
 
 from ...theme import Colors
 from ...components import section, container, section_title, regular_text
+from ...utils.translations import get_translation
+
+
+TRANSLATIONS = {
+    "nl": {
+        "title": "Stap voor stap naar gezonde voeten: alles over podotherapie",
+        "intro_text": "Op deze pagina kun je allerlei interessante stukken vinden over voetgezondheid en podotherapie, samen met andere verwante onderwerpen. Hier delen we handige tips en nuttige inzichten om je voeten gelukkig en gezond te houden. Of het nu gaat om het vinden van de juiste schoenen, het begrijpen van podotherapie, of gewoon het leren waarderen van je voeten, we hebben allerlei leuke en informatieve artikelen om je te helpen. Neem gerust een kijkje en ontdek hoe je je voeten het beste kunt verzorgen!",
+    },
+    "de": {
+        "title": "Schritt für Schritt zu gesunden Füßen: alles über Podotherapie",
+        "intro_text": "Auf dieser Seite finden Sie verschiedene interessante Artikel über Fußgesundheit und Podotherapie sowie andere verwandte Themen. Hier teilen wir praktische Tipps und nützliche Einblicke, um Ihre Füße glücklich und gesund zu halten. Ob es darum geht, die richtigen Schuhe zu finden, Podotherapie zu verstehen oder einfach Ihre Füße zu schätzen zu lernen, wir haben verschiedene interessante und informative Artikel, die Ihnen helfen. Schauen Sie sich gerne um und entdecken Sie, wie Sie Ihre Füße am besten pflegen können!",
+    },
+    "en": {
+        "title": "Step by step to healthy feet: all about podiatry",
+        "intro_text": "On this page you can find various interesting articles about foot health and podiatry, along with other related topics. Here we share practical tips and useful insights to keep your feet happy and healthy. Whether it's finding the right shoes, understanding podiatry, or simply learning to appreciate your feet, we have various interesting and informative articles to help you. Feel free to take a look and discover how to best care for your feet!",
+    },
+}
 
 
 def section_starter() -> rx.Component:
@@ -21,11 +38,11 @@ def section_starter() -> rx.Component:
     return section(
         container(
             section_title(
-                "Stap voor stap naar gezonde voeten: alles over podotherapie",
+                get_translation(TRANSLATIONS, "title"),
                 margin_bottom=10,
             ),
             regular_text(
-                "Op deze pagina kun je allerlei interessante stukken vinden over voetgezondheid en podotherapie, samen met andere verwante onderwerpen. Hier delen we handige tips en nuttige inzichten om je voeten gelukkig en gezond te houden. Of het nu gaat om het vinden van de juiste schoenen, het begrijpen van podotherapie, of gewoon het leren waarderen van je voeten, we hebben allerlei leuke en informatieve artikelen om je te helpen. Neem gerust een kijkje en ontdek hoe je je voeten het beste kunt verzorgen!",
+                get_translation(TRANSLATIONS, "intro_text"),
                 color=Colors.text["content"],
             ),
         ),

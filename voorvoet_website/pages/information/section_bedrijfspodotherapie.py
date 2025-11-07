@@ -2,6 +2,47 @@
 import reflex as rx
 from ...components import container, section, section_title, regular_text, icon_list_item, column
 from ...theme import Colors, Layout, Spacing
+from ...utils.translations import get_translation
+
+
+TRANSLATIONS = {
+    "nl": {
+        "title": "Bedrijfspodotherapie via VoorVoet podotherapie Enschede",
+        "intro": "Bedrijfspodotherapie is een specifieke vorm van podotherapie die gericht is op het verbeteren van de gezondheid en het welzijn van werknemers. Het richt zich op het voorkomen en behandelen van voetklachten die ontstaan zijn door de werkomgeving, zoals bijvoorbeeld door het dragen van niet goed passende werkschoenen, het lange staan op harde ondergronden en repetitieve werkzaamheden. Ook als je voor je werk veel moet staan en lopen kan dit natuurlijk klachten geven.",
+        "includes_intro": "Bedrijfspodotherapie kan worden aangeboden als onderdeel van een bedrijfsgezondheidsprogramma en omvat onder meer:",
+        "item1": "Beoordeling van de werkomgeving en het werkverrichtingsproces",
+        "item2": "Advies over het dragen van geschikte schoenen en indien nodig het aanmeten van steunzolen welke geschikt zijn voor het werkschoeisel. Hiervoor geldt specifiek wet- en regelgeving.",
+        "item3": "Behandeling van voetklachten",
+        "item4": "Oefeningen voor de voeten en het verbeteren van de houding",
+        "item5": "Preventie van voetproblemen door het verbeteren van de werkomgeving en werkverrichtingsproces.",
+        "conclusion": "Bedrijfspodotherapie kan helpen bij het voorkomen en behandelen van voetklachten en verminderen van het ziekteverzuim en de kosten die daarmee gepaard gaan. Het kan ook bijdragen aan het verbeteren van de productiviteit en tevredenheid van de werknemers.",
+        "contact": "Neem voor meer informatie vrijblijvend contact op.",
+    },
+    "de": {
+        "title": "Betriebspodotherapie über VoorVoet Podotherapie Enschede",
+        "intro": "Betriebspodotherapie ist eine spezifische Form der Podotherapie, die darauf abzielt, die Gesundheit und das Wohlbefinden von Mitarbeitern zu verbessern. Sie konzentriert sich auf die Vorbeugung und Behandlung von Fußbeschwerden, die durch die Arbeitsumgebung entstehen, wie zum Beispiel durch das Tragen von nicht gut passenden Arbeitsschuhen, langes Stehen auf harten Oberflächen und repetitive Tätigkeiten. Auch wenn Sie für Ihre Arbeit viel stehen und gehen müssen, kann dies natürlich Beschwerden verursachen.",
+        "includes_intro": "Betriebspodotherapie kann als Teil eines betrieblichen Gesundheitsprogramms angeboten werden und umfasst unter anderem:",
+        "item1": "Beurteilung der Arbeitsumgebung und des Arbeitsprozesses",
+        "item2": "Beratung über das Tragen geeigneter Schuhe und bei Bedarf das Anpassen von Einlagen, die für Arbeitsschuhe geeignet sind. Hierfür gelten spezifische Gesetze und Vorschriften.",
+        "item3": "Behandlung von Fußbeschwerden",
+        "item4": "Übungen für die Füße und Verbesserung der Haltung",
+        "item5": "Prävention von Fußproblemen durch Verbesserung der Arbeitsumgebung und des Arbeitsprozesses.",
+        "conclusion": "Betriebspodotherapie kann helfen, Fußbeschwerden vorzubeugen und zu behandeln sowie Krankheitsausfälle und damit verbundene Kosten zu reduzieren. Sie kann auch zur Verbesserung der Produktivität und Zufriedenheit der Mitarbeiter beitragen.",
+        "contact": "Nehmen Sie für weitere Informationen unverbindlich Kontakt auf.",
+    },
+    "en": {
+        "title": "Company podotherapy via VoorVoet podotherapie Enschede",
+        "intro": "Company podotherapy is a specific form of podotherapy aimed at improving the health and well-being of employees. It focuses on preventing and treating foot complaints that arise from the work environment, such as wearing poorly fitting work shoes, prolonged standing on hard surfaces and repetitive tasks. If you have to stand and walk a lot for your work, this can naturally cause complaints.",
+        "includes_intro": "Company podotherapy can be offered as part of a corporate health program and includes:",
+        "item1": "Assessment of the work environment and work process",
+        "item2": "Advice on wearing suitable shoes and, if necessary, fitting insoles that are suitable for work shoes. Specific laws and regulations apply to this.",
+        "item3": "Treatment of foot complaints",
+        "item4": "Exercises for the feet and improving posture",
+        "item5": "Prevention of foot problems by improving the work environment and work process.",
+        "conclusion": "Company podotherapy can help prevent and treat foot complaints and reduce absenteeism and associated costs. It can also contribute to improving employee productivity and satisfaction.",
+        "contact": "Please contact us for more information without obligation.",
+    },
+}
 
 
 def section_bedrijfspodotherapie() -> rx.Component:
@@ -40,39 +81,39 @@ def section_bedrijfspodotherapie() -> rx.Component:
     )
 
     text_column = column(
-        section_title("Bedrijfspodotherapie via VoorVoet podotherapie Enschede", margin_bottom=Spacing.text_margin_bottom),
+        section_title(get_translation(TRANSLATIONS, "title"), margin_bottom=Spacing.text_margin_bottom),
         regular_text(
-            "Bedrijfspodotherapie is een specifieke vorm van podotherapie die gericht is op het verbeteren van de gezondheid en het welzijn van werknemers. Het richt zich op het voorkomen en behandelen van voetklachten die ontstaan zijn door de werkomgeving, zoals bijvoorbeeld door het dragen van niet goed passende werkschoenen, het lange staan op harde ondergronden en repetitieve werkzaamheden. Ook als je voor je werk veel moet staan en lopen kan dit natuurlijk klachten geven.",
+            get_translation(TRANSLATIONS, "intro"),
             text_align="left",
             margin_bottom="1.5rem",
             color=Colors.text["content"],
         ),
         regular_text(
-            "Bedrijfspodotherapie kan worden aangeboden als onderdeel van een bedrijfsgezondheidsprogramma en omvat onder meer:",
+            get_translation(TRANSLATIONS, "includes_intro"),
             text_align="left",
             margin_bottom="1rem",
             color=Colors.text["content"],
         ),
         rx.vstack(
-            icon_list_item("fa-solid fa-circle", "Beoordeling van de werkomgeving en het werkverrichtingsproces"),
-            icon_list_item("fa-solid fa-circle", "Advies over het dragen van geschikte schoenen en indien nodig het aanmeten van steunzolen welke geschikt zijn voor het werkschoeisel. Hiervoor geldt specifiek wet- en regelgeving."),
-            icon_list_item("fa-solid fa-circle", "Behandeling van voetklachten"),
-            icon_list_item("fa-solid fa-circle", "Oefeningen voor de voeten en het verbeteren van de houding"),
-            icon_list_item("fa-solid fa-circle", "Preventie van voetproblemen door het verbeteren van de werkomgeving en werkverrichtingsproces."),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item1")),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item2")),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item3")),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item4")),
+            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item5")),
             gap="0.5rem",
             align="start",
             width="100%",
             margin_left="1.5rem",
         ),
         regular_text(
-            "Bedrijfspodotherapie kan helpen bij het voorkomen en behandelen van voetklachten en verminderen van het ziekteverzuim en de kosten die daarmee gepaard gaan. Het kan ook bijdragen aan het verbeteren van de productiviteit en tevredenheid van de werknemers.",
+            get_translation(TRANSLATIONS, "conclusion"),
             text_align="left",
             margin_bottom="1rem",
             margin_top="1.5rem",
             color=Colors.text["content"],
         ),
         regular_text(
-            "Neem voor meer informatie vrijblijvend contact op.",
+            get_translation(TRANSLATIONS, "contact"),
             text_align="left",
             color=Colors.text["content"],
         ),

@@ -3,6 +3,20 @@ import reflex as rx
 from ...states import BlogState
 from ...theme import Colors, FontSizes
 from ...components import container, blog_card, section
+from ...utils.translations import get_translation
+
+
+TRANSLATIONS = {
+    "nl": {
+        "no_posts": "Nog geen blogposts beschikbaar.",
+    },
+    "de": {
+        "no_posts": "Noch keine Blogbeiträge verfügbar.",
+    },
+    "en": {
+        "no_posts": "No blog posts available yet.",
+    },
+}
 
 
 def section_blog_list() -> rx.Component:
@@ -33,7 +47,7 @@ def section_blog_list() -> rx.Component:
                 ),
                 rx.vstack(
                     rx.text(
-                        "Nog geen blogposts beschikbaar.",
+                        get_translation(TRANSLATIONS, "no_posts"),
                         color=Colors.text['muted'],
                         font_size=FontSizes.regular,
                     ),
