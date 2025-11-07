@@ -12,6 +12,7 @@ from typing import Optional
 
 from ..models import BlogPost
 from .content_parser import parse_blog_content
+from ..utils.translations import get_current_language
 
 
 _posts_cache: list[BlogPost] | None = None
@@ -206,34 +207,42 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         return None
 
 
-def load_all_posts(force_reload: bool = False) -> list[BlogPost]:
+def load_all_posts(force_reload: bool = False, language: Optional[str] = None) -> list[BlogPost]:
     """
-    Load all blog posts from the blog_content directory.
+    Load all blog posts from the blog_content directory for a specific language.
 
-    Scans the blog content directory for markdown files and parses each one
-    into BlogPost objects. Results are cached for performance unless force_reload
-    is specified.
+    Scans the blog content directory for markdown files matching the current language
+    and parses each one into BlogPost objects. Results are cached for performance unless
+    force_reload is specified.
 
     Parameters
     ----------
     force_reload : bool, optional
         If True, bypass cache and reload all posts from disk (default: False)
+    language : Optional[str], optional
+        Language code to load posts for (e.g., "nl", "en", "de").
+        If None, uses the current language from get_current_language()
 
     Returns
     -------
     list[BlogPost]
         List of BlogPost objects sorted by date in descending order (newest first)
+        for the specified language
 
     Notes
     -----
     - Posts are cached globally after first load
-    - Only .md files in the blog_content directory are processed
+    - Only .{language}.md files in the blog_content directory are processed
     - Invalid or malformed posts are skipped with warnings
+    - Falls back to Dutch (nl) if the requested language is not available
     """
     global _posts_cache
 
     if _posts_cache is not None and not force_reload:
         return _posts_cache
+
+    if language is None:
+        language = get_current_language()
 
     posts = []
     blog_dir = _get_blog_content_dir()
@@ -242,7 +251,9 @@ def load_all_posts(force_reload: bool = False) -> list[BlogPost]:
         print(f"Warning: Blog content directory not found: {blog_dir}")
         return []
 
-    for file_path in blog_dir.glob("*.md"):
+    # Load posts for the specified language
+    pattern = f"*.{language}.md"
+    for file_path in blog_dir.glob(pattern):
         post = parse_blog_post(file_path)
         if post:
             posts.append(post)
@@ -254,21 +265,27 @@ def load_all_posts(force_reload: bool = False) -> list[BlogPost]:
     return posts
 
 
-def get_post_by_slug(slug: str) -> Optional[BlogPost]:
+def get_post_by_slug(slug: str, language: Optional[str] = None) -> Optional[BlogPost]:
     """
-    Get a single blog post by its URL slug.
+    Get a single blog post by its URL slug for a specific language.
 
     Parameters
     ----------
     slug : str
         The URL-friendly slug identifier for the post
+    language : Optional[str], optional
+        Language code to load the post for (e.g., "nl", "en", "de").
+        If None, uses the current language from get_current_language()
 
     Returns
     -------
     Optional[BlogPost]
-        BlogPost object matching the slug, or None if not found
+        BlogPost object matching the slug in the specified language, or None if not found
     """
-    all_posts = load_all_posts()
+    if language is None:
+        language = get_current_language()
+
+    all_posts = load_all_posts(language=language)
 
     for post in all_posts:
         if post.slug == slug:

@@ -6,6 +6,29 @@ from ...components import container, section, modal, markdown_content
 from ..shared_sections import footer, header
 from .section_hero import section_hero
 from ...config import config
+from ...utils.translations import get_translation
+
+
+TRANSLATIONS = {
+    "nl": {
+        "reading_time": "min leestijd",
+        "back_to_blog": "← Terug naar blog overzicht",
+        "post_not_found": "Blogpost niet gevonden",
+        "translation_not_available": "Helaas is deze blogpost nog niet beschikbaar in het Nederlands. Schakel naar een andere taal om de inhoud te lezen.",
+    },
+    "de": {
+        "reading_time": "Min. Lesezeit",
+        "back_to_blog": "← Zurück zur Blog-Übersicht",
+        "post_not_found": "Blogbeitrag nicht gefunden",
+        "translation_not_available": "Leider ist dieser Blogbeitrag noch nicht auf Deutsch verfügbar. Wechseln Sie zu einer anderen Sprache, um den Inhalt zu lesen.",
+    },
+    "en": {
+        "reading_time": "min read",
+        "back_to_blog": "← Back to blog overview",
+        "post_not_found": "Blog post not found",
+        "translation_not_available": "Unfortunately, this blog post is not yet available in English. Switch to another language to read the content.",
+    },
+}
 
 
 def page_blog_post() -> rx.Component:
@@ -80,7 +103,7 @@ def page_blog_post() -> rx.Component:
                                                 ),
                                             ),
                                             rx.text(
-                                                BlogState.current_post.read_time.to(str) + " min leestijd",  # type: ignore (rx.cond not detected by type-checker)
+                                                BlogState.current_post.read_time.to(str) + " " + get_translation(TRANSLATIONS, "reading_time"),  # type: ignore (rx.cond not detected by type-checker)
                                                 color=Colors.text['content'],
                                                 font_size="1rem",
                                             ),
@@ -96,8 +119,8 @@ def page_blog_post() -> rx.Component:
                         markdown_content(BlogState.current_post),  # type: ignore (rx.cond not detected by type-checker)
 
                         rx.link(
-                            rx.text("← Terug naar blog overzicht"),
-                            href="/blog/",
+                            rx.text(get_translation(TRANSLATIONS, "back_to_blog")),
+                            href=f"/{BlogState.current_language}/blog/",
                             color=Colors.primary['500'],
                             font_size=FontSizes.regular,
                             font_weight="600",
@@ -113,10 +136,34 @@ def page_blog_post() -> rx.Component:
                         width="100%",
                     ),
 
-                    rx.text(
-                        "Blogpost niet gevonden",
-                        color=Colors.text['muted'],
-                        font_size=FontSizes.regular,
+                    rx.vstack(
+                        rx.text(
+                            get_translation(TRANSLATIONS, "post_not_found"),
+                            color=Colors.text['muted'],
+                            font_size=FontSizes.regular,
+                        ),
+                        rx.text(
+                            get_translation(TRANSLATIONS, "translation_not_available"),
+                            color=Colors.text['content'],
+                            font_size=FontSizes.regular,
+                            text_align="center",
+                        ),
+                        rx.link(
+                            rx.text(get_translation(TRANSLATIONS, "back_to_blog")),
+                            href=f"/{BlogState.current_language}/blog/",
+                            color=Colors.primary['500'],
+                            font_size=FontSizes.regular,
+                            font_weight="600",
+                            text_decoration="none",
+                            margin_top="1rem",
+                            _hover={
+                                "text_decoration": "underline",
+                            },
+                        ),
+                        spacing="3",
+                        align_items="center",
+                        width="100%",
+                        padding="2rem",
                     ),
                 ),
             ),

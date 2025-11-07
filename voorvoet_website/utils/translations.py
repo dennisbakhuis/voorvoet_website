@@ -1,6 +1,36 @@
 """Translation utilities for multilingual support."""
 import reflex as rx
-from ..states import WebsiteState
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..states import WebsiteState
+
+
+def get_current_language() -> str:
+    """
+    Get the current language from WebsiteState.
+
+    This function is used by the blog service to determine which language
+    files to load. It uses a deferred import to avoid circular dependencies.
+
+    Returns
+    -------
+    str
+        The current language code ("nl", "de", or "en"), defaults to "nl"
+    """
+    # Deferred import to avoid circular dependency
+    from ..states import WebsiteState
+
+    # Try to get the language from the current state context
+    try:
+        state = rx.State()  # type: ignore
+        if hasattr(state, 'current_language'):
+            return state.current_language  # type: ignore
+    except Exception:
+        pass
+
+    # Default to Dutch
+    return "nl"
 
 
 def get_translation(translations: dict, key: str) -> rx.Var:
@@ -34,6 +64,9 @@ def get_translation(translations: dict, key: str) -> rx.Var:
     ... }
     >>> get_translation(TRANSLATIONS, "greeting")
     """
+    # Deferred import to avoid circular dependency
+    from ..states import WebsiteState
+
     return rx.cond(
         WebsiteState.current_language == "nl",
         translations["nl"][key],

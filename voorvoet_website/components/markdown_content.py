@@ -157,9 +157,15 @@ def _render_button(obj) -> rx.Component:
     Returns
     -------
     rx.Component
-        Styled button via button component
+        Styled button via button component, centered horizontally
     """
-    return button(label=obj["label"], href=obj["url"])
+    return rx.box(
+        button(label=obj["label"], href=obj["url"]),
+        display="flex",
+        justify_content="center",
+        width="100%",
+        margin_y="1.5rem",
+    )
 
 
 def _render_list(obj) -> rx.Component:

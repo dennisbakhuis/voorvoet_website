@@ -41,22 +41,23 @@ class BlogState(WebsiteState):
 
     def load_posts(self):
         """
-        Load all blog posts from the blog_content directory.
+        Load all blog posts from the blog_content directory for the current language.
 
         Reads markdown files from the blog content directory and parses them
-        into BlogPost objects. Only loads once per session to improve performance.
+        into BlogPost objects. Reloads when language changes to show correct translations.
         Also detects the current language from the route.
         """
         # Detect language from route first
         self.detect_language_from_route()
 
-        if not self.posts_loaded:
-            self.all_posts = blog_service.load_all_posts()
-            self.posts_loaded = True
+        # Force reload if language changed to clear cache
+        blog_service.clear_cache()
+        self.all_posts = blog_service.load_all_posts(language=self.current_language)
+        self.posts_loaded = True
 
     def load_post_by_slug(self):
         """
-        Load a specific blog post by its slug from the route parameters.
+        Load a specific blog post by its slug from the route parameters for the current language.
 
         Retrieves the slug from Reflex's dynamic routing (automatically
         available as self.slug for routes like /blog/[slug]). First attempts
@@ -78,15 +79,17 @@ class BlogState(WebsiteState):
         if not slug:
             return
 
-        if not self.posts_loaded:
-            self.load_posts()
+        # Force reload to ensure we get the correct language version
+        blog_service.clear_cache()
+        self.all_posts = blog_service.load_all_posts(language=self.current_language)
+        self.posts_loaded = True
 
         for post in self.all_posts:
             if post.slug == slug:
                 self.current_post = post
                 return
 
-        self.current_post = blog_service.get_post_by_slug(slug)
+        self.current_post = blog_service.get_post_by_slug(slug, language=self.current_language)
 
     @rx.var
     def sorted_posts(self) -> list[BlogPost]:
