@@ -2,7 +2,24 @@
 import reflex as rx
 from ...theme import Colors
 from ...components import container, section, hero_banner
+from ...utils.translations import get_translation
 from .section_hero_cta import hero_cta_box
+
+
+TRANSLATIONS = {
+    "nl": {
+        "hero_title": "Voetklachten?",
+        "hero_subtitle": "Loop er niet mee door!",
+    },
+    "de": {
+        "hero_title": "Fußbeschwerden?",
+        "hero_subtitle": "Laufen Sie nicht damit weiter!",
+    },
+    "en": {
+        "hero_title": "Foot complaints?",
+        "hero_subtitle": "Don't walk with them!",
+    },
+}
 
 
 def section_hero() -> rx.Component:
@@ -20,11 +37,12 @@ def section_hero() -> rx.Component:
         including the main heading, subtitle, and CTA box positioned at the
         bottom of the hero area.
     """
+
     hero_content = container(
         rx.box(
             rx.vstack(
                 rx.text(
-                    "Voetklachten?",
+                    get_translation(TRANSLATIONS, "hero_title"),
                     color=Colors.primary["300"],
                     font_weight="900",
                     text_align="center",
@@ -32,7 +50,7 @@ def section_hero() -> rx.Component:
                     font_size=["3rem", "4rem", "5rem", "6rem"],
                 ),
                 rx.text(
-                    "Loop er niet mee door!",
+                    get_translation(TRANSLATIONS, "hero_subtitle"),
                     color=Colors.text["heading"],
                     text_align="center",
                     opacity="0.95",

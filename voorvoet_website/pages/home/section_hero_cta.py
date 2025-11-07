@@ -3,6 +3,32 @@ import reflex as rx
 from ...components import button, section_sub_title, icon_list_item
 from ...theme import Colors
 from ...config import config
+from ...utils.translations import get_translation
+
+
+TRANSLATIONS = {
+    "nl": {
+        "cta_title": "Maak direct digitaal een afspraak!",
+        "no_referral": "Geen verwijzing nodig!",
+        "quick_help": "Snel geholpen door een professional.",
+        "fastest_route": "Snelste weg naar de specialist!",
+        "make_appointment": "Maak een afspraak",
+    },
+    "de": {
+        "cta_title": "Vereinbaren Sie sofort online einen Termin!",
+        "no_referral": "Keine Überweisung erforderlich!",
+        "quick_help": "Schnelle Hilfe durch einen Fachmann.",
+        "fastest_route": "Schnellster Weg zum Spezialisten!",
+        "make_appointment": "Termin vereinbaren",
+    },
+    "en": {
+        "cta_title": "Make an appointment online right away!",
+        "no_referral": "No referral needed!",
+        "quick_help": "Quick help from a professional.",
+        "fastest_route": "Fastest route to the specialist!",
+        "make_appointment": "Make an appointment",
+    },
+}
 
 
 def hero_cta_box() -> rx.Component:
@@ -22,12 +48,12 @@ def hero_cta_box() -> rx.Component:
     """
     return rx.box(
         rx.vstack(
-            section_sub_title("Maak direct digitaal een afspraak!", text_align="center"),
+            section_sub_title(get_translation(TRANSLATIONS, "cta_title"), text_align="center"),
             rx.box(
                 rx.vstack(
-                    icon_list_item("fa-check-square-o", "Geen verwijzing nodig!"),
-                    icon_list_item("fa-check-square-o", "Snel geholpen door een professional."),
-                    icon_list_item("fa-check-square-o", "Snelste weg naar de specialist!"),
+                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "no_referral")),
+                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "quick_help")),
+                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "fastest_route")),
                     spacing="3",
                     align="start",
                 ),
@@ -36,7 +62,7 @@ def hero_cta_box() -> rx.Component:
                 justify_content="center"
             ),
             rx.box(
-                button("Maak een afspraak", href=config.link_plan_portal),
+                button(get_translation(TRANSLATIONS, "make_appointment"), href=config.link_plan_portal),
                 width="100%",
                 display="flex",
                 justify_content="center"
