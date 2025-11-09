@@ -3,8 +3,74 @@ import reflex as rx
 import json
 from pathlib import Path
 
-from ...theme import Colors
-from ...components import section, container, section_title
+from ...theme import Colors, FontSizes
+from ...components import section, container
+from ...utils.translations import get_translation
+from ...states import WebsiteState
+
+
+TRANSLATIONS = {
+    "nl": {
+        "title": "Vergoedingen zorgverzekeraars",
+        "intro_part1": "We willen graag allemaal weten waar we aan toe zijn. Daarom heeft de ",
+        "link_text": "Nederlandse Vereniging van Podotherapeuten (NVvP)",
+        "intro_part2": " een overzicht gemaakt van vergoedingen van zo goed als alle zorgpakketten van Nederlandse zorgverzekeraars. Podotherapie wordt meestal vergoed vanuit een aanvullend zorgpakket. Een verwijzing van de huisarts is meestal niet nodig.",
+        "intro_part3": "Hieronder is een kleine web-applicatie met zo goed als alle zorgverzekeraars. Type boven in de zoekbalk je verzekering in en zie direct wat er voor podotherapie wordt vergoedt vanuit jouw verzekering!",
+        "search_placeholder": "Typ om te zoeken...",
+        "sort_asc": "Kolom oplopend sorteren",
+        "sort_desc": "Kolom aflopend sorteren",
+        "previous": "Vorige",
+        "next": "Volgende",
+        "showing": "Tonen",
+        "of": "van",
+        "to": "tot",
+        "results": "resultaten",
+        "loading": "Laden...",
+        "no_records": "Geen resultaten gevonden",
+        "error": "Er is een fout opgetreden bij het ophalen van de gegevens",
+        "disclaimer": "De lijst wordt met grootste zorg door de NVvP samengesteld en VoorVoet - Praktijk voor podotherapie neemt deze lijst zo goed als mogelijk over. Mochten er echter toch onverhoopt onjuistheden of fouten optreden dan kunnen zowel de NVvP als VoorVoet - Praktijk voor podotherapie niet aansprakelijk worden gesteld. Aan de inhoud van deze pagina's en eventueel toegevoegde bijlagen kunnen geen rechten worden ontleend.",
+    },
+    "de": {
+        "title": "Versicherungserstattungen",
+        "intro_part1": "Wir alle möchten wissen, woran wir sind. Deshalb hat die ",
+        "link_text": "Niederländische Vereinigung der Podotherapeuten (NVvP)",
+        "intro_part2": " eine Übersicht über Erstattungen für fast alle Pflegepakete niederländischer Krankenversicherungen erstellt. Podotherapie wird normalerweise aus einer Zusatzversicherung erstattet. Eine Überweisung des Hausarztes ist normalerweise nicht erforderlich.",
+        "intro_part3": "Unten finden Sie eine kleine Web-Anwendung mit fast allen Krankenversicherungen. Geben Sie Ihre Versicherung in die Suchleiste ein und sehen Sie direkt, was für Podotherapie aus Ihrer Versicherung erstattet wird!",
+        "search_placeholder": "Zum Suchen tippen...",
+        "sort_asc": "Spalte aufsteigend sortieren",
+        "sort_desc": "Spalte absteigend sortieren",
+        "previous": "Zurück",
+        "next": "Weiter",
+        "showing": "Anzeigen",
+        "of": "von",
+        "to": "bis",
+        "results": "Ergebnisse",
+        "loading": "Lädt...",
+        "no_records": "Keine Ergebnisse gefunden",
+        "error": "Beim Abrufen der Daten ist ein Fehler aufgetreten",
+        "disclaimer": "Die Liste wird mit größter Sorgfalt von der NVvP zusammengestellt und VoorVoet - Praxis für Podotherapie übernimmt diese Liste so gut wie möglich. Sollten dennoch Ungenauigkeiten oder Fehler auftreten, können weder die NVvP noch VoorVoet - Praxis für Podotherapie haftbar gemacht werden. Aus dem Inhalt dieser Seiten und eventuell beigefügten Anhängen können keine Rechte abgeleitet werden.",
+    },
+    "en": {
+        "title": "Insurance Reimbursements",
+        "intro_part1": "We all want to know where we stand. That's why the ",
+        "link_text": "Dutch Association of Podotherapists (NVvP)",
+        "intro_part2": " has created an overview of reimbursements for almost all care packages from Dutch health insurers. Podotherapy is usually reimbursed from a supplementary insurance package. A referral from your GP is usually not required.",
+        "intro_part3": "Below is a small web application with almost all health insurers. Type your insurance in the search bar and see directly what is reimbursed for podotherapy from your insurance!",
+        "search_placeholder": "Type to search...",
+        "sort_asc": "Sort column ascending",
+        "sort_desc": "Sort column descending",
+        "previous": "Previous",
+        "next": "Next",
+        "showing": "Showing",
+        "of": "of",
+        "to": "to",
+        "results": "results",
+        "loading": "Loading...",
+        "no_records": "No results found",
+        "error": "An error occurred while fetching the data",
+        "disclaimer": "The list is compiled with the greatest care by the NVvP and VoorVoet - Practice for Podotherapy adopts this list as closely as possible. However, should inaccuracies or errors occur, neither the NVvP nor VoorVoet - Practice for Podotherapy can be held liable. No rights can be derived from the content of these pages and any attached appendices.",
+    },
+}
 
 
 def load_reimbursement_data() -> tuple[list[str], list[list[str]]]:
@@ -71,16 +137,95 @@ def section_reimbursement_table() -> rx.Component:
 
     return section(
         container(
-            section_title("Overzicht Vergoedingen 2025"),
+            rx.text(
+                get_translation(TRANSLATIONS, "title"),
+                font_size=FontSizes.section_sub_title,
+                font_weight="700",
+                color=Colors.text["subheading"],
+            ),
+            rx.box(
+                rx.text(
+                    get_translation(TRANSLATIONS, "intro_part1"),
+                    rx.link(
+                        get_translation(TRANSLATIONS, "link_text"),
+                        href="https://www.podotherapie.nl/vergoedingen/",
+                        color=Colors.text["link"],
+                        text_decoration="underline",
+                        is_external=True,
+                    ),
+                    get_translation(TRANSLATIONS, "intro_part2"),
+                    color=Colors.text["content"],
+                    font_size="1.125rem",
+                    margin_bottom="1rem",
+                ),
+                rx.text(
+                    get_translation(TRANSLATIONS, "intro_part3"),
+                    color=Colors.text["content"],
+                    font_size="1.125rem",
+                    margin_bottom="1rem",
+                ),
+            ),
 
             rx.box(
-                rx.data_table(
-                    data=data,
-                    columns=columns,
-                    search=True,
-                    sort=True,
-                    pagination=True,
-                    resizable=True,
+                rx.cond(
+                    WebsiteState.current_language == "nl",
+                    rx.data_table(
+                        data=data,
+                        columns=columns,
+                        search=True,
+                        sort=True,
+                        pagination={"limit": 12},
+                        resizable=True,
+                        custom_attrs={
+                            "language": {
+                                "search": {"placeholder": "Typ om te zoeken..."},
+                                "sort": {"sortAsc": "Kolom oplopend sorteren", "sortDesc": "Kolom aflopend sorteren"},
+                                "pagination": {"previous": "Vorige", "next": "Volgende", "showing": "Tonen", "of": "van", "to": "tot", "results": "resultaten"},
+                                "loading": "Laden...",
+                                "noRecordsFound": "Geen resultaten gevonden",
+                                "error": "Er is een fout opgetreden bij het ophalen van de gegevens"
+                            }
+                        },
+                    ),
+                    rx.cond(
+                        WebsiteState.current_language == "de",
+                        rx.data_table(
+                            data=data,
+                            columns=columns,
+                            search=True,
+                            sort=True,
+                            pagination={"limit": 12},
+                            resizable=True,
+                            custom_attrs={
+                                "language": {
+                                    "search": {"placeholder": "Zum Suchen tippen..."},
+                                    "sort": {"sortAsc": "Spalte aufsteigend sortieren", "sortDesc": "Spalte absteigend sortieren"},
+                                    "pagination": {"previous": "Zurück", "next": "Weiter", "showing": "Anzeigen", "of": "von", "to": "bis", "results": "Ergebnisse"},
+                                    "loading": "Lädt...",
+                                    "noRecordsFound": "Keine Ergebnisse gefunden",
+                                    "error": "Beim Abrufen der Daten ist ein Fehler aufgetreten"
+                                }
+                            },
+                        ),
+                        rx.data_table(
+                            data=data,
+                            columns=columns,
+                            search=True,
+                            sort=True,
+                            pagination={"limit": 12},
+                            resizable=True,
+                            custom_attrs={
+                                "language": {
+                                    "search": {"placeholder": "Type to search..."},
+                                    "sort": {"sortAsc": "Sort column ascending", "sortDesc": "Sort column descending"},
+                                    "pagination": {"previous": "Previous", "next": "Next", "showing": "Showing", "of": "of", "to": "to", "results": "results"},
+                                    "loading": "Loading...",
+                                    "noRecordsFound": "No results found",
+                                    "error": "An error occurred while fetching the data"
+                                }
+                            },
+                        ),
+                    ),
                 ),
                 width="100%",
                 margin_top="2rem",
@@ -90,7 +235,7 @@ def section_reimbursement_table() -> rx.Component:
 
             rx.box(
                 rx.text(
-                    "Let op: Deze informatie is indicatief. Controleer altijd de exacte voorwaarden bij uw zorgverzekeraar.",
+                    get_translation(TRANSLATIONS, "disclaimer"),
                     color=Colors.text["muted"],
                     font_size="16px",
                     font_style="italic",
@@ -99,5 +244,5 @@ def section_reimbursement_table() -> rx.Component:
             ),
         ),
         background=Colors.backgrounds["white"],
-        padding_y="4rem",
+        padding_y="1rem",
     )

@@ -165,7 +165,10 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
 
         metadata = post.metadata
         content = post.content
+        # Remove language suffix from filename (e.g., "001_post.nl" -> "001_post")
         filename = file_path.stem
+        if '.' in filename:
+            filename = filename.rsplit('.', 1)[0]
 
         date_str = str(metadata.get('date', ''))
         date = _parse_date(date_str, filename)
