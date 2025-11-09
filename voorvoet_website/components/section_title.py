@@ -1,9 +1,10 @@
 """Section title component for main section headings."""
+from typing import Union
 import reflex as rx
 from ..theme import Colors, FontSizes
 
 
-def section_title(text: str, **props) -> rx.Component:
+def section_title(text: Union[str,rx.Var], **props) -> rx.Component:
     """
     Create a section title with large, bold styling.
 

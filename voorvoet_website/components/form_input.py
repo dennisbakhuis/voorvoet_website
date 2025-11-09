@@ -4,7 +4,7 @@ from ..theme import Colors, FontSizes
 
 
 def form_input(
-    placeholder: str,
+    placeholder: str | rx.Var,
     value: str,
     on_change,
     input_type: str = "text",
@@ -19,7 +19,7 @@ def form_input(
 
     Parameters
     ----------
-    placeholder : str
+    placeholder : str | rx.Var
         Placeholder text for the input field.
     value : str
         Current value of the input (bound to state).

@@ -3,8 +3,6 @@ import reflex as rx
 from ...components import (
     container,
     section,
-    section_title,
-    regular_text,
     form_label,
     form_input,
     form_textarea,
@@ -13,6 +11,65 @@ from ...components import (
 from ...theme import Colors, FontSizes
 from ...states.contact_state import ContactState
 from ...config import config
+from ...utils.translations import get_translation
+
+
+TRANSLATIONS = {
+    "nl": {
+        "first_name": "Voornaam",
+        "first_name_placeholder": "Voornaam",
+        "last_name": "Achternaam",
+        "last_name_placeholder": "Achternaam",
+        "request_type": "Soort verzoek",
+        "call_back": "Bel mij terug",
+        "email_question": "Vraag per email",
+        "phone_label": "Telefoonnummer (mobiel of vast)",
+        "phone_tooltip": "Het telefoonnummer moet precies 10 cijfers bevatten",
+        "phone_placeholder": "0612345678",
+        "email_label": "E-mailadres",
+        "email_tooltip": "Vul een geldig e-mailadres in",
+        "email_placeholder": "voorbeeld@email.nl",
+        "description_label": "Beschrijving van je vraag",
+        "description_placeholder": "Jouw beschrijving...",
+        "submit_button": "Verstuur het verzoek",
+    },
+    "de": {
+        "first_name": "Vorname",
+        "first_name_placeholder": "Vorname",
+        "last_name": "Nachname",
+        "last_name_placeholder": "Nachname",
+        "request_type": "Art der Anfrage",
+        "call_back": "Rufen Sie mich zurück",
+        "email_question": "Frage per E-Mail",
+        "phone_label": "Telefonnummer (Mobil oder Festnetz)",
+        "phone_tooltip": "Die Telefonnummer muss genau 10 Ziffern enthalten",
+        "phone_placeholder": "0612345678",
+        "email_label": "E-Mail-Adresse",
+        "email_tooltip": "Geben Sie eine gültige E-Mail-Adresse ein",
+        "email_placeholder": "beispiel@email.de",
+        "description_label": "Beschreibung Ihrer Frage",
+        "description_placeholder": "Ihre Beschreibung...",
+        "submit_button": "Anfrage senden",
+    },
+    "en": {
+        "first_name": "First Name",
+        "first_name_placeholder": "First Name",
+        "last_name": "Last Name",
+        "last_name_placeholder": "Last Name",
+        "request_type": "Type of Request",
+        "call_back": "Call me back",
+        "email_question": "Question via email",
+        "phone_label": "Phone Number (mobile or landline)",
+        "phone_tooltip": "The phone number must contain exactly 10 digits",
+        "phone_placeholder": "0612345678",
+        "email_label": "Email Address",
+        "email_tooltip": "Enter a valid email address",
+        "email_placeholder": "example@email.com",
+        "description_label": "Description of your question",
+        "description_placeholder": "Your description...",
+        "submit_button": "Submit Request",
+    },
+}
 
 
 def section_contact_form() -> rx.Component:
@@ -48,28 +105,22 @@ def section_contact_form() -> rx.Component:
 
     return section(
         container(
-            section_title("Contact"),
-            regular_text(
-                "Heb je een vraag stel hem dan via onderstaand formulier. Je kunt antwoord krijgen via email of een terugbelverzoek sturen.",
-                color=Colors.text["content"],
-                margin_bottom="2rem",
-            ),
             rx.box(
                 rx.box(
                     rx.box(
-                        form_label("Voornaam", required=True),
+                        form_label(get_translation(TRANSLATIONS, "first_name"), required=True),
                         form_input(
-                            placeholder="Voornaam",
-                            value=ContactState.contact_first_name,
+                            placeholder=get_translation(TRANSLATIONS, "first_name_placeholder"),
+                            value=ContactState.contact_first_name,  # type: ignore
                             on_change=ContactState.set_contact_first_name,
                         ),
                         flex="1",
                     ),
                     rx.box(
-                        form_label("Achternaam", required=True),
+                        form_label(get_translation(TRANSLATIONS, "last_name"), required=True),
                         form_input(
-                            placeholder="Achternaam",
-                            value=ContactState.contact_last_name,
+                            placeholder=get_translation(TRANSLATIONS, "last_name_placeholder"),
+                            value=ContactState.contact_last_name,  # type: ignore
                             on_change=ContactState.set_contact_last_name,
                         ),
                         flex="1",
@@ -80,9 +131,9 @@ def section_contact_form() -> rx.Component:
                     flex_direction=["column", "column", "row", "row", "row"],
                 ),
                 rx.box(
-                    form_label("Soort verzoek", required=True),
+                    form_label(get_translation(TRANSLATIONS, "request_type"), required=True),
                     rx.radio(
-                        ["Bel mij terug", "Vraag per email"],
+                        [get_translation(TRANSLATIONS, "call_back"), get_translation(TRANSLATIONS, "email_question")],
                         value=ContactState.contact_request_type,
                         on_change=ContactState.set_contact_request_type,
                         direction="column",
@@ -93,15 +144,15 @@ def section_contact_form() -> rx.Component:
                     margin_bottom="1.5rem",
                 ),
                 rx.cond(
-                    ContactState.contact_request_type == "Bel mij terug",
+                    ContactState.contact_request_type == get_translation(TRANSLATIONS, "call_back"),
                     rx.box(
                         form_label(
-                            "Telefoonnummer (mobiel of vast)",
+                            get_translation(TRANSLATIONS, "phone_label"),
                             required=True,
-                            tooltip_text="Het telefoonnummer moet precies 10 cijfers bevatten",
+                            tooltip_text=get_translation(TRANSLATIONS, "phone_tooltip"),
                         ),
                         rx.el.input(
-                            placeholder="0612345678",
+                            placeholder=get_translation(TRANSLATIONS, "phone_placeholder"),
                             value=ContactState.contact_phone_value,
                             on_change=ContactState.set_contact_phone_number,
                             on_blur=ContactState.on_phone_blur,
@@ -127,26 +178,26 @@ def section_contact_form() -> rx.Component:
                     ),
                     rx.box(
                         form_label(
-                            "E-mailadres",
+                            get_translation(TRANSLATIONS, "email_label"),
                             required=True,
-                            tooltip_text="Vul een geldig e-mailadres in",
+                            tooltip_text=get_translation(TRANSLATIONS, "email_tooltip"),
                         ),
                         form_input(
-                            placeholder="voorbeeld@email.nl",
-                            value=ContactState.contact_email,
+                            placeholder=get_translation(TRANSLATIONS, "email_placeholder"),
+                            value=ContactState.contact_email,  # type: ignore
                             on_change=ContactState.set_contact_email,
                             input_type="email",
                             on_blur=ContactState.on_email_blur,
-                            show_error=ContactState.should_show_email_error,
+                            show_error=ContactState.should_show_email_error,  # type: ignore
                         ),
                         margin_bottom="1.5rem",
                     ),
                 ),
                 rx.box(
-                    form_label("Beschrijving van je vraag", required=True),
+                    form_label(get_translation(TRANSLATIONS, "description_label"), required=True),
                     form_textarea(
-                        placeholder="Jouw beschrijving...",
-                        value=ContactState.contact_description,
+                        placeholder=get_translation(TRANSLATIONS, "description_placeholder"),
+                        value=ContactState.contact_description,  # type: ignore
                         on_change=ContactState.set_contact_description,
                     ),
                     margin_bottom="1.5rem",
@@ -175,7 +226,7 @@ def section_contact_form() -> rx.Component:
                 ),
                 rx.box(
                     form_button(
-                        label="Verstuur het verzoek",
+                        label=get_translation(TRANSLATIONS, "submit_button"),
                         on_click=ContactState.submit_contact_form,
                         is_loading=ContactState.form_submitting,
                         is_disabled=~ContactState.can_submit_form,
@@ -188,9 +239,9 @@ def section_contact_form() -> rx.Component:
                 padding=["1.5rem", "1.5rem", "2rem", "2.5rem", "3rem"],
                 border_radius="8px",
                 box_shadow="0 4px 12px rgba(0, 0, 0, 0.1)",
-                max_width="700px",
                 style=form_styles,
             ),
         ),
         background_color=Colors.backgrounds["white"],
+        padding_top="1rem",
     )

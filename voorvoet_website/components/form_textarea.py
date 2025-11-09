@@ -4,7 +4,7 @@ from ..theme import Colors, FontSizes
 
 
 def form_textarea(
-    placeholder: str,
+    placeholder: str | rx.Var,
     value: str,
     on_change,
     min_height: str = "120px",
@@ -14,7 +14,7 @@ def form_textarea(
 
     Parameters
     ----------
-    placeholder : str
+    placeholder : str | rx.Var
         Placeholder text for the textarea.
     value : str
         Current value of the textarea (bound to state).

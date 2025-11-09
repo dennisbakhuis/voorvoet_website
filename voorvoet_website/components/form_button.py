@@ -4,7 +4,7 @@ from ..theme import Colors, FontSizes
 
 
 def form_button(
-    label: str,
+    label: str | rx.Var,
     on_click,
     is_loading: bool | rx.Var = False,
     is_disabled: bool | rx.Var = False,
@@ -20,7 +20,7 @@ def form_button(
 
     Parameters
     ----------
-    label : str
+    label : str | rx.Var
         Button text to display in normal/active state.
     on_click : callable
         Event handler function to call when button is clicked.
