@@ -228,6 +228,9 @@ class WebsiteState(rx.State):
         """
         current_path = self.router.url.path
 
+        # Update the current page path
+        self.current_page_path = current_path
+
         if current_path.startswith("/"):
             path_parts = current_path[1:].split("/")
             if path_parts and len(path_parts) > 0:

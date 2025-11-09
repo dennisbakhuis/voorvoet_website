@@ -1,6 +1,6 @@
 """Configuration-driven information cards section."""
 import reflex as rx
-from typing import List
+from typing import List, Union
 
 from ..theme import Spacing
 from .responsive_grid import responsive_grid
@@ -23,20 +23,20 @@ class CardConfig:
         Background color for the card. Default is "white".
     show_box : bool
         Whether to show card box border and shadow. Default is False.
-    button_text : str
+    button_text : str | rx.Var
         Text for the call-to-action button. Default is "Lees meer".
-    button_link : str
+    button_link : str | rx.Var
         URL for the call-to-action button. Default is "#".
     """
     def __init__(
         self,
-        title: str,
-        description: str,
+        title: Union[str, rx.Var],
+        description: Union[str, rx.Var],
         icon: str,
         bg_color: str = "white",
         show_box: bool = False,
-        button_text: str = "Lees meer",
-        button_link: str = "#"
+        button_text: Union[str, rx.Var] = "Lees meer",
+        button_link: Union[str, rx.Var] = "#"
     ):
         self.title = title
         self.description = description
@@ -82,24 +82,24 @@ def information_cards_grid(
     rx.Component
         A responsive grid component containing information cards.
     """
-    
+
     if spacing is None:
         spacing = Spacing.grid_gap
-    
+
     card_components = []
     for card in cards:
         card_components.append(
             information_card(
-                title=card.title,
-                description=card.description,
+                title=card.title,  # type: ignore
+                description=card.description,  # type: ignore
                 icon=card.icon,
                 bg_color=card.bg_color,
                 show_box=card.show_box,
-                button_text=card.button_text,
+                button_text=card.button_text,  # type: ignore
                 button_link=card.button_link
             )
         )
-    
+
     return responsive_grid(
         *card_components,
         columns=columns,

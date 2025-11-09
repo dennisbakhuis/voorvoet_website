@@ -4,6 +4,7 @@ import reflex as rx
 from ...components import container, section, information_cards_grid, CardConfig
 from ...theme import Colors
 from ...utils.translations import get_translation
+from ...states import WebsiteState
 
 
 TRANSLATIONS = {
@@ -98,7 +99,7 @@ def section_information() -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card1_button"),
-            button_link="/podotherapie"
+            button_link="/" + WebsiteState.current_language + "/informatie/#what-is-podiatry"
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card2_title"),
@@ -107,7 +108,7 @@ def section_information() -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card2_button"),
-            button_link="/klachten"
+            button_link="/" + WebsiteState.current_language + "/informatie/#veel-voorkomende-klachten"
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card3_title"),
@@ -116,7 +117,7 @@ def section_information() -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card3_button"),
-            button_link="/verzekering"
+            button_link="/" + WebsiteState.current_language + "/reimbursements/"
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card4_title"),
@@ -125,7 +126,7 @@ def section_information() -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card4_button"),
-            button_link="/behandeling"
+            button_link="/" + WebsiteState.current_language + "/informatie/#het-behandeltraject"
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card5_title"),
@@ -134,7 +135,7 @@ def section_information() -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card5_button"),
-            button_link="/bedrijven"
+            button_link="/" + WebsiteState.current_language + "/informatie/#bedrijfspodotherapie"
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card6_title"),
@@ -143,7 +144,7 @@ def section_information() -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card6_button"),
-            button_link="/doelgroep"
+            button_link="/" + WebsiteState.current_language + "/informatie/#for-everyone"
         )
     ]
 

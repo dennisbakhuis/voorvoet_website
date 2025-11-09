@@ -1,11 +1,12 @@
 """Information card component for displaying service or feature information."""
 import reflex as rx
+from typing import Union
 
 from ..theme import Colors, FontSizes, Layout
 from .button import button
 
 
-def information_card(title: str, description: str, icon: str, bg_color="white", show_box=True, button_text="Lees meer", button_link="#") -> rx.Component:
+def information_card(title: Union[str, rx.Var], description: Union[str, rx.Var], icon: str, bg_color="white", show_box=True, button_text: Union[str, rx.Var] = "Lees meer", button_link: Union[str, rx.Var] = "#") -> rx.Component:
     """
     Create an information card with icon, title, description, and button.
 

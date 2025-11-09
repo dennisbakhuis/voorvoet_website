@@ -1,11 +1,12 @@
 """Button component based on voorvoet.nl CTA button styling."""
 import reflex as rx
+from typing import Union
 from ..theme import Colors, FontSizes
 
 
 def button(
-    label: str,
-    href: str | None = None,
+    label: Union[str, rx.Var],
+    href: Union[str, rx.Var, None] = None,
     on_click=None
 ) -> rx.Component:
     """

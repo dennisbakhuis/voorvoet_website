@@ -214,8 +214,8 @@ def footer() -> rx.Component:
                         ),
                         rx.box(
                             rx.link(get_translation("credits"), href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
-                            rx.link(get_translation("privacy_policy"), href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
-                            rx.link(get_translation("terms_conditions"), href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, text_align=["center", "center", "left", "left", "left"])
+                            rx.link(get_translation("privacy_policy"), href="/documents/Privacy_beleid_v0.1.1.pdf", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"], is_external=True),
+                            rx.link(get_translation("terms_conditions"), href="/documents/Algemene_voorwaarden_v0.1.0.pdf", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, text_align=["center", "center", "left", "left", "left"], is_external=True)
                         ),
                         display="flex",
                         flex_direction="column",
