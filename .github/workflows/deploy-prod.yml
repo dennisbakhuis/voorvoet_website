@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: Deploy to VPS
       run: |
-        curl -X POST https://voorvoeten.nl/webhook/deploy-prod \
+        curl -X POST https://deploy.voorvoeten.nl/hooks/deploy-prod \
           -H "X-Webhook-Token: ${{ secrets.WEBHOOK_TOKEN }}" \
           -H "Content-Type: application/json" \
           -d '{"branch": "main"}'
