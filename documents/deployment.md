@@ -8,10 +8,11 @@ This document describes the complete deployment process for deploying this Refle
 2. [Initial Server Configuration](#2-initial-server-configuration)
 3. [SSL Certificate Setup (Cloudflare)](#3-ssl-certificate-setup-cloudflare)
 4. [DNS Configuration](#4-dns-configuration)
-5. [Application Setup](#5-application-setup)
-6. [Systemd Services](#6-systemd-services)
-7. [Webhook Configuration](#7-webhook-configuration)
-8. [Deployment Scripts](#8-deployment-scripts)
+5. [Nginx Configuration](#5-nginx-configuration)
+6. [Application Setup](#6-application-setup)
+7. [Systemd Services](#7-systemd-services)
+8. [Webhook Configuration](#8-webhook-configuration)
+9. [Deployment Scripts](#9-deployment-scripts)
 
 ---
 
@@ -160,6 +161,20 @@ In Cloudflare dashboard, navigate to **DNS → Records**:
 - **Proxy status**: Proxied (orange cloud)
 - **TTL**: Auto
 
+**Dev subdomain A record:**
+- **Type**: A
+- **Name**: dev
+- **IPv4 address**: `<your-vps-ip>`
+- **Proxy status**: Proxied (orange cloud)
+- **TTL**: Auto
+
+**Deploy subdomain A record (for webhooks):**
+- **Type**: A
+- **Name**: deploy
+- **IPv4 address**: `<your-vps-ip>`
+- **Proxy status**: Proxied (orange cloud)
+- **TTL**: Auto
+
 ### SSL/TLS Settings
 
 Navigate to **SSL/TLS → Overview**:
@@ -167,7 +182,198 @@ Navigate to **SSL/TLS → Overview**:
 
 ---
 
-## 5. Application Setup
+## 5. Nginx Configuration
+
+Nginx acts as a reverse proxy, routing incoming HTTPS traffic to the appropriate Reflex application (production or development) and handling SSL/TLS termination. It also routes webhook requests to the webhook service.
+
+### Create Nginx Site Configuration
+
+Create the Nginx configuration file:
+
+```bash
+vi /etc/nginx/sites-available/voorvoeten.nl.conf
+```
+
+Add the following configuration:
+
+```nginx
+server {
+    listen 80;
+    server_name voorvoeten.nl www.voorvoeten.nl;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name voorvoeten.nl www.voorvoeten.nl;
+
+    ssl_certificate /etc/ssl/cloudflare/voorvoeten.nl/cert.pem;
+    ssl_certificate_key /etc/ssl/cloudflare/voorvoeten.nl/key.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+
+    access_log /var/www/voorvoeten.nl/logs/access.log;
+    error_log /var/www/voorvoeten.nl/logs/error.log;
+
+    location /api/ {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /_event {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    location / {
+        proxy_pass http://localhost:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 80;
+    server_name dev.voorvoeten.nl;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name dev.voorvoeten.nl;
+
+    ssl_certificate /etc/ssl/cloudflare/voorvoeten.nl/cert.pem;
+    ssl_certificate_key /etc/ssl/cloudflare/voorvoeten.nl/key.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+
+    access_log /var/www/dev.voorvoeten.nl/logs/access.log;
+    error_log /var/www/dev.voorvoeten.nl/logs/error.log;
+
+    location /api/ {
+        proxy_pass http://localhost:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /_event {
+        proxy_pass http://localhost:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    location / {
+        proxy_pass http://localhost:8001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    server_name deploy.voorvoeten.nl;
+
+    ssl_certificate /etc/ssl/cloudflare/voorvoeten.nl/cert.pem;
+    ssl_certificate_key /etc/ssl/cloudflare/voorvoeten.nl/key.pem;
+
+    location /hooks/ {
+        proxy_pass http://localhost:9000/hooks/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+This configuration defines three server blocks:
+
+**Production site (voorvoeten.nl):**
+- Redirects HTTP to HTTPS
+- Proxies `/api/` requests to backend on port 3000
+- Proxies `/_event` (WebSocket) to backend on port 3000
+- Proxies all other requests to frontend on port 8000
+- Logs access and errors to production logs directory
+
+**Development site (dev.voorvoeten.nl):**
+- Same structure as production but uses ports 3001 and 8001
+- Separate logs in the development directory
+
+**Webhook endpoint (deploy.voorvoeten.nl):**
+- Proxies webhook requests to the webhook service on port 9000
+- Accessible at `https://deploy.voorvoeten.nl/hooks/deploy-prod` and `https://deploy.voorvoeten.nl/hooks/deploy-dev`
+
+### Enable the Site
+
+Create a symbolic link to enable the site:
+
+```bash
+ln -s /etc/nginx/sites-available/voorvoeten.nl.conf /etc/nginx/sites-enabled/
+```
+
+### Test Nginx Configuration
+
+Verify the configuration syntax is correct:
+
+```bash
+nginx -t
+```
+
+You should see output indicating the configuration is valid. If there are errors, review the configuration file for typos.
+
+### Restart Nginx
+
+Apply the configuration by restarting Nginx:
+
+```bash
+systemctl restart nginx
+```
+
+Verify Nginx is running:
+
+```bash
+systemctl status nginx
+```
+
+---
+
+## 6. Application Setup
 
 This section sets up the Reflex application in two separate environments: production and development. Each environment will run independently with its own codebase, configuration, and logs.
 
@@ -210,7 +416,7 @@ The development environment tracks the `dev` branch, allowing you to test change
 
 ---
 
-## 6. Systemd Services
+## 7. Systemd Services
 
 Systemd services allow the Reflex applications to run continuously in the background, automatically restart on failure, and start on system boot. We'll create two services: one for production and one for development.
 
@@ -316,7 +522,7 @@ You should see "active (running)" in the output for both services.
 
 ---
 
-## 7. Webhook Configuration
+## 8. Webhook Configuration
 
 Webhooks enable automated deployments. When you push code to GitHub, you can configure GitHub Actions or other CI/CD tools to send an HTTP request to your server, which then triggers the deployment script. The webhook service listens for these requests and executes the appropriate deployment script based on authentication and the webhook ID.
 
@@ -427,7 +633,7 @@ systemctl status webhook.service
 
 ---
 
-## 8. Deployment Scripts
+## 9. Deployment Scripts
 
 The deployment scripts automate the process of updating the application when new code is pushed to GitHub. Each script pulls the latest code from the appropriate Git branch, installs any new dependencies, and restarts the service. All deployment actions are logged for troubleshooting.
 

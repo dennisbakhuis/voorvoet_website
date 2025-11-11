@@ -1,25 +1,28 @@
 """Order insoles section promoting extra insole purchases."""
 import reflex as rx
-from ...components import container, section, image_text_section
+from ...components import container, section, image_text_section, button
 from ...theme import Colors
 from ...utils.translations import get_translation
 
 
 TRANSLATIONS = {
     "nl": {
-        "title": "Bestel een extra paar zolen online",
-        "paragraph1": "Een extra paar steunzolen kan handig zijn om bijvoorbeeld met een ander paar schoenen te gebruiken, bijvoorbeeld in sport- of wandelschoenen. Dit scheelt niet alleen gedoe met wisselen maar verlengt ook de levensduur van de podotherapeutische zolen.",
-        "paragraph2": "Wij werken samen met andere medische disciplines zoals bijvoorbeeld huisartsen, medisch pedicures en fysiotherapeuten om de beste zorg te bieden aan onze patiënten. Onze praktijk is toegankelijk voor iedereen - van kinderen tot actievelingen met blessures en ouderen met voet- of voetgerelateerde klachten.",
+        "title": "Extra paar podotherapeutische zolen",
+        "paragraph1": "Een extra paar zolen kan handig zijn om bijvoorbeeld met een ander paar schoenen te gebruiken, bijvoorbeeld in uw sport- of wandelschoenen. Dit scheelt niet alleen gedoe met wisselen maar verlengt ook de levensduur van de zolen.",
+        "paragraph2": "Een extra paar zolen kan alleen als u al eens eerder bij VoorVoet bent geweest en wij een digitale scan van de voet hebben. Als het langer dan een jaar geleden is dat u een scan van u voet heeft laten maken is het raadzaam om een controle in te plannen.",
+        "button": "Bestel een extra paar",
     },
     "de": {
-        "title": "Bestellen Sie online ein zusätzliches Paar Einlagen",
-        "paragraph1": "Ein zusätzliches Paar Stützeinlagen kann praktisch sein, um sie beispielsweise mit einem anderen Paar Schuhen zu verwenden, etwa in Sport- oder Wanderschuhen. Dies erspart nicht nur den Aufwand des Wechselns, sondern verlängert auch die Lebensdauer der podotherapeutischen Einlagen.",
-        "paragraph2": "Wir arbeiten mit anderen medizinischen Disziplinen wie Hausärzten, medizinischen Fußpflegern und Physiotherapeuten zusammen, um unseren Patienten die beste Versorgung zu bieten. Unsere Praxis ist für jeden zugänglich - von Kindern bis zu aktiven Menschen mit Verletzungen und Senioren mit Fuß- oder fußbezogenen Beschwerden.",
+        "title": "Zusätzliches Paar podotherapeutische Einlagen",
+        "paragraph1": "Ein zusätzliches Paar Einlagen kann praktisch sein, um sie beispielsweise mit einem anderen Paar Schuhen zu verwenden, etwa in Ihren Sport- oder Wanderschuhen. Dies erspart nicht nur den Aufwand des Wechselns, sondern verlängert auch die Lebensdauer der Einlagen.",
+        "paragraph2": "Ein zusätzliches Paar Einlagen ist nur möglich, wenn Sie bereits bei VoorVoet waren und wir einen digitalen Scan Ihres Fußes haben. Wenn der Scan Ihres Fußes länger als ein Jahr zurückliegt, ist es ratsam, eine Kontrolle zu vereinbaren.",
+        "button": "Bestellen Sie ein zusätzliches Paar",
     },
     "en": {
-        "title": "Order an extra pair of insoles online",
-        "paragraph1": "An extra pair of support insoles can be handy to use with a different pair of shoes, for example in sports or hiking shoes. This not only saves the hassle of switching but also extends the lifespan of the podotherapeutic insoles.",
-        "paragraph2": "We work together with other medical disciplines such as general practitioners, medical pedicurists and physiotherapists to provide the best care to our patients. Our practice is accessible to everyone - from children to active people with injuries and elderly with foot or foot-related complaints.",
+        "title": "Extra pair of podotherapeutic insoles",
+        "paragraph1": "An extra pair of insoles can be handy to use with a different pair of shoes, for example in your sports or hiking shoes. This not only saves the hassle of switching but also extends the lifespan of the insoles.",
+        "paragraph2": "An extra pair of insoles is only possible if you have been to VoorVoet before and we have a digital scan of your foot. If it has been longer than a year since you had a scan of your foot, it is advisable to schedule a check-up.",
+        "button": "Order an extra pair",
     },
 }
 
@@ -45,7 +48,6 @@ def section_order_insoles() -> rx.Component:
         get_translation(TRANSLATIONS, "paragraph2")
     ]
 
-    # Create section without button to avoid reactive variable issue with if statement
     return section(
         container(
             image_text_section(
@@ -53,6 +55,15 @@ def section_order_insoles() -> rx.Component:
                 title=get_translation(TRANSLATIONS, "title"),
                 paragraphs=paragraphs,
                 image_position="right"
+            ),
+            rx.box(
+                button(
+                    label=get_translation(TRANSLATIONS, "button"),
+                    href="/order-insoles"
+                ),
+                display="flex",
+                justify_content="center",
+                margin_top="2rem"
             )
         ),
         id="order-insoles",
