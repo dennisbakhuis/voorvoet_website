@@ -1,0 +1,17 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to VPS
+      run: |
+        curl -X POST https://voorvoeten.nl/webhook/deploy-prod \
+          -H "X-Webhook-Token: ${{ secrets.WEBHOOK_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d '{"branch": "main"}'

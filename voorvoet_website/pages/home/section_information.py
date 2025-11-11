@@ -9,7 +9,7 @@ from ...states import WebsiteState
 
 TRANSLATIONS = {
     "nl": {
-        "card1_title": "Wat doet een podotherapeut?",
+        "card1_title": "Wat doet een podotherapeut? haha✅",
         "card1_description": "Podotherapie (dus niet podologie, zie onze blog) behandelt diverse voet- en voetgerelateerde klachten die voortvloeien uit een afwijkende voetstand. Van nagelklachten tot lage rugpijn, en alles wat ertussenin zit.",
         "card1_button": "Wat doen we precies",
         "card2_title": "Veel voorkomende klachten",
