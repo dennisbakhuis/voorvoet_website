@@ -7,6 +7,8 @@ from ...components import (
     form_input,
     form_textarea,
     form_button,
+    form_radio,
+    form_select,
 )
 from ...theme import Colors, FontSizes
 from ...utils.translations import get_translation
@@ -107,7 +109,6 @@ def section_order_form() -> rx.Component:
     return section(
         container(
             rx.box(
-                # Name fields
                 rx.box(
                     rx.box(
                         form_label(get_translation(TRANSLATIONS, "first_name"), required=True),
@@ -132,7 +133,6 @@ def section_order_form() -> rx.Component:
                     margin_bottom="1.5rem",
                     flex_direction=["column", "column", "row", "row", "row"],
                 ),
-                # Email field
                 rx.box(
                     form_label(
                         get_translation(TRANSLATIONS, "email_label"),
@@ -144,10 +144,11 @@ def section_order_form() -> rx.Component:
                         value=OrderInsolesState.email,  # type: ignore
                         on_change=OrderInsolesState.set_email,
                         input_type="email",
+                        on_blur=OrderInsolesState.on_email_blur,
+                        show_error=OrderInsolesState.should_show_email_error,  # type: ignore
                     ),
                     margin_bottom="1.5rem",
                 ),
-                # Birth date field
                 rx.box(
                     form_label(get_translation(TRANSLATIONS, "birth_date_label"), required=True),
                     form_input(
@@ -155,39 +156,36 @@ def section_order_form() -> rx.Component:
                         value=OrderInsolesState.birth_date,  # type: ignore
                         on_change=OrderInsolesState.set_birth_date,
                         input_type="text",
+                        on_blur=OrderInsolesState.on_birth_date_blur,
+                        show_error=OrderInsolesState.should_show_birth_date_error,  # type: ignore
                     ),
                     margin_bottom="1.5rem",
+                    max_width="250px",
                 ),
-                # Insole type radio buttons
                 rx.box(
                     form_label(get_translation(TRANSLATIONS, "insole_type_label"), required=True),
-                    rx.radio(
-                        [
+                    form_radio(
+                        items=[
                             get_translation(TRANSLATIONS, "insole_type_daily"),
                             get_translation(TRANSLATIONS, "insole_type_sport"),
                             get_translation(TRANSLATIONS, "insole_type_work"),
                         ],
                         value=OrderInsolesState.insole_type,
                         on_change=OrderInsolesState.set_insole_type,
-                        direction="column",
-                        spacing="2",
-                        color=Colors.text["content"],
-                        font_size=FontSizes.regular,
                     ),
                     margin_bottom="1.5rem",
                 ),
-                # Quantity field
                 rx.box(
                     form_label(get_translation(TRANSLATIONS, "quantity_label"), required=True),
-                    form_input(
-                        placeholder=get_translation(TRANSLATIONS, "quantity_placeholder"),
-                        value=OrderInsolesState.quantity,  # type: ignore
+                    form_select(
+                        items=["1", "2", "3"],
+                        value=OrderInsolesState.quantity,
                         on_change=OrderInsolesState.set_quantity,
-                        input_type="number",
+                        placeholder=get_translation(TRANSLATIONS, "quantity_placeholder"),
                     ),
                     margin_bottom="1.5rem",
+                    max_width="250px",
                 ),
-                # Comments field
                 rx.box(
                     form_label(get_translation(TRANSLATIONS, "comments_label"), required=False),
                     form_textarea(
@@ -197,11 +195,12 @@ def section_order_form() -> rx.Component:
                     ),
                     margin_bottom="1.5rem",
                 ),
-                # Submit button
                 rx.box(
                     form_button(
                         label=get_translation(TRANSLATIONS, "submit_button"),
                         on_click=OrderInsolesState.submit_order,
+                        is_loading=OrderInsolesState.form_submitting,
+                        is_disabled=~OrderInsolesState.can_submit_form,
                     ),
                     display="flex",
                     justify_content=["center", "center", "flex-end", "flex-end", "flex-end"],

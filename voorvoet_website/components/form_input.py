@@ -43,20 +43,6 @@ def form_input(
     rx.Component
         A styled input component with consistent theming and optional
         error state.
-
-    Examples
-    --------
-    Basic text input:
-        >>> form_input("Enter name", value=state.name, on_change=state.set_name)
-
-    Email input with error state:
-        >>> form_input(
-        ...     "email@example.com",
-        ...     value=state.email,
-        ...     on_change=state.set_email,
-        ...     input_type="email",
-        ...     show_error=state.email_error
-        ... )
     """
     base_props = {
         "placeholder": placeholder,
@@ -82,18 +68,15 @@ def form_input(
     if max_length:
         base_props["max_length"] = max_length
 
-    # Handle error border conditionally
     if isinstance(show_error, bool):
         base_props["border"] = "3px solid red" if show_error else f"1px solid {Colors.borders['light']}"
     else:
-        # show_error is a reactive Var
         base_props["border"] = rx.cond(
             show_error,
             "3px solid red",
             f"1px solid {Colors.borders['light']}",
         )
 
-    # Use rx.el.input for custom attributes support
     if custom_attrs:
         base_props["custom_attrs"] = custom_attrs
         return rx.el.input(**base_props)
