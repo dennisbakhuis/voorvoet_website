@@ -1,6 +1,6 @@
 """Reusable image-text section component to eliminate layout duplication."""
 import reflex as rx
-from typing import Optional, Union
+from typing import Optional, Union, Sequence
 
 from ..theme import Layout, Spacing
 from .column import column
@@ -10,12 +10,12 @@ from .button import button
 
 
 def image_text_section(
-    image_src: str,
-    title: str,
-    paragraphs: Union[str, list[str]],
+    image_src: Union[str, rx.Var],
+    title: Union[str, rx.Var],
+    paragraphs: Union[str, rx.Var, Sequence[Union[str, rx.Var]]],
     image_position: str = "left",
-    button_text: Optional[str] = None,
-    button_link: Optional[str] = None,
+    button_text: Optional[Union[str, rx.Var]] = None,
+    button_link: Optional[Union[str, rx.Var]] = None,
     image_max_width: Optional[str] = None,
     **section_props
 ) -> rx.Component:
@@ -29,19 +29,20 @@ def image_text_section(
 
     Parameters
     ----------
-    image_src : str
+    image_src : str | rx.Var
         Path or URL to the image to display.
-    title : str
+    title : str | rx.Var
         Section title text.
-    paragraphs : str | list[str]
-        Single paragraph string or list of paragraph strings.
+    paragraphs : str | rx.Var | Sequence[str | rx.Var]
+        Single paragraph string or sequence of paragraph strings.
         Multiple paragraphs are automatically spaced.
+        Can be reactive variables from translations.
     image_position : str, optional
         Position of image relative to text: "left" or "right".
         Default is "left".
-    button_text : str | None, optional
+    button_text : str | rx.Var | None, optional
         Text for optional call-to-action button. Default is None.
-    button_link : str | None, optional
+    button_link : str | rx.Var | None, optional
         URL for optional call-to-action button. Default is None.
     image_max_width : str | None, optional
         Override for image maximum width. If None, uses Layout.image_max_width.
@@ -60,7 +61,7 @@ def image_text_section(
     Both button_text and button_link must be provided for the button to appear.
     """
 
-    if isinstance(paragraphs, str):
+    if isinstance(paragraphs, (str, rx.Var)):
         paragraph_list = [paragraphs]
     else:
         paragraph_list = paragraphs

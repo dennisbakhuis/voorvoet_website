@@ -14,6 +14,7 @@ Language-prefixed routes (nl, de, en):
 /[lang]/informatie/ : Information page
 /[lang]/reimbursements/ : Insurance reimbursements page
 /[lang]/contact/ : Contact form page
+/[lang]/order-insoles/ : Order insoles page
 
 Root redirects (automatically redirect to /nl/...):
 / → /nl
@@ -21,6 +22,7 @@ Root redirects (automatically redirect to /nl/...):
 /informatie/ → /nl/informatie/
 /reimbursements/ → /nl/reimbursements/
 /contact/ → /nl/contact/
+/order-insoles/ → /nl/order-insoles/
 
 Notes
 -----
@@ -31,7 +33,7 @@ All routes support language prefixes for multi-language support.
 
 import reflex as rx
 
-from .pages import page_home, page_blog, page_blog_post, page_information, page_reimbursements, page_contact
+from .pages import page_home, page_blog, page_blog_post, page_information, page_reimbursements, page_contact, page_order_insoles
 from .states import BlogState, WebsiteState
 
 
@@ -57,6 +59,11 @@ def redirect_to_nl_reimbursements() -> rx.Component:
 
 def redirect_to_nl_contact() -> rx.Component:
     """Redirect root contact path to Dutch contact page."""
+    return rx.fragment()
+
+
+def redirect_to_nl_order_insoles() -> rx.Component:
+    """Redirect root order-insoles path to Dutch order insoles page."""
     return rx.fragment()
 
 
@@ -102,6 +109,12 @@ app.add_page(
     on_load=lambda: rx.redirect("/nl/contact/"),
 )
 
+app.add_page(
+    component=redirect_to_nl_order_insoles,
+    route="/order-insoles/",
+    on_load=lambda: rx.redirect("/nl/order-insoles/"),
+)
+
 
 app.add_page(
     component=page_home,
@@ -141,6 +154,13 @@ app.add_page(
 app.add_page(
     component=page_contact,
     route="/[lang]/contact/",
+    title=WebsiteState.page_title,  # type: ignore
+    on_load=WebsiteState.detect_language_from_route,  # type: ignore
+)
+
+app.add_page(
+    component=page_order_insoles,
+    route="/[lang]/order-insoles/",
     title=WebsiteState.page_title,  # type: ignore
     on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )

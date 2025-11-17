@@ -1,18 +1,19 @@
-# Email service for sending contact form notifications
+"""Email service for sending contact form and order notifications."""
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 import logging
 from datetime import datetime
 
 from ..config import config
 from ..models.contact_form import ContactForm
 
-# Configure logging
+if TYPE_CHECKING:
+    from ..states.order_insoles_state import OrderInsolesState
+
 logger = logging.getLogger(__name__)
 
-# Dutch day and month names
 DUTCH_DAYS = [
     "Maandag", "Dinsdag", "Woensdag", "Donderdag",
     "Vrijdag", "Zaterdag", "Zondag"
@@ -25,15 +26,18 @@ DUTCH_MONTHS = [
 
 
 def format_dutch_datetime(dt: datetime) -> str:
-    """Format datetime in Dutch human-readable format
+    """
+    Format datetime in Dutch human-readable format.
 
-    Example: Maandag 5 april 2025 om 11:47
+    Parameters
+    ----------
+    dt : datetime
+        The datetime to format.
 
-    Args:
-        dt: The datetime to format
-
-    Returns:
-        str: Formatted datetime string in Dutch
+    Returns
+    -------
+    str
+        Formatted datetime string in Dutch (e.g., "Maandag 5 april 2025 om 11:47").
     """
     day_name = DUTCH_DAYS[dt.weekday()]
     day = dt.day
@@ -45,15 +49,19 @@ def format_dutch_datetime(dt: datetime) -> str:
 
 
 def send_contact_form_email(form: ContactForm) -> bool:
-    """Send an email notification when a contact form is submitted
-
-    Args:
-        form: The ContactForm instance containing submission data
-
-    Returns:
-        bool: True if email was sent successfully, False otherwise
     """
-    # Get SMTP configuration
+    Send an email notification when a contact form is submitted.
+
+    Parameters
+    ----------
+    form : ContactForm
+        The ContactForm instance containing submission data.
+
+    Returns
+    -------
+    bool
+        True if email was sent successfully, False otherwise.
+    """
     smtp_host = config.smtp_host
     smtp_port = config.smtp_port
     smtp_username = config.smtp_username
@@ -61,29 +69,24 @@ def send_contact_form_email(form: ContactForm) -> bool:
     from_email = config.smtp_from_email
     to_email = config.smtp_to_email
 
-    # Validate configuration
     if not all([smtp_username, smtp_password, from_email, to_email]):
         logger.error("SMTP configuration incomplete. Check environment variables.")
         return False
 
     try:
-        # Get current timestamp in Dutch format
         timestamp = format_dutch_datetime(datetime.now())
 
-        # Create email message
         msg = MIMEMultipart("alternative")
         msg["Subject"] = f"Nieuw contactformulier: {form.request_type}"
         msg["From"] = from_email
         msg["To"] = to_email
 
-        # Create email body
         contact_method = ""
         if form.request_type == "Bel mij terug":
             contact_method = f"Telefoonnummer: {form.phone.value}"
         else:
             contact_method = f"E-mail: {form.email.value}"
 
-        # Plain text version
         text_body = f"""
 Nieuw contactformulier inzending
 
@@ -97,7 +100,6 @@ Bericht:
 {form.description}
 """
 
-        # HTML version
         html_body = f"""
 <html>
 <head></head>
@@ -114,19 +116,107 @@ Bericht:
 </html>
 """
 
-        # Attach parts
         part1 = MIMEText(text_body, "plain")
         part2 = MIMEText(html_body, "html")
         msg.attach(part1)
         msg.attach(part2)
 
-        # Send email
         with smtplib.SMTP(smtp_host, smtp_port) as server:
-            server.starttls()  # Enable TLS encryption
+            server.starttls()
             server.login(smtp_username, smtp_password)
             server.send_message(msg)
 
         logger.info(f"Contact form email sent successfully to {to_email}")
+        return True
+
+    except smtplib.SMTPAuthenticationError as e:
+        logger.error(f"SMTP authentication failed: {e}")
+        return False
+    except smtplib.SMTPException as e:
+        logger.error(f"SMTP error occurred: {e}")
+        return False
+    except Exception as e:
+        logger.error(f"Unexpected error sending email: {e}")
+        return False
+
+
+def send_order_insoles_email(order_state: "OrderInsolesState") -> bool:
+    """
+    Send an email notification when an order insoles form is submitted.
+
+    Parameters
+    ----------
+    order_state : OrderInsolesState
+        The OrderInsolesState instance containing order data.
+
+    Returns
+    -------
+    bool
+        True if email was sent successfully, False otherwise.
+    """
+    smtp_host = config.smtp_host
+    smtp_port = config.smtp_port
+    smtp_username = config.smtp_username
+    smtp_password = config.smtp_password
+    from_email = config.smtp_from_email
+    to_email = config.smtp_to_email
+
+    if not all([smtp_username, smtp_password, from_email, to_email]):
+        logger.error("SMTP configuration incomplete. Check environment variables.")
+        return False
+
+    try:
+        timestamp = format_dutch_datetime(datetime.now())
+
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = f"Nieuw bestelling extra paar zolen: {order_state.first_name} {order_state.last_name}"
+        msg["From"] = from_email
+        msg["To"] = to_email
+
+        text_body = f"""
+Nieuwe zoolbestelling
+
+Ontvangen: {timestamp}
+
+Naam: {order_state.first_name} {order_state.last_name}
+E-mail: {order_state.email}
+Geboortedatum: {order_state.birth_date}
+Soort zolen: {order_state.insole_type}
+Aantal: {order_state.quantity}
+
+Opmerkingen:
+{order_state.comments if order_state.comments.strip() else "(geen opmerkingen)"}
+"""
+
+        html_body = f"""
+<html>
+<head></head>
+<body>
+    <h2>Nieuwe zoolbestelling</h2>
+    <p><em>Ontvangen: {timestamp}</em></p>
+    <hr style="border: none; border-top: 1px solid #ddd; margin: 1rem 0;">
+    <p><strong>Naam:</strong> {order_state.first_name} {order_state.last_name}</p>
+    <p><strong>E-mail:</strong> {order_state.email}</p>
+    <p><strong>Geboortedatum:</strong> {order_state.birth_date}</p>
+    <p><strong>Soort zolen:</strong> {order_state.insole_type}</p>
+    <p><strong>Aantal:</strong> {order_state.quantity}</p>
+    <h3>Opmerkingen:</h3>
+    <p>{order_state.comments.replace(chr(10), '<br>') if order_state.comments.strip() else "<em>(geen opmerkingen)</em>"}</p>
+</body>
+</html>
+"""
+
+        part1 = MIMEText(text_body, "plain")
+        part2 = MIMEText(html_body, "html")
+        msg.attach(part1)
+        msg.attach(part2)
+
+        with smtplib.SMTP(smtp_host, smtp_port) as server:
+            server.starttls()
+            server.login(smtp_username, smtp_password)
+            server.send_message(msg)
+
+        logger.info(f"Order insoles email sent successfully to {to_email}")
         return True
 
     except smtplib.SMTPAuthenticationError as e:
