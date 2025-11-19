@@ -65,6 +65,7 @@ def section_veel_voorkomende_klachten() -> rx.Component:
             height="auto",
             border_radius=Layout.image_border_radius,
             box_shadow=Layout.image_box_shadow,
+            loading="lazy",
         ),
         size=Layout.image_column_size,
         display="flex",

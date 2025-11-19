@@ -47,10 +47,8 @@ class BlogState(WebsiteState):
         into BlogPost objects. Reloads when language changes to show correct translations.
         Also detects the current language from the route.
         """
-        # Detect language from route first
         self.detect_language_from_route()
 
-        # Force reload if language changed to clear cache
         blog_service.clear_cache()
         self.all_posts = blog_service.load_all_posts(language=self.current_language)
         self.posts_loaded = True
@@ -71,7 +69,6 @@ class BlogState(WebsiteState):
         routing system and is accessible as self.slug when this method
         is called from a route with a [slug] parameter.
         """
-        # Detect language from route first
         self.detect_language_from_route()
 
         slug = self.slug
@@ -79,7 +76,6 @@ class BlogState(WebsiteState):
         if not slug:
             return
 
-        # Force reload to ensure we get the correct language version
         blog_service.clear_cache()
         self.all_posts = blog_service.load_all_posts(language=self.current_language)
         self.posts_loaded = True

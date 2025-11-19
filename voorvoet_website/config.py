@@ -135,5 +135,4 @@ class Config(BaseSettings):
     )
 
 
-# Singleton instance
 config = Config()

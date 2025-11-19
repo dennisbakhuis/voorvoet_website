@@ -2,7 +2,7 @@
 import reflex as rx
 
 from ...components import container, section, regular_text
-from ...theme import Colors, FontSizes
+from ...theme import Colors, FontSizes, Layout
 from ...states import WebsiteState
 
 
@@ -84,8 +84,20 @@ def footer() -> rx.Component:
     - Transitions to side-by-side layout on larger screens
     - Includes gentle wave clip-path styling at the top
     """
-    # Helper function to get translation based on current language
     def get_translation(key: str) -> rx.Var:
+        """
+        Get translation for a key based on current language.
+
+        Parameters
+        ----------
+        key : str
+            Translation key to look up in TRANSLATIONS dict.
+
+        Returns
+        -------
+        rx.Var
+            Reactive variable containing the translated text for the current language.
+        """
         return rx.cond(
             WebsiteState.current_language == "nl",
             TRANSLATIONS["nl"][key],
@@ -104,13 +116,14 @@ def footer() -> rx.Component:
                         src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
                         alt="VoorVoet - Praktijk voor podotherapie",
                         width="100%",
-                        max_width="300px",
-                        margin_top="-25px"
+                        max_width=["300px", "300px", "clamp(200px, 98.04vw - 552.94px, 300px)", "300px"],
+                        margin_top="-25px",
+                        loading="lazy",
                     ),
                     display="flex",
-                    justify_content=["center", "center", "center", "center", "flex-start"],
-                    flex=["none", "none", "none", "0 0 30%", "0 0 30%"],
-                    margin_bottom=["2rem", "2rem", "2rem", "0", "0"]
+                    justify_content=["center", "center", "center", "flex-start"],
+                    flex=["none", "none", "none", "0 0 30%"],
+                    margin_bottom=["2rem", "2rem", "2rem", "0"]
                 ),
                 rx.box(
                     rx.box(
@@ -156,10 +169,10 @@ def footer() -> rx.Component:
                             regular_text(get_translation("friday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.00 - 13.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
-                        flex="1",
-                        text_align=["center", "center", "left", "left", "left"],
-                        margin_bottom=["2rem", "2rem", "0", "0", "0"],
-                        padding_x=["20px", "20px", "20px", "20px", "20px"],
+                        flex=["1", "1", "0 1 auto", "1"],
+                        text_align=["center", "center", "left", "left"],
+                        margin_bottom=["2rem", "2rem", "0", "0"],
+                        padding_x=["1.25rem", "1.25rem", "0.5rem", "1.25rem"],
                     ),
                     rx.box(
                         rx.box(
@@ -175,7 +188,7 @@ def footer() -> rx.Component:
                                 ),
                                 spacing="2",
                                 align="center",
-                                justify_content=["center", "center", "flex-start", "flex-start", "flex-start"]
+                                justify_content=["center", "center", "flex-start", "flex-start"]
                             ),
                             rx.hstack(
                                 rx.html(f'<i class="fa fa-envelope" style="color: {Colors.text["secondary"]}; font-size: 20px;"/>'),
@@ -189,7 +202,7 @@ def footer() -> rx.Component:
                                 ),
                                 spacing="2",
                                 align="center",
-                                justify_content=["center", "center", "flex-start", "flex-start", "flex-start"]
+                                justify_content=["center", "center", "flex-start", "flex-start"]
                             ),
                             spacing="1rem",
                             margin_bottom="2rem"
@@ -207,34 +220,35 @@ def footer() -> rx.Component:
                             ),
                             rx.box(
                                 regular_text(get_translation("bank_account"), color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
-                                regular_text("NL18 KNAB 0515 1858 84", color=Colors.text["secondary"], display="inline-block"),
+                                regular_text("NL18 KNAB 0515 1858 84", color=Colors.text["secondary"], display="inline-block", word_break="break-word"),
                             ),
                             flex="1",
-                            margin_bottom="2rem"
+                            margin_bottom="2rem",
+                            max_width=["none", "none", "280px", "none"]
                         ),
                         rx.box(
-                            rx.link(get_translation("credits"), href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"]),
-                            rx.link(get_translation("privacy_policy"), href="/documents/Privacy_beleid_v0.1.1.pdf", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left", "left"], is_external=True),
-                            rx.link(get_translation("terms_conditions"), href="/documents/Algemene_voorwaarden_v0.1.0.pdf", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, text_align=["center", "center", "left", "left", "left"], is_external=True)
+                            rx.link(get_translation("credits"), href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left"]),
+                            rx.link(get_translation("privacy_policy"), href="/documents/Privacy_beleid_v0.1.1.pdf", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left"], is_external=True),
+                            rx.link(get_translation("terms_conditions"), href="/documents/Algemene_voorwaarden_v0.1.0.pdf", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, text_align=["center", "center", "left", "left"], is_external=True)
                         ),
                         display="flex",
                         flex_direction="column",
-                        flex="1",
-                        text_align=["center", "center", "left", "left", "left"]
+                        flex=["1", "1", "0 1 auto", "1"],
+                        text_align=["center", "center", "left", "left"]
                     ),
-                    display=["block", "block", "flex", "flex", "flex"],
-                    gap=["0", "0", "2rem", "2rem", "2rem"],
-                    flex=["none", "none", "none", "0 0 70%", "0 0 70%"]
+                    display=["block", "block", "flex", "flex"],
+                    gap=["0", "0", "1rem", "2rem"],
+                    flex=["none", "none", "none", "0 0 70%"]
                 ),
-                display=["block", "block", "block", "flex", "flex"],
-                gap=["0", "0", "0", "2rem", "2rem"],
-                align_items=["center", "center", "center", "flex-start", "flex-start"],
-                text_align=["center", "center", "center", "left", "left"]
+                display=Layout.responsive_flex,
+                gap=["0", "0", "0", "2rem"],
+                align_items=["center", "center", "center", "flex-start"],
+                text_align=["center", "center", "center", "left"]
             ),
             rx.box(
                 rx.box(
                     rx.link(
-                        rx.image(src="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png", height="60px"),
+                        rx.image(src="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png", height="60px", loading="lazy"),
                         href="https://www.podotherapie.nl/",
                         is_external=True
                     ),
@@ -244,14 +258,14 @@ def footer() -> rx.Component:
                 ),
                 rx.box(
                     rx.link(
-                        rx.image(src="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png", height="60px"),
+                        rx.image(src="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png", height="60px", loading="lazy"),
                         href="https://www.kwaliteitsregisterparamedici.nl/kwaliteitsregister/paramedici/33997",
                         is_external=True
                     ),
                     display="flex",
                     justify_content="center",
                     flex="1",
-                    margin_top=["1rem", "1rem", "0", "0", "0"],
+                    margin_top=["1rem", "1rem", "0", "0"],
                 ),
                 rx.box(
                     rx.link(
@@ -263,7 +277,7 @@ def footer() -> rx.Component:
                         text_decoration="none",
                         _hover={"text_decoration": "underline", "color": Colors.primary["700"]},
                         is_external=True,
-                        margin_top=["1rem", "1rem", "0", "0", "0"],
+                        margin_top=["1rem", "1rem", "0", "0"],
 
                     ),
                     display="flex",

@@ -18,10 +18,8 @@ def get_current_language() -> str:
     str
         The current language code ("nl", "de", or "en"), defaults to "nl"
     """
-    # Deferred import to avoid circular dependency
     from ..states import WebsiteState
 
-    # Try to get the language from the current state context
     try:
         state = rx.State()  # type: ignore
         if hasattr(state, 'current_language'):
@@ -29,7 +27,6 @@ def get_current_language() -> str:
     except Exception:
         pass
 
-    # Default to Dutch
     return "nl"
 
 
@@ -64,7 +61,6 @@ def get_translation(translations: dict, key: str) -> rx.Var:
     ... }
     >>> get_translation(TRANSLATIONS, "greeting")
     """
-    # Deferred import to avoid circular dependency
     from ..states import WebsiteState
 
     return rx.cond(

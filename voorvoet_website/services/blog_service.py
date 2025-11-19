@@ -165,7 +165,6 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
 
         metadata = post.metadata
         content = post.content
-        # Remove language suffix from filename (e.g., "001_post.nl" -> "001_post")
         filename = file_path.stem
         if '.' in filename:
             filename = filename.rsplit('.', 1)[0]
@@ -254,7 +253,6 @@ def load_all_posts(force_reload: bool = False, language: Optional[str] = None) -
         print(f"Warning: Blog content directory not found: {blog_dir}")
         return []
 
-    # Load posts for the specified language
     pattern = f"*.{language}.md"
     for file_path in blog_dir.glob(pattern):
         post = parse_blog_post(file_path)

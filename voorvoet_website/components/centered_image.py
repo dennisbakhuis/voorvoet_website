@@ -41,9 +41,10 @@ def centered_image(
         "border_radius": Layout.image_border_radius,
         "box_shadow": Layout.image_box_shadow,
         "margin_y": "2rem",
+        "loading": "lazy",
     }
     defaults.update(props)
-    
+
     return rx.image(
         src=src,
         alt=alt,

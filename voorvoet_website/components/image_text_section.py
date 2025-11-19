@@ -66,8 +66,7 @@ def image_text_section(
     else:
         paragraph_list = paragraphs
 
-    # Create image column
-    image_column = column(
+    image_column = rx.box(
         rx.image(
             src=image_src,
             width="100%",
@@ -75,22 +74,21 @@ def image_text_section(
             height="auto",
             border_radius=Layout.image_border_radius,
             box_shadow=Layout.image_box_shadow,
+            loading="lazy",
         ),
-        size=Layout.image_column_size,
-        padding_right="2rem",
+        width=["100%", "100%", "35%", "35%"],
+        flex=["1", "1", "0 0 auto", "0 0 auto"],
         display="flex",
         justify_content="center",
         align_items="center",
         margin_bottom=Spacing.image_margin_bottom,
-        order=["1", "1", "1", "1"] if image_position == "left" else ["1", "1", "1", "2"],
+        order=["1", "1", "1", "1"] if image_position == "left" else ["1", "1", "2", "2"],
     )
 
-    # Create text content
     text_content = [
         section_title(title, margin_bottom=Spacing.text_margin_bottom)
     ]
 
-    # Add paragraphs
     for i, paragraph in enumerate(paragraph_list):
         margin_bottom = Spacing.text_margin_bottom if i < len(paragraph_list) - 1 else "0"
         text_content.append(
@@ -101,7 +99,6 @@ def image_text_section(
             )
         )
 
-    # Add button if provided
     if button_text and button_link:
         text_content.append(
             rx.box(
@@ -111,12 +108,11 @@ def image_text_section(
             )
         )
 
-    # Create text column
-    text_column = column(
+    text_column = rx.box(
         *text_content,
-        size=Layout.text_column_size,
-        padding_right="2rem",
-        order=["2", "2", "2", "2"] if image_position == "left" else ["2", "2", "2", "1"],
+        width=["100%", "100%", "auto", "auto"],
+        flex=["1", "1", "1", "1"],
+        order=["2", "2", "2", "2"] if image_position == "left" else ["2", "2", "1", "1"],
         display="flex",
         flex_direction="column",
         justify_content="center",

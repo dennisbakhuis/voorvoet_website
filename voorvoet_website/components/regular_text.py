@@ -42,7 +42,6 @@ def regular_text(text: Union[str, list[str], rx.Var], **props) -> rx.Component:
     }
     defaults.update(props)
 
-    # Handle rx.Var (e.g., from translations with rx.cond)
     if isinstance(text, rx.Var):
         return rx.text(text, **defaults)  # type: ignore
 

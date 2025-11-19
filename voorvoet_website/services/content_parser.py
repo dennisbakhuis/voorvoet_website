@@ -51,11 +51,9 @@ def parse_blog_content(
     - Empty content blocks are filtered out
     - Lists can be ordered (numbered) or unordered (bullet points)
     """
-    # Get project root for image path validation
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
 
-    # Preprocess: Convert custom !button syntax to a marker we can detect
     button_pattern = r'!button\[([^\]]+)\]\(([^)]+)\)'
     button_placeholder = "BUTTON_PLACEHOLDER_{index}"
 
@@ -74,15 +72,12 @@ def parse_blog_content(
 
     processed_content = re.sub(button_pattern, replace_button, markdown_content)
 
-    # Parse markdown using mistletoe
     doc = Document(processed_content)
 
     content_objects: list[dict[str, Any]] = []
 
-    # Document.children is always a list of BlockToken objects
     children = doc.children if doc.children is not None else []
     for child in children:
-        # Type guard: ensure we only process BlockToken instances
         if isinstance(child, BlockToken):
             obj = _process_block_token(child, filename, buttons, project_root)
             if obj:
@@ -130,7 +125,6 @@ def _process_block_token(
         children = token.children if token.children is not None else []
         content = _render_span_tokens(children, filename, buttons, project_root)
 
-        # Check if this paragraph contains a button placeholder
         button_match = re.match(r'^BUTTON_PLACEHOLDER_(\d+)$', content.strip())
         if button_match:
             button_index = int(button_match.group(1))
@@ -141,13 +135,11 @@ def _process_block_token(
                     'url': buttons[button_index]['url'],
                 }
 
-        # Check if this paragraph is just an image
         children_list = list(children)
         if len(children_list) == 1 and isinstance(children_list[0], Image):
             image = children_list[0]
             return _process_image(image, filename, project_root)
 
-        # Regular paragraph
         if content.strip():
             return {
                 'type': 'paragraph',
@@ -203,12 +195,10 @@ def _process_image(image: Image, filename: str, project_root: Path) -> dict[str,
     image_children = image.children if image.children is not None else []
     alt = _render_span_tokens(image_children, filename, [], project_root) if image_children else ""
 
-    # Resolve relative image paths
     if not (src.startswith('http://') or src.startswith('https://') or src.startswith('/')):
         resolved_path = f"/images/page_blog/{filename}/{src}"
         file_system_path = project_root / f"assets{resolved_path}"
 
-        # Check if image exists, otherwise use default fallback
         if not file_system_path.exists():
             resolved_path = "/images/page_blog/default_image_filler.jpg"
 
@@ -253,7 +243,6 @@ def _render_span_tokens(
         if isinstance(token, RawText):
             result.append(token.content)
         elif isinstance(token, Image):
-            # Images in paragraphs - keep markdown format for now
             img_children = token.children if token.children is not None else []
             alt = _render_span_tokens(img_children, filename, buttons, project_root) if img_children else ""
             result.append(f"![{alt}]({token.src})")
@@ -262,11 +251,9 @@ def _render_span_tokens(
             text = _render_span_tokens(link_children, filename, buttons, project_root) if link_children else ""
             result.append(f"[{text}]({token.target})")
         elif hasattr(token, 'children'):
-            # Recursive for nested tokens
             nested_children = token.children if token.children is not None else []
             result.append(_render_span_tokens(nested_children, filename, buttons, project_root))
         else:
-            # Fallback: try to get content attribute
             result.append(getattr(token, 'content', str(token)))
 
     return ''.join(result)

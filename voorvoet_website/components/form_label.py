@@ -62,9 +62,7 @@ def form_label(
         },
     )
 
-    # Check if tooltip_text is provided - handle both static and Var values
     if isinstance(tooltip_text, str) and tooltip_text:
-        # Static string provided
         return rx.box(
             label_text,
             tooltip_icon,
@@ -74,7 +72,6 @@ def form_label(
             margin_bottom="0.5rem",
         )
     elif tooltip_text is not None and not isinstance(tooltip_text, str):
-        # Var provided - always show tooltip (Reflex will handle reactivity)
         return rx.box(
             label_text,
             tooltip_icon,
@@ -84,7 +81,6 @@ def form_label(
             margin_bottom="0.5rem",
         )
     else:
-        # No tooltip
         return rx.box(
             label_text,
             display="flex",

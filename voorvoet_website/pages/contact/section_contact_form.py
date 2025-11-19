@@ -8,7 +8,7 @@ from ...components import (
     form_textarea,
     form_button,
 )
-from ...theme import Colors, FontSizes
+from ...theme import Colors, FontSizes, Spacing
 from ...states.contact_state import ContactState
 from ...config import config
 from ...utils.translations import get_translation
@@ -128,7 +128,7 @@ def section_contact_form() -> rx.Component:
                     display="flex",
                     gap="1rem",
                     margin_bottom="1.5rem",
-                    flex_direction=["column", "column", "row", "row", "row"],
+                    flex_direction=["column", "column", "row", "row"],
                 ),
                 rx.box(
                     form_label(get_translation(TRANSLATIONS, "request_type"), required=True),
@@ -232,11 +232,11 @@ def section_contact_form() -> rx.Component:
                         is_disabled=~ContactState.can_submit_form,
                     ),
                     display="flex",
-                    justify_content=["center", "center", "flex-end", "flex-end", "flex-end"],
+                    justify_content=["center", "center", "flex-end", "flex-end"],
                     width="100%",
                 ),
                 background=Colors.backgrounds["green_light"],
-                padding=["1.5rem", "1.5rem", "2rem", "2.5rem", "3rem"],
+                padding=Spacing.form_padding,
                 border_radius="8px",
                 box_shadow="0 4px 12px rgba(0, 0, 0, 0.1)",
                 style=form_styles,
