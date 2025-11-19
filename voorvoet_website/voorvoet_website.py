@@ -78,7 +78,6 @@ app = rx.App(
     },
 )
 
-# Redirect root paths to /nl/...
 app.add_page(
     component=redirect_to_nl_home,
     route="/",

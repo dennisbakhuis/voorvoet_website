@@ -5,7 +5,6 @@ organized by category. Each translation is a dictionary with language codes
 (nl, de, en) as keys.
 """
 
-# Page titles
 PAGE_TITLES = {
     "home": {
         "nl": "VoorVoet - Praktijk voor Podotherapie",

@@ -1,6 +1,6 @@
 """Hero section for the home page with title, subtitle, and CTA."""
 import reflex as rx
-from ...theme import Colors
+from ...theme import Colors, FontSizes, Layout
 from ...components import container, section, hero_banner
 from ...utils.translations import get_translation
 from .section_hero_cta import hero_cta_box
@@ -47,7 +47,7 @@ def section_hero() -> rx.Component:
                     font_weight="900",
                     text_align="center",
                     line_height="1.05",
-                    font_size=["3rem", "4rem", "5rem", "6rem"],
+                    font_size=FontSizes.hero_title,
                 ),
                 rx.text(
                     get_translation(TRANSLATIONS, "hero_subtitle"),
@@ -56,7 +56,7 @@ def section_hero() -> rx.Component:
                     opacity="0.95",
                     font_weight="600",
                     line_height="1.15",
-                    font_size=["2rem", "2.25rem", "2.7rem", "3rem"],
+                    font_size=FontSizes.hero_subtitle,
                 ),
                 spacing="2",
                 align="center",
@@ -66,13 +66,15 @@ def section_hero() -> rx.Component:
             justify_content="center",
             height="100%",
             grid_row="1",
+            padding_top="40px",
         ),
         rx.box(
             hero_cta_box(),
             grid_row="2",
-            padding_x=["1rem", "0"],
-            padding_bottom=["0.5rem", "0.75rem", "1rem", "1rem", "1rem"],
-            margin_bottom=["4rem","4rem","4rem","4rem","4rem"]
+            display="flex",
+            justify_content="center",
+            padding_bottom=["0.5rem", "0.75rem", "1rem", "1rem"],
+            margin_bottom="4rem"
         ),
         position="relative",
         z_index="2",
@@ -88,9 +90,9 @@ def section_hero() -> rx.Component:
             content=hero_content,
         ),
         padding_top="0",
-        padding_bottom=["3rem", "3rem", "3rem", "3rem"],
+        padding_bottom="3rem",
         position="relative",
-        min_height=["calc(56dvh + 6rem)", "calc(62dvh + 6rem)", "calc(69dvh + 6rem)", "calc(74dvh + 6rem)"],
+        min_height=Layout.hero_min_height,
         clip_bottom="gentle_1",
         divider_color=Colors.backgrounds['white']
     )

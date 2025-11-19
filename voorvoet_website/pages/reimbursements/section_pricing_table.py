@@ -52,10 +52,7 @@ def load_pricing_data() -> tuple[list[str], list[list[str]]]:
         reader = csv.reader(f)
         rows = list(reader)
 
-    # First row is headers
     columns = rows[0]
-
-    # Rest are data rows (filter out empty rows)
     data_rows = [row for row in rows[1:] if row and row[0].strip()]
 
     return columns, data_rows

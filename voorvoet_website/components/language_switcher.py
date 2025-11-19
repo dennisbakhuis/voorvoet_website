@@ -27,48 +27,60 @@ def language_option(flag_emoji: str, language_name: str, language_code: str) -> 
             rx.text(
                 flag_emoji,
                 font_size="1.5rem",
+                transition="transform 0.2s ease",
+                class_name="flag-emoji",
             ),
             rx.text(
                 language_name,
                 font_size="0.95rem",
                 font_weight="500",
-                color=Colors.text["heading"],
+                color=Colors.primary["700"],
+                text_decoration="none",
+                class_name="language-name",
             ),
             spacing="3",
             align="center",
         ),
         padding="10px 16px",
         cursor="pointer",
-        border_radius="6px",
         transition="all 0.2s ease",
         _hover={
-            "bg": Colors.primary["50"],
+            "& .flag-emoji": {
+                "transform": "scale(1.2)",
+            },
+            "& .language-name": {
+                "color": Colors.primary["300"],
+                "text_decoration": "underline",
+            }
         },
         on_click=lambda: WebsiteState.set_language(language_code),  # type: ignore
         width="100%",
     )
 
 
-def language_switcher() -> rx.Component:
+def language_switcher(mobile: bool = False) -> rx.Component:
     """
     Create the language switcher component with popup selector.
 
     Displays the current language flag and opens a popup menu when clicked.
     The popup shows all available languages with their flags and names.
 
+    Parameters
+    ----------
+    mobile : bool
+        Whether this is the mobile version (in hamburger menu) or header version
+
     Returns
     -------
     rx.Component
         A language switcher button with popup menu overlay
     """
-    # Map language codes to flag emojis and names
     language_info = {
         "nl": {"flag": "🇳🇱", "name": "Nederlands"},
         "de": {"flag": "🇩🇪", "name": "Deutsch"},
         "en": {"flag": "🇬🇧", "name": "English"},
     }
 
-    # Current language display button
     current_flag = rx.cond(
         WebsiteState.current_language == "nl",
         "🇳🇱",
@@ -79,35 +91,51 @@ def language_switcher() -> rx.Component:
         )
     )
 
+    selector_open_state = WebsiteState.language_selector_mobile_open if mobile else WebsiteState.language_selector_open
+    toggle_handler = WebsiteState.toggle_language_selector_mobile if mobile else WebsiteState.toggle_language_selector
+
     trigger_button = rx.box(
-        rx.hstack(
+        rx.box(
             rx.text(
                 current_flag,
                 font_size="1.5rem",
                 transition="transform 0.2s ease",
+                class_name="flag-text",
             ),
             rx.icon(
                 "chevron-down",
-                size=16,
+                size=12,
                 color=Colors.text["heading"],
+                transition="transform 0.2s ease",
+                position="absolute",
+                bottom="-2px",
+                left="50%",
+                style={
+                    "transform": rx.cond(
+                        selector_open_state,
+                        "translateX(-50%) rotate(180deg)",
+                        "translateX(-50%) rotate(0deg)"
+                    )
+                },
             ),
-            spacing="2",
-            align="center",
+            position="relative",
+            display="inline-flex",
+            align_items="center",
+            justify_content="center",
         ),
         padding="8px 12px",
         border_radius="6px",
         cursor="pointer",
         _hover={
-            "& *": {
+            "& .flag-text": {
                 "transform": "scale(1.1)",
             }
         },
-        on_click=WebsiteState.toggle_language_selector,  # type: ignore
+        on_click=toggle_handler,  # type: ignore
     )
 
-    # Popup menu with all language options
     popup_menu = rx.cond(
-        WebsiteState.language_selector_open,
+        selector_open_state,
         rx.box(
             rx.vstack(
                 language_option(
@@ -137,36 +165,18 @@ def language_switcher() -> rx.Component:
             box_shadow="0 4px 12px rgba(0, 0, 0, 0.1)",
             padding="8px",
             min_width="180px",
-            z_index="30",
+            z_index="1",
             style={
-                "background": "rgba(255, 255, 255, 0.50)",
-                "backdropFilter": "saturate(180%) blur(6px)",
-                "webkitBackdropFilter": "saturate(180%) blur(6px)",
+                "background": "rgba(255, 255, 255, 0.95)",
+                "backdropFilter": "saturate(180%) blur(10px)",
+                "webkitBackdropFilter": "saturate(180%) blur(10px)",
             },
         ),
         rx.fragment(),
     )
 
-    # Overlay to close popup when clicking outside
-    overlay = rx.cond(
-        WebsiteState.language_selector_open,
-        rx.box(
-            position="fixed",
-            top="0",
-            left="0",
-            right="0",
-            bottom="0",
-            z_index="29",
-            on_click=WebsiteState.toggle_language_selector,  # type: ignore
-        ),
-        rx.fragment(),
-    )
-
-    return rx.fragment(
-        overlay,
-        rx.box(
-            trigger_button,
-            popup_menu,
-            position="relative",
-        ),
+    return rx.box(
+        trigger_button,
+        popup_menu,
+        position="relative",
     )

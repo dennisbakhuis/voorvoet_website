@@ -111,18 +111,18 @@ def location_map_item(
         section_title(
             title, 
             margin_bottom="0.5rem", 
-            text_align=["center", "center", "left", "left", "left"]
+            text_align=["center", "center", "left", "left"]
         ),
         regular_text(
             address, 
             font_weight="700", 
             color=Colors.text["subheading"], 
             margin_bottom="1rem", 
-            text_align=["center", "center", "left", "left", "left"]
+            text_align=["center", "center", "left", "left"]
         ),
         regular_text(
             description, 
-            text_align=["center", "center", "left", "left", "left"], 
+            text_align=["center", "center", "left", "left"], 
             margin_bottom="1.5rem"
         ),
         rx.box(
@@ -204,13 +204,13 @@ def location_section(
     return rx.vstack(
         section_title(
             title,
-            text_align=["center", "center", "left", "left", "left"],
+            text_align=["center", "center", "left", "left"],
             margin_bottom=Spacing.grid_gap,
             width="100%"
         ),
         regular_text(
             description,
-            text_align=["center", "center", "left", "left", "left"],
+            text_align=["center", "center", "left", "left"],
             width="100%"
         ),
         *location_items,

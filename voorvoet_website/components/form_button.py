@@ -60,7 +60,6 @@ def form_button(
         "white_space": "nowrap",
     }
 
-    # Loading state
     loading_button = rx.box(
         rx.html("⏳ "),
         rx.text(loading_text, display="inline"),
@@ -71,7 +70,6 @@ def form_button(
         opacity="0.7",
     )
 
-    # Disabled state
     disabled_button = rx.box(
         rx.text(label),
         **base_styles,
@@ -81,7 +79,6 @@ def form_button(
         opacity="0.6",
     )
 
-    # Active state (using the existing button component styling)
     active_button = rx.box(
         rx.text(label),
         on_click=on_click,
@@ -97,7 +94,6 @@ def form_button(
         }
     )
 
-    # Return conditional rendering based on state
     return rx.cond(
         is_loading,
         loading_button,

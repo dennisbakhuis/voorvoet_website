@@ -38,7 +38,9 @@ class WebsiteState(rx.State):
     current_language : str
         Current website language code (nl, de, en)
     language_selector_open : bool
-        Whether the language selector popup is currently open
+        Whether the language selector popup is currently open (header version)
+    language_selector_mobile_open : bool
+        Whether the language selector popup is currently open (mobile/hamburger menu version)
     """
 
     nav_open: bool = False
@@ -56,6 +58,7 @@ class WebsiteState(rx.State):
 
     current_language: str = "nl"
     language_selector_open: bool = False
+    language_selector_mobile_open: bool = False
 
     def set_page_path(self, path: str):
         """
@@ -68,7 +71,6 @@ class WebsiteState(rx.State):
         """
         self.current_page_path = path
 
-        # Detect language from path
         if path.startswith("/de"):
             self.current_language = "de"
         elif path.startswith("/en"):
@@ -144,6 +146,10 @@ class WebsiteState(rx.State):
     def toggle_nav(self):
         """Toggle the mobile navigation menu open/closed state."""
         self.nav_open = not self.nav_open
+        if self.nav_open:
+            self.language_selector_open = False
+        else:
+            self.language_selector_mobile_open = False
 
     def open_modal(self, title: str, desc: str):
         """
@@ -216,8 +222,14 @@ class WebsiteState(rx.State):
         self.toast_visible = False
 
     def toggle_language_selector(self):
-        """Toggle the language selector popup open/closed state."""
+        """Toggle the language selector popup open/closed state (header version)."""
         self.language_selector_open = not self.language_selector_open
+        if self.language_selector_open:
+            self.nav_open = False
+
+    def toggle_language_selector_mobile(self):
+        """Toggle the language selector popup open/closed state (mobile/hamburger menu version)."""
+        self.language_selector_mobile_open = not self.language_selector_mobile_open
 
     def detect_language_from_route(self):
         """
@@ -227,8 +239,6 @@ class WebsiteState(rx.State):
         language state with the current route's [lang] parameter.
         """
         current_path = self.router.url.path
-
-        # Update the current page path
         self.current_page_path = current_path
 
         if current_path.startswith("/"):
@@ -252,11 +262,10 @@ class WebsiteState(rx.State):
         """
         self.current_language = lang
         self.language_selector_open = False
+        self.language_selector_mobile_open = False
 
-        # Get current path and replace language prefix
         current_path = self.router.url.path
 
-        # Remove current language prefix if present
         if current_path.startswith("/nl"):
             base_path = current_path[3:] or ""
         elif current_path.startswith("/de"):
@@ -266,7 +275,6 @@ class WebsiteState(rx.State):
         else:
             base_path = current_path
 
-        # Build new path with selected language
         target_path = f"/{lang}{base_path}"
 
         return rx.redirect(target_path)
@@ -287,5 +295,4 @@ class WebsiteState(rx.State):
         else:
             page_key = "home"
 
-        # Get title from translations
         return PAGE_TITLES.get(page_key, {}).get(self.current_language, PAGE_TITLES.get(page_key, {}).get("nl", "VoorVoet"))

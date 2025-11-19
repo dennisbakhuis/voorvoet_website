@@ -40,7 +40,7 @@ def modal() -> rx.Component:
                 max_length=2000,
             ),
             rx.hstack(button("Open", href="#"), justify="center", mt="12px"),
-            width=["90vw", "480px"],
+            width=["90vw", "30rem", "30rem", "30rem"],
             max_width="600px",
             bg=Colors.backgrounds["white"],
             border_radius="12px",
