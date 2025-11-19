@@ -117,7 +117,8 @@ def footer() -> rx.Component:
                         alt="VoorVoet - Praktijk voor podotherapie",
                         width="100%",
                         max_width=["300px", "300px", "clamp(200px, 98.04vw - 552.94px, 300px)", "300px"],
-                        margin_top="-25px"
+                        margin_top="-25px",
+                        loading="lazy",
                     ),
                     display="flex",
                     justify_content=["center", "center", "center", "flex-start"],
@@ -247,7 +248,7 @@ def footer() -> rx.Component:
             rx.box(
                 rx.box(
                     rx.link(
-                        rx.image(src="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png", height="60px"),
+                        rx.image(src="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png", height="60px", loading="lazy"),
                         href="https://www.podotherapie.nl/",
                         is_external=True
                     ),
@@ -257,7 +258,7 @@ def footer() -> rx.Component:
                 ),
                 rx.box(
                     rx.link(
-                        rx.image(src="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png", height="60px"),
+                        rx.image(src="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png", height="60px", loading="lazy"),
                         href="https://www.kwaliteitsregisterparamedici.nl/kwaliteitsregister/paramedici/33997",
                         is_external=True
                     ),

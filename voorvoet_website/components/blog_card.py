@@ -131,6 +131,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
             width="100%",
             height="100%",
             object_fit="cover",
+            loading="lazy",
         ),
         width="250px",
         height="250px",

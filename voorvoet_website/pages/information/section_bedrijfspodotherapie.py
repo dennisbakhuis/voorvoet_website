@@ -70,6 +70,7 @@ def section_bedrijfspodotherapie() -> rx.Component:
             height="auto",
             border_radius=Layout.image_border_radius,
             box_shadow=Layout.image_box_shadow,
+            loading="lazy",
         ),
         size=Layout.image_column_size,
         padding_right=Spacing.responsive_2rem_right,

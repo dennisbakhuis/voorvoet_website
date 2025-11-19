@@ -74,6 +74,7 @@ def image_text_section(
             height="auto",
             border_radius=Layout.image_border_radius,
             box_shadow=Layout.image_box_shadow,
+            loading="lazy",
         ),
         width=["100%", "100%", "35%", "35%"],
         flex=["1", "1", "0 0 auto", "0 0 auto"],
