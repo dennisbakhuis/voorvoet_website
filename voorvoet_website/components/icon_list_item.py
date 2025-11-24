@@ -27,7 +27,7 @@ def icon_list_item(icon: str, text: str, **props) -> rx.Component:
         A Reflex hstack component with icon and text.
     """
     return rx.hstack(
-        rx.html(f'<i class="fa {icon}" style="color: {Colors.text["content"]}; font-size: 18px; margin-top: 6px;"/>'),
+        rx.html(f'<i class="fa {icon}" style="color: {Colors.text["content"]}; font-size: 8px; margin-top: 10px;"/>'),
         rx.text(
             text,
             font_size=FontSizes.regular,

@@ -10,7 +10,7 @@ from ...components import (
     form_radio,
     form_select,
 )
-from ...theme import Colors, FontSizes, Spacing
+from ...theme import Colors, Spacing
 from ...utils.translations import get_translation
 from ...states.order_insoles_state import OrderInsolesState
 
@@ -92,20 +92,6 @@ def section_order_form() -> rx.Component:
         A section component containing the order form with all input
         fields and submit button.
     """
-    form_styles = {
-        "input::placeholder, textarea::placeholder": {
-            "color": f"{Colors.text['placeholder']} !important",
-            "opacity": "1 !important",
-        },
-        ".rt-TextAreaRoot .rt-TextAreaInput": {
-            "font-size": f"{FontSizes.regular} !important",
-            "line-height": "1.6 !important",
-        },
-        ".rt-RadioGroupRoot .rt-Text": {
-            "font-size": f"{FontSizes.regular} !important",
-        },
-    }
-
     return section(
         container(
             rx.box(
@@ -210,7 +196,6 @@ def section_order_form() -> rx.Component:
                 padding=Spacing.form_padding,
                 border_radius="8px",
                 box_shadow="0 4px 12px rgba(0, 0, 0, 0.1)",
-                style=form_styles,
             ),
         ),
         background_color=Colors.backgrounds["white"],

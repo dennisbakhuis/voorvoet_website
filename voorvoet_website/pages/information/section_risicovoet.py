@@ -149,7 +149,7 @@ def section_risicovoet() -> rx.Component:
                 centered_image(
                     src="/images/page_information/nagelbeugel_nagelproblemen_voorvoet_podotherapie_enschede.jpg",
                     alt="Kim Bakhuis legt podotherapie uit",
-                    width="70%",
+                    width="100%",
                     max_width="840px",
                 ),
                 width="100%",

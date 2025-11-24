@@ -49,4 +49,5 @@ def section_starter() -> rx.Component:
         ),
         background=Colors.backgrounds["white"],
         padding_bottom="0",
+        padding_top="40px",
     )

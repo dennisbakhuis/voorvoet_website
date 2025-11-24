@@ -127,14 +127,14 @@ def section_for_everyone() -> rx.Component:
                     gap="0.5rem",
                     align="start",
                     width="100%",
-                    margin_left="1.5rem",
+                    padding_left="1.5rem",
                 ),
                 
                 rx.center(
                     centered_image(
                         src="/images/page_information/podotherapeut_enschede_kim_bakhuis_legt_het_met_een_lach_uit-VoorVoet_podotherapie_enschede.jpg",
                         alt="Kim Bakhuis legt podotherapie uit",
-                        width="70%",
+                        width="100%",
                         max_width="840px",
                     ),
                     width="100%",
@@ -153,7 +153,7 @@ def section_for_everyone() -> rx.Component:
                     gap="0.5rem",
                     align="start",
                     width="100%",
-                    margin_left="1.5rem",
+                    padding_left="1.5rem",
                 ),
                 regular_text(
                     get_translation(TRANSLATIONS, "athletes_conclusion"),
@@ -173,7 +173,7 @@ def section_for_everyone() -> rx.Component:
                     gap="0.5rem",
                     align="start",
                     width="100%",
-                    margin_left="1.5rem",
+                    padding_left="1.5rem",
                 ),
                 regular_text(
                     get_translation(TRANSLATIONS, "elderly_conclusion"),

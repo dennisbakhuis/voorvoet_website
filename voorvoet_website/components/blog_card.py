@@ -39,7 +39,8 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
             post.title,
             size="6",
             color=Colors.text['heading'],
-            margin_bottom="0.5rem",
+            margin_top="1.0rem",
+            margin_bottom="-0.2rem",
             line_height="1.3",
         ),
         rx.text(
@@ -47,14 +48,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
             color=Colors.text['content'],
             font_size=FontSizes.regular,
             line_height="1.6",
-            margin_bottom="1rem",
-            overflow="hidden",
-            text_overflow="ellipsis",
-            display="-webkit-box",
-            style={
-                "-webkit-line-clamp": "3",
-                "-webkit-box-orient": "vertical",
-            },
+            margin_bottom="0.5rem",
         ),
         rx.cond(
             config.blog_show_author | config.blog_show_publication_date | config.blog_show_reading_time,
@@ -117,10 +111,9 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
             font_size=FontSizes.regular,
             margin_top="auto",
         ),
-        spacing="3",
         align_items="start",
         justify_content="center",
-        padding="2.5rem",
+        padding_top="4",
         flex="1",
     )
 
@@ -131,6 +124,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
             width="100%",
             height="100%",
             object_fit="cover",
+            object_position="center",
             loading="lazy",
         ),
         width="250px",
@@ -143,21 +137,23 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
 
     card_content = rx.cond(
         flip,
-        rx.hstack(
-            content_area,
+        rx.flex(
             thumbnail,
+            content_area,
             width="100%",
-            height="250px",
-            spacing="0",
-            align_items="center",
+            height="auto",
+            gap=["8", "8", "1.5rem", "1.5rem"],
+            align_items=["center", "center", "center", "center"],
+            flex_direction=["column", "column", "row-reverse", "row-reverse"],
         ),
-        rx.hstack(
+        rx.flex(
             thumbnail,
             content_area,
             width="100%",
-            height="250px",
-            spacing="0",
-            align_items="center",
+            height="auto",
+            gap=["8", "8", "1.5rem", "1.5rem"],
+            align_items=["center", "center", "center", "center"],
+            flex_direction=["column", "column", "row", "row"],
         ),
     )
 
@@ -168,9 +164,10 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
             background=Colors.backgrounds['white'],
             padding="1.5rem",
             margin_y="1rem",
+            box_shadow="0 8px 24px rgba(0, 0, 0, 0.12)",
             transition="all 0.3s ease",
             _hover={
-                "box_shadow": "0 8px 24px rgba(0, 0, 0, 0.12)",
+                "box_shadow": f"0 8px 24px {Colors.primary['300']}66",
                 "transform": "translateY(-2px)",
             },
         ),

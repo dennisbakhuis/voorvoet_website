@@ -5,7 +5,7 @@ from ..theme import Colors, FontSizes
 
 def form_textarea(
     placeholder: str | rx.Var,
-    value: str,
+    value: str | rx.Var,
     on_change,
     min_height: str = "120px",
 ) -> rx.Component:
@@ -51,5 +51,13 @@ def form_textarea(
         style={
             "fontSize": FontSizes.regular,
             "lineHeight": "1.6",
+            "::placeholder": {
+                "color": f"{Colors.text['placeholder']} !important",
+                "opacity": "1 !important",
+            },
+            ".rt-TextAreaRoot .rt-TextAreaInput": {
+                "font-size": f"{FontSizes.regular} !important",
+                "line-height": "1.6 !important",
+            },
         },
     )

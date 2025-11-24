@@ -30,6 +30,7 @@ def blog_list(markdown: str) -> rx.Component:
     - Uses content text color from theme for readability
     - Regular font size (18px) for comfortable reading
     - Bottom margin of 1rem for spacing between content blocks
+    - Links styled with brand colors (brand 500) with hover effect (brand 300)
     - Supports both ordered (numbered) and unordered (bulleted) lists
     - Supports nested lists if properly formatted in markdown
     - List items can contain inline markdown (bold, italic, links, code)
@@ -48,9 +49,21 @@ def blog_list(markdown: str) -> rx.Component:
     >>> blog_list("1. First step\\n2. Second step\\n3. Third step")
     >>> blog_list("- Item with **bold** text\\n- Item with [link](url)")
     """
-    return rx.markdown(
-        markdown,
-        color=Colors.text['content'],
-        font_size=FontSizes.regular,
+    return rx.box(
+        rx.markdown(
+            markdown,
+            color=Colors.text['content'],
+            font_size=FontSizes.regular,
+        ),
         margin_bottom=Spacing.blog_content_margin_bottom,
+        style={
+            "& a": {
+                "color": f"{Colors.primary['300']} !important",
+                "textDecoration": "underline",
+                "transition": "color 0.2s ease",
+            },
+            "& a:hover": {
+                "color": f"{Colors.primary['700']} !important",
+            },
+        },
     )

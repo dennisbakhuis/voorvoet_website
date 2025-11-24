@@ -5,11 +5,11 @@ from ..theme import Colors, FontSizes
 
 def form_input(
     placeholder: str | rx.Var,
-    value: str,
+    value: str | rx.Var,
     on_change,
     input_type: str = "text",
     on_blur=None,
-    show_error: bool = False,
+    show_error: bool | rx.Var = False,
     custom_attrs: dict | None = None,
     input_mode: str | None = None,
     max_length: int | None = None,
@@ -21,7 +21,7 @@ def form_input(
     ----------
     placeholder : str | rx.Var
         Placeholder text for the input field.
-    value : str
+    value : str | rx.Var
         Current value of the input (bound to state).
     on_change : callable
         Event handler for value changes.
@@ -29,7 +29,7 @@ def form_input(
         HTML input type (text, email, tel, etc.). Default is "text".
     on_blur : callable | None, optional
         Event handler for blur events. Default is None.
-    show_error : bool, optional
+    show_error : bool | rx.Var, optional
         Whether to show error styling (red border). Default is False.
     custom_attrs : dict | None, optional
         Custom HTML attributes for the input. Default is None.
@@ -57,6 +57,12 @@ def form_input(
         "background": "white",
         "color": Colors.text["content"],
         "type": input_type,
+        "style": {
+            "::placeholder": {
+                "color": f"{Colors.text['placeholder']} !important",
+                "opacity": "1 !important",
+            },
+        },
     }
 
     if on_blur:

@@ -27,6 +27,7 @@ def blog_paragraph(content: str) -> rx.Component:
     - Uses content text color from theme for readability
     - Regular font size (18px) for comfortable reading
     - Bottom margin of 1rem for proper paragraph spacing
+    - Links styled with brand colors (brand 500) with hover effect (brand 300)
     - Supports full inline markdown syntax
     - Renders as a markdown component to preserve formatting
 
@@ -36,9 +37,21 @@ def blog_paragraph(content: str) -> rx.Component:
     >>> blog_paragraph("This paragraph has **bold** and *italic* text.")
     >>> blog_paragraph("Visit [our website](https://example.com) for more info.")
     """
-    return rx.markdown(
-        content,
-        color=Colors.text['content'],
-        font_size=FontSizes.regular,
+    return rx.box(
+        rx.markdown(
+            content,
+            color=Colors.text['content'],
+            font_size=FontSizes.regular,
+        ),
         margin_bottom=Spacing.blog_content_margin_bottom,
+        style={
+            "& a": {
+                "color": f"{Colors.primary['300']} !important",
+                "textDecoration": "underline",
+                "transition": "color 0.2s ease",
+            },
+            "& a:hover": {
+                "color": f"{Colors.primary['700']} !important",
+            },
+        },
     )
