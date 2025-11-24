@@ -10,6 +10,8 @@ def form_radio(
     on_change,
     direction: Literal["column", "column-reverse", "row", "row-reverse"] = "column",
     spacing: Literal["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"] = "2",
+    color: Union[str, rx.Var] = None,
+    font_size: Union[str, rx.Var] = None,
 ) -> rx.Component:
     """
     Create a styled radio button group with consistent theming.
@@ -26,6 +28,10 @@ def form_radio(
         Layout direction. Default is "column".
     spacing : Literal["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], optional
         Spacing between radio buttons. Default is "2".
+    color : str | rx.Var, optional
+        Text color. Default is Colors.text["content"].
+    font_size : str | rx.Var, optional
+        Font size. Default is FontSizes.regular.
 
     Returns
     -------
@@ -38,9 +44,10 @@ def form_radio(
         on_change=on_change,
         direction=direction,
         spacing=spacing,
-        font_size=FontSizes.regular,
+        font_size=font_size or FontSizes.regular,
         variant="classic",
-        color=Colors.text["content"],
+        color=color or Colors.text["content"],
+        size="3",
         style={
             ".rt-BaseRadioRoot:where(.rt-variant-classic):where(:not(:checked), [data-state='unchecked'])::before": {
                 "background_color": "transparent !important",
@@ -52,6 +59,9 @@ def form_radio(
             },
             ".rt-BaseRadioRoot:where(.rt-variant-classic):where(:checked, [data-state='checked'])::after": {
                 "background_color": f"{Colors.primary['300']} !important",
+            },
+            "& .rt-Text, & label, & .rt-RadioGroupItem": {
+                "font-size": f"{FontSizes.regular} !important",
             },
         },
     )

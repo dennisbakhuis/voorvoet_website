@@ -104,7 +104,7 @@ def section_bedrijfspodotherapie() -> rx.Component:
             gap="0.5rem",
             align="start",
             width="100%",
-            margin_left="1.5rem",
+            padding_left="1.5rem",
         ),
         regular_text(
             get_translation(TRANSLATIONS, "conclusion"),

@@ -668,11 +668,20 @@ log_message() {
 
 log_message "Starting production deployment..."
 
+# Wait a few seconds to ensure GitHub has processed the merge
+sleep 5
+
 cd "$REPO_DIR" || exit 1
 
+# Discard any local changes
+git reset --hard
+
+# Fetch latest changes
 git fetch origin
-git checkout main
-git pull origin main
+
+# Switch to main branch and reset to match remote exactly
+git switch main
+git reset --hard origin/main
 
 log_message "Installing dependencies..."
 /root/.local/bin/uv sync
@@ -691,13 +700,15 @@ log_message "Production deployment completed."
 ```
 
 This script performs the following steps:
-1. Navigates to the production repository directory
-2. Fetches the latest changes from GitHub
-3. Checks out and pulls the `main` branch
-4. Installs or updates Python dependencies using `uv sync`
-5. Restarts the production systemd service
-6. Verifies the service started successfully
-7. Logs all actions with timestamps to `/var/www/voorvoeten.nl/logs/deploy.log`
+1. Waits 5 seconds to ensure GitHub has fully processed any recent merges
+2. Navigates to the production repository directory
+3. Discards any local changes that might prevent pulling
+4. Fetches the latest changes from GitHub
+5. Switches to the `main` branch and resets to match the remote exactly
+6. Installs or updates Python dependencies using `uv sync`
+7. Restarts the production systemd service
+8. Verifies the service started successfully
+9. Logs all actions with timestamps to `/var/www/voorvoeten.nl/logs/deploy.log`
 
 ### Development Deployment Script
 
@@ -722,11 +733,20 @@ log_message() {
 
 log_message "Starting development deployment..."
 
+# Wait a few seconds to ensure GitHub has processed the merge
+sleep 5
+
 cd "$REPO_DIR" || exit 1
 
+# Discard any local changes
+git reset --hard
+
+# Fetch latest changes
 git fetch origin
-git checkout dev
-git pull origin dev
+
+# Switch to dev branch and reset to match remote exactly
+git switch dev
+git reset --hard origin/dev
 
 log_message "Installing dependencies..."
 /root/.local/bin/uv sync
@@ -744,7 +764,11 @@ fi
 log_message "Development deployment completed."
 ```
 
-This script is identical to the production script except it works with the `dev` branch and the development environment paths.
+This script is identical to the production script except it works with the `dev` branch and the development environment paths. The key improvements include:
+- A 5-second delay to ensure GitHub has processed recent merges
+- Using `git reset --hard` to discard any local changes
+- Using modern `git switch` command instead of `git checkout`
+- Using `git reset --hard origin/dev` to ensure the local branch exactly matches the remote, avoiding any merge conflicts
 
 ### Make Scripts Executable
 

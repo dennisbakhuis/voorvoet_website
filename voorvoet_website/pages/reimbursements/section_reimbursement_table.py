@@ -127,11 +127,75 @@ def section_reimbursement_table() -> rx.Component:
             "color": f"{Colors.text['white']} !important",
             "font-weight": "600",
         },
+        ".gridjs-th .gridjs-th-content": {
+            "color": f"{Colors.text['white']} !important",
+        },
+        ".gridjs-th:nth-child(2)": {
+            "background-color": f"{Colors.primary['500']} !important",
+            "color": f"{Colors.text['white']} !important",
+        },
+        ".gridjs-th:nth-child(2) .gridjs-th-content": {
+            "color": f"{Colors.text['white']} !important",
+        },
+        ".gridjs-th:nth-child(3)": {
+            "background-color": f"{Colors.primary['500']} !important",
+            "color": f"{Colors.text['white']} !important",
+        },
+        ".gridjs-th:nth-child(3) .gridjs-th-content": {
+            "color": f"{Colors.text['white']} !important",
+        },
         "tr:nth-of-type(even) td": {
             "background": Colors.backgrounds["white"],
         },
         "tr:nth-of-type(odd) td": {
             "background": Colors.backgrounds["green_light"],
+        },
+        ".gridjs-wrapper": {
+            "overflow-x": "auto",
+            "box-shadow": "inset -10px 0 8px -8px rgba(0,0,0,0.15)",
+        },
+        ".gridjs-th:nth-child(1)": {
+            "position": "sticky",
+            "left": "0",
+            "z-index": "10",
+            "background-color": f"{Colors.primary['500']} !important",
+            "color": f"{Colors.text['white']} !important",
+        },
+        ".gridjs-th:nth-child(1) .gridjs-th-content": {
+            "color": f"{Colors.text['white']} !important",
+        },
+        "td:nth-child(1)": {
+            "position": "sticky",
+            "left": "0",
+            "z-index": "5",
+        },
+        "tr:nth-of-type(even) td:nth-child(1)": {
+            "background": Colors.backgrounds["white"],
+        },
+        "tr:nth-of-type(odd) td:nth-child(1)": {
+            "background": Colors.backgrounds["green_light"],
+        },
+        ".gridjs-td": {
+            "white-space": "normal !important",
+            "word-wrap": "break-word !important",
+            "line-height": "1.4",
+        },
+        ".gridjs-th": {
+            "white-space": "normal !important",
+        },
+        ".gridjs-th:nth-child(1), td:nth-child(1)": {
+            "min-width": "150px",
+        },
+        ".gridjs-th:nth-child(2), td:nth-child(2)": {
+            "min-width": "120px",
+        },
+        ".gridjs-th:nth-child(3), td:nth-child(3)": {
+            "min-width": "250px",
+        },
+        "@media (max-width: 640px)": {
+            ".gridjs-th:nth-child(1), td:nth-child(1)": {
+                "min-width": "110px",
+            },
         },
     }
 
@@ -175,7 +239,7 @@ def section_reimbursement_table() -> rx.Component:
                         search=True,
                         sort=True,
                         pagination={"limit": 12},
-                        resizable=True,
+                        resizable=False,
                         custom_attrs={
                             "language": {
                                 "search": {"placeholder": "Typ om te zoeken..."},
@@ -195,7 +259,7 @@ def section_reimbursement_table() -> rx.Component:
                             search=True,
                             sort=True,
                             pagination={"limit": 12},
-                            resizable=True,
+                            resizable=False,
                             custom_attrs={
                                 "language": {
                                     "search": {"placeholder": "Zum Suchen tippen..."},
@@ -213,7 +277,7 @@ def section_reimbursement_table() -> rx.Component:
                             search=True,
                             sort=True,
                             pagination={"limit": 12},
-                            resizable=True,
+                            resizable=False,
                             custom_attrs={
                                 "language": {
                                     "search": {"placeholder": "Type to search..."},

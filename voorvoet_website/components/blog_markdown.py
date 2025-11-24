@@ -28,6 +28,7 @@ def blog_markdown(content: str) -> rx.Component:
     - Uses content text color from theme
     - Regular font size (18px) for readability
     - Bottom margin of 1rem for spacing between blocks
+    - Links styled with brand colors (brand 500) with hover effect (brand 300)
     - Supports full markdown syntax including:
         - Headings (# ## ###)
         - Lists (ordered and unordered)
@@ -43,9 +44,21 @@ def blog_markdown(content: str) -> rx.Component:
     >>> blog_markdown("This is **bold** and this is *italic*.")
     >>> blog_markdown("# Heading\\n\\nParagraph text\\n\\n- List item\\n- Another item")
     """
-    return rx.markdown(
-        content,
-        color=Colors.text['content'],
-        font_size=FontSizes.regular,
+    return rx.box(
+        rx.markdown(
+            content,
+            color=Colors.text['content'],
+            font_size=FontSizes.regular,
+        ),
         margin_bottom=Spacing.blog_content_margin_bottom,
+        style={
+            "& a": {
+                "color": f"{Colors.primary['300']} !important",
+                "textDecoration": "underline",
+                "transition": "color 0.2s ease",
+            },
+            "& a:hover": {
+                "color": f"{Colors.primary['700']} !important",
+            },
+        },
     )

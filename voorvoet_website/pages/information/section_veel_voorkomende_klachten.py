@@ -94,7 +94,7 @@ def section_veel_voorkomende_klachten() -> rx.Component:
             gap="0.5rem",
             align="start",
             width="100%",
-            margin_left="1.5rem",
+            padding_left="1.5rem",
         ),
         size=Layout.text_column_size,
         order=["2", "2", "2", "1"],
