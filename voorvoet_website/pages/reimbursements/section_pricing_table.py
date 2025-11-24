@@ -81,19 +81,44 @@ def section_pricing_table() -> rx.Component:
             "color": f"{Colors.text['white']} !important",
             "font-weight": "600",
         },
-        ".gridjs-th:nth-child(2)": {
-            "width": "15% !important",
-            "min-width": "120px !important",
+        ".gridjs-th .gridjs-th-content": {
+            "color": f"{Colors.text['white']} !important",
         },
-        "td:nth-child(2)": {
-            "width": "15% !important",
-            "min-width": "120px !important",
+        ".gridjs-th:nth-child(1)": {
+            "background-color": f"{Colors.primary['500']} !important",
+        },
+        ".gridjs-th:nth-child(2)": {
+            "background-color": f"{Colors.primary['500']} !important",
         },
         "tr:nth-of-type(even) td": {
             "background": Colors.backgrounds["white"],
         },
         "tr:nth-of-type(odd) td": {
             "background": Colors.backgrounds["green_light"],
+        },
+        ".gridjs-wrapper": {
+            "overflow-x": "auto",
+            "box-shadow": "inset -10px 0 8px -8px rgba(0,0,0,0.15)",
+        },
+        ".gridjs-td": {
+            "white-space": "normal !important",
+            "word-wrap": "break-word !important",
+            "line-height": "1.4",
+        },
+        ".gridjs-th": {
+            "white-space": "normal !important",
+        },
+        ".gridjs-th:nth-child(1), td:nth-child(1)": {
+            "min-width": "150px",
+        },
+        ".gridjs-th:nth-child(2), td:nth-child(2)": {
+            "min-width": "140px",
+            "width": "140px",
+        },
+        "@media (max-width: 640px)": {
+            ".gridjs-th:nth-child(1), td:nth-child(1)": {
+                "min-width": "110px",
+            },
         },
     }
 
