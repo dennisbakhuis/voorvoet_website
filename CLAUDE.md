@@ -14,7 +14,6 @@ Main app is in [voorvoet_website/voorvoet_website.py](voorvoet_website/voorvoet_
 ### State Management
 Reflex uses centralized state classes inheriting from `rx.State`:
 - **WebsiteState**: toasts, language switching
-- **BlogState**: Blog post loading/display
 - **ContactState**: Contact form with Turnstile verification
 - **OrderInsolesState**: Insole order form
 ### Theme System
@@ -25,7 +24,8 @@ Design system in [voorvoet_website/theme.py](voorvoet_website/theme.py):
 ### Blog System
 - Markdown files in `voorvoet_website/data/blog_content/`
 - Naming: `{number}_{slug}.{lang}.md` (e.g., `001_post.nl.md`)
-- Blog service caches posts globally; use `clear_cache()` during development
+- Blog posts are loaded at app startup and passed to stateless page components
+- Restart the app to reload blog content changes
 ### Configuration
 [voorvoet_website/config.py](voorvoet_website/config.py) loads from `.env` (see `.env.example`):
 - Cloudflare Turnstile keys

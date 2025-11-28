@@ -14,9 +14,10 @@ Language-prefixed routes (nl, de, en):
 import reflex as rx
 
 from .pages import page_home, page_blog, page_blog_post, page_informatie, page_vergoedingen, page_contact, page_zolen_bestellen
-from .states import BlogState, WebsiteState
+from .states import WebsiteState
 from .utils import get_translation
 from .translations import PAGE_TITLES
+from .services.blog_service import load_all_blog_posts_dict
 
 
 def redirect_placeholder() -> rx.Component:
@@ -60,21 +61,18 @@ for route, redirect_to in redirect_routes:
 ################
 main_pages = [
     ("nl", "home", "/nl", page_home),
-    ("nl", "blog", "/nl/blog/", page_blog),
     ("nl", "information", "/nl/informatie", page_informatie),
     ("nl", "reimbursements", "/nl/vergoedingen", page_vergoedingen),
     ("nl", "contact", "/nl/contact", page_contact),
     ("nl", "order_insoles", "/nl/zolen-bestellen", page_zolen_bestellen),
 
     ("en", "home", "/en", page_home),
-    ("en", "blog", "/en/blog/", page_blog),
     ("en", "information", "/en/information", page_informatie),
     ("en", "reimbursements", "/en/reimbursements", page_vergoedingen),
     ("en", "contact", "/en/contact", page_contact),
     ("en", "order_insoles", "/en/order-insoles", page_zolen_bestellen),
 
     ("de", "home", "/de", page_home),
-    ("de", "blog", "/de/blog/", page_blog),
     ("de", "information", "/de/informationen", page_informatie),
     ("de", "reimbursements", "/de/erstattungen", page_vergoedingen),
     ("de", "contact", "/de/kontakt", page_contact),
@@ -89,9 +87,40 @@ for (language, page_key, page_route, page) in main_pages:
     )
 
 
-# app.add_page(
-#     component=lambda: page_blog_post(language="nl"),
-#     route="/nl/blog/[slug]",
-#     title=WebsiteState.page_title,  # type: ignore
-#     on_load=BlogState.load_post_by_slug,  # type: ignore
-# )
+#######################
+## Blog / blog posts ##
+#######################
+blog_posts = load_all_blog_posts_dict()
+
+for language in ['nl', 'en', 'de']:
+    posts_for_lang = blog_posts.get(language, [])
+
+    # Create a closure factory to properly capture language and posts
+    def make_blog_page(lang: str, posts_list: list):
+        def _page():
+            return page_blog(language=lang, posts=posts_list)
+        return _page
+
+    app.add_page(
+        component=make_blog_page(language, posts_for_lang),
+        route=f"/{language}/blog/",
+        title=get_translation(PAGE_TITLES, "blog", language)
+    )
+
+for language, posts in blog_posts.items():
+    for post in posts:
+        slug = post["slug"]
+        title = post["title"]
+        route = f"/{language}/blog/{slug}/"
+
+        # Create a closure factory to properly capture language and post
+        def make_blog_post_page(lang: str, post_data: dict):
+            def _page():
+                return page_blog_post(language=lang, post=post_data)
+            return _page
+
+        app.add_page(
+            component=make_blog_post_page(language, post),
+            route=route,
+            title=title,
+        )

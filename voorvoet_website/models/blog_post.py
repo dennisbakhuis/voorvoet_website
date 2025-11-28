@@ -1,7 +1,7 @@
 """BlogPost data model definition."""
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
-from typing import Optional, Any, Literal
+from typing import Optional, Any, Literal, Union
 
 
 ContentType = Literal["heading", "paragraph", "markdown", "image", "button", "list"]
@@ -53,18 +53,56 @@ class BlogPost(BaseModel):
     slug: str
     summary: str
     author: Optional[str] = None
-    date: datetime
-    date_modified: Optional[datetime] = None
+    date: Union[datetime, str]
+    date_modified: Optional[Union[datetime, str]] = None
     formatted_date: str
     thumbnail: str
-    thumbnail_alt: str
-    content: str
+    thumbnail_alt: str = ""
+    content: str = ""
     filename: str
     thumbnail_url: str
-    read_time: Optional[int] = None
-    content_objects: list[ContentDict] = Field(default_factory=list)
-    tags: list[str] = Field(default_factory=list)
+    read_time: Optional[Union[int, str]] = None
+    content_objects: Any = Field(default_factory=list)
+    tags: Union[list[str], str] = Field(default_factory=list)
     category: Optional[str] = None
+
+    @field_validator('date', mode='before')
+    @classmethod
+    def parse_date(cls, v):
+        """Parse date from string or datetime."""
+        if isinstance(v, str):
+            return datetime.fromisoformat(v)
+        return v
+
+    @field_validator('date_modified', mode='before')
+    @classmethod
+    def parse_date_modified(cls, v):
+        """Parse date_modified from string or datetime."""
+        if v is None or v == "":
+            return None
+        if isinstance(v, str):
+            return datetime.fromisoformat(v)
+        return v
+
+    @field_validator('read_time', mode='before')
+    @classmethod
+    def parse_read_time(cls, v):
+        """Parse read_time from string or int."""
+        if v is None or v == "":
+            return None
+        if isinstance(v, str):
+            return int(v)
+        return v
+
+    @field_validator('tags', mode='before')
+    @classmethod
+    def parse_tags(cls, v):
+        """Parse tags from string or list."""
+        if isinstance(v, str):
+            if v == "":
+                return []
+            return [tag.strip() for tag in v.split(',')]
+        return v
 
     @property
     def url(self) -> str:

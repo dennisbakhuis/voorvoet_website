@@ -1,6 +1,5 @@
 """Blog list section displaying grid of blog post cards."""
 import reflex as rx
-from ...states import BlogState
 from ...theme import Colors, FontSizes
 from ...components import container, blog_card, section
 from ...utils.get_translation import get_translation
@@ -19,7 +18,7 @@ TRANSLATIONS = {
 }
 
 
-def section_blog_list(language: str) -> rx.Component:
+def section_blog_list(language: str, posts: list = []) -> rx.Component:
     """
     Display a grid of blog post cards.
 
@@ -31,6 +30,8 @@ def section_blog_list(language: str) -> rx.Component:
     ----------
     language : str
         Current language code ("nl", "de", or "en")
+    posts : list
+        List of blog post dictionaries to display
 
     Returns
     -------
@@ -41,11 +42,11 @@ def section_blog_list(language: str) -> rx.Component:
     return section(
         container(
             rx.cond(
-                BlogState.has_posts,
+                len(posts) > 0,
                 rx.vstack(
                     rx.foreach(
-                        BlogState.sorted_posts,
-                        lambda post, index: blog_card(post, flip=index % 2 == 1),
+                        posts,
+                        lambda post, index: blog_card(post, language=language, flip=index % 2 == 1),
                     ),
                     spacing="5",
                     width="100%",

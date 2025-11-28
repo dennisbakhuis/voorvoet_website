@@ -1,10 +1,4 @@
-"""Blog service for loading and managing blog posts from the file system.
-
-This module handles all I/O operations for blog posts including loading markdown
-files, parsing frontmatter metadata, resolving thumbnail paths, and caching loaded
-posts. Content parsing is delegated to the content_parser module for clean
-separation of concerns.
-"""
+"""Blog service for loading and managing blog posts from the file system."""
 from datetime import datetime
 from pathlib import Path
 import frontmatter
@@ -13,67 +7,27 @@ from typing import Optional
 from ..models import BlogPost
 from .content_parser import parse_blog_content
 
-
-_posts_cache: list[BlogPost] | None = None
-
 FALLBACK_DATE = datetime(2023, 2, 1)
+_posts_cache: dict[str, list[BlogPost]] = {}
 
 
 def _get_blog_content_dir() -> Path:
-    """
-    Get the path to the blog content directory.
-
-    Returns
-    -------
-    Path
-        Absolute path to the blog_content directory containing markdown files
-    """
+    """Get the path to the blog content directory."""
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
     return project_root / "voorvoet_website" / "data" / "blog_content"
 
 
 def calculate_read_time(content: str) -> int:
-    """
-    Calculate estimated reading time based on word count.
-
-    Uses average reading speed of 200 words per minute to estimate how long
-    it takes to read the blog post content.
-
-    Parameters
-    ----------
-    content : str
-        Markdown content text to analyze
-
-    Returns
-    -------
-    int
-        Estimated reading time in minutes (minimum 1)
-    """
+    """Calculate estimated reading time (200 words per minute, minimum 1 minute)."""
     words = len(content.split())
-    minutes = max(1, round(words / 200))
-    return minutes
+    return max(1, round(words / 200))
 
 
 def _resolve_thumbnail_path(filename: str, thumbnail_filename: str) -> str:
-    """
-    Resolve thumbnail path with fallback to default image.
-
-    Parameters
-    ----------
-    filename : str
-        Blog post filename without extension
-    thumbnail_filename : str
-        Thumbnail filename from frontmatter metadata
-
-    Returns
-    -------
-    str
-        Resolved absolute URL path to thumbnail image
-    """
+    """Resolve thumbnail path with fallback to default image."""
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
-
     thumbnail_path = f"/images/page_blog/{filename}/{thumbnail_filename}"
     file_system_path = project_root / f"assets{thumbnail_path}"
 
@@ -84,21 +38,7 @@ def _resolve_thumbnail_path(filename: str, thumbnail_filename: str) -> str:
 
 
 def _parse_date(date_str: str, filename: str) -> datetime:
-    """
-    Parse date string from frontmatter with multiple format support.
-
-    Parameters
-    ----------
-    date_str : str
-        Date string from frontmatter metadata
-    filename : str
-        Blog post filename for error reporting
-
-    Returns
-    -------
-    datetime
-        Parsed datetime object or FALLBACK_DATE if parsing fails
-    """
+    """Parse date string from frontmatter (YYYY-MM-DD or DD-MM-YYYY)."""
     try:
         return datetime.strptime(date_str, '%Y-%m-%d')
     except ValueError:
@@ -110,19 +50,7 @@ def _parse_date(date_str: str, filename: str) -> datetime:
 
 
 def _format_date_dutch(date: datetime) -> str:
-    """
-    Format datetime as Dutch locale date string.
-
-    Parameters
-    ----------
-    date : datetime
-        Date to format
-
-    Returns
-    -------
-    str
-        Formatted date string like "15 maart 2024"
-    """
+    """Format datetime as Dutch locale date string (e.g., '15 maart 2024')."""
     months_nl = {
         1: "januari", 2: "februari", 3: "maart", 4: "april",
         5: "mei", 6: "juni", 7: "juli", 8: "augustus",
@@ -132,32 +60,7 @@ def _format_date_dutch(date: datetime) -> str:
 
 
 def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
-    """
-    Parse a single blog post markdown file into a BlogPost object.
-
-    Reads the markdown file, extracts frontmatter metadata, resolves asset paths,
-    and delegates content parsing to the content_parser module. Handles errors
-    gracefully and returns None if parsing fails.
-
-    Parameters
-    ----------
-    file_path : Path
-        Absolute path to the markdown file to parse
-
-    Returns
-    -------
-    Optional[BlogPost]
-        BlogPost object with all metadata and parsed content, or None if
-        parsing fails due to invalid file format or I/O errors
-
-    Notes
-    -----
-    - Expects frontmatter with fields: title, slug, summary, date, author (optional),
-      thumbnail (optional), thumbnail_alt (optional), read_time (optional)
-    - Falls back to calculated read time if not specified in frontmatter
-    - Resolves thumbnail paths with fallback to default images
-    - Content parsing is handled by content_parser.parse_blog_content()
-    """
+    """Parse a single blog post markdown file into a BlogPost object."""
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             post = frontmatter.load(f)
@@ -172,7 +75,6 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         date = _parse_date(date_str, filename)
         formatted_date = _format_date_dutch(date)
 
-        # Parse date_modified if provided, otherwise None (will use date)
         date_modified = None
         if 'date_modified' in metadata:
             date_modified_str = str(metadata.get('date_modified', ''))
@@ -189,7 +91,6 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         thumbnail_filename = metadata.get('thumbnail', 'thumbnail.jpg')
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
 
-        # Parse tags as list, handle both list and comma-separated string formats
         tags_raw = metadata.get('tags', [])
         if isinstance(tags_raw, list):
             tags = [str(tag).strip() for tag in tags_raw]
@@ -229,41 +130,14 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
 
 
 def load_all_posts(force_reload: bool = False, language: Optional[str] = None) -> list[BlogPost]:
-    """
-    Load all blog posts from the blog_content directory for a specific language.
-
-    Scans the blog content directory for markdown files matching the current language
-    and parses each one into BlogPost objects. Results are cached for performance unless
-    force_reload is specified.
-
-    Parameters
-    ----------
-    force_reload : bool, optional
-        If True, bypass cache and reload all posts from disk (default: False)
-    language : Optional[str], optional
-        Language code to load posts for (e.g., "nl", "en", "de").
-        If None, uses the current language from get_current_language()
-
-    Returns
-    -------
-    list[BlogPost]
-        List of BlogPost objects sorted by date in descending order (newest first)
-        for the specified language
-
-    Notes
-    -----
-    - Posts are cached globally after first load
-    - Only .{language}.md files in the blog_content directory are processed
-    - Invalid or malformed posts are skipped with warnings
-    - Falls back to Dutch (nl) if the requested language is not available
-    """
+    """Load all blog posts for a specific language, sorted by date (newest first)."""
     global _posts_cache
 
-    if _posts_cache is not None and not force_reload:
-        return _posts_cache
-
     if language is None:
-        language = "nl"  # TODO: wrong
+        language = "nl"
+
+    if language in _posts_cache and not force_reload:
+        return _posts_cache[language]
 
     posts = []
     blog_dir = _get_blog_content_dir()
@@ -279,48 +153,40 @@ def load_all_posts(force_reload: bool = False, language: Optional[str] = None) -
             posts.append(post)
 
     posts.sort(key=lambda p: p.date, reverse=True)
-
-    _posts_cache = posts
+    _posts_cache[language] = posts
 
     return posts
 
 
-def get_post_by_slug(slug: str, language: Optional[str] = None) -> Optional[BlogPost]:
-    """
-    Get a single blog post by its URL slug for a specific language.
+def load_all_blog_posts_dict() -> dict[str, list[dict[str, str]]]:
+    """Load all blog posts for all languages as dictionaries."""
+    languages = ["nl", "en", "de"]
+    result: dict[str, list[dict[str, str]]] = {}
 
-    Parameters
-    ----------
-    slug : str
-        The URL-friendly slug identifier for the post
-    language : Optional[str], optional
-        Language code to load the post for (e.g., "nl", "en", "de").
-        If None, uses the current language from get_current_language()
+    for lang in languages:
+        posts = load_all_posts(force_reload=False, language=lang)
+        result[lang] = []
 
-    Returns
-    -------
-    Optional[BlogPost]
-        BlogPost object matching the slug in the specified language, or None if not found
-    """
-    if language is None:
-        language = "nl"  # TODO: wrong
+        for post in posts:
+            post_dict = {
+                "title": post.title,
+                "slug": post.slug,
+                "summary": post.summary,
+                "author": post.author or "",
+                "date": post.date.isoformat(),
+                "date_modified": post.date_modified.isoformat() if post.date_modified else "",
+                "formatted_date": post.formatted_date,
+                "thumbnail": post.thumbnail,
+                "thumbnail_alt": post.thumbnail_alt or "",
+                "thumbnail_url": post.thumbnail_url,
+                "read_time": str(post.read_time) if post.read_time else "",
+                "category": post.category or "",
+                "tags": ",".join(post.tags),
+                "filename": post.filename,
+                "url": post.url,
+                "content": post.content,
+                "content_objects": post.content_objects,
+            }
+            result[lang].append(post_dict)
 
-
-    all_posts = load_all_posts(language=language)
-
-    for post in all_posts:
-        if post.slug == slug:
-            return post
-
-    return None
-
-
-def clear_cache():
-    """
-    Clear the posts cache.
-
-    Useful during development when blog content changes and needs to be reloaded
-    without restarting the application.
-    """
-    global _posts_cache
-    _posts_cache = None
+    return result

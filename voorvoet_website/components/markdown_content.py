@@ -142,7 +142,7 @@ def _render_image(obj) -> rx.Component:
     rx.Component
         Styled image via blog_image
     """
-    return blog_image(obj["src"], obj["alt"], obj.get("caption", ""))
+    return blog_image(obj["src"], obj.get("alt", ""), obj.get("caption", ""))
 
 
 def _render_button(obj) -> rx.Component:

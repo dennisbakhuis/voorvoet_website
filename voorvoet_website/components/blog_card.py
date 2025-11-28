@@ -3,10 +3,9 @@ import reflex as rx
 from ..models import BlogPost
 from ..theme import Colors, FontSizes, Layout
 from ..config import config
-from ..states import BlogState
 
 
-def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
+def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
     """
     Display a blog post card in landscape layout with thumbnail and content.
 
@@ -16,8 +15,10 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
 
     Parameters
     ----------
-    post : BlogPost
-        BlogPost object containing all post data and metadata.
+    post : BlogPost or dict
+        BlogPost object or dictionary containing all post data and metadata.
+    language : str
+        Current language code ("nl", "de", or "en")
     flip : bool, optional
         If True, thumbnail appears on the right side; if False, on the left.
         Default is False.
@@ -34,6 +35,10 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
     - Card has hover effects (shadow and lift)
     - Thumbnail is a fixed 250x250px square with rounded corners
     """
+    # Convert dict to BlogPost if needed
+    if isinstance(post, dict):
+        post = BlogPost(**post)
+
     content_area = rx.vstack(
         rx.heading(
             post.title,
@@ -120,7 +125,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
     thumbnail = rx.box(
         rx.image(
             src=post.thumbnail_url,
-            alt=post.thumbnail_alt,
+            alt=post.thumbnail_alt.to(str),
             width="100%",
             height="100%",
             object_fit="cover",
@@ -171,7 +176,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
                 "transform": "translateY(-2px)",
             },
         ),
-        href=f"/{BlogState.current_language}/blog/" + post.slug,
+        href=f"/{language}/blog/{post.slug}/",
         text_decoration="none",
         _hover={"text_decoration": "none"},
     )
