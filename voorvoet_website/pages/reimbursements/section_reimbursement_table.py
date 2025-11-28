@@ -81,6 +81,11 @@ def load_reimbursement_data() -> tuple[list[str], list[list[str]]]:
     it from JSON dictionary format to a list of lists suitable for display
     in a data table component.
 
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
+
     Returns
     -------
     tuple[list[str], list[list[str]]]
@@ -103,7 +108,7 @@ def load_reimbursement_data() -> tuple[list[str], list[list[str]]]:
     return columns, rows
 
 
-def section_reimbursement_table() -> rx.Component:
+def section_reimbursement_table(language: str) -> rx.Component:
     """
     Create the reimbursement table section.
 
@@ -112,6 +117,11 @@ def section_reimbursement_table() -> rx.Component:
     The table includes built-in search, sort, and pagination functionality
     for easy navigation. Features alternating row colors (white and light
     green) for better readability.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -202,28 +212,28 @@ def section_reimbursement_table() -> rx.Component:
     return section(
         container(
             rx.text(
-                get_translation(TRANSLATIONS, "title"),
+                get_translation(TRANSLATIONS, "title", language),
                 font_size=FontSizes.section_sub_title,
                 font_weight="700",
                 color=Colors.text["subheading"],
             ),
             rx.box(
                 rx.text(
-                    get_translation(TRANSLATIONS, "intro_part1"),
+                    get_translation(TRANSLATIONS, "intro_part1", language),
                     rx.link(
-                        get_translation(TRANSLATIONS, "link_text"),
+                        get_translation(TRANSLATIONS, "link_text", language),
                         href="https://www.podotherapie.nl/vergoedingen/",
                         color=Colors.text["link"],
                         text_decoration="underline",
                         is_external=True,
                     ),
-                    get_translation(TRANSLATIONS, "intro_part2"),
+                    get_translation(TRANSLATIONS, "intro_part2", language),
                     color=Colors.text["content"],
                     font_size="1.125rem",
                     margin_bottom="1rem",
                 ),
                 rx.text(
-                    get_translation(TRANSLATIONS, "intro_part3"),
+                    get_translation(TRANSLATIONS, "intro_part3", language),
                     color=Colors.text["content"],
                     font_size="1.125rem",
                     margin_bottom="1rem",
@@ -299,7 +309,7 @@ def section_reimbursement_table() -> rx.Component:
 
             rx.box(
                 rx.text(
-                    get_translation(TRANSLATIONS, "disclaimer"),
+                    get_translation(TRANSLATIONS, "disclaimer", language),
                     color=Colors.text["muted"],
                     font_size="16px",
                     font_style="italic",

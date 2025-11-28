@@ -23,14 +23,14 @@ TRANSLATIONS = {
 }
 
 
-def section_who_is_voorvoet() -> rx.Component:
+def section_who_is_voorvoet(language: str) -> rx.Component:
     """
     Create the 'Who is VoorVoet' section introducing the practice.
 
-    This section presents VoorVoet as a small-scale practice near Zuiderval,
-    emphasizing their personal approach, modern equipment and methods,
-    collaborative relationships with other medical professionals, and
-    accessibility for all age groups and conditions.
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -40,15 +40,15 @@ def section_who_is_voorvoet() -> rx.Component:
         on the right.
     """
     paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1"),
-        get_translation(TRANSLATIONS, "paragraph2")
+        get_translation(TRANSLATIONS, "paragraph1", language),
+        get_translation(TRANSLATIONS, "paragraph2", language)
     ]
 
     return section(
         container(
             image_text_section(
                 image_src="/images/page_home/podotherapeut_enschede_kim_bakhuis_van_voorvoet_praktijk_voor_podotherapie.jpg",
-                title=get_translation(TRANSLATIONS, "title"),
+                title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
                 image_position="left"
             )

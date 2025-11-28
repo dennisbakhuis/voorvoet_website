@@ -22,7 +22,7 @@ TRANSLATIONS = {
 }
 
 
-def section_starter() -> rx.Component:
+def section_starter(language: str) -> rx.Component:
     """
     Create the contact page starter section with introductory text.
 
@@ -30,6 +30,11 @@ def section_starter() -> rx.Component:
     explaining that visitors can ask questions about podotherapy or
     schedule an appointment through the contact form or provided
     contact details.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -40,10 +45,10 @@ def section_starter() -> rx.Component:
     return section(
         container(
             section_title(
-                get_translation(TRANSLATIONS, "title"),
+                get_translation(TRANSLATIONS, "title", language),
             ),
             regular_text(
-                get_translation(TRANSLATIONS, "description"),
+                get_translation(TRANSLATIONS, "description", language),
                 color=Colors.text["content"],
             ),
         ),

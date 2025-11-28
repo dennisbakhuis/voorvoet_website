@@ -7,6 +7,7 @@ from .section_order_form import section_order_form
 
 from ..shared_sections import footer, header
 from ...components import toast
+from ...utils.translations import get_language_from_path
 
 
 def page_order_insoles() -> rx.Component:
@@ -21,11 +22,13 @@ def page_order_insoles() -> rx.Component:
     rx.Component
         A fragment containing all sections of the order insoles page in order.
     """
+    language = get_language_from_path()
+
     return rx.fragment(
-        header(),
+        header(language),
         section_hero(),
-        section_starter(),
-        section_order_form(),
-        footer(),
+        section_starter(language),
+        section_order_form(language),
+        footer(language),
         toast(),
     )

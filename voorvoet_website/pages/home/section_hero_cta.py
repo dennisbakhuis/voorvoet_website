@@ -31,14 +31,14 @@ TRANSLATIONS = {
 }
 
 
-def hero_cta_box() -> rx.Component:
+def hero_cta_box(language: str) -> rx.Component:
     """
     Create a call-to-action box for the hero section.
 
-    The CTA box displays a title, list of benefits (no referral needed,
-    quick professional help, fastest route to specialist), and a button
-    to book an appointment. The box has a light green background with
-    rounded corners and shadow.
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -48,12 +48,12 @@ def hero_cta_box() -> rx.Component:
     """
     return rx.box(
         rx.vstack(
-            section_sub_title(get_translation(TRANSLATIONS, "cta_title"), text_align="center"),
+            section_sub_title(get_translation(TRANSLATIONS, "cta_title", language), text_align="center"),
             rx.box(
                 rx.vstack(
-                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "no_referral")),
-                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "quick_help")),
-                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "fastest_route")),
+                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "no_referral", language)),
+                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "quick_help", language)),
+                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "fastest_route", language)),
                     spacing="3",
                     align="start",
                 ),
@@ -62,7 +62,7 @@ def hero_cta_box() -> rx.Component:
                 justify_content="center"
             ),
             rx.box(
-                button(get_translation(TRANSLATIONS, "make_appointment"), href=config.link_plan_portal),
+                button(get_translation(TRANSLATIONS, "make_appointment", language), href=config.link_plan_portal),
                 width="100%",
                 display="flex",
                 justify_content="center"

@@ -73,13 +73,18 @@ TRANSLATIONS = {
 }
 
 
-def section_contact_form() -> rx.Component:
+def section_contact_form(language: str) -> rx.Component:
     """
     Create the contact form section with form fields.
 
     The form collects user information including name, contact preference
     (phone or email), and inquiry description. Features validation, error
     states, optional Cloudflare Turnstile captcha, and submission handling.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -98,18 +103,18 @@ def section_contact_form() -> rx.Component:
             rx.box(
                 rx.box(
                     rx.box(
-                        form_label(get_translation(TRANSLATIONS, "first_name"), required=True),
+                        form_label(get_translation(TRANSLATIONS, "first_name", language), required=True),
                         form_input(
-                            placeholder=get_translation(TRANSLATIONS, "first_name_placeholder"),
+                            placeholder=get_translation(TRANSLATIONS, "first_name_placeholder", language),
                             value=ContactState.contact_first_name,  # type: ignore
                             on_change=ContactState.set_contact_first_name,
                         ),
                         flex="1",
                     ),
                     rx.box(
-                        form_label(get_translation(TRANSLATIONS, "last_name"), required=True),
+                        form_label(get_translation(TRANSLATIONS, "last_name", language), required=True),
                         form_input(
-                            placeholder=get_translation(TRANSLATIONS, "last_name_placeholder"),
+                            placeholder=get_translation(TRANSLATIONS, "last_name_placeholder", language),
                             value=ContactState.contact_last_name,  # type: ignore
                             on_change=ContactState.set_contact_last_name,
                         ),
@@ -121,24 +126,24 @@ def section_contact_form() -> rx.Component:
                     flex_direction=["column", "column", "row", "row"],
                 ),
                 rx.box(
-                    form_label(get_translation(TRANSLATIONS, "request_type"), required=True),
+                    form_label(get_translation(TRANSLATIONS, "request_type", language), required=True),
                     form_radio(
-                        items=[get_translation(TRANSLATIONS, "call_back"), get_translation(TRANSLATIONS, "email_question")],
+                        items=[get_translation(TRANSLATIONS, "call_back", language), get_translation(TRANSLATIONS, "email_question", language)],
                         value=ContactState.contact_request_type,
                         on_change=ContactState.set_contact_request_type,
                     ),
                     margin_bottom="1.5rem",
                 ),
                 rx.cond(
-                    ContactState.contact_request_type == get_translation(TRANSLATIONS, "call_back"),
+                    ContactState.contact_request_type == get_translation(TRANSLATIONS, "call_back", language),
                     rx.box(
                         form_label(
-                            get_translation(TRANSLATIONS, "phone_label"),
+                            get_translation(TRANSLATIONS, "phone_label", language),
                             required=True,
-                            tooltip_text=get_translation(TRANSLATIONS, "phone_tooltip"),
+                            tooltip_text=get_translation(TRANSLATIONS, "phone_tooltip", language),
                         ),
                         form_input(
-                            placeholder=get_translation(TRANSLATIONS, "phone_placeholder"),
+                            placeholder=get_translation(TRANSLATIONS, "phone_placeholder", language),
                             value=ContactState.contact_phone_value,
                             on_change=ContactState.set_contact_phone_number,
                             on_blur=ContactState.on_phone_blur,
@@ -152,12 +157,12 @@ def section_contact_form() -> rx.Component:
                     ),
                     rx.box(
                         form_label(
-                            get_translation(TRANSLATIONS, "email_label"),
+                            get_translation(TRANSLATIONS, "email_label", language),
                             required=True,
-                            tooltip_text=get_translation(TRANSLATIONS, "email_tooltip"),
+                            tooltip_text=get_translation(TRANSLATIONS, "email_tooltip", language),
                         ),
                         form_input(
-                            placeholder=get_translation(TRANSLATIONS, "email_placeholder"),
+                            placeholder=get_translation(TRANSLATIONS, "email_placeholder", language),
                             value=ContactState.contact_email,  # type: ignore
                             on_change=ContactState.set_contact_email,
                             input_type="email",
@@ -168,9 +173,9 @@ def section_contact_form() -> rx.Component:
                     ),
                 ),
                 rx.box(
-                    form_label(get_translation(TRANSLATIONS, "description_label"), required=True),
+                    form_label(get_translation(TRANSLATIONS, "description_label", language), required=True),
                     form_textarea(
-                        placeholder=get_translation(TRANSLATIONS, "description_placeholder"),
+                        placeholder=get_translation(TRANSLATIONS, "description_placeholder", language),
                         value=ContactState.contact_description,  # type: ignore
                         on_change=ContactState.set_contact_description,
                     ),
@@ -200,7 +205,7 @@ def section_contact_form() -> rx.Component:
                 ),
                 rx.box(
                     form_button(
-                        label=get_translation(TRANSLATIONS, "submit_button"),
+                        label=get_translation(TRANSLATIONS, "submit_button", language),
                         on_click=ContactState.submit_contact_form,
                         is_loading=ContactState.form_submitting,
                         is_disabled=~ContactState.can_submit_form,

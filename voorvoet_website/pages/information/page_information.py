@@ -12,6 +12,7 @@ from .section_risicovoet import section_risicovoet
 
 from ..shared_sections import footer, header
 from ...components import modal
+from ...utils.translations import get_language_from_path
 
 
 def page_information() -> rx.Component:
@@ -28,17 +29,19 @@ def page_information() -> rx.Component:
         A fragment containing all sections of the information page including
         header, hero, informational sections, footer, and modal components.
     """
-    return rx.fragment(
-        header(),
-        section_hero(),
-        section_starter(),
-        section_what_is_podiatry(),
-        section_for_everyone(),
-        section_behandeltraject(),
-        section_veel_voorkomende_klachten(),
-        section_bedrijfspodotherapie(),
-        section_risicovoet(),
+    language = get_language_from_path()
 
-        footer(),
+    return rx.fragment(
+        header(language),
+        section_hero(),
+        section_starter(language),
+        section_what_is_podiatry(language),
+        section_for_everyone(language),
+        section_behandeltraject(language),
+        section_veel_voorkomende_klachten(language),
+        section_bedrijfspodotherapie(language),
+        section_risicovoet(language),
+
+        footer(language),
         modal(),
     )

@@ -6,7 +6,7 @@ from ...components import container, section, modal, markdown_content, article_s
 from ..shared_sections import footer, header
 from .section_hero import section_hero
 from ...config import config
-from ...utils.translations import get_translation
+from ...utils.translations import get_translation, get_language_from_path
 
 
 TRANSLATIONS = {
@@ -46,11 +46,13 @@ def page_blog_post() -> rx.Component:
         A fragment containing header, hero, blog post content section,
         footer, and modal components.
     """
+    language = get_language_from_path()
+
     return rx.fragment(
         # Add Article schema for SEO (automatically handles empty state)
         article_schema(),
 
-        header(),
+        header(language),
         section_hero(),
 
         section(
@@ -107,7 +109,7 @@ def page_blog_post() -> rx.Component:
                                                 ),
                                             ),
                                             rx.text(
-                                                BlogState.current_post.read_time.to(str) + " " + get_translation(TRANSLATIONS, "reading_time"),  # type: ignore (rx.cond not detected by type-checker)
+                                                BlogState.current_post.read_time.to(str) + " " + get_translation(TRANSLATIONS, "reading_time", language),  # type: ignore (rx.cond not detected by type-checker)
                                                 color=Colors.text['content'],
                                                 font_size="1rem",
                                             ),
@@ -123,7 +125,7 @@ def page_blog_post() -> rx.Component:
                         markdown_content(BlogState.current_post),  # type: ignore (rx.cond not detected by type-checker)
 
                         rx.link(
-                            rx.text(get_translation(TRANSLATIONS, "back_to_blog")),
+                            rx.text(get_translation(TRANSLATIONS, "back_to_blog", language)),
                             href=f"/{BlogState.current_language}/blog/",
                             color=Colors.primary['500'],
                             font_size=FontSizes.regular,
@@ -142,18 +144,18 @@ def page_blog_post() -> rx.Component:
 
                     rx.vstack(
                         rx.text(
-                            get_translation(TRANSLATIONS, "post_not_found"),
+                            get_translation(TRANSLATIONS, "post_not_found", language),
                             color=Colors.text['muted'],
                             font_size=FontSizes.regular,
                         ),
                         rx.text(
-                            get_translation(TRANSLATIONS, "translation_not_available"),
+                            get_translation(TRANSLATIONS, "translation_not_available", language),
                             color=Colors.text['content'],
                             font_size=FontSizes.regular,
                             text_align="center",
                         ),
                         rx.link(
-                            rx.text(get_translation(TRANSLATIONS, "back_to_blog")),
+                            rx.text(get_translation(TRANSLATIONS, "back_to_blog", language)),
                             href=f"/{BlogState.current_language}/blog/",
                             color=Colors.primary['500'],
                             font_size=FontSizes.regular,
@@ -175,6 +177,6 @@ def page_blog_post() -> rx.Component:
             padding_top="1em",
         ),
 
-        footer(),
+        footer(language),
         modal(),
     )

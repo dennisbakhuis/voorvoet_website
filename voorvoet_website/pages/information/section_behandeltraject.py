@@ -20,7 +20,7 @@ TRANSLATIONS = {
 }
 
 
-def section_behandeltraject() -> rx.Component:
+def section_behandeltraject(language: str) -> rx.Component:
     """
     Create the treatment process explanation section.
 
@@ -29,6 +29,11 @@ def section_behandeltraject() -> rx.Component:
     measurements), treatment planning, insole fitting, and follow-up care.
     Emphasizes the personalized approach to each patient.
 
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
+
     Returns
     -------
     rx.Component
@@ -36,14 +41,14 @@ def section_behandeltraject() -> rx.Component:
         step-by-step treatment process at the practice.
     """
     paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1")
+        get_translation(TRANSLATIONS, "paragraph1", language)
     ]
 
     return section(
         container(
             image_text_section(
                 image_src="/images/page_information/wandelen_zonder_pijn_in_de_voeten_voorvoet_podotherapie_enschede.jpg",
-                title=get_translation(TRANSLATIONS, "title"),
+                title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
                 image_position="left",
                 image_max_width="450px",

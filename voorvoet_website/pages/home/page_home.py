@@ -9,33 +9,29 @@ from .section_information import section_information
 from .section_locations import section_locations
 
 from ..shared_sections import footer, header
-from ...components import modal, organization_schema
+from ...components import organization_schema
+from ...utils.translations import get_language_from_path
 
 
 def page_home() -> rx.Component:
     """
     Create the complete home page with all sections.
 
-    The home page is composed of multiple sections arranged vertically:
-    header, hero, about practice, ordering insoles, introduction,
-    information cards, locations, footer, and modal.
-
-    Includes JSON-LD structured data (Organization schema) for SEO optimization.
-
     Returns
     -------
     rx.Component
         A fragment containing all sections of the home page in order.
     """
+    language = get_language_from_path()
+
     return rx.fragment(
         organization_schema(),
-        header(),
-        section_hero(),
-        section_who_is_voorvoet(),
-        section_order_insoles(),
-        section_introduction(),
-        section_information(),
-        section_locations(),
-        footer(),
-        modal(),
+        header(language),
+        section_hero(language),
+        section_who_is_voorvoet(language),
+        section_order_insoles(language),
+        section_introduction(language),
+        section_information(language),
+        section_locations(language),
+        footer(language),
     )

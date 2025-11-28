@@ -37,13 +37,18 @@ TRANSLATIONS = {
 }
 
 
-def section_starter() -> rx.Component:
+def section_starter(language: str) -> rx.Component:
     """
     Create the order insoles page starter section with pricing information.
 
     This section provides pricing information for ordering extra pairs of
     orthopedic insoles, including discounts for orders within 3 months
     and terms and conditions.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -54,37 +59,37 @@ def section_starter() -> rx.Component:
     return section(
         container(
             section_title(
-                get_translation(TRANSLATIONS, "title"),
+                get_translation(TRANSLATIONS, "title", language),
             ),
             rx.box(
                 regular_text(
-                    get_translation(TRANSLATIONS, "pricing_title"),
+                    get_translation(TRANSLATIONS, "pricing_title", language),
                     color=Colors.text["content"],
                     font_weight="700",
                     margin_bottom="0.5rem",
                 ),
                 regular_text(
-                    get_translation(TRANSLATIONS, "pricing_within_3m"),
+                    get_translation(TRANSLATIONS, "pricing_within_3m", language),
                     color=Colors.text["content"],
                     margin_bottom="0.5rem",
                 ),
                 regular_text(
-                    get_translation(TRANSLATIONS, "pricing_after_3m"),
+                    get_translation(TRANSLATIONS, "pricing_after_3m", language),
                     color=Colors.text["content"],
                     margin_bottom="0.5rem",
                 ),
                 regular_text(
-                    get_translation(TRANSLATIONS, "pricing_workshoes"),
+                    get_translation(TRANSLATIONS, "pricing_workshoes", language),
                     color=Colors.text["content"],
                     margin_bottom="0.5rem",
                 ),
                 regular_text(
-                    get_translation(TRANSLATIONS, "pricing_link"),
+                    get_translation(TRANSLATIONS, "pricing_link", language),
                     color=Colors.text["content"],
                     margin_bottom="1.5rem",
                 ),
                 regular_text(
-                    get_translation(TRANSLATIONS, "terms"),
+                    get_translation(TRANSLATIONS, "terms", language),
                     color=Colors.text["content"],
                     font_style="italic",
                 ),

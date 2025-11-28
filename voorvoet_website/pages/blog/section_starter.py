@@ -22,12 +22,17 @@ TRANSLATIONS = {
 }
 
 
-def section_starter() -> rx.Component:
+def section_starter(language: str) -> rx.Component:
     """
     Create the introductory section for the blog page.
 
     Displays a welcoming title and introductory text explaining the purpose
     of the blog and what type of content visitors can expect to find.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -38,11 +43,11 @@ def section_starter() -> rx.Component:
     return section(
         container(
             section_title(
-                get_translation(TRANSLATIONS, "title"),
+                get_translation(TRANSLATIONS, "title", language),
                 margin_bottom=10,
             ),
             regular_text(
-                get_translation(TRANSLATIONS, "intro_text"),
+                get_translation(TRANSLATIONS, "intro_text", language),
                 color=Colors.text["content"],
             ),
         ),

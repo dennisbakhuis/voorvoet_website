@@ -6,12 +6,27 @@ if TYPE_CHECKING:
     from ..states import WebsiteState
 
 
+def get_language_from_path():
+    """
+    Extract language code from the current URL path.
+
+    This function returns WebsiteState.current_language which is a reactive
+    state variable that resolves to the language code from the URL path at runtime.
+
+    Returns
+    -------
+    Var
+        A reactive variable that evaluates to the language code ("nl", "de", or "en")
+    """
+    from ..states import WebsiteState
+
+    # Use WebsiteState.current_language which is computed from the router
+    return WebsiteState.current_language
+
+
 def get_current_language() -> str:
     """
     Get the current language from WebsiteState.
-
-    This function is used by the blog service to determine which language
-    files to load. It uses a deferred import to avoid circular dependencies.
 
     Returns
     -------
@@ -30,44 +45,41 @@ def get_current_language() -> str:
     return "nl"
 
 
-def get_translation(translations: dict, key: str) -> rx.Var:
+def get_translation(translations: dict, key: str, language=None) -> rx.Var | str:
     """
-    Get translated text based on current language.
-
-    This helper function uses Reflex's rx.cond to conditionally return
-    the appropriate translation based on the current language state.
+    Get translated text based on specified or current language.
 
     Parameters
     ----------
     translations : dict
-        Translation dictionary with language codes as keys ("nl", "de", "en")
-        and translation strings as values for the specified key.
-        Example structure: {"nl": {"key": "text"}, "de": {"key": "text"}, "en": {"key": "text"}}
+        Translation dictionary with structure {"nl": {"key": "text"}, ...}
     key : str
-        The translation key to look up in each language dictionary.
+        The translation key to look up
+    language : str | Var | None, optional
+        If provided as a string, returns translation for that language as a string.
+        If provided as a Var, returns a reactive variable that resolves based on that Var.
+        If None, returns a reactive variable based on WebsiteState.current_language
 
     Returns
     -------
-    rx.Var
-        A reactive variable that evaluates to the correct translation
-        based on WebsiteState.current_language.
-
-    Examples
-    --------
-    >>> TRANSLATIONS = {
-    ...     "nl": {"greeting": "Hallo"},
-    ...     "de": {"greeting": "Hallo"},
-    ...     "en": {"greeting": "Hello"}
-    ... }
-    >>> get_translation(TRANSLATIONS, "greeting")
+    rx.Var | str
+        String if language is a string, reactive Var otherwise
     """
+    # If language is provided as a string, return the translation directly
+    if isinstance(language, str):
+        return translations.get(language, translations["nl"])[key]
+
     from ..states import WebsiteState
 
+    # If language is a Var or None, use rx.cond
+    # If language is None, use WebsiteState.current_language
+    lang_var = language if language is not None else WebsiteState.current_language
+
     return rx.cond(
-        WebsiteState.current_language == "nl",
+        lang_var == "nl",
         translations["nl"][key],
         rx.cond(
-            WebsiteState.current_language == "de",
+            lang_var == "de",
             translations["de"][key],
             translations["en"][key]
         )

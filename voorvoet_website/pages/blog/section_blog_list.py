@@ -19,13 +19,18 @@ TRANSLATIONS = {
 }
 
 
-def section_blog_list() -> rx.Component:
+def section_blog_list(language: str) -> rx.Component:
     """
     Display a grid of blog post cards.
 
     Creates a responsive layout that shows all blog posts in a vertical stack.
     Each blog post card alternates its layout (flipped) for visual variety.
     Displays an empty state message when no posts are available.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -47,7 +52,7 @@ def section_blog_list() -> rx.Component:
                 ),
                 rx.vstack(
                     rx.text(
-                        get_translation(TRANSLATIONS, "no_posts"),
+                        get_translation(TRANSLATIONS, "no_posts", language),
                         color=Colors.text['muted'],
                         font_size=FontSizes.regular,
                     ),

@@ -22,13 +22,14 @@ TRANSLATIONS = {
 }
 
 
-def section_hero() -> rx.Component:
+def section_hero(language: str) -> rx.Component:
     """
     Create the home page hero section with tagline and call-to-action.
 
-    The hero section displays a full-width background image with a gradient
-    overlay, featuring the main tagline "Voetklachten? Loop er niet mee door!"
-    and a call-to-action box for booking appointments.
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -42,7 +43,7 @@ def section_hero() -> rx.Component:
         rx.box(
             rx.vstack(
                 rx.text(
-                    get_translation(TRANSLATIONS, "hero_title"),
+                    get_translation(TRANSLATIONS, "hero_title", language),
                     color=Colors.primary["300"],
                     font_weight="900",
                     text_align="center",
@@ -50,7 +51,7 @@ def section_hero() -> rx.Component:
                     font_size=FontSizes.hero_title,
                 ),
                 rx.text(
-                    get_translation(TRANSLATIONS, "hero_subtitle"),
+                    get_translation(TRANSLATIONS, "hero_subtitle", language),
                     color=Colors.text["heading"],
                     text_align="center",
                     opacity="0.95",
@@ -69,7 +70,7 @@ def section_hero() -> rx.Component:
             padding_top="40px",
         ),
         rx.box(
-            hero_cta_box(),
+            hero_cta_box(language),
             grid_row="2",
             display="flex",
             justify_content="center",

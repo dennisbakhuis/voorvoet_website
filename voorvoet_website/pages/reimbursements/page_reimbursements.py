@@ -9,6 +9,7 @@ from .section_pricing_table import section_pricing_table
 from ..shared_sections import footer, header
 from ...components import modal
 from ...states import WebsiteState
+from ...utils.translations import get_language_from_path
 
 
 def page_reimbursements() -> rx.Component:
@@ -27,13 +28,15 @@ def page_reimbursements() -> rx.Component:
         including header, hero, starter text, reimbursement table,
         pricing table, footer, and modal components.
     """
-    return rx.fragment(
-        header(),
-        section_hero(),
-        section_starter(),
-        section_reimbursement_table(),
-        section_pricing_table(),
+    language = get_language_from_path()
 
-        footer(),
+    return rx.fragment(
+        header(language),
+        section_hero(),
+        section_starter(language),
+        section_reimbursement_table(language),
+        section_pricing_table(language),
+
+        footer(language),
         modal(),
     )

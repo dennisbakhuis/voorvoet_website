@@ -27,14 +27,14 @@ TRANSLATIONS = {
 }
 
 
-def section_order_insoles() -> rx.Component:
+def section_order_insoles(language: str) -> rx.Component:
     """
     Create the section for ordering extra pairs of insoles.
 
-    This section promotes the option to order additional pairs of orthopedic
-    insoles online for use with different shoes. It features an image-text
-    layout with outdoor shoes imagery and explains the benefits of having
-    multiple pairs and the practice's collaborative approach.
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -44,21 +44,21 @@ def section_order_insoles() -> rx.Component:
         text on the left, with a call-to-action button.
     """
     paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1"),
-        get_translation(TRANSLATIONS, "paragraph2")
+        get_translation(TRANSLATIONS, "paragraph1", language),
+        get_translation(TRANSLATIONS, "paragraph2", language)
     ]
 
     return section(
         container(
             image_text_section(
                 image_src="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.jpg",
-                title=get_translation(TRANSLATIONS, "title"),
+                title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
                 image_position="right"
             ),
             rx.box(
                 button(
-                    label=get_translation(TRANSLATIONS, "button"),
+                    label=get_translation(TRANSLATIONS, "button", language),
                     href="/order-insoles"
                 ),
                 display="flex",

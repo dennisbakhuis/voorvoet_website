@@ -38,6 +38,11 @@ def load_pricing_data() -> tuple[list[str], list[list[str]]]:
     it from CSV format to a list of lists suitable for display
     in a data table component.
 
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
+
     Returns
     -------
     tuple[list[str], list[list[str]]]
@@ -58,7 +63,7 @@ def load_pricing_data() -> tuple[list[str], list[list[str]]]:
     return columns, data_rows
 
 
-def section_pricing_table() -> rx.Component:
+def section_pricing_table(language: str) -> rx.Component:
     """
     Create the pricing table section.
 
@@ -66,6 +71,11 @@ def section_pricing_table() -> rx.Component:
     prices for 2025. The table includes built-in search, sort, and
     pagination functionality for easy navigation. Features alternating
     row colors (white and light green) for better readability.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -125,15 +135,15 @@ def section_pricing_table() -> rx.Component:
     return section(
         container(
             rx.text(
-                get_translation(TRANSLATIONS, "title"),
+                get_translation(TRANSLATIONS, "title", language),
                 font_size=FontSizes.section_sub_title,
                 font_weight="700",
                 color=Colors.text["subheading"],
             ),
             rx.text(
-                get_translation(TRANSLATIONS, "intro"),
+                get_translation(TRANSLATIONS, "intro", language),
                 rx.link(
-                    get_translation(TRANSLATIONS, "pdf_link"),
+                    get_translation(TRANSLATIONS, "pdf_link", language),
                     href="/documents/voorvoet_praktijk_voor_podotherapie_tarieven_2025.pdf",
                     color=Colors.text["link"],
                     text_decoration="underline",
@@ -163,7 +173,7 @@ def section_pricing_table() -> rx.Component:
 
             rx.box(
                 rx.text(
-                    get_translation(TRANSLATIONS, "disclaimer"),
+                    get_translation(TRANSLATIONS, "disclaimer", language),
                     color=Colors.text["muted"],
                     font_size="16px",
                     font_style="italic",

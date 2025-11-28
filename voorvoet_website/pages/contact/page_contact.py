@@ -8,6 +8,7 @@ from .section_contact_form import section_contact_form
 from ..shared_sections import footer, header
 from ...components import toast
 from ...states import WebsiteState
+from ...utils.translations import get_language_from_path
 
 
 def page_contact() -> rx.Component:
@@ -22,11 +23,13 @@ def page_contact() -> rx.Component:
     rx.Component
         A fragment containing all sections of the contact page in order.
     """
+    language = get_language_from_path()
+
     return rx.fragment(
-        header(),
+        header(language),
         section_hero(),
-        section_starter(),
-        section_contact_form(),
-        footer(),
+        section_starter(language),
+        section_contact_form(language),
+        footer(language),
         toast(),
     )

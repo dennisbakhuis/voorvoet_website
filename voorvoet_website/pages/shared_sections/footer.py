@@ -3,7 +3,6 @@ import reflex as rx
 
 from ...components import container, section, regular_text
 from ...theme import Colors, FontSizes, Layout
-from ...states import WebsiteState
 
 
 TRANSLATIONS = {
@@ -58,7 +57,7 @@ TRANSLATIONS = {
 }
 
 
-def footer() -> rx.Component:
+def footer(language: str) -> rx.Component:
     """
     Create the site-wide footer with practice information and links.
 
@@ -70,6 +69,11 @@ def footer() -> rx.Component:
     - Professional affiliations (logos)
     - Legal links (privacy policy, terms)
     - Copyright notice
+
+    Parameters
+    ----------
+    language : str
+        The current language code (nl, de, or en).
 
     Returns
     -------
@@ -84,25 +88,27 @@ def footer() -> rx.Component:
     - Transitions to side-by-side layout on larger screens
     - Includes gentle wave clip-path styling at the top
     """
-    def get_translation(key: str) -> rx.Var:
+    def get_translation(key: str, lang: str) -> rx.Var:
         """
-        Get translation for a key based on current language.
+        Get translation for a key based on provided language.
 
         Parameters
         ----------
         key : str
             Translation key to look up in TRANSLATIONS dict.
+        lang : str
+            Language code (nl, de, or en).
 
         Returns
         -------
         rx.Var
-            Reactive variable containing the translated text for the current language.
+            Reactive variable containing the translated text for the specified language.
         """
         return rx.cond(
-            WebsiteState.current_language == "nl",
+            lang == "nl",
             TRANSLATIONS["nl"][key],
             rx.cond(
-                WebsiteState.current_language == "de",
+                lang == "de",
                 TRANSLATIONS["de"][key],
                 TRANSLATIONS["en"][key]
             )
@@ -128,7 +134,7 @@ def footer() -> rx.Component:
                 rx.box(
                     rx.box(
                         regular_text(
-                            get_translation("location_eeftinksweg"),
+                            get_translation("location_eeftinksweg", language),
                             color=Colors.text["muted"],
                             font_weight="700",
                             text_decoration="underline",
@@ -138,16 +144,16 @@ def footer() -> rx.Component:
                         regular_text("Eeftinksweg 13", color=Colors.text["secondary"]),
                         regular_text("7541 WE Enschede", color=Colors.text["secondary"], margin_bottom="0.20rem"),
                         rx.box(
-                            regular_text(get_translation("monday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text(get_translation("monday", language), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.00 - 17.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         rx.box(
-                            regular_text(get_translation("thursday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text(get_translation("thursday", language), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.00 - 17.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                             margin_bottom="0.15rem"
                         ),
                         regular_text(
-                            get_translation("location_beethovenlaan"),
+                            get_translation("location_beethovenlaan", language),
                             color=Colors.text["muted"],
                             font_weight="700",
                             text_decoration="underline",
@@ -158,15 +164,15 @@ def footer() -> rx.Component:
                         regular_text("Beethovenlaan 10", color=Colors.text["secondary"]),
                         regular_text("7522 HJ Enschede", color=Colors.text["secondary"], margin_bottom="0.20rem"),
                         rx.box(
-                            regular_text(get_translation("tuesday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text(get_translation("tuesday", language), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.30 - 19.30", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         rx.box(
-                            regular_text(get_translation("wednesday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text(get_translation("wednesday", language), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.30 - 17.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         rx.box(
-                            regular_text(get_translation("friday"), color=Colors.text["secondary"], display="inline-block", width="100px"),
+                            regular_text(get_translation("friday", language), color=Colors.text["secondary"], display="inline-block", width="100px"),
                             regular_text("8.00 - 13.00", color=Colors.text["secondary"], display="inline-block", margin_left="10px"),
                         ),
                         flex=["1", "1", "0 1 auto", "1"],
@@ -209,17 +215,17 @@ def footer() -> rx.Component:
                         ),
                         rx.box(
                             rx.box(
-                                regular_text(get_translation("kvk_number"), color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
+                                regular_text(get_translation("kvk_number", language), color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
                                 regular_text("87984814", color=Colors.text["secondary"], display="inline-block"),
                                 margin_bottom="0.5rem"
                             ),
                             rx.box(
-                                regular_text(get_translation("practice_code"), color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
+                                regular_text(get_translation("practice_code", language), color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
                                 regular_text("26000993", color=Colors.text["secondary"], display="inline-block"),
                                 margin_bottom="0.5rem"
                             ),
                             rx.box(
-                                regular_text(get_translation("bank_account"), color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
+                                regular_text(get_translation("bank_account", language), color=Colors.text["muted"], font_weight="600", display="inline-block", width="140px"),
                                 regular_text("NL18 KNAB 0515 1858 84", color=Colors.text["secondary"], display="inline-block", word_break="break-word"),
                             ),
                             flex="1",
@@ -227,9 +233,9 @@ def footer() -> rx.Component:
                             max_width=["none", "none", "280px", "none"]
                         ),
                         rx.box(
-                            rx.link(get_translation("credits"), href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left"]),
-                            rx.link(get_translation("privacy_policy"), href="/documents/Privacy_beleid_v0.1.1.pdf", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left"], is_external=True),
-                            rx.link(get_translation("terms_conditions"), href="/documents/Algemene_voorwaarden_v0.1.0.pdf", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, text_align=["center", "center", "left", "left"], is_external=True)
+                            rx.link(get_translation("credits", language), href="#", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left"]),
+                            rx.link(get_translation("privacy_policy", language), href="/documents/Privacy_beleid_v0.1.1.pdf", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, margin_bottom="0.5rem", text_align=["center", "center", "left", "left"], is_external=True),
+                            rx.link(get_translation("terms_conditions", language), href="/documents/Algemene_voorwaarden_v0.1.0.pdf", color=Colors.text["link"], text_decoration="underline", display="block", font_size=FontSizes.regular, text_align=["center", "center", "left", "left"], is_external=True)
                         ),
                         display="flex",
                         flex_direction="column",
@@ -269,7 +275,7 @@ def footer() -> rx.Component:
                 ),
                 rx.box(
                     rx.link(
-                        rx.text("© ", get_translation("made_with_love")),
+                        rx.text("© ", get_translation("made_with_love", language)),
                         href="https://linkedin.com/in/dennisbakhuis",
                         color=Colors.text["muted"],
                         font_size=FontSizes.regular,

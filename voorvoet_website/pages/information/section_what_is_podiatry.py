@@ -20,7 +20,7 @@ TRANSLATIONS = {
 }
 
 
-def section_what_is_podiatry() -> rx.Component:
+def section_what_is_podiatry(language: str) -> rx.Component:
     """
     Create the 'What is podiatry?' explanatory section.
 
@@ -29,6 +29,11 @@ def section_what_is_podiatry() -> rx.Component:
     various treatment options available (custom insoles, shoe advice,
     exercises, orthoses, nail braces, taping, etc.).
 
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
+
     Returns
     -------
     rx.Component
@@ -36,14 +41,14 @@ def section_what_is_podiatry() -> rx.Component:
         services and treatment approaches.
     """
     paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1")
+        get_translation(TRANSLATIONS, "paragraph1", language)
     ]
 
     return section(
         container(
             image_text_section(
                 image_src="/images/page_information/skelet_botjes_voet_voorvoet_praktijk_voor_podotherapie_enschede.jpg",
-                title=get_translation(TRANSLATIONS, "title"),
+                title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
                 image_position="right",
                 image_max_width="450px",
