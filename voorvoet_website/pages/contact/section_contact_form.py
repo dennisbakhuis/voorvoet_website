@@ -181,28 +181,28 @@ def section_contact_form(language: str) -> rx.Component:
                     ),
                     margin_bottom="1.5rem",
                 ),
-                rx.cond(
-                    config.turnstile_enabled,
-                    rx.box(
-                        rx.html(
-                            f"""
-                            <div class="cf-turnstile"
-                                 data-sitekey="{config.turnstile_site_key}"
-                                 data-theme="light"
-                                 data-callback="onTurnstileSuccess"
-                                 style="margin-bottom: 1.5rem;">
-                            </div>
-                            <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-                            <script>
-                                function onTurnstileSuccess(token) {{
-                                    console.log('Turnstile verification successful');
-                                }}
-                            </script>
-                            """
-                        ),
-                    ),
-                    rx.fragment(),
-                ),
+                # rx.cond(  # TODO: test turnstile
+                #     config.turnstile_enabled,
+                #     rx.box(
+                #         rx.html(
+                #             f"""
+                #             <div class="cf-turnstile"
+                #                  data-sitekey="{config.turnstile_site_key}"
+                #                  data-theme="light"
+                #                  data-callback="onTurnstileSuccess"
+                #                  style="margin-bottom: 1.5rem;">
+                #             </div>
+                #             <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                #             <script>
+                #                 function onTurnstileSuccess(token) {{
+                #                     console.log('Turnstile verification successful');
+                #                 }}
+                #             </script>
+                #             """
+                #         ),
+                #     ),
+                #     rx.fragment(),
+                # ),
                 rx.box(
                     form_button(
                         label=get_translation(TRANSLATIONS, "submit_button", language),

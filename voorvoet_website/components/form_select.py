@@ -53,15 +53,16 @@ def form_select(
         }}
     """
 
-    return rx.fragment(
-        rx.html(f"<style>{custom_css}</style>"),
-        rx.select(
-            items,
-            value=value,
-            on_change=on_change,
-            placeholder=placeholder,
-            size=size,
-            width="100%",
-            variant="surface",
-        ),
+    # return rx.fragment(
+    #     # rx.html(f"<style>{custom_css}</style>"),
+    return rx.select(
+        items,
+        value=value,
+        on_change=on_change,
+        placeholder=placeholder,
+        size=size,
+        width="100%",
+        variant="surface",
     )
+    #     ,
+    # )
