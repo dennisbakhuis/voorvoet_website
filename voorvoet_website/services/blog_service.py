@@ -173,6 +173,12 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         date = _parse_date(date_str, filename)
         formatted_date = _format_date_dutch(date)
 
+        # Parse date_modified if provided, otherwise None (will use date)
+        date_modified = None
+        if 'date_modified' in metadata:
+            date_modified_str = str(metadata.get('date_modified', ''))
+            date_modified = _parse_date(date_modified_str, filename)
+
         try:
             read_time = int(str(metadata.get('read_time', "")))
             if read_time <= 0:
@@ -184,6 +190,17 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         thumbnail_filename = metadata.get('thumbnail', 'thumbnail.jpg')
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
 
+        # Parse tags as list, handle both list and comma-separated string formats
+        tags_raw = metadata.get('tags', [])
+        if isinstance(tags_raw, list):
+            tags = [str(tag).strip() for tag in tags_raw]
+        elif isinstance(tags_raw, str):
+            tags = [tag.strip() for tag in tags_raw.split(',') if tag.strip()]
+        else:
+            tags = []
+
+        category = metadata.get('category')
+
         content_objects = parse_blog_content(content, filename)
 
         blog_post = BlogPost(
@@ -192,6 +209,7 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
             summary=str(metadata.get('summary', '')),
             author=str(author) if author else None,
             date=date,
+            date_modified=date_modified,
             formatted_date=formatted_date,
             thumbnail=str(thumbnail_filename),
             thumbnail_alt=str(metadata.get('thumbnail_alt', '')),
@@ -200,6 +218,8 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
             thumbnail_url=thumbnail_url,
             read_time=read_time,
             content_objects=content_objects,
+            tags=tags,
+            category=str(category) if category else None,
         )
 
         return blog_post

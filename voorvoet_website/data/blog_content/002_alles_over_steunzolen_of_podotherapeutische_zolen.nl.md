@@ -4,8 +4,11 @@ slug: "steunzolen-of-podotherapeutische-zolen"
 summary: "In ons dagelijks leven onderschatten we vaak het belang van gezonde voeten. Ze dragen ons letterlijk door het leven, maar krijgen vaak niet de aandacht die ze verdienen. Steunzolen of podotherapeutische zolen zijn een oplossing die steeds meer mensen ontdekken om hun voetcomfort te verbeteren en diverse gezondheidsproblemen te verlichten. In dit artikel verkennen we de wereld van podotherapeutische zolen en ontdekken we hoe ze een positieve invloed kunnen hebben op je voetgezondheid."
 author: "Kim Bakhuis"
 date: "2023-11-26"
+date_modified: "2023-11-26"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "Voor de perfecte steunzool wordt een 3D scan gemaakt van de voet."
+tags: ["steunzolen", "podotherapeutische zolen", "inlegzolen", "voetklachten", "maatwerk"]
+category: "Behandelingen"
 ---
 # De basis: wat zijn steunzolen of podotherapeutische zolen?
 Podotherapeutische zolen, worden ook wel steunzolen, inlegzolen of inlays genoemd en zijn speciaal ontworpen om de stand en de beweging van de voeten te corrigeren of de voeten te ondersteunen. Ze worden op maat gemaakt door podotherapeuten, paramedische specialisten die gespecialiseerd zijn in het onderzoeken en behandelen van voetproblemen. Steunzolen worden tegenwoordig vaak digitaal aangemeten, en worden ontworpen voor de individuele behoeften van de patiënt.

@@ -1,11 +1,14 @@
 ---
 title: "Zonder voetklachten het nieuwe jaar in!"
 slug: "zonder-voetklachten"
-summary: "Het frisse begin van het nieuwe jaar brengt vaak de drang met zich mee om positieve veranderingen aan te brengen, en voor velen betekent dit het stellen van goede voornemens. Misschien staan sporten, meer bewegen of simpelweg genieten van een ontspannen wandeling hoog op je lijst. En het is wel zo fijn als dat zonder"  # TODO: missing text
+summary: "Het frisse begin van het nieuwe jaar brengt vaak de drang met zich mee om positieve veranderingen aan te brengen, en voor velen betekent dit het stellen van goede voornemens. Misschien staan sporten, meer bewegen of simpelweg genieten van een ontspannen wandeling hoog op je lijst. En het is wel zo fijn als dat zonder voetklachten mogelijk is!"
 author: "Kim Bakhuis"
 date: "2024-01-08"
+date_modified: "2024-01-08"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "Een goede schoen helpt bij het houden van gezonden voeten."
+tags: ["voetklachten", "wandelen", "sporten", "goede voornemens", "preventie"]
+category: "Gezondheid en preventie"
 ---
 Het frisse begin van het nieuwe jaar brengt vaak de drang met zich mee om positieve veranderingen aan te brengen, en voor velen betekent dit het stellen van goede voornemens. Misschien staan sporten, meer bewegen of simpelweg genieten van een ontspannen wandeling hoog op je lijst. En het is wel zo fijn als dat zonder voetklachten mogelijk is!
 

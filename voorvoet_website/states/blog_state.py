@@ -6,6 +6,7 @@ providing computed properties for post display.
 """
 import reflex as rx
 from typing import Optional
+import json
 
 from ..models import BlogPost
 from ..services import blog_service
@@ -111,3 +112,87 @@ class BlogState(WebsiteState):
             True if at least one blog post has been loaded, False otherwise
         """
         return len(self.all_posts) > 0
+
+    @rx.var
+    def article_schema_json(self) -> str:
+        """
+        Generate Article JSON-LD structured data for the current blog post.
+
+        Creates schema markup dynamically from current_post data for SEO.
+        Returns empty string if no current post is loaded.
+
+        Returns
+        -------
+        str
+            JSON-LD structured data as string, or empty string if no post
+        """
+        if not self.current_post:
+            return ""
+
+        base_url = "https://voorvoet.nl"
+        post = self.current_post
+
+        # Construct full canonical URL
+        full_url = f"{base_url}/{self.current_language}/blog/{post.slug}/"
+
+        # Image URL - prepend base_url to thumbnail path
+        image_url = f"{base_url}{post.thumbnail_url}"
+
+        # Extract article snippet from first 200 words of content
+        words = post.content.split()
+        snippet_words = words[:200] if len(words) > 200 else words
+        article_snippet = ' '.join(snippet_words)
+        # Clean up markdown formatting for snippet
+        article_snippet = article_snippet.replace('#', '').replace('*', '').replace('!', '').strip()
+
+        # Build article data
+        article_data = {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "description": post.summary,
+            "articleBody": article_snippet,
+            "image": {
+                "@type": "ImageObject",
+                "url": image_url,
+                "caption": post.thumbnail_alt if post.thumbnail_alt else post.title
+            },
+            "datePublished": post.date.isoformat(),
+            "dateModified": post.date_modified.isoformat() if post.date_modified else post.date.isoformat(),
+            "author": {
+                "@type": "Person",
+                "name": post.author if post.author else "Kim Bakhuis",
+                "url": base_url,
+                "sameAs": "https://www.linkedin.com/in/kimbakhuis/"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "VoorVoet",
+                "url": base_url,
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": f"{base_url}/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg"
+                }
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": full_url
+            },
+            "url": full_url,
+            "inLanguage": self.current_language,
+        }
+
+        # Add word count from content
+        word_count = len(post.content.split())
+        if word_count > 0:
+            article_data["wordCount"] = word_count
+
+        # Add keywords from tags
+        if post.tags and len(post.tags) > 0:
+            article_data["keywords"] = post.tags
+
+        # Add article section/category
+        if post.category:
+            article_data["articleSection"] = post.category
+
+        return json.dumps(article_data, ensure_ascii=False, indent=2)

@@ -9,7 +9,7 @@ from .section_information import section_information
 from .section_locations import section_locations
 
 from ..shared_sections import footer, header
-from ...components import modal
+from ...components import modal, organization_schema
 
 
 def page_home() -> rx.Component:
@@ -20,12 +20,15 @@ def page_home() -> rx.Component:
     header, hero, about practice, ordering insoles, introduction,
     information cards, locations, footer, and modal.
 
+    Includes JSON-LD structured data (Organization schema) for SEO optimization.
+
     Returns
     -------
     rx.Component
         A fragment containing all sections of the home page in order.
     """
     return rx.fragment(
+        organization_schema(),
         header(),
         section_hero(),
         section_who_is_voorvoet(),

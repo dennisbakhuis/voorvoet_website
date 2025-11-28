@@ -30,10 +30,12 @@ from .risk_level_card import risk_level_card
 from .section import section
 from .section_title import section_title
 from .section_sub_title import section_sub_title
+from .structured_data import organization_schema, article_schema
 from .toast import toast
 
 
 __all__ = [
+    "article_schema",
     "blog_card",
     "blog_heading",
     "blog_image",
@@ -61,6 +63,7 @@ __all__ = [
     "LocationConfig",
     "markdown_content",
     "modal",
+    "organization_schema",
     "regular_text",
     "responsive_grid",
     "risk_level_card",

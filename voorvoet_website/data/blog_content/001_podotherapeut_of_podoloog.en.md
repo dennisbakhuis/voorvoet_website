@@ -4,8 +4,11 @@ slug: "podotherapeut-of-podoloog"
 summary: "Curious about the difference between a podiatrist and a podologist? These terms are often confused, but there is an important distinction. While a podiatrist has completed an extensive HBO degree and holds a legally recognized and protected title, anyone can call themselves a podologist, regardless of their level of education. The impact of this choice on your foot care can be considerable. Read here about the differences between a podiatrist and a podologist."
 author: "Kim Bakhuis"
 date: "2023-11-06"
+date_modified: "2023-11-06"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "Podiatrist Kim Bakhuis checking a podiatric insole against the foot."
+tags: ["podiatry", "podologist", "foot care", "education", "Enschede"]
+category: "Education and profession"
 ---
 # The difference between a podiatrist and a podologist?
 It can happen to anyone: suddenly you have sore feet. Sometimes so severe that you can barely stand or walk on them. We quickly start looking for a solution and turn to Google. But what do you type in? Podologist Enschede or Podiatrist Enschede? The terms podiatrist and podologist are often used interchangeably. What is the difference? Although both professions focus on complaints of the lower extremity (read: lower back and below), there is definitely a difference between these professional groups.

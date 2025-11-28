@@ -23,6 +23,8 @@ class BlogPost(BaseModel):
         Author name, defaults to None if not specified.
     date : datetime
         Publication date and time.
+    date_modified : Optional[datetime]
+        Last modification date, defaults to None (uses publication date).
     formatted_date : str
         Pre-formatted date string in Dutch locale.
     thumbnail : str
@@ -39,6 +41,10 @@ class BlogPost(BaseModel):
         Estimated reading time in minutes, defaults to None.
     content_objects : list[ContentDict]
         Parsed content as structured dictionaries.
+    tags : list[str]
+        Keywords/tags for the blog post for SEO and categorization.
+    category : Optional[str]
+        Article category/section, defaults to None.
     url : str
         Computed URL path for the blog post (read-only property).
     """
@@ -48,6 +54,7 @@ class BlogPost(BaseModel):
     summary: str
     author: Optional[str] = None
     date: datetime
+    date_modified: Optional[datetime] = None
     formatted_date: str
     thumbnail: str
     thumbnail_alt: str
@@ -56,6 +63,8 @@ class BlogPost(BaseModel):
     thumbnail_url: str
     read_time: Optional[int] = None
     content_objects: list[ContentDict] = Field(default_factory=list)
+    tags: list[str] = Field(default_factory=list)
+    category: Optional[str] = None
 
     @property
     def url(self) -> str:

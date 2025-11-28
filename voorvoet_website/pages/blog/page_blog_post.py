@@ -2,7 +2,7 @@
 import reflex as rx
 from ...states import BlogState
 from ...theme import Colors, FontSizes
-from ...components import container, section, modal, markdown_content
+from ...components import container, section, modal, markdown_content, article_schema
 from ..shared_sections import footer, header
 from .section_hero import section_hero
 from ...config import config
@@ -37,7 +37,8 @@ def page_blog_post() -> rx.Component:
 
     Displays the complete blog post including title, metadata (author,
     date, reading time based on config), rendered markdown content,
-    and a back link to the blog overview.
+    and a back link to the blog overview. Also includes Article structured
+    data (JSON-LD) for SEO optimization.
 
     Returns
     -------
@@ -46,6 +47,9 @@ def page_blog_post() -> rx.Component:
         footer, and modal components.
     """
     return rx.fragment(
+        # Add Article schema for SEO (automatically handles empty state)
+        article_schema(),
+
         header(),
         section_hero(),
 

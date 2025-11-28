@@ -134,5 +134,10 @@ class Config(BaseSettings):
         description="Show estimated reading time on blog posts",
     )
 
+    site_url: str = Field(
+        default="https://voorvoet.nl",
+        description="Base URL of the website for Open Graph and canonical URLs",
+    )
+
 
 config = Config()
