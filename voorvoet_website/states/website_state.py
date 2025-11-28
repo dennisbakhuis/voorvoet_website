@@ -1,7 +1,7 @@
 """Main website state management for global UI components and navigation.
 
 This module contains the WebsiteState class which manages the core application
-state including navigation, modal dialogs, and toast notifications.
+state including navigation, and toast notifications.
 """
 import reflex as rx
 from .page_title_translations import PAGE_TITLES
@@ -12,21 +12,13 @@ class WebsiteState(rx.State):
     Global state manager for the website application.
 
     Manages the state for global UI components including the navigation menu,
-    modal dialogs, toast notifications, and language switching. This is the base
+    toast notifications, and language switching. This is the base
     state class that other state classes can inherit from or reference.
 
     Attributes
     ----------
     nav_open : bool
         Whether the mobile navigation menu is currently open
-    modal_open : bool
-        Whether the modal dialog is currently visible
-    modal_title : str
-        Title text displayed in the modal dialog
-    modal_desc : str
-        Description text displayed in the modal dialog
-    modal_input : str
-        User input value from the modal dialog
     toast_visible : bool
         Whether the toast notification is currently visible
     toast_message : str
@@ -43,11 +35,6 @@ class WebsiteState(rx.State):
 
     nav_open: bool = False
 
-    modal_open: bool = False
-    modal_title: str = ""
-    modal_desc: str = ""
-    modal_input: str = ""
-
     toast_visible: bool = False
     toast_message: str = ""
     toast_type: str = "success"
@@ -63,54 +50,6 @@ class WebsiteState(rx.State):
             self.language_selector_open = False
         else:
             self.language_selector_mobile_open = False
-
-    def open_modal(self, title: str, desc: str):
-        """
-        Open the modal dialog with specified content.
-
-        Parameters
-        ----------
-        title : str
-            Title to display in the modal header
-        desc : str
-            Description text to display in the modal body
-        """
-        self.modal_title = title
-        self.modal_desc = desc
-        self.modal_open = True
-
-    def close_modal(self):
-        """Close the modal dialog and clear its input value."""
-        self.modal_open = False
-        self.modal_input = ""
-
-    def set_modal_input(self, value: str):
-        """
-        Update the modal input field value.
-
-        Parameters
-        ----------
-        value : str
-            The new input value
-        """
-        self.modal_input = value
-
-    def on_modal_change(self, is_open: bool):
-        """
-        Handle modal open/close state changes.
-
-        Called when the modal's visibility changes, typically from user
-        interaction with the modal's close button or overlay.
-
-        Parameters
-        ----------
-        is_open : bool
-            Whether the modal should be open
-        """
-        if not is_open:
-            self.close_modal()
-        else:
-            self.modal_open = True
 
     def show_toast(self, message: str, toast_type: str = "success"):
         """

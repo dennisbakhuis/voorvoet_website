@@ -2,11 +2,11 @@
 import reflex as rx
 from ...states import BlogState
 from ...theme import Colors, FontSizes
-from ...components import container, section, modal, markdown_content, article_schema
+from ...components import container, section, markdown_content, article_schema
 from ..shared_sections import footer, header
 from .section_hero import section_hero
 from ...config import config
-from ...utils.translations import get_translation, get_language_from_path
+from ...utils.translations import get_translation
 
 
 TRANSLATIONS = {
@@ -31,7 +31,7 @@ TRANSLATIONS = {
 }
 
 
-def page_blog_post() -> rx.Component:
+def page_blog_post(language: str="nl") -> rx.Component:
     """
     Create the individual blog post page with full content.
 
@@ -44,17 +44,12 @@ def page_blog_post() -> rx.Component:
     -------
     rx.Component
         A fragment containing header, hero, blog post content section,
-        footer, and modal components.
+        footer.
     """
-    language = get_language_from_path()
-
     return rx.fragment(
-        # Add Article schema for SEO (automatically handles empty state)
         article_schema(),
-
         header(language, page_key="blog"),
         section_hero(),
-
         section(
             container(
                 rx.cond(
@@ -176,7 +171,5 @@ def page_blog_post() -> rx.Component:
 
             padding_top="1em",
         ),
-
         footer(language),
-        modal(),
     )

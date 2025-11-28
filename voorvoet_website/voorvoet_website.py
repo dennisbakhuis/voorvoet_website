@@ -80,47 +80,41 @@ app.add_page(
     component=lambda: page_home(language="nl"),
     route="/nl",
     title=WebsiteState.page_title,  # type: ignore
-    on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
-    component=page_blog,
-    route="/[lang]/blog/",
+    component=lambda: page_blog(language="nl"),
+    route="/nl/blog/",
     title=WebsiteState.page_title,  # type: ignore
-    on_load=BlogState.load_posts,  # type: ignore
 )
 
 app.add_page(
-    component=page_blog_post,
-    route="/[lang]/blog/[slug]",
+    component=lambda: page_blog_post(language="nl"),
+    route="/nl/blog/[slug]",
     title=WebsiteState.page_title,  # type: ignore
     on_load=BlogState.load_post_by_slug,  # type: ignore
 )
 
 app.add_page(
-    component=page_informatie,
-    route="/[lang]/informatie/",
+    component=lambda: page_informatie(language="nl"),
+    route="/nl/informatie/",
     title=WebsiteState.page_title,  # type: ignore
-    on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
-    component=page_vergoedingen,
-    route="/[lang]/vergoedingen/",
+    component=lambda: page_vergoedingen(language="nl"),
+    route="/nl/vergoedingen/",
     title=WebsiteState.page_title,  # type: ignore
-    on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
-    component=page_contact,
-    route="/[lang]/contact/",
+    component=lambda: page_contact(language="nl"),
+    route="/nl/contact/",
     title=WebsiteState.page_title,  # type: ignore
-    on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
-    component=page_zolen_bestellen,
-    route="/[lang]/zolen-bestellen/",
+    component=lambda: page_zolen_bestellen(language="nl"),
+    route="/nl/zolen-bestellen/",
     title=WebsiteState.page_title,  # type: ignore
-    on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )

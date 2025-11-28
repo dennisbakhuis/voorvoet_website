@@ -7,12 +7,9 @@ from .section_reimbursement_table import section_reimbursement_table
 from .section_pricing_table import section_pricing_table
 
 from ..shared_sections import footer, header
-from ...components import modal
-from ...states import WebsiteState
-from ...utils.translations import get_language_from_path
 
 
-def page_vergoedingen() -> rx.Component:
+def page_vergoedingen(language: str="nl") -> rx.Component:
     """
     Create the complete vergoedingen page with all sections.
 
@@ -26,17 +23,13 @@ def page_vergoedingen() -> rx.Component:
     rx.Component
         A fragment containing all sections of the vergoedingen page
         including header, hero, starter text, reimbursement table,
-        pricing table, footer, and modal components.
+        pricing table, footer components.
     """
-    language = get_language_from_path()
-
     return rx.fragment(
         header(language, page_key="vergoedingen"),
         section_hero(),
         section_starter(language),
         section_reimbursement_table(language),
         section_pricing_table(language),
-
         footer(language),
-        modal(),
     )

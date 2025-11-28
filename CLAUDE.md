@@ -13,7 +13,7 @@ Main app is in [voorvoet_website/voorvoet_website.py](voorvoet_website/voorvoet_
 - Pages connect to state handlers via `on_load` callbacks
 ### State Management
 Reflex uses centralized state classes inheriting from `rx.State`:
-- **WebsiteState**: Navigation, modals, toasts, language switching
+- **WebsiteState**: toasts, language switching
 - **BlogState**: Blog post loading/display
 - **ContactState**: Contact form with Turnstile verification
 - **OrderInsolesState**: Insole order form

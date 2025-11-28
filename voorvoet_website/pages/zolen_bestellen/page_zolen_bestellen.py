@@ -7,10 +7,9 @@ from .section_order_form import section_order_form
 
 from ..shared_sections import footer, header
 from ...components import toast
-from ...utils.translations import get_language_from_path
 
 
-def page_zolen_bestellen() -> rx.Component:
+def page_zolen_bestellen(language: str="nl") -> rx.Component:
     """
     Create the complete zolen bestellen page with all sections.
 
@@ -22,8 +21,6 @@ def page_zolen_bestellen() -> rx.Component:
     rx.Component
         A fragment containing all sections of the zolen bestellen page in order.
     """
-    language = get_language_from_path()
-
     return rx.fragment(
         header(language, page_key=None),
         section_hero(),
