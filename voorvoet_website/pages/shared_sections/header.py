@@ -128,8 +128,8 @@ def header(language: str) -> rx.Component:
             rx.fragment()
         ),
         rx.cond(
-            is_not_on_page("/reimbursements/"),
-            rx.link(get_translation("vergoedingen", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_reimbursements, cursor="pointer"),  #type: ignore
+            is_not_on_page("/vergoedingen/"),
+            rx.link(get_translation("vergoedingen", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_vergoedingen, cursor="pointer"),  #type: ignore
             rx.fragment()
         ),
         rx.cond(
@@ -213,7 +213,7 @@ def header(language: str) -> rx.Component:
             rx.fragment()
         ),
         rx.cond(
-            is_not_on_page("/reimbursements/"),
+            is_not_on_page("/vergoedingen/"),
             rx.box(
                 rx.link(
                     get_translation("vergoedingen", language),
@@ -226,7 +226,7 @@ def header(language: str) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_reimbursements],  #type: ignore
+                on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_vergoedingen],  #type: ignore
                 _hover={
                     "& a": {
                         "color": Colors.primary["300"],

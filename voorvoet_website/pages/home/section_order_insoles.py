@@ -59,7 +59,7 @@ def section_order_insoles(language: str) -> rx.Component:
             rx.box(
                 button(
                     label=get_translation(TRANSLATIONS, "button", language),
-                    href="/order-insoles"
+                    href=f"/{language}/zolen-bestellen/"
                 ),
                 display="flex",
                 justify_content="center",

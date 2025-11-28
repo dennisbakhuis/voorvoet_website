@@ -111,7 +111,7 @@ def section_information(language: str) -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card3_button", language),
-            button_link=f"/{language}/reimbursements/"
+            button_link=f"/{language}/vergoedingen/"
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card4_title", language),

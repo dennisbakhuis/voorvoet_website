@@ -204,7 +204,7 @@ def section_risicovoet(language: str) -> rx.Component:
                 get_translation(TRANSLATIONS, "reimbursement_text", language),
                 rx.link(
                     get_translation(TRANSLATIONS, "reimbursement_link", language),
-                    href="/reimbursements/",
+                    href=f"/{language}/vergoedingen/",
                     color=Colors.text["link"],
                     text_decoration="underline",
                     _hover={"color": Colors.primary["700"]}

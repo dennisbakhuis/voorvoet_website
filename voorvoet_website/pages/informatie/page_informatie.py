@@ -15,18 +15,18 @@ from ...components import modal
 from ...utils.translations import get_language_from_path
 
 
-def page_information() -> rx.Component:
+def page_informatie() -> rx.Component:
     """
-    Create the complete information page with all sections.
+    Create the complete informatie page with all sections.
 
-    The information page provides comprehensive details about podiatry services,
+    The informatie page provides comprehensive details about podiatry services,
     including what podiatry is, who it's for, treatment processes, common
     complaints, company podiatry services, and risk foot classifications.
 
     Returns
     -------
     rx.Component
-        A fragment containing all sections of the information page including
+        A fragment containing all sections of the informatie page including
         header, hero, informational sections, footer, and modal components.
     """
     language = get_language_from_path()

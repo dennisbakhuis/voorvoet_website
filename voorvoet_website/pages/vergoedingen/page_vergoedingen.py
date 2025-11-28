@@ -12,11 +12,11 @@ from ...states import WebsiteState
 from ...utils.translations import get_language_from_path
 
 
-def page_reimbursements() -> rx.Component:
+def page_vergoedingen() -> rx.Component:
     """
-    Create the complete reimbursements page with all sections.
+    Create the complete vergoedingen page with all sections.
 
-    The reimbursements page provides information about insurance coverage
+    The vergoedingen page provides information about insurance coverage
     and costs for podiatry services, including a comprehensive searchable
     table of insurance providers and their reimbursement amounts for 2025,
     as well as VoorVoet's pricing information.
@@ -24,7 +24,7 @@ def page_reimbursements() -> rx.Component:
     Returns
     -------
     rx.Component
-        A fragment containing all sections of the reimbursements page
+        A fragment containing all sections of the vergoedingen page
         including header, hero, starter text, reimbursement table,
         pricing table, footer, and modal components.
     """

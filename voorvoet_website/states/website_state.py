@@ -117,16 +117,16 @@ class WebsiteState(rx.State):
         self.current_page_path = path
         return rx.redirect(path)
 
-    def nav_to_reimbursements(self):
+    def nav_to_vergoedingen(self):
         """
-        Navigate to the reimbursements page with current language.
+        Navigate to the vergoedingen page with current language.
 
         Returns
         -------
         rx.event
-            Redirect event to the reimbursements page
+            Redirect event to the vergoedingen page
         """
-        path = f"/{self.current_language}/reimbursements/"
+        path = f"/{self.current_language}/vergoedingen/"
         self.current_page_path = path
         return rx.redirect(path)
 
@@ -140,6 +140,19 @@ class WebsiteState(rx.State):
             Redirect event to the contact page
         """
         path = f"/{self.current_language}/contact/"
+        self.current_page_path = path
+        return rx.redirect(path)
+
+    def nav_to_zolen_bestellen(self):
+        """
+        Navigate to the zolen bestellen page with current language.
+
+        Returns
+        -------
+        rx.event
+            Redirect event to the zolen bestellen page
+        """
+        path = f"/{self.current_language}/zolen-bestellen/"
         self.current_page_path = path
         return rx.redirect(path)
 
@@ -288,10 +301,12 @@ class WebsiteState(rx.State):
             page_key = "blog"
         elif "/informatie/" in current_path:
             page_key = "information"
-        elif "/reimbursements/" in current_path:
+        elif "/vergoedingen/" in current_path:
             page_key = "reimbursements"
         elif "/contact/" in current_path:
             page_key = "contact"
+        elif "/zolen-bestellen/" in current_path:
+            page_key = "order_insoles"
         else:
             page_key = "home"
 

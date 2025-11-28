@@ -10,17 +10,17 @@ from ...components import toast
 from ...utils.translations import get_language_from_path
 
 
-def page_order_insoles() -> rx.Component:
+def page_zolen_bestellen() -> rx.Component:
     """
-    Create the complete order insoles page with all sections.
+    Create the complete zolen bestellen page with all sections.
 
-    The order insoles page is composed of: header, hero banner, starter text,
+    The zolen bestellen page is composed of: header, hero banner, starter text,
     order form, footer, and toast notification components.
 
     Returns
     -------
     rx.Component
-        A fragment containing all sections of the order insoles page in order.
+        A fragment containing all sections of the zolen bestellen page in order.
     """
     language = get_language_from_path()
 

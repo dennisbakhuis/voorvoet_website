@@ -12,17 +12,17 @@ Language-prefixed routes (nl, de, en):
 /[lang]/blog/ : Blog listing page
 /[lang]/blog/[slug] : Individual blog post pages
 /[lang]/informatie/ : Information page
-/[lang]/reimbursements/ : Insurance reimbursements page
+/[lang]/vergoedingen/ : Insurance reimbursements page
 /[lang]/contact/ : Contact form page
-/[lang]/order-insoles/ : Order insoles page
+/[lang]/zolen-bestellen/ : Order insoles page
 
 Root redirects (automatically redirect to /nl/...):
 / → /nl
 /blog/ → /nl/blog/
 /informatie/ → /nl/informatie/
-/reimbursements/ → /nl/reimbursements/
+/vergoedingen/ → /nl/vergoedingen/
 /contact/ → /nl/contact/
-/order-insoles/ → /nl/order-insoles/
+/zolen-bestellen/ → /nl/zolen-bestellen/
 
 Notes
 -----
@@ -33,37 +33,12 @@ All routes support language prefixes for multi-language support.
 
 import reflex as rx
 
-from .pages import page_home, page_blog, page_blog_post, page_information, page_reimbursements, page_contact, page_order_insoles
+from .pages import page_home, page_blog, page_blog_post, page_informatie, page_vergoedingen, page_contact, page_zolen_bestellen
 from .states import BlogState, WebsiteState
 
 
-def redirect_to_nl_home() -> rx.Component:
-    """Redirect root path to Dutch home page."""
-    return rx.fragment()
-
-
-def redirect_to_nl_blog() -> rx.Component:
-    """Redirect root blog path to Dutch blog page."""
-    return rx.fragment()
-
-
-def redirect_to_nl_informatie() -> rx.Component:
-    """Redirect root informatie path to Dutch informatie page."""
-    return rx.fragment()
-
-
-def redirect_to_nl_reimbursements() -> rx.Component:
-    """Redirect root reimbursements path to Dutch reimbursements page."""
-    return rx.fragment()
-
-
-def redirect_to_nl_contact() -> rx.Component:
-    """Redirect root contact path to Dutch contact page."""
-    return rx.fragment()
-
-
-def redirect_to_nl_order_insoles() -> rx.Component:
-    """Redirect root order-insoles path to Dutch order insoles page."""
+def redirect_placeholder() -> rx.Component:
+    """Placeholder component for redirect routes."""
     return rx.fragment()
 
 
@@ -79,39 +54,39 @@ app = rx.App(
 )
 
 app.add_page(
-    component=redirect_to_nl_home,
+    component=redirect_placeholder,
     route="/",
     on_load=lambda: rx.redirect("/nl"),
 )
 
 app.add_page(
-    component=redirect_to_nl_blog,
+    component=redirect_placeholder,
     route="/blog/",
     on_load=lambda: rx.redirect("/nl/blog/"),
 )
 
 app.add_page(
-    component=redirect_to_nl_informatie,
+    component=redirect_placeholder,
     route="/informatie/",
     on_load=lambda: rx.redirect("/nl/informatie/"),
 )
 
 app.add_page(
-    component=redirect_to_nl_reimbursements,
-    route="/reimbursements/",
-    on_load=lambda: rx.redirect("/nl/reimbursements/"),
+    component=redirect_placeholder,
+    route="/vergoedingen/",
+    on_load=lambda: rx.redirect("/nl/vergoedingen/"),
 )
 
 app.add_page(
-    component=redirect_to_nl_contact,
+    component=redirect_placeholder,
     route="/contact/",
     on_load=lambda: rx.redirect("/nl/contact/"),
 )
 
 app.add_page(
-    component=redirect_to_nl_order_insoles,
-    route="/order-insoles/",
-    on_load=lambda: rx.redirect("/nl/order-insoles/"),
+    component=redirect_placeholder,
+    route="/zolen-bestellen/",
+    on_load=lambda: rx.redirect("/nl/zolen-bestellen/"),
 )
 
 
@@ -137,15 +112,15 @@ app.add_page(
 )
 
 app.add_page(
-    component=page_information,
+    component=page_informatie,
     route="/[lang]/informatie/",
     title=WebsiteState.page_title,  # type: ignore
     on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
 
 app.add_page(
-    component=page_reimbursements,
-    route="/[lang]/reimbursements/",
+    component=page_vergoedingen,
+    route="/[lang]/vergoedingen/",
     title=WebsiteState.page_title,  # type: ignore
     on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
@@ -158,8 +133,8 @@ app.add_page(
 )
 
 app.add_page(
-    component=page_order_insoles,
-    route="/[lang]/order-insoles/",
+    component=page_zolen_bestellen,
+    route="/[lang]/zolen-bestellen/",
     title=WebsiteState.page_title,  # type: ignore
     on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )
