@@ -2,7 +2,7 @@
 import reflex as rx
 from ...components import container, section, section_title, regular_text, icon_list_item, column
 from ...theme import Colors, Layout, Spacing
-from ...utils.get_translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {

@@ -19,3 +19,4 @@ assets/external/
 local/
 .claude/
 .env
+.ruff_cache/

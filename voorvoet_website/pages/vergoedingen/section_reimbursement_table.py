@@ -5,7 +5,7 @@ from pathlib import Path
 
 from ...theme import Colors, FontSizes
 from ...components import section, container
-from ...utils.get_translations import get_translation
+from ...utils.get_translation import get_translation
 from ...states import WebsiteState
 
 

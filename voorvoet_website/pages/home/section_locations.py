@@ -2,7 +2,7 @@
 import reflex as rx
 
 from ...components import section, container, location_section, LocationConfig
-from ...utils.get_translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {

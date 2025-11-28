@@ -11,7 +11,7 @@ from ...components import (
     form_select,
 )
 from ...theme import Colors, Spacing
-from ...utils.get_translations import get_translation
+from ...utils.get_translation import get_translation
 from ...states.order_insoles_state import OrderInsolesState
 
 

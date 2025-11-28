@@ -2,7 +2,7 @@
 import reflex as rx
 from ...components import container, section, image_text_section, section_sub_title, regular_text, centered_image, risk_level_card
 from ...theme import Colors
-from ...utils.get_translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {

@@ -181,3 +181,119 @@ def get_page_meta_tags(page_key: str, language: str, route: str, page_type: str 
 
     # Add alternate language versions (hreflang will be added in Phase 5)
     return meta_tags
+
+# def get_breadcrumb_name(page_key: str, language: str = "nl") -> str:
+#     """
+#     Get the breadcrumb name for a specific page and language.
+
+#     Parameters
+#     ----------
+#     page_key : str
+#         The key identifying the page (e.g., "blog", "contact", "information")
+#     language : str, optional
+#         The language code ("nl", "de", "en"), defaults to "nl"
+
+#     Returns
+#     -------
+#     str
+#         The breadcrumb name in the requested language, or Dutch if language not found
+#     """
+#     return BREADCRUMB_NAMES.get(page_key, {}).get(language, BREADCRUMB_NAMES.get(page_key, {}).get("nl", ""))
+
+# def get_page_meta_tags(page_key: str, language: str, route: str, page_type: str = "website") -> list[dict]:
+#     """
+#     Generate complete meta tags for SEO including Open Graph and Twitter Cards.
+
+#     Parameters
+#     ----------
+#     page_key : str
+#         The key identifying the page (e.g., "home", "blog", "contact")
+#     language : str
+#         The language code ("nl", "de", "en")
+#     route : str
+#         The page route (e.g., "/nl", "/de/blog/")
+#     page_type : str, optional
+#         Open Graph type ("website" or "article"), defaults to "website"
+
+#     Returns
+#     -------
+#     list[dict]
+#         List of meta tag dictionaries for use with Reflex's app.add_page()
+#     """
+#     title = get_page_title(page_key, language)
+#     description = get_page_description(page_key, language)
+#     image_path = PAGE_IMAGES.get(page_key, PAGE_IMAGES["home"])
+#     image_url = f"{config.site_url}{image_path}"
+#     page_url = f"{config.site_url}{route}"
+#     locale = LOCALE_MAP.get(language, "nl_NL")
+
+#     meta_tags = [
+#         {"name": "description", "content": description},
+
+#         {"property": "og:title", "content": title},
+#         {"property": "og:description", "content": description},
+#         {"property": "og:image", "content": image_url},
+#         {"property": "og:url", "content": page_url},
+#         {"property": "og:type", "content": page_type},
+#         {"property": "og:locale", "content": locale},
+#         {"property": "og:site_name", "content": "VoorVoet"},
+
+#         {"name": "twitter:card", "content": "summary_large_image"},
+#         {"name": "twitter:title", "content": title},
+#         {"name": "twitter:description", "content": description},
+#         {"name": "twitter:image", "content": image_url},
+
+#         {"name": "canonical", "content": page_url},
+#     ]
+
+#     return meta_tags
+
+
+# def get_blog_post_meta_tags(post_title: str, post_summary: str, post_thumbnail: str, language: str, route: str) -> list[dict]:
+#     """
+#     Generate post-specific meta tags for individual blog posts.
+
+#     Parameters
+#     ----------
+#     post_title : str
+#         The blog post title
+#     post_summary : str
+#         The blog post summary/excerpt
+#     post_thumbnail : str
+#         The blog post thumbnail URL path
+#     language : str
+#         The language code ("nl", "de", "en")
+#     route : str
+#         The blog post route (e.g., "/nl/blog/slug")
+
+#     Returns
+#     -------
+#     list[dict]
+#         List of meta tag dictionaries optimized for blog posts
+#     """
+#     full_title = f"{post_title} - VoorVoet Blog"
+
+#     image_url = f"{config.site_url}{post_thumbnail}"
+#     page_url = f"{config.site_url}{route}"
+#     locale = LOCALE_MAP.get(language, "nl_NL")
+
+#     meta_tags = [
+#         {"name": "description", "content": post_summary},
+
+#         {"property": "og:title", "content": full_title},
+#         {"property": "og:description", "content": post_summary},
+#         {"property": "og:image", "content": image_url},
+#         {"property": "og:url", "content": page_url},
+#         {"property": "og:type", "content": "article"},
+#         {"property": "og:locale", "content": locale},
+#         {"property": "og:site_name", "content": "VoorVoet"},
+
+#         {"name": "twitter:card", "content": "summary_large_image"},
+#         {"name": "twitter:title", "content": full_title},
+#         {"name": "twitter:description", "content": post_summary},
+#         {"name": "twitter:image", "content": image_url},
+
+#         {"name": "canonical", "content": page_url},
+#     ]
+
+#     return meta_tags
