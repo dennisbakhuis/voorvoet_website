@@ -27,5 +27,5 @@ def page_contact(language: str="nl") -> rx.Component:
         section_starter(language),
         section_contact_form(language),
         footer(language),
-        # toast(),
+        toast(),
     )
