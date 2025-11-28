@@ -20,7 +20,6 @@ def get_language_from_path():
     """
     from ..states import WebsiteState
 
-    # Use WebsiteState.current_language which is computed from the router
     return WebsiteState.current_language
 
 
@@ -65,14 +64,11 @@ def get_translation(translations: dict, key: str, language=None) -> rx.Var | str
     rx.Var | str
         String if language is a string, reactive Var otherwise
     """
-    # If language is provided as a string, return the translation directly
     if isinstance(language, str):
         return translations.get(language, translations["nl"])[key]
 
     from ..states import WebsiteState
 
-    # If language is a Var or None, use rx.cond
-    # If language is None, use WebsiteState.current_language
     lang_var = language if language is not None else WebsiteState.current_language
 
     return rx.cond(

@@ -31,7 +31,7 @@ def page_vergoedingen() -> rx.Component:
     language = get_language_from_path()
 
     return rx.fragment(
-        header(language),
+        header(language, page_key="vergoedingen"),
         section_hero(),
         section_starter(language),
         section_reimbursement_table(language),

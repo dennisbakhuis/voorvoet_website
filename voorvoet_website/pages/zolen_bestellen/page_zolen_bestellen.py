@@ -25,7 +25,7 @@ def page_zolen_bestellen() -> rx.Component:
     language = get_language_from_path()
 
     return rx.fragment(
-        header(language),
+        header(language, page_key=None),
         section_hero(),
         section_starter(language),
         section_order_form(language),

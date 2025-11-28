@@ -12,7 +12,7 @@ class WebsiteState(rx.State):
     Global state manager for the website application.
 
     Manages the state for global UI components including the navigation menu,
-    modal dialogs, toast notifications, and page routing. This is the base
+    modal dialogs, toast notifications, and language switching. This is the base
     state class that other state classes can inherit from or reference.
 
     Attributes
@@ -27,8 +27,6 @@ class WebsiteState(rx.State):
         Description text displayed in the modal dialog
     modal_input : str
         User input value from the modal dialog
-    current_page_path : str
-        Current page path for navigation tracking
     toast_visible : bool
         Whether the toast notification is currently visible
     toast_message : str
@@ -50,8 +48,6 @@ class WebsiteState(rx.State):
     modal_desc: str = ""
     modal_input: str = ""
 
-    current_page_path: str = "/"
-
     toast_visible: bool = False
     toast_message: str = ""
     toast_type: str = "success"
@@ -59,102 +55,6 @@ class WebsiteState(rx.State):
     current_language: str = "nl"
     language_selector_open: bool = False
     language_selector_mobile_open: bool = False
-
-    def set_page_path(self, path: str):
-        """
-        Update the current page path and detect language from URL.
-
-        Parameters
-        ----------
-        path : str
-            The new page path to set
-        """
-        self.current_page_path = path
-
-        if path.startswith("/de"):
-            self.current_language = "de"
-        elif path.startswith("/en"):
-            self.current_language = "en"
-        else:
-            self.current_language = "nl"
-
-    def nav_to_home(self):
-        """
-        Navigate to the home page with current language.
-
-        Returns
-        -------
-        rx.event
-            Redirect event to the home page
-        """
-        path = f"/{self.current_language}"
-        self.current_page_path = path
-        return rx.redirect(path)
-
-    def nav_to_blog(self):
-        """
-        Navigate to the blog page with current language.
-
-        Returns
-        -------
-        rx.event
-            Redirect event to the blog page
-        """
-        path = f"/{self.current_language}/blog/"
-        self.current_page_path = path
-        return rx.redirect(path)
-
-    def nav_to_informatie(self):
-        """
-        Navigate to the information page with current language.
-
-        Returns
-        -------
-        rx.event
-            Redirect event to the information page
-        """
-        path = f"/{self.current_language}/informatie/"
-        self.current_page_path = path
-        return rx.redirect(path)
-
-    def nav_to_vergoedingen(self):
-        """
-        Navigate to the vergoedingen page with current language.
-
-        Returns
-        -------
-        rx.event
-            Redirect event to the vergoedingen page
-        """
-        path = f"/{self.current_language}/vergoedingen/"
-        self.current_page_path = path
-        return rx.redirect(path)
-
-    def nav_to_contact(self):
-        """
-        Navigate to the contact page with current language.
-
-        Returns
-        -------
-        rx.event
-            Redirect event to the contact page
-        """
-        path = f"/{self.current_language}/contact/"
-        self.current_page_path = path
-        return rx.redirect(path)
-
-    def nav_to_zolen_bestellen(self):
-        """
-        Navigate to the zolen bestellen page with current language.
-
-        Returns
-        -------
-        rx.event
-            Redirect event to the zolen bestellen page
-        """
-        path = f"/{self.current_language}/zolen-bestellen/"
-        self.current_page_path = path
-        return rx.redirect(path)
 
     def toggle_nav(self):
         """Toggle the mobile navigation menu open/closed state."""
@@ -252,7 +152,6 @@ class WebsiteState(rx.State):
         language state with the current route's [lang] parameter.
         """
         current_path = self.router.url.path
-        self.current_page_path = current_path
 
         if current_path.startswith("/"):
             path_parts = current_path[1:].split("/")

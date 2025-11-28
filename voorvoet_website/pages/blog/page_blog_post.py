@@ -52,7 +52,7 @@ def page_blog_post() -> rx.Component:
         # Add Article schema for SEO (automatically handles empty state)
         article_schema(),
 
-        header(language),
+        header(language, page_key="blog"),
         section_hero(),
 
         section(

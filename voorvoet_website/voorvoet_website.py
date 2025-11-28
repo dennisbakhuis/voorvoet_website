@@ -53,46 +53,32 @@ app = rx.App(
     },
 )
 
-app.add_page(
-    component=redirect_placeholder,
-    route="/",
-    on_load=lambda: rx.redirect("/nl"),
-)
+###############
+## Redirects ##
+###############
+redirect_routes = [
+    ("/", "/nl"),
+    ("/blog/", "/nl/blog/"),
+    ("/informatie/", "/nl/informatie/"),
+    ("/vergoedingen/", "/nl/vergoedingen/"),
+    ("/contact/", "/nl/contact/"),
+    ("/zolen-bestellen/", "/nl/zolen-bestellen/"),
+]
 
-app.add_page(
-    component=redirect_placeholder,
-    route="/blog/",
-    on_load=lambda: rx.redirect("/nl/blog/"),
-)
-
-app.add_page(
-    component=redirect_placeholder,
-    route="/informatie/",
-    on_load=lambda: rx.redirect("/nl/informatie/"),
-)
-
-app.add_page(
-    component=redirect_placeholder,
-    route="/vergoedingen/",
-    on_load=lambda: rx.redirect("/nl/vergoedingen/"),
-)
-
-app.add_page(
-    component=redirect_placeholder,
-    route="/contact/",
-    on_load=lambda: rx.redirect("/nl/contact/"),
-)
-
-app.add_page(
-    component=redirect_placeholder,
-    route="/zolen-bestellen/",
-    on_load=lambda: rx.redirect("/nl/zolen-bestellen/"),
-)
+for route, redirect_to in redirect_routes:
+    app.add_page(
+        component=redirect_placeholder,
+        route=route,
+        on_load=lambda target=redirect_to: rx.redirect(target),
+    )
 
 
+######################
+## Main Dutch pages ##
+######################
 app.add_page(
-    component=page_home,
-    route="/[lang]",
+    component=lambda: page_home(language="nl"),
+    route="/nl",
     title=WebsiteState.page_title,  # type: ignore
     on_load=WebsiteState.detect_language_from_route,  # type: ignore
 )

@@ -26,7 +26,7 @@ def page_contact() -> rx.Component:
     language = get_language_from_path()
 
     return rx.fragment(
-        header(language),
+        header(language, page_key="contact"),
         section_hero(),
         section_starter(language),
         section_contact_form(language),

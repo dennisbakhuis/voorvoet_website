@@ -10,10 +10,9 @@ from .section_locations import section_locations
 
 from ..shared_sections import footer, header
 from ...components import organization_schema
-from ...utils.translations import get_language_from_path
 
 
-def page_home() -> rx.Component:
+def page_home(language: str="nl") -> rx.Component:
     """
     Create the complete home page with all sections.
 
@@ -22,11 +21,9 @@ def page_home() -> rx.Component:
     rx.Component
         A fragment containing all sections of the home page in order.
     """
-    language = get_language_from_path()
-
     return rx.fragment(
         organization_schema(),
-        header(language),
+        header(language, page_key="home"),
         section_hero(language),
         section_who_is_voorvoet(language),
         section_order_insoles(language),
