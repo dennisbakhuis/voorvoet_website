@@ -61,7 +61,7 @@ def form_button(
     }
 
     loading_button = rx.box(
-        rx.html("⏳ "),
+        rx.text("⏳ ", display="inline"),
         rx.text(loading_text, display="inline"),
         **base_styles,
         cursor="wait",

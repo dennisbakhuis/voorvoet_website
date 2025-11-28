@@ -1,7 +1,7 @@
 """Who is VoorVoet section introducing the practice."""
 import reflex as rx
 from ...components import container, section, image_text_section
-from ...utils.translations import get_translation
+from ...utils.get_translations import get_translation
 
 
 TRANSLATIONS = {

@@ -9,6 +9,7 @@ from .button import button
 from .centered_image import centered_image
 from .column import column
 from .container import container
+from .fa_icon import fa_icon
 from .form_button import form_button
 from .form_input import form_input
 from .form_label import form_label
@@ -45,6 +46,7 @@ __all__ = [
     "centered_image",
     "column",
     "container",
+    "fa_icon",
     "form_button",
     "form_input",
     "form_label",

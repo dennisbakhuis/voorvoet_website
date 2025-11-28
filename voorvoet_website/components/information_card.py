@@ -4,6 +4,7 @@ from typing import Union
 
 from ..theme import Colors, FontSizes, Layout
 from .button import button
+from .fa_icon import fa_icon
 
 
 def information_card(title: Union[str, rx.Var], description: Union[str, rx.Var], icon: str, bg_color="white", show_box=True, button_text: Union[str, rx.Var] = "Lees meer", button_link: Union[str, rx.Var] = "#") -> rx.Component:
@@ -61,7 +62,7 @@ def information_card(title: Union[str, rx.Var], description: Union[str, rx.Var],
         rx.vstack(
             rx.vstack(
                 rx.box(
-                    rx.html(f'<i class="fa {icon}" style="color: {Colors.text["heading"]}; font-size: 4.5rem;"></i>'),
+                    fa_icon(icon, color=Colors.text["heading"], size="4.5rem"),
                     display="flex",
                     justify_content="center",
                     align_items="center",

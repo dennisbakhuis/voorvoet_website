@@ -12,7 +12,7 @@ from ...components import (
 from ...theme import Colors, Spacing
 from ...states.contact_state import ContactState
 from ...config import config
-from ...utils.translations import get_translation
+from ...utils.get_translations import get_translation
 
 
 TRANSLATIONS = {

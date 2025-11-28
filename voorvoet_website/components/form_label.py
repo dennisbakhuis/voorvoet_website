@@ -1,6 +1,7 @@
 """Form label component with optional required indicator and tooltip."""
 import reflex as rx
 from ..theme import Colors, FontSizes
+from .fa_icon import fa_icon
 
 
 def form_label(
@@ -50,7 +51,7 @@ def form_label(
     )
 
     tooltip_icon = rx.tooltip(
-        rx.html(f'<i class="fa fa-info-circle" style="color: {Colors.text["link"]};"/>'),
+        fa_icon("fa-info-circle", color=Colors.text["link"]),
         content=tooltip_text,
         style={
             "backgroundColor": "white",

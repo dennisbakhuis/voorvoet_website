@@ -30,8 +30,8 @@ def toast() -> rx.Component:
             rx.box(
                 rx.cond(
                     WebsiteState.toast_type == "success",
-                    rx.html("✓"),
-                    rx.html("✕"),
+                    rx.text("✓"),
+                    rx.text("✕"),
                 ),
                 display="flex",
                 align_items="center",

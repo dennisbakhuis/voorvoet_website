@@ -6,7 +6,7 @@ from ...components import container, section, markdown_content, article_schema
 from ..shared_sections import footer, header
 from .section_hero import section_hero
 from ...config import config
-from ...utils.translations import get_translation
+from ...utils.get_translations import get_translation
 
 
 TRANSLATIONS = {

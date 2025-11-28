@@ -3,7 +3,7 @@ import reflex as rx
 
 from ...components import container, section, information_cards_grid, CardConfig
 from ...theme import Colors
-from ...utils.translations import get_translation
+from ...utils.get_translations import get_translation
 
 
 TRANSLATIONS = {

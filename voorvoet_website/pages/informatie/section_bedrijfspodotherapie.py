@@ -2,7 +2,7 @@
 import reflex as rx
 from ...components import container, section, section_title, regular_text, icon_list_item, column
 from ...theme import Colors, Layout, Spacing
-from ...utils.translations import get_translation
+from ...utils.get_translations import get_translation
 
 
 TRANSLATIONS = {
@@ -130,7 +130,7 @@ def section_bedrijfspodotherapie(language: str) -> rx.Component:
         flex_direction="column",
         justify_content="center",
     )
-    
+
     return section(
         container(
             rx.box(

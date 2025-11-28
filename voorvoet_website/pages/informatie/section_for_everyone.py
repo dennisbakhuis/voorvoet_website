@@ -2,7 +2,7 @@
 import reflex as rx
 from ...components import container, section, section_title, section_sub_title, regular_text, centered_image, icon_list_item
 from ...theme import Colors
-from ...utils.translations import get_translation
+from ...utils.get_translations import get_translation
 
 
 TRANSLATIONS = {
@@ -134,7 +134,7 @@ def section_for_everyone(language: str) -> rx.Component:
                     width="100%",
                     padding_left="1.5rem",
                 ),
-                
+
                 rx.center(
                     centered_image(
                         src="/images/page_information/podotherapeut_enschede_kim_bakhuis_legt_het_met_een_lach_uit-VoorVoet_podotherapie_enschede.jpg",
@@ -144,7 +144,7 @@ def section_for_everyone(language: str) -> rx.Component:
                     ),
                     width="100%",
                 ),
-                
+
                 section_sub_title(get_translation(TRANSLATIONS, "athletes_title", language)),
                 regular_text(
                     get_translation(TRANSLATIONS, "athletes_intro", language),
@@ -184,7 +184,7 @@ def section_for_everyone(language: str) -> rx.Component:
                     get_translation(TRANSLATIONS, "elderly_conclusion", language),
                     color=Colors.text["content"],
                 ),
-                
+
                 gap="1.5rem",
                 align="start",
                 width="100%",

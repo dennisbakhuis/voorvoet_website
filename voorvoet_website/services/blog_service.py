@@ -12,7 +12,6 @@ from typing import Optional
 
 from ..models import BlogPost
 from .content_parser import parse_blog_content
-from ..utils.translations import get_current_language
 
 
 _posts_cache: list[BlogPost] | None = None
@@ -264,7 +263,7 @@ def load_all_posts(force_reload: bool = False, language: Optional[str] = None) -
         return _posts_cache
 
     if language is None:
-        language = get_current_language()
+        language = "nl"  # TODO: wrong
 
     posts = []
     blog_dir = _get_blog_content_dir()
@@ -304,7 +303,8 @@ def get_post_by_slug(slug: str, language: Optional[str] = None) -> Optional[Blog
         BlogPost object matching the slug in the specified language, or None if not found
     """
     if language is None:
-        language = get_current_language()
+        language = "nl"  # TODO: wrong
+
 
     all_posts = load_all_posts(language=language)
 

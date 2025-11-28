@@ -1,7 +1,7 @@
 """Footer component for the entire site."""
 import reflex as rx
 
-from ...components import container, section, regular_text
+from ...components import container, section, regular_text, fa_icon
 from ...theme import Colors, FontSizes, Layout
 
 
@@ -183,7 +183,7 @@ def footer(language: str) -> rx.Component:
                     rx.box(
                         rx.box(
                             rx.hstack(
-                                rx.html(f'<i class="fa fa-phone" style="color: {Colors.text["secondary"]}; font-size: 20px;"/>'),
+                                fa_icon("fa-phone", color=Colors.text["secondary"], size="20px"),
                                 rx.link(
                                     "+31 (0) 6 577 509 97",
                                     href="tel:+31657750997",
@@ -197,7 +197,7 @@ def footer(language: str) -> rx.Component:
                                 justify_content=["center", "center", "flex-start", "flex-start"]
                             ),
                             rx.hstack(
-                                rx.html(f'<i class="fa fa-envelope" style="color: {Colors.text["secondary"]}; font-size: 20px;"/>'),
+                                fa_icon("fa-envelope", color=Colors.text["secondary"], size="20px"),
                                 rx.link(
                                     "info@voorvoet.nl",
                                     href="mailto:info@voorvoet.nl",
