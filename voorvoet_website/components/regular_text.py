@@ -53,6 +53,6 @@ def regular_text(text: Union[str, list[str], rx.Var], **props) -> rx.Component:
         paragraph_props = defaults.copy()
         if i < len(text) - 1:
             paragraph_props["margin_bottom"] = Spacing.text_margin_bottom
-        paragraphs.append(rx.text(paragraph, **paragraph_props))
+        paragraphs.append(rx.text(paragraph, **paragraph_props))  # type: ignore
 
     return rx.box(*paragraphs)

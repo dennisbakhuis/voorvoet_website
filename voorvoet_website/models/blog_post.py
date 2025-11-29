@@ -53,17 +53,17 @@ class BlogPost(BaseModel):
     slug: str
     summary: str
     author: Optional[str] = None
-    date: Union[datetime, str]
-    date_modified: Optional[Union[datetime, str]] = None
+    date: datetime
+    date_modified: Optional[datetime] = None
     formatted_date: str
     thumbnail: str
     thumbnail_alt: str = ""
     content: str = ""
     filename: str
     thumbnail_url: str
-    read_time: Optional[Union[int, str]] = None
+    read_time: Optional[int] = None
     content_objects: Any = Field(default_factory=list)
-    tags: Union[list[str], str] = Field(default_factory=list)
+    tags: list[str] = Field(default_factory=list)
     category: Optional[str] = None
 
     @field_validator('date', mode='before')
@@ -103,6 +103,14 @@ class BlogPost(BaseModel):
                 return []
             return [tag.strip() for tag in v.split(',')]
         return v
+
+    @field_validator('thumbnail_alt', mode='before')
+    @classmethod
+    def ensure_thumbnail_alt(cls, v):
+        """Ensure thumbnail_alt is never None."""
+        if v is None or v == "":
+            return ""
+        return str(v)
 
     @property
     def url(self) -> str:

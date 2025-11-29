@@ -34,19 +34,14 @@ def centered_image(
     rx.Component
         A Reflex image component with centered, styled presentation.
     """
-    defaults = {
-        "width": "100%",
-        "max_width": max_width,
-        "height": "auto",
-        "border_radius": Layout.image_border_radius,
-        "box_shadow": Layout.image_box_shadow,
-        "margin_y": "2rem",
-        "loading": "lazy",
-    }
-    defaults.update(props)
-
     return rx.image(
         src=src,
         alt=alt,
-        **defaults
+        width=props.get("width", "100%"),
+        max_width=props.get("max_width", max_width),
+        height=props.get("height", "auto"),
+        border_radius=props.get("border_radius", Layout.image_border_radius),
+        box_shadow=props.get("box_shadow", Layout.image_box_shadow),
+        margin_y=props.get("margin_y", "2rem"),
+        loading=props.get("loading", "lazy"),
     )

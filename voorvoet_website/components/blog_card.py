@@ -9,10 +9,6 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
     """
     Display a blog post card in landscape layout with thumbnail and content.
 
-    Creates a clickable card component that displays blog post information
-    including title, summary, metadata (author, date, reading time), and
-    thumbnail image. The thumbnail position can be flipped to alternate sides.
-
     Parameters
     ----------
     post : BlogPost or dict
@@ -27,15 +23,7 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
     -------
     rx.Component
         A Reflex link component wrapping the styled blog card.
-
-    Notes
-    -----
-    - Card displays metadata based on config settings (author, date, reading time)
-    - Summary text is clamped to 3 lines with ellipsis
-    - Card has hover effects (shadow and lift)
-    - Thumbnail is a fixed 250x250px square with rounded corners
     """
-    # Convert dict to BlogPost if needed
     if isinstance(post, dict):
         post = BlogPost(**post)
 
@@ -98,7 +86,7 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
                                 ),
                             ),
                             rx.text(
-                                post.read_time.to(str) + " min leestijd",  # type: ignore
+                                f"{post.read_time} min leestijd",
                                 color=Colors.text['muted'],
                                 font_size="0.85rem",
                             ),
@@ -125,7 +113,7 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
     thumbnail = rx.box(
         rx.image(
             src=post.thumbnail_url,
-            alt=post.thumbnail_alt.to(str),
+            alt=str(post.thumbnail_alt),
             width="100%",
             height="100%",
             object_fit="cover",

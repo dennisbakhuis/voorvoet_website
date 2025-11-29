@@ -62,8 +62,6 @@ def send_contact_form_email(form: ContactForm) -> bool:
     bool
         True if email was sent successfully, False otherwise.
     """
-    smtp_host = config.smtp_host
-    smtp_port = config.smtp_port
     smtp_username = config.smtp_username
     smtp_password = config.smtp_password
     from_email = config.smtp_from_email
@@ -72,6 +70,15 @@ def send_contact_form_email(form: ContactForm) -> bool:
     if not all([smtp_username, smtp_password, from_email, to_email]):
         logger.error("SMTP configuration incomplete. Check environment variables.")
         return False
+
+    # Type narrowing: after the check above, we know these are not None
+    assert smtp_username is not None
+    assert smtp_password is not None
+    assert from_email is not None
+    assert to_email is not None
+
+    smtp_host = config.smtp_host
+    smtp_port = config.smtp_port
 
     try:
         timestamp = format_dutch_datetime(datetime.now())
@@ -154,8 +161,6 @@ def send_order_insoles_email(order_state: "OrderInsolesState") -> bool:
     bool
         True if email was sent successfully, False otherwise.
     """
-    smtp_host = config.smtp_host
-    smtp_port = config.smtp_port
     smtp_username = config.smtp_username
     smtp_password = config.smtp_password
     from_email = config.smtp_from_email
@@ -164,6 +169,15 @@ def send_order_insoles_email(order_state: "OrderInsolesState") -> bool:
     if not all([smtp_username, smtp_password, from_email, to_email]):
         logger.error("SMTP configuration incomplete. Check environment variables.")
         return False
+
+    # Type narrowing: after the check above, we know these are not None
+    assert smtp_username is not None
+    assert smtp_password is not None
+    assert from_email is not None
+    assert to_email is not None
+
+    smtp_host = config.smtp_host
+    smtp_port = config.smtp_port
 
     try:
         timestamp = format_dutch_datetime(datetime.now())

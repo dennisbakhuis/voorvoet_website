@@ -88,7 +88,7 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
             read_time = calculate_read_time(content)
 
         author = metadata.get('author')
-        thumbnail_filename = metadata.get('thumbnail', 'thumbnail.jpg')
+        thumbnail_filename: str = str(metadata.get('thumbnail', 'thumbnail.jpg'))
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
 
         tags_raw = metadata.get('tags', [])
