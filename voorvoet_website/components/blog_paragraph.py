@@ -45,6 +45,10 @@ def blog_paragraph(content: str) -> rx.Component:
         ),
         margin_bottom=Spacing.blog_content_margin_bottom,
         style={
+            "& p": {
+                "marginTop": "0",
+                "marginBottom": "0",
+            },
             "& a": {
                 "color": f"{Colors.primary['300']} !important",
                 "textDecoration": "underline",

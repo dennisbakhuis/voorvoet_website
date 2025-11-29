@@ -43,7 +43,7 @@ def get_language_url(target_lang: str):
     )
 
 
-def language_option(flag_emoji: str, language_name: str, language_code: str) -> rx.Component:
+def language_option(flag_emoji: str, language_name: str, language_code: str, toggle_handler) -> rx.Component:
     """
     Create a single language option in the selector.
 
@@ -55,6 +55,8 @@ def language_option(flag_emoji: str, language_name: str, language_code: str) -> 
         Full name of the language (e.g., "Nederlands", "Deutsch", "English")
     language_code : str
         ISO language code (e.g., "nl", "de", "en")
+    toggle_handler : callable
+        Function to close the language selector menu
 
     Returns
     -------
@@ -84,6 +86,7 @@ def language_option(flag_emoji: str, language_name: str, language_code: str) -> 
         padding="10px 16px",
         cursor="pointer",
         transition="all 0.2s ease",
+        on_click=toggle_handler,  # type: ignore
         _hover={
             "& .flag-emoji": {
                 "transform": "scale(1.2)",
@@ -172,17 +175,20 @@ def language_switcher(language: str, mobile: bool = False) -> rx.Component:
                 language_option(
                     flag_emoji=language_info["nl"]["flag"],
                     language_name=language_info["nl"]["name"],
-                    language_code="nl"
+                    language_code="nl",
+                    toggle_handler=toggle_handler
                 ),
                 language_option(
                     flag_emoji=language_info["de"]["flag"],
                     language_name=language_info["de"]["name"],
-                    language_code="de"
+                    language_code="de",
+                    toggle_handler=toggle_handler
                 ),
                 language_option(
                     flag_emoji=language_info["en"]["flag"],
                     language_name=language_info["en"]["name"],
-                    language_code="en"
+                    language_code="en",
+                    toggle_handler=toggle_handler
                 ),
                 spacing="0",
                 width="100%",

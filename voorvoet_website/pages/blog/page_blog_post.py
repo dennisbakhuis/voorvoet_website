@@ -1,9 +1,12 @@
 """Individual blog post page displaying full content."""
 import reflex as rx
-from typing import Optional
+from typing import Optional, Any
 from ...models import BlogPost
-from ...theme import Colors, FontSizes
-from ...components import container, section, markdown_content, article_schema
+from ...theme import Colors, FontSizes, Spacing
+from ...components import (
+    container, section, article_schema,
+    blog_heading, blog_paragraph, blog_markdown, blog_image, blog_list, button
+)
 from ..shared_sections import footer, header
 from .section_hero import section_hero
 from ...config import config
@@ -30,6 +33,42 @@ TRANSLATIONS = {
         "translation_not_available": "Unfortunately, this blog post is not yet available in English. Switch to another language to read the content.",
     },
 }
+
+
+def _build_content_component(obj: dict[str, Any]) -> rx.Component:
+    """Build a single content component from a content object dict at compile time."""
+    content_type = obj.get("type", "")
+
+    if content_type == "heading":
+        return blog_heading(obj.get("content", ""), obj.get("level", 2))
+    elif content_type == "paragraph":
+        return blog_paragraph(obj.get("content", ""))
+    elif content_type == "markdown":
+        return blog_markdown(obj.get("content", ""))
+    elif content_type == "image":
+        return blog_image(
+            obj.get("src", ""),
+            obj.get("alt", ""),
+            obj.get("caption", "")
+        )
+    elif content_type == "button":
+        return rx.box(
+            button(label=obj.get("label", ""), href=obj.get("url", "")),
+            display="flex",
+            justify_content="center",
+            width="100%",
+            margin_y="1.5rem",
+        )
+    elif content_type == "list":
+        return blog_list(obj.get("markdown", ""))
+    else:
+        # Fallback for unknown types
+        return rx.box()
+
+
+def _build_content_components(content_objects: list[dict[str, Any]]) -> list[rx.Component]:
+    """Build all content components from content_objects list at compile time."""
+    return [_build_content_component(obj) for obj in content_objects]
 
 
 def page_blog_post(language: str="nl", post: Optional[dict] = None) -> rx.Component:
@@ -59,67 +98,55 @@ def page_blog_post(language: str="nl", post: Optional[dict] = None) -> rx.Compon
         author_val = post.get("author", "") or ""
         formatted_date_val = post.get("formatted_date", "")
         read_time_val = str(post.get("read_time", "")) if post.get("read_time") else ""
-        content_val = post.get("content", "")
+        content_objects_val = post.get("content_objects", [])
 
-        content_component = rx.vstack(
+        # Build content components statically at compile time
+        content_components = _build_content_components(content_objects_val)
+
+        # Build metadata section
+        metadata_components = []
+        if config.blog_show_author and author_val:
+            metadata_components.append(rx.text(author_val, color=Colors.text['content'], font_size="1rem"))
+            metadata_components.append(rx.text("•", color=Colors.text['content'], font_size="1rem"))
+
+        if config.blog_show_publication_date:
+            metadata_components.append(rx.text(formatted_date_val, color=Colors.text['content'], font_size="1rem"))
+
+        if config.blog_show_reading_time and read_time_val:
+            if metadata_components:
+                metadata_components.append(rx.text("•", color=Colors.text['content'], font_size="1rem"))
+            metadata_components.append(
+                rx.text(
+                    read_time_val + " " + get_translation(TRANSLATIONS, "reading_time", language),
+                    color=Colors.text['content'],
+                    font_size="1rem"
+                )
+            )
+
+        page_components: list[rx.Component] = [
             rx.heading(
                 title_val,
                 font_size=FontSizes.section_title,
                 color=Colors.text['heading'],
-            ),
+                margin_bottom=Spacing.blog_heading_margin_bottom,
+            )
+        ]
 
-            rx.cond(
-                config.blog_show_author | config.blog_show_publication_date | config.blog_show_reading_time,
+        if metadata_components:
+            page_components.append(
                 rx.hstack(
-                    rx.cond(
-                        config.blog_show_author & (author_val != ""),
-                        rx.fragment(
-                            rx.text(
-                                author_val,
-                                color=Colors.text['content'],
-                                font_size="1rem",
-                            ),
-                            rx.text(
-                                "•",
-                                color=Colors.text['content'],
-                                font_size="1rem",
-                            ),
-                        ),
-                    ),
-                    rx.cond(
-                        config.blog_show_publication_date,
-                        rx.text(
-                            formatted_date_val,
-                            color=Colors.text['content'],
-                            font_size="1rem",
-                        ),
-                    ),
-                    rx.cond(
-                        config.blog_show_reading_time & (read_time_val != ""),
-                        rx.fragment(
-                            rx.cond(
-                                config.blog_show_publication_date,
-                                rx.text(
-                                    "•",
-                                    color=Colors.text['content'],
-                                    font_size="1rem",
-                                ),
-                            ),
-                            rx.text(
-                                read_time_val + " " + get_translation(TRANSLATIONS, "reading_time", language),
-                                color=Colors.text['content'],
-                                font_size="1rem",
-                            ),
-                        ),
-                    ),
+                    *metadata_components,
                     spacing="2",
                     wrap="wrap",
                     margin_bottom="2rem",
-                ),
-            ),
+                )
+            )
 
-            rx.markdown(content_val),
+        # Add all blog content components
+        page_components.extend(content_components)
 
+        # Add back link
+        page_components.append(
             rx.link(
                 rx.text(get_translation(TRANSLATIONS, "back_to_blog", language)),
                 href=f"/{language}/blog/",
@@ -131,15 +158,23 @@ def page_blog_post(language: str="nl", post: Optional[dict] = None) -> rx.Compon
                 _hover={
                     "text_decoration": "underline",
                 },
-            ),
+            )
+        )
 
-            spacing="3",
+        content_component = rx.vstack(
+            *page_components,
+            spacing="0",
             align_items="start",
             width="100%",
         )
 
-        blog_post_obj = BlogPost(**post)
-        schema_component = article_schema(blog_post_obj, language)
+        # Create BlogPost object for structured data
+        try:
+            blog_post_obj = BlogPost(**post)
+            schema_component = article_schema(blog_post_obj, language)
+        except Exception:
+            # If BlogPost creation fails, skip structured data
+            schema_component = rx.fragment()
     else:
         content_component = rx.vstack(
             rx.text(
@@ -181,6 +216,7 @@ def page_blog_post(language: str="nl", post: Optional[dict] = None) -> rx.Compon
                 content_component,
             ),
             padding_top="1em",
+            padding_bottom="2em",
         ),
         footer(language),
     )

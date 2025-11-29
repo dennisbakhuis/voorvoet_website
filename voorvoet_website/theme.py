@@ -195,8 +195,8 @@ class Spacing:
     button_margin_top = "1.5rem"
 
     blog_heading_margin_top = "2rem"
-    blog_heading_margin_bottom = "1rem"
-    blog_content_margin_bottom = "1rem"
+    blog_heading_margin_bottom = "1.5rem"
+    blog_content_margin_bottom = "0.5rem"
     blog_image_margin = "2rem auto"
     blog_caption_margin_top = "0.5rem"
 

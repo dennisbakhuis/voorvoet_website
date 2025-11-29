@@ -52,6 +52,15 @@ def blog_markdown(content: str) -> rx.Component:
         ),
         margin_bottom=Spacing.blog_content_margin_bottom,
         style={
+            "& p": {
+                "marginTop": "0",
+                "marginBottom": "0",
+            },
+            "& h1, & h2, & h3, & h4, & h5, & h6": {
+                "marginTop": Spacing.blog_heading_margin_top,
+                "marginBottom": Spacing.blog_heading_margin_bottom,
+                "color": Colors.text['heading'],
+            },
             "& a": {
                 "color": f"{Colors.primary['300']} !important",
                 "textDecoration": "underline",

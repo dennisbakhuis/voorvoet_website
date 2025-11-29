@@ -30,6 +30,31 @@ TRANSLATIONS = {
     },
 }
 
+# Route segments for each page in each language
+ROUTE_SEGMENTS = {
+    "nl": {
+        "home": "",
+        "blog": "blog/",
+        "informatie": "informatie",
+        "vergoedingen": "vergoedingen",
+        "contact": "contact",
+    },
+    "de": {
+        "home": "",
+        "blog": "blog/",
+        "informatie": "informationen",
+        "vergoedingen": "erstattungen",
+        "contact": "kontakt",
+    },
+    "en": {
+        "home": "",
+        "blog": "blog/",
+        "informatie": "information",
+        "vergoedingen": "reimbursements",
+        "contact": "contact",
+    },
+}
+
 
 def header(language: str, page_key: str | None = None) -> rx.Component:
     """
@@ -84,6 +109,27 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             )
         )
 
+    def get_route(page_key: str, lang: str) -> str:
+        """
+        Get the route path for a page in the specified language.
+
+        Parameters
+        ----------
+        page_key : str
+            Page key ('home', 'blog', 'informatie', 'vergoedingen', 'contact').
+        lang : str
+            Language code (nl, de, or en).
+
+        Returns
+        -------
+        str
+            The full route path for the page in the specified language.
+        """
+        segment = ROUTE_SEGMENTS[lang][page_key]
+        if segment:
+            return f"/{lang}/{segment}"
+        return f"/{lang}"
+
     def is_not_on_page(check_page_key: str) -> bool:
         """
         Check if current page does not match the given page key.
@@ -103,27 +149,27 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
     nav_items = [
         rx.cond(
             is_not_on_page("home"),
-            rx.link(get_translation("home", language), href=f"/{language}", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
+            rx.link(get_translation("home", language), href=get_route("home", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
             rx.fragment()
         ),
         rx.cond(
             is_not_on_page("blog"),
-            rx.link(get_translation("blog", language), href=f"/{language}/blog/", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
+            rx.link(get_translation("blog", language), href=get_route("blog", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
             rx.fragment()
         ),
         rx.cond(
             is_not_on_page("informatie"),
-            rx.link(get_translation("informatie", language), href=f"/{language}/informatie/", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
+            rx.link(get_translation("informatie", language), href=get_route("informatie", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
             rx.fragment()
         ),
         rx.cond(
             is_not_on_page("vergoedingen"),
-            rx.link(get_translation("vergoedingen", language), href=f"/{language}/vergoedingen/", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
+            rx.link(get_translation("vergoedingen", language), href=get_route("vergoedingen", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
             rx.fragment()
         ),
         rx.cond(
             is_not_on_page("contact"),
-            rx.link(get_translation("contact", language), href=f"/{language}/contact/", color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
+            rx.link(get_translation("contact", language), href=get_route("contact", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
             rx.fragment()
         ),
     ]
@@ -133,7 +179,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             is_not_on_page("home"),
             rx.link(
                 get_translation("home", language),
-                href=f"/{language}",
+                href=get_route("home", language),
                 color=Colors.primary["700"],
                 font_size=FontSizes.nav_link,
                 font_weight="500",
@@ -154,7 +200,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             is_not_on_page("blog"),
             rx.link(
                 get_translation("blog", language),
-                href=f"/{language}/blog/",
+                href=get_route("blog", language),
                 color=Colors.primary["700"],
                 font_size=FontSizes.nav_link,
                 font_weight="500",
@@ -175,7 +221,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             is_not_on_page("informatie"),
             rx.link(
                 get_translation("informatie", language),
-                href=f"/{language}/informatie/",
+                href=get_route("informatie", language),
                 color=Colors.primary["700"],
                 font_size=FontSizes.nav_link,
                 font_weight="500",
@@ -196,7 +242,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             is_not_on_page("vergoedingen"),
             rx.link(
                 get_translation("vergoedingen", language),
-                href=f"/{language}/vergoedingen/",
+                href=get_route("vergoedingen", language),
                 color=Colors.primary["700"],
                 font_size=FontSizes.nav_link,
                 font_weight="500",
@@ -217,7 +263,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             is_not_on_page("contact"),
             rx.link(
                 get_translation("contact", language),
-                href=f"/{language}/contact/",
+                href=get_route("contact", language),
                 color=Colors.primary["700"],
                 font_size=FontSizes.nav_link,
                 font_weight="500",
