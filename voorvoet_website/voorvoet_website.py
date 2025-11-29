@@ -16,7 +16,7 @@ import reflex as rx
 from .pages import page_home, page_blog, page_blog_post, page_informatie, page_vergoedingen, page_contact, page_zolen_bestellen
 from .states import WebsiteState
 from .utils import get_translation
-from .translations import PAGE_TITLES
+from .translations import PAGE_TITLES, get_page_meta_tags
 from .services.blog_service import load_all_blog_posts_dict
 
 
@@ -83,7 +83,8 @@ for (language, page_key, page_route, page) in main_pages:
     app.add_page(
         component=lambda page_func=page, lang=language: page_func(language=lang),
         route=page_route,
-        title=get_translation(PAGE_TITLES, page_key, language)
+        title=get_translation(PAGE_TITLES, page_key, language),
+        meta=get_page_meta_tags(page_key, language, page_route)
     )
 
 
@@ -95,7 +96,6 @@ blog_posts = load_all_blog_posts_dict()
 for language in ['nl', 'en', 'de']:
     posts_for_lang = blog_posts.get(language, [])
 
-    # Create a closure factory to properly capture language and posts
     def make_blog_page(lang: str, posts_list: list):
         def _page():
             return page_blog(language=lang, posts=posts_list)
@@ -104,7 +104,8 @@ for language in ['nl', 'en', 'de']:
     app.add_page(
         component=make_blog_page(language, posts_for_lang),
         route=f"/{language}/blog/",
-        title=get_translation(PAGE_TITLES, "blog", language)
+        title=get_translation(PAGE_TITLES, "blog", language),
+        meta=get_page_meta_tags("blog", language, f"/{language}/blog/")
     )
 
 for language, posts in blog_posts.items():
@@ -113,7 +114,6 @@ for language, posts in blog_posts.items():
         title = post["title"]
         route = f"/{language}/blog/{slug}/"
 
-        # Create a closure factory to properly capture language and post
         def make_blog_post_page(lang: str, post_data: dict):
             def _page():
                 return page_blog_post(language=lang, post=post_data)

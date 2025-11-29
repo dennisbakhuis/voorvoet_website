@@ -1,5 +1,7 @@
 """Translation strings for multi-language support."""
 
+from voorvoet_website.config import config
+
 
 PAGE_TITLES = {
     "nl": {
@@ -99,3 +101,52 @@ BREADCRUMB_NAMES = {
         "order_insoles": "Order Insoles"
     }
 }
+
+
+def get_page_meta_tags(page_key: str, language: str, route: str, page_type: str = "website") -> list[dict]:
+    """
+    Generate complete meta tags for SEO including Open Graph and Twitter Cards.
+
+    Parameters
+    ----------
+    page_key : str
+        The key identifying the page (e.g., "home", "blog", "contact")
+    language : str
+        The language code ("nl", "de", "en")
+    route : str
+        The page route (e.g., "/nl", "/de/blog/")
+    page_type : str, optional
+        Open Graph type ("website" or "article"), defaults to "website"
+
+    Returns
+    -------
+    list[dict]
+        List of meta tag dictionaries for use with Reflex's app.add_page()
+    """
+    title = PAGE_TITLES.get(language, {}).get(page_key, "VoorVoet")
+    description = PAGE_DESCRIPTIONS.get(language, {}).get(page_key, "")
+    image_path = PAGE_IMAGES.get(page_key, PAGE_IMAGES["home"])
+    image_url = f"{config.site_url}{image_path}"
+    page_url = f"{config.site_url}{route}"
+    locale = LOCALE_MAP.get(language, "nl_NL")
+
+    meta_tags = [
+        {"name": "description", "content": description},
+
+        {"property": "og:title", "content": title},
+        {"property": "og:description", "content": description},
+        {"property": "og:image", "content": image_url},
+        {"property": "og:url", "content": page_url},
+        {"property": "og:type", "content": page_type},
+        {"property": "og:locale", "content": locale},
+        {"property": "og:site_name", "content": "VoorVoet"},
+
+        {"name": "twitter:card", "content": "summary_large_image"},
+        {"name": "twitter:title", "content": title},
+        {"name": "twitter:description", "content": description},
+        {"name": "twitter:image", "content": image_url},
+
+        {"name": "canonical", "content": page_url},
+    ]
+
+    return meta_tags
