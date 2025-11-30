@@ -7,6 +7,9 @@ from .section_blog_list import section_blog_list
 from .section_starter import section_starter
 
 from ..shared_sections import footer, header
+from ...components import breadcrumb_schema
+from ...translations import BREADCRUMB_NAMES
+from ...config import config
 
 
 def page_blog(language: str = "nl", posts: list = []) -> rx.Component:
@@ -29,7 +32,19 @@ def page_blog(language: str = "nl", posts: list = []) -> rx.Component:
     rx.Component
         A fragment containing all sections of the blog page in order.
     """
+    breadcrumb_items = [
+        {
+            "name": BREADCRUMB_NAMES.get(language, {}).get("home", "Home"),
+            "url": f"{config.site_url}/{language}",
+        },
+        {
+            "name": BREADCRUMB_NAMES.get(language, {}).get("blog", "Blog"),
+            "url": f"{config.site_url}/{language}/blog/",
+        },
+    ]
+
     return rx.fragment(
+        breadcrumb_schema(breadcrumb_items),
         header(language, page_key="blog"),
         section_hero(),
         section_starter(language),

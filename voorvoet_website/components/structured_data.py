@@ -1,33 +1,4 @@
-"""Structured data components for SEO optimization.
-
-This module provides functions to generate JSON-LD structured data for search engines.
-Structured data helps search engines understand your content and can lead to rich snippets
-in search results.
-
-Examples
---------
-Add organization schema to a page:
-
-    from voorvoet_website.components.structured_data import organization_schema
-
-    def page_home() -> rx.Component:
-        return rx.fragment(
-            organization_schema(),
-            # ... rest of page content
-        )
-
-Add article schema to blog posts:
-
-    from voorvoet_website.components.structured_data import article_schema
-    from voorvoet_website.models import BlogPost
-
-    def page_blog_post(language: str, post: dict) -> rx.Component:
-        blog_post = BlogPost(**post)
-        return rx.fragment(
-            article_schema(blog_post, language),
-            # ... rest of page content
-        )
-"""
+"""Structured data components for SEO optimization."""
 
 import reflex as rx
 from typing import Dict, Any
@@ -61,13 +32,6 @@ def organization_schema() -> rx.Component:
     -------
     rx.Component
         A script tag containing JSON-LD structured data.
-
-    Notes
-    -----
-    - The schema should only be added to the home page
-    - Test with Google Rich Results Test: https://search.google.com/test/rich-results
-    - GPS coordinates are configured for both physical locations
-    - Single entity approach with multiple addresses (better for brand consistency)
     """
 
     org_data: Dict[str, Any] = {
@@ -221,26 +185,6 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
     -------
     rx.Component
         A script tag containing JSON-LD Article structured data
-
-    Notes
-    -----
-    - Test with Google Rich Results Test: https://search.google.com/test/rich-results
-    - Should only be added to individual blog post pages
-    - Supports multi-language content with language-specific tags and categories
-    - Includes article snippet from first 200 words of content
-
-    Examples
-    --------
-    Add to blog post page:
-
-        from voorvoet_website.components.structured_data import article_schema
-
-        def page_blog_post(language: str, post: dict) -> rx.Component:
-            blog_post = BlogPost(**post)
-            return rx.fragment(
-                article_schema(blog_post, language),
-                # ... rest of page content
-            )
     """
     base_url = "https://voorvoet.nl"
 
@@ -249,12 +193,10 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
     words = post.content.split()
     snippet_words = words[:200] if len(words) > 200 else words
     article_snippet = " ".join(snippet_words)
-    # Clean up markdown formatting for snippet
     article_snippet = (
         article_snippet.replace("#", "").replace("*", "").replace("!", "").strip()
     )
 
-    # Build article data
     article_data: Dict[str, Any] = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
@@ -290,20 +232,56 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
         "inLanguage": language,
     }
 
-    # Add word count from content
     word_count = len(post.content.split())
     if word_count > 0:
         article_data["wordCount"] = word_count
 
-    # Add keywords from tags
     if post.tags and len(post.tags) > 0:
         article_data["keywords"] = post.tags
 
-    # Add article section/category
     if post.category:
         article_data["articleSection"] = post.category
 
     json_ld = json.dumps(article_data, ensure_ascii=False, indent=2)
+
+    return rx.el.script(
+        json_ld,
+        type="application/ld+json",
+    )
+
+
+def breadcrumb_schema(items: list[dict[str, str]]) -> rx.Component:
+    """Generate BreadcrumbList JSON-LD structured data for navigation hierarchy.
+
+    Creates schema markup that helps search engines understand the site navigation
+    structure and hierarchy. Can lead to breadcrumb rich snippets in search results.
+
+    Parameters
+    ----------
+    items : list[dict[str, str]]
+        List of breadcrumb items, each with 'name' and 'url' keys.
+        Items should be in order from root to current page.
+
+    Returns
+    -------
+    rx.Component
+        A script tag containing JSON-LD BreadcrumbList structured data.
+    """
+    breadcrumb_data: Dict[str, Any] = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": idx + 1,
+                "name": item["name"],
+                "item": item["url"],
+            }
+            for idx, item in enumerate(items)
+        ],
+    }
+
+    json_ld = json.dumps(breadcrumb_data, ensure_ascii=False, indent=2)
 
     return rx.el.script(
         json_ld,

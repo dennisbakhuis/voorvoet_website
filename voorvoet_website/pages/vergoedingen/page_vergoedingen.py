@@ -8,6 +8,9 @@ from .section_reimbursement_table import section_reimbursement_table
 from .section_pricing_table import section_pricing_table
 
 from ..shared_sections import footer, header
+from ...components import breadcrumb_schema
+from ...translations import BREADCRUMB_NAMES
+from ...config import config
 
 
 def page_vergoedingen(language: str = "nl") -> rx.Component:
@@ -26,8 +29,26 @@ def page_vergoedingen(language: str = "nl") -> rx.Component:
         including header, hero, starter text, reimbursement table,
         pricing table, footer components.
     """
+    breadcrumb_items = [
+        {
+            "name": BREADCRUMB_NAMES.get(language, {}).get("home", "Home"),
+            "url": f"{config.site_url}/{language}",
+        },
+        {
+            "name": BREADCRUMB_NAMES.get(language, {}).get(
+                "reimbursements", "Reimbursements"
+            ),
+            "url": f"{config.site_url}/{language}/vergoedingen"
+            if language == "nl"
+            else f"{config.site_url}/{language}/erstattungen"
+            if language == "de"
+            else f"{config.site_url}/{language}/reimbursements",
+        },
+    ]
+
     return rx.fragment(
-        header(language, page_key="vergoedingen"),
+        breadcrumb_schema(breadcrumb_items),
+        header(language, page_key="reimbursements"),
         section_hero(),
         section_starter(language),
         section_reimbursement_table(language),

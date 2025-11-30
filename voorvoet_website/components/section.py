@@ -128,12 +128,6 @@ def section(
     -------
     rx.Component
         A Reflex box component configured as a section with optional dividers.
-
-    Notes
-    -----
-    When dividers are present, additional padding is automatically added to
-    account for the divider height. This can be overridden via padding_top
-    and padding_bottom in styles parameter.
     """
     CLIP_PADDING_COMPENSATION = "3rem"
 

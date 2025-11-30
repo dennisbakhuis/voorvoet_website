@@ -8,6 +8,7 @@ from ...components import (
     container,
     section,
     article_schema,
+    breadcrumb_schema,
     blog_heading,
     blog_paragraph,
     blog_markdown,
@@ -19,6 +20,7 @@ from ..shared_sections import footer, header
 from .section_hero import section_hero
 from ...config import config
 from ...utils.get_translation import get_translation
+from ...translations import BREADCRUMB_NAMES
 
 
 TRANSLATIONS = {
@@ -68,7 +70,6 @@ def _build_content_component(obj: dict[str, Any]) -> rx.Component:
     elif content_type == "list":
         return blog_list(obj.get("markdown", ""))
     else:
-        # Fallback for unknown types
         return rx.box()
 
 
@@ -108,10 +109,8 @@ def page_blog_post(language: str = "nl", post: Optional[dict] = None) -> rx.Comp
         read_time_val = str(post.get("read_time", "")) if post.get("read_time") else ""
         content_objects_val = post.get("content_objects", [])
 
-        # Build content components statically at compile time
         content_components = _build_content_components(content_objects_val)
 
-        # Build metadata section
         metadata_components = []
         if config.blog_show_author and author_val:
             metadata_components.append(
@@ -162,10 +161,8 @@ def page_blog_post(language: str = "nl", post: Optional[dict] = None) -> rx.Comp
                 )
             )
 
-        # Add all blog content components
         page_components.extend(content_components)
 
-        # Add back link
         page_components.append(
             rx.link(
                 rx.text(get_translation(TRANSLATIONS, "back_to_blog", language)),
@@ -188,13 +185,27 @@ def page_blog_post(language: str = "nl", post: Optional[dict] = None) -> rx.Comp
             width="100%",
         )
 
-        # Create BlogPost object for structured data
         try:
             blog_post_obj = BlogPost(**post)
-            schema_component = article_schema(blog_post_obj, language)
+            article_schema_component = article_schema(blog_post_obj, language)
         except Exception:
-            # If BlogPost creation fails, skip structured data
-            schema_component = rx.fragment()
+            article_schema_component = rx.fragment()
+
+        breadcrumb_items = [
+            {
+                "name": BREADCRUMB_NAMES.get(language, {}).get("home", "Home"),
+                "url": f"{config.site_url}/{language}",
+            },
+            {
+                "name": BREADCRUMB_NAMES.get(language, {}).get("blog", "Blog"),
+                "url": f"{config.site_url}/{language}/blog/",
+            },
+            {
+                "name": title_val,
+                "url": f"{config.site_url}/{language}/blog/{post.get('slug', '')}/",
+            },
+        ]
+        breadcrumb_schema_component = breadcrumb_schema(breadcrumb_items)
     else:
         content_component = rx.vstack(
             rx.text(
@@ -225,10 +236,12 @@ def page_blog_post(language: str = "nl", post: Optional[dict] = None) -> rx.Comp
             width="100%",
             padding="2rem",
         )
-        schema_component = rx.fragment()
+        article_schema_component = rx.fragment()
+        breadcrumb_schema_component = rx.fragment()
 
     return rx.fragment(
-        schema_component,
+        article_schema_component,
+        breadcrumb_schema_component,
         header(language, page_key="blog"),
         section_hero(),
         section(

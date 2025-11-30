@@ -12,6 +12,9 @@ from .section_bedrijfspodotherapie import section_bedrijfspodotherapie
 from .section_risicovoet import section_risicovoet
 
 from ..shared_sections import footer, header
+from ...components import breadcrumb_schema
+from ...translations import BREADCRUMB_NAMES
+from ...config import config
 
 
 def page_informatie(language: str = "nl") -> rx.Component:
@@ -28,8 +31,24 @@ def page_informatie(language: str = "nl") -> rx.Component:
         A fragment containing all sections of the informatie page including
         header, hero, informational sections, footer components.
     """
+    breadcrumb_items = [
+        {
+            "name": BREADCRUMB_NAMES.get(language, {}).get("home", "Home"),
+            "url": f"{config.site_url}/{language}",
+        },
+        {
+            "name": BREADCRUMB_NAMES.get(language, {}).get(
+                "information", "Information"
+            ),
+            "url": f"{config.site_url}/{language}/informatie"
+            if language == "nl"
+            else f"{config.site_url}/{language}/information",
+        },
+    ]
+
     return rx.fragment(
-        header(language, page_key="informatie"),
+        breadcrumb_schema(breadcrumb_items),
+        header(language, page_key="information"),
         section_hero(),
         section_starter(language),
         section_what_is_podiatry(language),

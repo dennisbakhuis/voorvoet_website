@@ -18,13 +18,6 @@ def toast() -> rx.Component:
     -------
     rx.Component
         A Reflex box component containing the toast notification.
-
-    Notes
-    -----
-    The toast visibility is controlled by WebsiteState.toast_visible.
-    Message content is from WebsiteState.toast_message.
-    Toast type (success/error) is from WebsiteState.toast_type.
-    Colors: success=brand green, error=red.
     """
     return rx.box(
         rx.box(
