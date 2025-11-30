@@ -1,4 +1,5 @@
 """Translation strings for multi-language support."""
+import reflex as rx
 
 from voorvoet_website.config import config
 
@@ -103,7 +104,127 @@ BREADCRUMB_NAMES = {
 }
 
 
-def get_page_meta_tags(page_key: str, language: str, route: str, page_type: str = "website") -> list[dict]:
+PAGE_ROUTES = {
+    "home": {
+        "nl": "/nl",
+        "de": "/de",
+        "en": "/en"
+    },
+    "blog": {
+        "nl": "/nl/blog/",
+        "de": "/de/blog/",
+        "en": "/en/blog/"
+    },
+    "information": {
+        "nl": "/nl/informatie",
+        "de": "/de/informationen",
+        "en": "/en/information"
+    },
+    "reimbursements": {
+        "nl": "/nl/vergoedingen",
+        "de": "/de/erstattungen",
+        "en": "/en/reimbursements"
+    },
+    "contact": {
+        "nl": "/nl/contact",
+        "de": "/de/kontakt",
+        "en": "/en/contact"
+    },
+    "order_insoles": {
+        "nl": "/nl/zolen-bestellen",
+        "de": "/de/einlagen-bestellen",
+        "en": "/en/order-insoles"
+    }
+}
+
+
+def get_hreflang_tags(page_key: str) -> list:
+    """Generate hreflang link tags for multi-language pages.
+
+    Creates alternate language links for SEO to help search engines understand
+    which language versions of a page are available.
+
+    Parameters
+    ----------
+    page_key : str
+        The key identifying the page (e.g., "home", "blog", "contact")
+
+    Returns
+    -------
+    list
+        List of rx.el.link components with hreflang attributes
+
+    Notes
+    -----
+    - Includes hreflang for all available language versions
+    - Adds x-default pointing to Dutch (nl) as the default language
+    - Required for multi-language SEO per Google guidelines
+    """
+    hreflang_tags = []
+
+    page_routes = PAGE_ROUTES.get(page_key, {})
+
+    if not page_routes:
+        return hreflang_tags
+
+    for lang, route in page_routes.items():
+        full_url = f"{config.site_url}{route}"
+        hreflang_tags.append(
+            rx.el.link(
+                rel="alternate",
+                href=full_url,
+                custom_attrs={"hreflang": lang},
+            )
+        )
+
+    if "nl" in page_routes:
+        default_url = f"{config.site_url}{page_routes['nl']}"
+        hreflang_tags.append(
+            rx.el.link(
+                rel="alternate",
+                href=default_url,
+                custom_attrs={"hreflang": "x-default"},
+            )
+        )
+
+    return hreflang_tags
+
+
+def get_blog_post_hreflang_tags(story_number: str, all_blog_posts: dict[str, list[dict]]) -> list:
+    """Generate hreflang tags for blog posts based on story number."""
+    hreflang_tags = []
+    nl_slug = None
+
+    for lang, posts in all_blog_posts.items():
+        for post in posts:
+            if post.get("story_number") == story_number:
+                slug = post["slug"]
+                full_url = f"{config.site_url}/{lang}/blog/{slug}/"
+                hreflang_tags.append(
+                    rx.el.link(
+                        rel="alternate",
+                        href=full_url,
+                        custom_attrs={"hreflang": lang},
+                    )
+                )
+                if lang == "nl":
+                    nl_slug = slug
+                break
+
+    if nl_slug:
+        default_url = f"{config.site_url}/nl/blog/{nl_slug}/"
+        hreflang_tags.append(
+            rx.el.link(
+                rel="alternate",
+                href=default_url,
+                custom_attrs={"hreflang": "x-default"},
+            )
+        )
+
+    return hreflang_tags
+
+
+def get_page_meta_tags(page_key: str, language: str, route: str, page_type: str = "website", image_url: str | None = None) -> list:
     """
     Generate complete meta tags for SEO including Open Graph and Twitter Cards.
 
@@ -117,6 +238,8 @@ def get_page_meta_tags(page_key: str, language: str, route: str, page_type: str 
         The page route (e.g., "/nl", "/de/blog/")
     page_type : str, optional
         Open Graph type ("website" or "article"), defaults to "website"
+    image_url : str, optional
+        Full URL to the page image for Twitter Cards
 
     Returns
     -------
@@ -125,17 +248,14 @@ def get_page_meta_tags(page_key: str, language: str, route: str, page_type: str 
     """
     title = PAGE_TITLES.get(language, {}).get(page_key, "VoorVoet")
     description = PAGE_DESCRIPTIONS.get(language, {}).get(page_key, "")
-    image_path = PAGE_IMAGES.get(page_key, PAGE_IMAGES["home"])
-    image_url = f"{config.site_url}{image_path}"
     page_url = f"{config.site_url}{route}"
     locale = LOCALE_MAP.get(language, "nl_NL")
 
-    meta_tags = [
+    meta_tags: list = [
         {"name": "description", "content": description},
 
         {"property": "og:title", "content": title},
         {"property": "og:description", "content": description},
-        {"property": "og:image", "content": image_url},
         {"property": "og:url", "content": page_url},
         {"property": "og:type", "content": page_type},
         {"property": "og:locale", "content": locale},
@@ -144,9 +264,66 @@ def get_page_meta_tags(page_key: str, language: str, route: str, page_type: str 
         {"name": "twitter:card", "content": "summary_large_image"},
         {"name": "twitter:title", "content": title},
         {"name": "twitter:description", "content": description},
-        {"name": "twitter:image", "content": image_url},
-
-        {"name": "canonical", "content": page_url},
     ]
+
+    if image_url:
+        meta_tags.append({"name": "twitter:image", "content": image_url})
+
+    meta_tags.append(
+        rx.el.link(
+            rel="canonical",
+            href=page_url,
+        )
+    )
+
+    hreflang_tags = get_hreflang_tags(page_key)
+    meta_tags.extend(hreflang_tags)
+
+    return meta_tags
+
+
+def get_blog_post_meta_tags(
+    post_title: str,
+    post_summary: str,
+    language: str,
+    route: str,
+    story_number: str = "",
+    all_blog_posts: dict[str, list[dict]] = {},
+    image_url: str | None = None
+) -> list:
+    """Generate post-specific meta tags for individual blog posts."""
+    full_title = f"{post_title} - VoorVoet Blog"
+
+    page_url = f"{config.site_url}{route}"
+    locale = LOCALE_MAP.get(language, "nl_NL")
+
+    meta_tags: list = [
+        {"name": "description", "content": post_summary},
+
+        {"property": "og:title", "content": full_title},
+        {"property": "og:description", "content": post_summary},
+        {"property": "og:url", "content": page_url},
+        {"property": "og:type", "content": "article"},
+        {"property": "og:locale", "content": locale},
+        {"property": "og:site_name", "content": "VoorVoet"},
+
+        {"name": "twitter:card", "content": "summary_large_image"},
+        {"name": "twitter:title", "content": full_title},
+        {"name": "twitter:description", "content": post_summary},
+    ]
+
+    if image_url:
+        meta_tags.append({"name": "twitter:image", "content": image_url})
+
+    meta_tags.append(
+        rx.el.link(
+            rel="canonical",
+            href=page_url,
+        )
+    )
+
+    if story_number:
+        hreflang_tags = get_blog_post_hreflang_tags(story_number, all_blog_posts)
+        meta_tags.extend(hreflang_tags)
 
     return meta_tags

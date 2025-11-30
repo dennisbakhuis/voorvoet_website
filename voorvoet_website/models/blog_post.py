@@ -65,6 +65,7 @@ class BlogPost(BaseModel):
     content_objects: Any = Field(default_factory=list)
     tags: list[str] = Field(default_factory=list)
     category: Optional[str] = None
+    story_number: str
 
     @field_validator('date', mode='before')
     @classmethod

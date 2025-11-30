@@ -71,6 +71,8 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         if '.' in filename:
             filename = filename.rsplit('.', 1)[0]
 
+        story_number = filename.split('_')[0]
+
         date_str = str(metadata.get('date', ''))
         date = _parse_date(date_str, filename)
         formatted_date = _format_date_dutch(date)
@@ -120,6 +122,7 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
             content_objects=content_objects,
             tags=tags,
             category=str(category) if category else None,
+            story_number=story_number,
         )
 
         return blog_post
@@ -186,6 +189,7 @@ def load_all_blog_posts_dict() -> dict[str, list[dict[str, str]]]:
                 "url": post.url,
                 "content": post.content,
                 "content_objects": post.content_objects,
+                "story_number": post.story_number,
             }
             result[lang].append(post_dict)
 

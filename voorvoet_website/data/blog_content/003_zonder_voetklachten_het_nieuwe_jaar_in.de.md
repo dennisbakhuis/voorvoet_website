@@ -1,6 +1,6 @@
 ---
 title: "Ohne Fußbeschwerden ins neue Jahr!"
-slug: "zonder-voetklachten"
+slug: "ohne-fussbeschwerden"
 summary: "Der frische Beginn des neuen Jahres bringt oft den Drang mit sich, positive Veränderungen vorzunehmen, und für viele bedeutet dies das Setzen guter Vorsätze. Vielleicht stehen Sport, mehr Bewegung oder einfach das Genießen eines entspannten Spaziergangs hoch auf Ihrer Liste. Und es ist doch schön, wenn das ohne Fußbeschwerden möglich ist!"
 author: "Kim Bakhuis"
 date: "2024-01-08"

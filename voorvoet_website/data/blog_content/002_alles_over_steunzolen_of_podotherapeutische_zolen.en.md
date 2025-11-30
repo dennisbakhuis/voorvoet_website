@@ -1,6 +1,6 @@
 ---
 title: "Everything about orthotic insoles or podiatric insoles"
-slug: "steunzolen-of-podotherapeutische-zolen"
+slug: "orthotic-insoles-or-podiatric-insoles"
 summary: "In our daily lives, we often underestimate the importance of healthy feet. They literally carry us through life, but often don't receive the attention they deserve. Orthotic insoles or podiatric insoles are a solution that more and more people are discovering to improve their foot comfort and alleviate various health problems. In this article, we explore the world of podiatric insoles and discover how they can have a positive impact on your foot health."
 author: "Kim Bakhuis"
 date: "2023-11-26"
