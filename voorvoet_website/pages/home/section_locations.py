@@ -1,8 +1,9 @@
 """Locations section displaying practice addresses and maps."""
+
 import reflex as rx
 
 from ...components import section, container, location_section, LocationConfig
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -39,13 +40,18 @@ TRANSLATIONS = {
 }
 
 
-def section_locations() -> rx.Component:
+def section_locations(language: str) -> rx.Component:
     """
     Create the locations section with practice address details.
 
     This section displays information about both VoorVoet practice locations
     in Enschede (Eeftinksweg and Beethovenlaan), including addresses,
     descriptions, opening hours, embedded Google Maps, and route links.
+
+    Parameters
+    ----------
+    language : str
+        The language code for translations (e.g., 'nl', 'de', 'en').
 
     Returns
     -------
@@ -55,30 +61,34 @@ def section_locations() -> rx.Component:
     """
     locations = [
         LocationConfig(
-            title=get_translation(TRANSLATIONS, "location1_title"),
-            address=get_translation(TRANSLATIONS, "location1_address"),
-            description=get_translation(TRANSLATIONS, "location1_description"),
+            title=get_translation(TRANSLATIONS, "location1_title", language),
+            address=get_translation(TRANSLATIONS, "location1_address", language),
+            description=get_translation(
+                TRANSLATIONS, "location1_description", language
+            ),
             map_embed='<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2443.8!2d6.8944!3d52.2215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b813bb8f8b8b8b%3A0x123456!2sEeftinksweg+13%2C+7541+WE+Enschede!5e0!3m2!1sen!2snl!4v1234567890" style="border:0;width:100%;height:400px;display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>',
             route_link="https://www.google.com/maps/dir//Eeftinksweg+13,+7541+WE+Enschede",
-            reverse_order=False
+            reverse_order=False,
         ),
         LocationConfig(
-            title=get_translation(TRANSLATIONS, "location2_title"),
-            address=get_translation(TRANSLATIONS, "location2_address"),
-            description=get_translation(TRANSLATIONS, "location2_description"),
+            title=get_translation(TRANSLATIONS, "location2_title", language),
+            address=get_translation(TRANSLATIONS, "location2_address", language),
+            description=get_translation(
+                TRANSLATIONS, "location2_description", language
+            ),
             map_embed='<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2443.5!2d6.8756!3d52.2289!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b813bb8f8b8b8b%3A0x654321!2sBeethovenlaan+10%2C+7522+HJ+Enschede!5e0!3m2!1sen!2snl!4v1234567890" style="border:0;width:100%;height:400px;display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>',
             route_link="https://www.google.com/maps/dir//Beethovenlaan+10,+7522+HJ+Enschede",
-            reverse_order=True
-        )
+            reverse_order=True,
+        ),
     ]
 
     return section(
         container(
             location_section(
-                title=get_translation(TRANSLATIONS, "main_title"),
-                description=get_translation(TRANSLATIONS, "main_description"),
-                locations=locations
+                title=get_translation(TRANSLATIONS, "main_title", language),
+                description=get_translation(TRANSLATIONS, "main_description", language),
+                locations=locations,
             )
         ),
-        id="locations"
+        id="locations",
     )

@@ -1,8 +1,16 @@
 """Section listing common foot and related complaints."""
+
 import reflex as rx
-from ...components import container, section, section_title, regular_text, icon_list_item, column
+from ...components import (
+    container,
+    section,
+    section_title,
+    regular_text,
+    icon_list_item,
+    column,
+)
 from ...theme import Colors, Layout, Spacing
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -42,7 +50,7 @@ TRANSLATIONS = {
 }
 
 
-def section_veel_voorkomende_klachten() -> rx.Component:
+def section_veel_voorkomende_klachten(language: str) -> rx.Component:
     """
     Create the common complaints section.
 
@@ -50,6 +58,11 @@ def section_veel_voorkomende_klachten() -> rx.Component:
     foot pain, heel pain, forefoot complaints, ankle issues, tendon
     inflammations, calluses, ingrown toenails, foot deformities, and
     related pain in legs, knees, hips, or back caused by foot problems.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -76,21 +89,38 @@ def section_veel_voorkomende_klachten() -> rx.Component:
     )
 
     text_column = column(
-        section_title(get_translation(TRANSLATIONS, "title"), margin_bottom=Spacing.text_margin_bottom),
+        section_title(
+            get_translation(TRANSLATIONS, "title", language),
+            margin_bottom=Spacing.text_margin_bottom,
+        ),
         regular_text(
-            get_translation(TRANSLATIONS, "intro"),
+            get_translation(TRANSLATIONS, "intro", language),
             text_align="left",
             margin_bottom="1.5rem",
             color=Colors.text["content"],
         ),
         rx.vstack(
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item1")),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item2")),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item3")),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item4")),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item5")),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item6")),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item7")),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item1", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item2", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item3", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item4", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item5", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item6", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item7", language)
+            ),
             gap="0.5rem",
             align="start",
             width="100%",
@@ -114,5 +144,5 @@ def section_veel_voorkomende_klachten() -> rx.Component:
             )
         ),
         padding_top="2rem",
-        id="veel-voorkomende-klachten"
+        id="veel-voorkomende-klachten",
     )

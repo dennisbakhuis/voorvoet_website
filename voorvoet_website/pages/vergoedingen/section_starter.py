@@ -1,9 +1,10 @@
 """Introductory text section for the reimbursements page."""
+
 import reflex as rx
 
 from ...theme import Colors, FontSizes
 from ...components import section, container
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -22,7 +23,7 @@ TRANSLATIONS = {
 }
 
 
-def section_starter() -> rx.Component:
+def section_starter(language: str) -> rx.Component:
     """
     Create the introductory section for the reimbursements page.
 
@@ -30,6 +31,11 @@ def section_starter() -> rx.Component:
     podiatry is often covered by health insurance and directing visitors
     to the comprehensive information below about reimbursements, costs,
     and what to expect during treatment.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -40,14 +46,14 @@ def section_starter() -> rx.Component:
     return section(
         container(
             rx.text(
-                get_translation(TRANSLATIONS, "title"),
+                get_translation(TRANSLATIONS, "title", language),
                 font_size=FontSizes.section_title,
                 font_weight="700",
                 color=Colors.text["heading"],
                 margin_bottom="1rem",
             ),
             rx.text(
-                get_translation(TRANSLATIONS, "intro"),
+                get_translation(TRANSLATIONS, "intro", language),
                 color=Colors.text["content"],
                 font_size="1.125rem",
                 line_height="1.6",
@@ -55,5 +61,4 @@ def section_starter() -> rx.Component:
         ),
         background=Colors.backgrounds["white"],
         padding_y="2rem",
-
     )

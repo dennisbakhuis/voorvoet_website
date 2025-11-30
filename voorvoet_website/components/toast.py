@@ -1,4 +1,5 @@
 """Toast notification component."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 from ..states import WebsiteState
@@ -17,21 +18,14 @@ def toast() -> rx.Component:
     -------
     rx.Component
         A Reflex box component containing the toast notification.
-
-    Notes
-    -----
-    The toast visibility is controlled by WebsiteState.toast_visible.
-    Message content is from WebsiteState.toast_message.
-    Toast type (success/error) is from WebsiteState.toast_type.
-    Colors: success=brand green, error=red.
     """
     return rx.box(
         rx.box(
             rx.box(
                 rx.cond(
                     WebsiteState.toast_type == "success",
-                    rx.html("✓"),
-                    rx.html("✕"),
+                    rx.text("✓"),
+                    rx.text("✕"),
                 ),
                 display="flex",
                 align_items="center",
@@ -66,7 +60,7 @@ def toast() -> rx.Component:
             box_shadow="0 10px 25px rgba(0, 0, 0, 0.15)",
             min_width="320px",
             max_width="500px",
-            animation=f"slideDown 0.3s ease-out",
+            animation="slideDown 0.3s ease-out",
         ),
         position="fixed",
         top="2rem",

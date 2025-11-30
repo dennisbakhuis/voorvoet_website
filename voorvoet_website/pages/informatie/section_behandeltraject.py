@@ -1,7 +1,8 @@
 """Section explaining the podiatry treatment process."""
+
 import reflex as rx
 from ...components import container, section, image_text_section
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -20,7 +21,7 @@ TRANSLATIONS = {
 }
 
 
-def section_behandeltraject() -> rx.Component:
+def section_behandeltraject(language: str) -> rx.Component:
     """
     Create the treatment process explanation section.
 
@@ -29,26 +30,29 @@ def section_behandeltraject() -> rx.Component:
     measurements), treatment planning, insole fitting, and follow-up care.
     Emphasizes the personalized approach to each patient.
 
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
+
     Returns
     -------
     rx.Component
         A section component with an image-text layout explaining the
         step-by-step treatment process at the practice.
     """
-    paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1")
-    ]
+    paragraphs = [get_translation(TRANSLATIONS, "paragraph1", language)]
 
     return section(
         container(
             image_text_section(
                 image_src="/images/page_information/wandelen_zonder_pijn_in_de_voeten_voorvoet_podotherapie_enschede.jpg",
-                title=get_translation(TRANSLATIONS, "title"),
+                title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
                 image_position="left",
                 image_max_width="450px",
             ),
         ),
         padding_bottom="2rem",
-        id="het-behandeltraject"
+        id="het-behandeltraject",
     )

@@ -1,7 +1,8 @@
 """Introduction section with personal story from the practice owner."""
+
 import reflex as rx
 from ...components import container, section, image_text_section
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -23,13 +24,18 @@ TRANSLATIONS = {
 }
 
 
-def section_introduction() -> rx.Component:
+def section_introduction(language: str) -> rx.Component:
     """
     Create the introduction section with owner's personal story.
 
     This section features an image-text layout introducing Kim Bakhuis,
     the podotherapist and owner of VoorVoet. It describes her background,
     qualifications, approach to patient care, and personal interests.
+
+    Parameters
+    ----------
+    language : str
+        The language code for translations (e.g., 'nl', 'de', 'en').
 
     Returns
     -------
@@ -38,18 +44,18 @@ def section_introduction() -> rx.Component:
         owner's photo on the left and biographical text on the right.
     """
     paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1"),
-        get_translation(TRANSLATIONS, "paragraph2")
+        get_translation(TRANSLATIONS, "paragraph1", language),
+        get_translation(TRANSLATIONS, "paragraph2", language),
     ]
 
     return section(
         container(
             image_text_section(
                 image_src="/images/page_home/podotherapeut_enschede_kim_bakhuis_loopt_op_strand_voorvoet_praktijk_voor_podotherapie.jpg",
-                title=get_translation(TRANSLATIONS, "title"),
+                title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
-                image_position="left"
+                image_position="left",
             )
         ),
-        id="introduction"
+        id="introduction",
     )

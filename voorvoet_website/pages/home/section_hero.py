@@ -1,8 +1,9 @@
 """Hero section for the home page with title, subtitle, and CTA."""
+
 import reflex as rx
 from ...theme import Colors, FontSizes, Layout
 from ...components import container, section, hero_banner
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 from .section_hero_cta import hero_cta_box
 
 
@@ -22,13 +23,14 @@ TRANSLATIONS = {
 }
 
 
-def section_hero() -> rx.Component:
+def section_hero(language: str) -> rx.Component:
     """
     Create the home page hero section with tagline and call-to-action.
 
-    The hero section displays a full-width background image with a gradient
-    overlay, featuring the main tagline "Voetklachten? Loop er niet mee door!"
-    and a call-to-action box for booking appointments.
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -42,7 +44,7 @@ def section_hero() -> rx.Component:
         rx.box(
             rx.vstack(
                 rx.text(
-                    get_translation(TRANSLATIONS, "hero_title"),
+                    get_translation(TRANSLATIONS, "hero_title", language),
                     color=Colors.primary["300"],
                     font_weight="900",
                     text_align="center",
@@ -50,7 +52,7 @@ def section_hero() -> rx.Component:
                     font_size=FontSizes.hero_title,
                 ),
                 rx.text(
-                    get_translation(TRANSLATIONS, "hero_subtitle"),
+                    get_translation(TRANSLATIONS, "hero_subtitle", language),
                     color=Colors.text["heading"],
                     text_align="center",
                     opacity="0.95",
@@ -69,12 +71,12 @@ def section_hero() -> rx.Component:
             padding_top="40px",
         ),
         rx.box(
-            hero_cta_box(),
+            hero_cta_box(language),
             grid_row="2",
             display="flex",
             justify_content="center",
             padding_bottom=["0.5rem", "0.75rem", "1rem", "1rem"],
-            margin_bottom="4rem"
+            margin_bottom="4rem",
         ),
         position="relative",
         z_index="2",
@@ -94,5 +96,5 @@ def section_hero() -> rx.Component:
         position="relative",
         min_height=Layout.hero_min_height,
         clip_bottom="gentle_1",
-        divider_color=Colors.backgrounds['white']
+        divider_color=Colors.backgrounds["white"],
     )

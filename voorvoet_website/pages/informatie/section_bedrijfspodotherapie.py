@@ -1,8 +1,16 @@
 """Section explaining company podiatry services."""
+
 import reflex as rx
-from ...components import container, section, section_title, regular_text, icon_list_item, column
+from ...components import (
+    container,
+    section,
+    section_title,
+    regular_text,
+    icon_list_item,
+    column,
+)
 from ...theme import Colors, Layout, Spacing
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -45,7 +53,7 @@ TRANSLATIONS = {
 }
 
 
-def section_bedrijfspodotherapie() -> rx.Component:
+def section_bedrijfspodotherapie(language: str) -> rx.Component:
     """
     Create the company podiatry section.
 
@@ -55,6 +63,11 @@ def section_bedrijfspodotherapie() -> rx.Component:
     workplace assessments, footwear advice, custom work insoles, treatment,
     exercises, and preventive measures to reduce absenteeism and improve
     employee productivity.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -82,39 +95,52 @@ def section_bedrijfspodotherapie() -> rx.Component:
     )
 
     text_column = column(
-        section_title(get_translation(TRANSLATIONS, "title"), margin_bottom=Spacing.text_margin_bottom),
+        section_title(
+            get_translation(TRANSLATIONS, "title", language),
+            margin_bottom=Spacing.text_margin_bottom,
+        ),
         regular_text(
-            get_translation(TRANSLATIONS, "intro"),
+            get_translation(TRANSLATIONS, "intro", language),
             text_align="left",
             margin_bottom="1.5rem",
             color=Colors.text["content"],
         ),
         regular_text(
-            get_translation(TRANSLATIONS, "includes_intro"),
+            get_translation(TRANSLATIONS, "includes_intro", language),
             text_align="left",
             margin_bottom="1rem",
             color=Colors.text["content"],
         ),
         rx.vstack(
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item1")),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item2")),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item3")),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item4")),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item5")),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item1", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item2", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item3", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item4", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item5", language)
+            ),
             gap="0.5rem",
             align="start",
             width="100%",
             padding_left="1.5rem",
         ),
         regular_text(
-            get_translation(TRANSLATIONS, "conclusion"),
+            get_translation(TRANSLATIONS, "conclusion", language),
             text_align="left",
             margin_bottom="1rem",
             margin_top="1.5rem",
             color=Colors.text["content"],
         ),
         regular_text(
-            get_translation(TRANSLATIONS, "contact"),
+            get_translation(TRANSLATIONS, "contact", language),
             text_align="left",
             color=Colors.text["content"],
         ),
@@ -125,7 +151,7 @@ def section_bedrijfspodotherapie() -> rx.Component:
         flex_direction="column",
         justify_content="center",
     )
-    
+
     return section(
         container(
             rx.box(

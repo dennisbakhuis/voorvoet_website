@@ -1,4 +1,5 @@
 """Email address validation model."""
+
 from pydantic import field_validator
 from .validated_field import ValidatedField
 
@@ -24,7 +25,7 @@ class EmailAddress(ValidatedField):
         Whether the field has lost focus at least once.
     """
 
-    @field_validator('value')
+    @field_validator("value")
     @classmethod
     def validate_value(cls, v: str) -> str:
         """Validate that value is a string (allows any string for flexibility)."""

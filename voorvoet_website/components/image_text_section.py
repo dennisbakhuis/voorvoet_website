@@ -1,9 +1,9 @@
 """Reusable image-text section component to eliminate layout duplication."""
+
 import reflex as rx
 from typing import Optional, Union, Sequence
 
 from ..theme import Layout, Spacing
-from .column import column
 from .section_title import section_title
 from .regular_text import regular_text
 from .button import button
@@ -17,7 +17,7 @@ def image_text_section(
     button_text: Optional[Union[str, rx.Var]] = None,
     button_link: Optional[Union[str, rx.Var]] = None,
     image_max_width: Optional[str] = None,
-    **section_props
+    **section_props,
 ) -> rx.Component:
     """
     Create a responsive section with image and text content.
@@ -82,21 +82,19 @@ def image_text_section(
         justify_content="center",
         align_items="center",
         margin_bottom=Spacing.image_margin_bottom,
-        order=["1", "1", "1", "1"] if image_position == "left" else ["1", "1", "2", "2"],
+        order=["1", "1", "1", "1"]
+        if image_position == "left"
+        else ["1", "1", "2", "2"],
     )
 
-    text_content = [
-        section_title(title, margin_bottom=Spacing.text_margin_bottom)
-    ]
+    text_content = [section_title(title, margin_bottom=Spacing.text_margin_bottom)]
 
     for i, paragraph in enumerate(paragraph_list):
-        margin_bottom = Spacing.text_margin_bottom if i < len(paragraph_list) - 1 else "0"
+        margin_bottom = (
+            Spacing.text_margin_bottom if i < len(paragraph_list) - 1 else "0"
+        )
         text_content.append(
-            regular_text(
-                paragraph,
-                text_align="left",
-                margin_bottom=margin_bottom
-            )
+            regular_text(paragraph, text_align="left", margin_bottom=margin_bottom)
         )
 
     if button_text and button_link:
@@ -104,7 +102,7 @@ def image_text_section(
             rx.box(
                 button(button_text, href=button_link),
                 margin_top=Spacing.button_margin_top,
-                text_align="center"
+                text_align="center",
             )
         )
 
@@ -112,7 +110,9 @@ def image_text_section(
         *text_content,
         width=["100%", "100%", "auto", "auto"],
         flex=["1", "1", "1", "1"],
-        order=["2", "2", "2", "2"] if image_position == "left" else ["2", "2", "1", "1"],
+        order=["2", "2", "2", "2"]
+        if image_position == "left"
+        else ["2", "2", "1", "1"],
         display="flex",
         flex_direction="column",
         justify_content="center",
@@ -125,5 +125,5 @@ def image_text_section(
         display=Layout.responsive_flex,
         gap=Spacing.section_gap,
         align_items="center",
-        **section_props
+        **section_props,
     )

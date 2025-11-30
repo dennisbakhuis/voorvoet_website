@@ -1,4 +1,5 @@
 """Blog image component for rendering images with optional captions."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes, Spacing, Layout
 
@@ -55,7 +56,7 @@ def blog_image(src: str, alt: str, caption: str = "") -> rx.Component:
             caption != "",
             rx.text(
                 caption,
-                color=Colors.text['muted'],
+                color=Colors.text["muted"],
                 font_size=FontSizes.regular,
                 font_style="italic",
                 text_align="center",
@@ -76,5 +77,5 @@ def blog_image(src: str, alt: str, caption: str = "") -> rx.Component:
                 "border_radius": Layout.blog_image_border_radius,
                 "box_shadow": Layout.image_box_shadow,
             }
-        }
+        },
     )

@@ -1,10 +1,10 @@
 """Information cards section displaying practice services and details."""
+
 import reflex as rx
 
 from ...components import container, section, information_cards_grid, CardConfig
 from ...theme import Colors
-from ...utils.translations import get_translation
-from ...states import WebsiteState
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -71,19 +71,14 @@ TRANSLATIONS = {
 }
 
 
-def section_information() -> rx.Component:
+def section_information(language: str) -> rx.Component:
     """
     Create the information section with service and practice detail cards.
 
-    This section displays a grid of information cards covering:
-    - What a podotherapist does
-    - Common complaints treated
-    - Insurance reimbursement information
-    - Treatment process overview
-    - Business-specific services
-    - Target audience information
-
-    Each card includes an icon, title, description, and link button.
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -93,73 +88,68 @@ def section_information() -> rx.Component:
     """
     cards = [
         CardConfig(
-            title=get_translation(TRANSLATIONS, "card1_title"),
-            description=get_translation(TRANSLATIONS, "card1_description"),
+            title=get_translation(TRANSLATIONS, "card1_title", language),
+            description=get_translation(TRANSLATIONS, "card1_description", language),
             icon="fa-user-md",
             bg_color="white",
             show_box=False,
-            button_text=get_translation(TRANSLATIONS, "card1_button"),
-            button_link="/" + WebsiteState.current_language + "/informatie/#what-is-podiatry"
+            button_text=get_translation(TRANSLATIONS, "card1_button", language),
+            button_link=f"/{language}/informatie/#what-is-podiatry",
         ),
         CardConfig(
-            title=get_translation(TRANSLATIONS, "card2_title"),
-            description=get_translation(TRANSLATIONS, "card2_description"),
+            title=get_translation(TRANSLATIONS, "card2_title", language),
+            description=get_translation(TRANSLATIONS, "card2_description", language),
             icon="fa-exclamation-triangle",
             bg_color="white",
             show_box=False,
-            button_text=get_translation(TRANSLATIONS, "card2_button"),
-            button_link="/" + WebsiteState.current_language + "/informatie/#veel-voorkomende-klachten"
+            button_text=get_translation(TRANSLATIONS, "card2_button", language),
+            button_link=f"/{language}/informatie/#veel-voorkomende-klachten",
         ),
         CardConfig(
-            title=get_translation(TRANSLATIONS, "card3_title"),
-            description=get_translation(TRANSLATIONS, "card3_description"),
+            title=get_translation(TRANSLATIONS, "card3_title", language),
+            description=get_translation(TRANSLATIONS, "card3_description", language),
             icon="fa-money",
             bg_color="white",
             show_box=False,
-            button_text=get_translation(TRANSLATIONS, "card3_button"),
-            button_link="/" + WebsiteState.current_language + "/reimbursements/"
+            button_text=get_translation(TRANSLATIONS, "card3_button", language),
+            button_link=f"/{language}/vergoedingen/",
         ),
         CardConfig(
-            title=get_translation(TRANSLATIONS, "card4_title"),
-            description=get_translation(TRANSLATIONS, "card4_description"),
+            title=get_translation(TRANSLATIONS, "card4_title", language),
+            description=get_translation(TRANSLATIONS, "card4_description", language),
             icon="fa-heart-o",
             bg_color="white",
             show_box=False,
-            button_text=get_translation(TRANSLATIONS, "card4_button"),
-            button_link="/" + WebsiteState.current_language + "/informatie/#het-behandeltraject"
+            button_text=get_translation(TRANSLATIONS, "card4_button", language),
+            button_link=f"/{language}/informatie/#het-behandeltraject",
         ),
         CardConfig(
-            title=get_translation(TRANSLATIONS, "card5_title"),
-            description=get_translation(TRANSLATIONS, "card5_description"),
+            title=get_translation(TRANSLATIONS, "card5_title", language),
+            description=get_translation(TRANSLATIONS, "card5_description", language),
             icon="fa-building-o",
             bg_color="white",
             show_box=False,
-            button_text=get_translation(TRANSLATIONS, "card5_button"),
-            button_link="/" + WebsiteState.current_language + "/informatie/#bedrijfspodotherapie"
+            button_text=get_translation(TRANSLATIONS, "card5_button", language),
+            button_link=f"/{language}/informatie/#bedrijfspodotherapie",
         ),
         CardConfig(
-            title=get_translation(TRANSLATIONS, "card6_title"),
-            description=get_translation(TRANSLATIONS, "card6_description"),
+            title=get_translation(TRANSLATIONS, "card6_title", language),
+            description=get_translation(TRANSLATIONS, "card6_description", language),
             icon="fa-child",
             bg_color="white",
             show_box=False,
-            button_text=get_translation(TRANSLATIONS, "card6_button"),
-            button_link="/" + WebsiteState.current_language + "/informatie/#for-everyone"
-        )
+            button_text=get_translation(TRANSLATIONS, "card6_button", language),
+            button_link=f"/{language}/informatie/#for-everyone",
+        ),
     ]
 
     return section(
         container(
-            information_cards_grid(
-                cards=cards,
-                columns=[1, 2, 3],
-                spacing="2rem"
-            )
+            information_cards_grid(cards=cards, columns=[1, 2, 3], spacing="2rem")
         ),
         id="services",
-        background_color= Colors.backgrounds["green_light"],
+        background_color=Colors.backgrounds["green_light"],
         divider_color=Colors.backgrounds["white"],
         clip_top="gentle_4",
-        clip_bottom="gentle_1"
-
+        clip_bottom="gentle_1",
     )

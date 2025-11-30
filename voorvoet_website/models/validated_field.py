@@ -1,4 +1,5 @@
 """Base class for validated form fields."""
+
 from pydantic import BaseModel, ConfigDict
 from abc import ABC, abstractmethod
 
@@ -25,9 +26,9 @@ class ValidatedField(BaseModel, ABC):
     """
 
     model_config = ConfigDict(
-        frozen=False,                  # Allow mutation for Reflex state compatibility
-        validate_assignment=True,      # Validate on assignment for type safety
-        extra='forbid',                # Allow extra fields to be ignored
+        frozen=False,  # Allow mutation for Reflex state compatibility
+        validate_assignment=True,  # Validate on assignment for type safety
+        extra="forbid",  # Allow extra fields to be ignored
     )
 
     value: str = ""

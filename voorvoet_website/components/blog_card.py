@@ -1,23 +1,21 @@
 """Blog card component for displaying blog post previews."""
+
 import reflex as rx
 from ..models import BlogPost
 from ..theme import Colors, FontSizes, Layout
 from ..config import config
-from ..states import BlogState
 
 
-def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
+def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
     """
     Display a blog post card in landscape layout with thumbnail and content.
 
-    Creates a clickable card component that displays blog post information
-    including title, summary, metadata (author, date, reading time), and
-    thumbnail image. The thumbnail position can be flipped to alternate sides.
-
     Parameters
     ----------
-    post : BlogPost
-        BlogPost object containing all post data and metadata.
+    post : BlogPost or dict
+        BlogPost object or dictionary containing all post data and metadata.
+    language : str
+        Current language code ("nl", "de", or "en")
     flip : bool, optional
         If True, thumbnail appears on the right side; if False, on the left.
         Default is False.
@@ -26,32 +24,30 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
     -------
     rx.Component
         A Reflex link component wrapping the styled blog card.
-
-    Notes
-    -----
-    - Card displays metadata based on config settings (author, date, reading time)
-    - Summary text is clamped to 3 lines with ellipsis
-    - Card has hover effects (shadow and lift)
-    - Thumbnail is a fixed 250x250px square with rounded corners
     """
+    if isinstance(post, dict):
+        post = BlogPost(**post)
+
     content_area = rx.vstack(
         rx.heading(
             post.title,
             size="6",
-            color=Colors.text['heading'],
+            color=Colors.text["heading"],
             margin_top="1.0rem",
             margin_bottom="-0.2rem",
             line_height="1.3",
         ),
         rx.text(
             post.summary,
-            color=Colors.text['content'],
+            color=Colors.text["content"],
             font_size=FontSizes.regular,
             line_height="1.6",
             margin_bottom="0.5rem",
         ),
         rx.cond(
-            config.blog_show_author | config.blog_show_publication_date | config.blog_show_reading_time,
+            config.blog_show_author
+            | config.blog_show_publication_date
+            | config.blog_show_reading_time,
             rx.hstack(
                 rx.cond(
                     config.blog_show_author,
@@ -60,12 +56,12 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
                         rx.fragment(
                             rx.text(
                                 post.author,
-                                color=Colors.text['muted'],
+                                color=Colors.text["muted"],
                                 font_size="0.85rem",
                             ),
                             rx.text(
                                 "•",
-                                color=Colors.text['muted'],
+                                color=Colors.text["muted"],
                                 font_size="0.85rem",
                             ),
                         ),
@@ -75,7 +71,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
                     config.blog_show_publication_date,
                     rx.text(
                         post.formatted_date,
-                        color=Colors.text['muted'],
+                        color=Colors.text["muted"],
                         font_size="0.85rem",
                     ),
                 ),
@@ -88,13 +84,13 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
                                 config.blog_show_publication_date,
                                 rx.text(
                                     "•",
-                                    color=Colors.text['muted'],
+                                    color=Colors.text["muted"],
                                     font_size="0.85rem",
                                 ),
                             ),
                             rx.text(
-                                post.read_time.to(str) + " min leestijd",  # type: ignore
-                                color=Colors.text['muted'],
+                                f"{post.read_time} min leestijd",
+                                color=Colors.text["muted"],
                                 font_size="0.85rem",
                             ),
                         ),
@@ -106,7 +102,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
         ),
         rx.text(
             "Lees meer →",
-            color=Colors.primary['500'],
+            color=Colors.primary["500"],
             font_weight="600",
             font_size=FontSizes.regular,
             margin_top="auto",
@@ -120,7 +116,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
     thumbnail = rx.box(
         rx.image(
             src=post.thumbnail_url,
-            alt=post.thumbnail_alt,
+            alt=str(post.thumbnail_alt),
             width="100%",
             height="100%",
             object_fit="cover",
@@ -161,7 +157,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
         rx.box(
             card_content,
             border_radius="8px",
-            background=Colors.backgrounds['white'],
+            background=Colors.backgrounds["white"],
             padding="1.5rem",
             margin_y="1rem",
             box_shadow="0 8px 24px rgba(0, 0, 0, 0.12)",
@@ -171,7 +167,7 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
                 "transform": "translateY(-2px)",
             },
         ),
-        href=f"/{BlogState.current_language}/blog/" + post.slug,
+        href=f"/{language}/blog/{post.slug}/",
         text_decoration="none",
         _hover={"text_decoration": "none"},
     )

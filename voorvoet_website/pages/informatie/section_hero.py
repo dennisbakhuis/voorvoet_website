@@ -1,4 +1,5 @@
 """Hero section for the information page."""
+
 import reflex as rx
 
 from ...theme import Colors
@@ -24,10 +25,10 @@ def section_hero() -> rx.Component:
             gradient="linear-gradient(270deg, rgba(255,255,255,.35) 0%, rgba(16,185,129,.35) 100%)",
             content=None,
         ),
-        background_color=Colors.backgrounds['green_light'],
+        background_color=Colors.backgrounds["green_light"],
         padding_top="0",
         position="relative",
         height="500px",
         clip_bottom="gentle_3",
-        divider_color=Colors.backgrounds['white']
+        divider_color=Colors.backgrounds["white"],
     )

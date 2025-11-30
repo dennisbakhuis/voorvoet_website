@@ -1,4 +1,5 @@
 """Form input component with consistent styling and error states."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 
@@ -44,6 +45,17 @@ def form_input(
         A styled input component with consistent theming and optional
         error state.
     """
+    if isinstance(show_error, bool):
+        border_value = (
+            "3px solid red" if show_error else f"1px solid {Colors.borders['light']}"
+        )
+    else:
+        border_value = rx.cond(
+            show_error,
+            "3px solid red",
+            f"1px solid {Colors.borders['light']}",
+        )
+
     base_props = {
         "placeholder": placeholder,
         "value": value,
@@ -57,10 +69,16 @@ def form_input(
         "background": "white",
         "color": Colors.text["content"],
         "type": input_type,
+        "border": border_value,
         "style": {
             "::placeholder": {
-                "color": f"{Colors.text['placeholder']} !important",
-                "opacity": "1 !important",
+                "color": f"{Colors.text['muted']}",
+                "opacity": "1",
+            },
+            "&:focus": {
+                "outline": "none",
+                "border_color": f"{Colors.primary['300']}",
+                "box_shadow": f"0 0 0 3px {Colors.primary['300']}40",
             },
         },
     }
@@ -74,17 +92,7 @@ def form_input(
     if max_length:
         base_props["max_length"] = max_length
 
-    if isinstance(show_error, bool):
-        base_props["border"] = "3px solid red" if show_error else f"1px solid {Colors.borders['light']}"
-    else:
-        base_props["border"] = rx.cond(
-            show_error,
-            "3px solid red",
-            f"1px solid {Colors.borders['light']}",
-        )
-
     if custom_attrs:
         base_props["custom_attrs"] = custom_attrs
-        return rx.el.input(**base_props)
 
-    return rx.input(**base_props)
+    return rx.el.input(**base_props)

@@ -1,6 +1,6 @@
 """Hero banner component with background image and optional content overlay."""
+
 import reflex as rx
-from ..theme import Colors
 
 
 def hero_banner(

@@ -1,4 +1,5 @@
 """Header component used across all pages."""
+
 import reflex as rx
 
 from ...theme import Colors, FontSizes, Layout
@@ -30,14 +31,47 @@ TRANSLATIONS = {
     },
 }
 
+# Route segments for each page in each language
+ROUTE_SEGMENTS = {
+    "nl": {
+        "home": "",
+        "blog": "blog/",
+        "informatie": "informatie",
+        "vergoedingen": "vergoedingen",
+        "contact": "contact",
+    },
+    "de": {
+        "home": "",
+        "blog": "blog/",
+        "informatie": "informationen",
+        "vergoedingen": "erstattungen",
+        "contact": "kontakt",
+    },
+    "en": {
+        "home": "",
+        "blog": "blog/",
+        "informatie": "information",
+        "vergoedingen": "reimbursements",
+        "contact": "contact",
+    },
+}
 
-def header() -> rx.Component:
+
+def header(language: str, page_key: str | None = None) -> rx.Component:
     """
     Create the site-wide header with navigation and mobile menu.
 
     The header includes the logo, desktop navigation links, and a mobile menu
     toggle button. Navigation items are conditionally displayed based on the
-    current page path to avoid showing links to the current page.
+    current page to avoid showing links to the current page.
+
+    Parameters
+    ----------
+    language : str
+        The current language code (nl, de, or en).
+    page_key : str, optional
+        The current page identifier ('home', 'blog', 'informatie', 'vergoedingen', 'contact').
+        When provided, the navigation link for that page will be hidden.
 
     Returns
     -------
@@ -47,212 +81,237 @@ def header() -> rx.Component:
     Notes
     -----
     The header uses Reflex state (WebsiteState) to:
-    - Track the current page path for conditional nav rendering
     - Handle navigation between pages
     - Toggle the mobile menu visibility
-    - Provide translated navigation labels
     """
-    def get_translation(key: str) -> rx.Var:
+
+    def get_translation(key: str, lang: str) -> rx.Var:
         """
-        Get translation for a key based on current language.
+        Get translation for a key based on provided language.
 
         Parameters
         ----------
         key : str
             Translation key to look up in TRANSLATIONS dict.
+        lang : str
+            Language code (nl, de, or en).
 
         Returns
         -------
         rx.Var
-            Reactive variable containing the translated text for the current language.
+            Reactive variable containing the translated text for the specified language.
         """
         return rx.cond(
-            WebsiteState.current_language == "nl",
+            lang == "nl",
             TRANSLATIONS["nl"][key],
-            rx.cond(
-                WebsiteState.current_language == "de",
-                TRANSLATIONS["de"][key],
-                TRANSLATIONS["en"][key]
-            )
+            rx.cond(lang == "de", TRANSLATIONS["de"][key], TRANSLATIONS["en"][key]),
         )
 
-    def is_not_on_page(page_suffix: str) -> rx.Var:
+    def get_route(page_key: str, lang: str) -> str:
         """
-        Check if current path does not match the given page.
+        Get the route path for a page in the specified language.
 
         Parameters
         ----------
-        page_suffix : str
-            Page suffix to check against current path (empty string for home page).
+        page_key : str
+            Page key ('home', 'blog', 'informatie', 'vergoedingen', 'contact').
+        lang : str
+            Language code (nl, de, or en).
 
         Returns
         -------
-        rx.Var
-            Reactive variable evaluating to True if not on the specified page,
-            False otherwise.
+        str
+            The full route path for the page in the specified language.
         """
-        if page_suffix == "":
-            is_home = (
-                (WebsiteState.current_page_path == "/nl") |
-                (WebsiteState.current_page_path == "/de") |
-                (WebsiteState.current_page_path == "/en")
-            )
-            return rx.cond(is_home, False, True)
-        else:
-            return rx.cond(
-                WebsiteState.current_page_path.endswith(page_suffix),
-                False,
-                True
-            )
+        segment = ROUTE_SEGMENTS[lang][page_key]
+        if segment:
+            return f"/{lang}/{segment}"
+        return f"/{lang}"
+
+    def is_not_on_page(check_page_key: str) -> bool:
+        """
+        Check if current page does not match the given page key.
+
+        Parameters
+        ----------
+        check_page_key : str
+            Page key to check against current page ('home', 'blog', etc.).
+
+        Returns
+        -------
+        bool
+            True if not on the specified page, False otherwise.
+        """
+        return page_key != check_page_key
 
     nav_items = [
         rx.cond(
-            is_not_on_page(""),
-            rx.link(get_translation("home"), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_home, cursor="pointer"),  #type: ignore
-            rx.fragment()
+            is_not_on_page("home"),
+            rx.link(
+                get_translation("home", language),
+                href=get_route("home", language),
+                color=Colors.text["heading"],
+                font_size=FontSizes.nav_link,
+                font_weight="600",
+                _hover={"color": Colors.primary["300"]},
+            ),
+            rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("/blog/"),
-            rx.link(get_translation("blog"), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_blog, cursor="pointer"),  #type: ignore
-            rx.fragment()
+            is_not_on_page("blog"),
+            rx.link(
+                get_translation("blog", language),
+                href=get_route("blog", language),
+                color=Colors.text["heading"],
+                font_size=FontSizes.nav_link,
+                font_weight="600",
+                _hover={"color": Colors.primary["300"]},
+            ),
+            rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("/informatie/"),
-            rx.link(get_translation("informatie"), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_informatie, cursor="pointer"),  #type: ignore
-            rx.fragment()
+            is_not_on_page("informatie"),
+            rx.link(
+                get_translation("informatie", language),
+                href=get_route("informatie", language),
+                color=Colors.text["heading"],
+                font_size=FontSizes.nav_link,
+                font_weight="600",
+                _hover={"color": Colors.primary["300"]},
+            ),
+            rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("/reimbursements/"),
-            rx.link(get_translation("vergoedingen"), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_reimbursements, cursor="pointer"),  #type: ignore
-            rx.fragment()
+            is_not_on_page("vergoedingen"),
+            rx.link(
+                get_translation("vergoedingen", language),
+                href=get_route("vergoedingen", language),
+                color=Colors.text["heading"],
+                font_size=FontSizes.nav_link,
+                font_weight="600",
+                _hover={"color": Colors.primary["300"]},
+            ),
+            rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("/contact/"),
-            rx.link(get_translation("contact"), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}, on_click=WebsiteState.nav_to_contact, cursor="pointer"),  #type: ignore
-            rx.fragment()
+            is_not_on_page("contact"),
+            rx.link(
+                get_translation("contact", language),
+                href=get_route("contact", language),
+                color=Colors.text["heading"],
+                font_size=FontSizes.nav_link,
+                font_weight="600",
+                _hover={"color": Colors.primary["300"]},
+            ),
+            rx.fragment(),
         ),
     ]
 
     mobile_nav_items = [
         rx.cond(
-            is_not_on_page(""),
-            rx.box(
-                rx.link(
-                    get_translation("home"),
-                    color=Colors.primary["700"],
-                    font_size=FontSizes.nav_link,
-                    font_weight="500",
-                    text_decoration="none",
-                ),
+            is_not_on_page("home"),
+            rx.link(
+                get_translation("home", language),
+                href=get_route("home", language),
+                color=Colors.primary["700"],
+                font_size=FontSizes.nav_link,
+                font_weight="500",
+                text_decoration="none",
                 width="100%",
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_home],  #type: ignore
+                on_click=WebsiteState.toggle_nav,  # type: ignore
                 _hover={
-                    "& a": {
-                        "color": Colors.primary["300"],
-                        "text_decoration": "underline",
-                    }
+                    "color": Colors.primary["300"],
+                    "text_decoration": "underline",
                 },
             ),
-            rx.fragment()
+            rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("/blog/"),
-            rx.box(
-                rx.link(
-                    get_translation("blog"),
-                    color=Colors.primary["700"],
-                    font_size=FontSizes.nav_link,
-                    font_weight="500",
-                    text_decoration="none",
-                ),
+            is_not_on_page("blog"),
+            rx.link(
+                get_translation("blog", language),
+                href=get_route("blog", language),
+                color=Colors.primary["700"],
+                font_size=FontSizes.nav_link,
+                font_weight="500",
+                text_decoration="none",
                 width="100%",
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_blog],  #type: ignore
+                on_click=WebsiteState.toggle_nav,  # type: ignore
                 _hover={
-                    "& a": {
-                        "color": Colors.primary["300"],
-                        "text_decoration": "underline",
-                    }
+                    "color": Colors.primary["300"],
+                    "text_decoration": "underline",
                 },
             ),
-            rx.fragment()
+            rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("/informatie/"),
-            rx.box(
-                rx.link(
-                    get_translation("informatie"),
-                    color=Colors.primary["700"],
-                    font_size=FontSizes.nav_link,
-                    font_weight="500",
-                    text_decoration="none",
-                ),
+            is_not_on_page("informatie"),
+            rx.link(
+                get_translation("informatie", language),
+                href=get_route("informatie", language),
+                color=Colors.primary["700"],
+                font_size=FontSizes.nav_link,
+                font_weight="500",
+                text_decoration="none",
                 width="100%",
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_informatie],  #type: ignore
+                on_click=WebsiteState.toggle_nav,  # type: ignore
                 _hover={
-                    "& a": {
-                        "color": Colors.primary["300"],
-                        "text_decoration": "underline",
-                    }
+                    "color": Colors.primary["300"],
+                    "text_decoration": "underline",
                 },
             ),
-            rx.fragment()
+            rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("/reimbursements/"),
-            rx.box(
-                rx.link(
-                    get_translation("vergoedingen"),
-                    color=Colors.primary["700"],
-                    font_size=FontSizes.nav_link,
-                    font_weight="500",
-                    text_decoration="none",
-                ),
+            is_not_on_page("vergoedingen"),
+            rx.link(
+                get_translation("vergoedingen", language),
+                href=get_route("vergoedingen", language),
+                color=Colors.primary["700"],
+                font_size=FontSizes.nav_link,
+                font_weight="500",
+                text_decoration="none",
                 width="100%",
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_reimbursements],  #type: ignore
+                on_click=WebsiteState.toggle_nav,  # type: ignore
                 _hover={
-                    "& a": {
-                        "color": Colors.primary["300"],
-                        "text_decoration": "underline",
-                    }
+                    "color": Colors.primary["300"],
+                    "text_decoration": "underline",
                 },
             ),
-            rx.fragment()
+            rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("/contact/"),
-            rx.box(
-                rx.link(
-                    get_translation("contact"),
-                    color=Colors.primary["700"],
-                    font_size=FontSizes.nav_link,
-                    font_weight="500",
-                    text_decoration="none",
-                ),
+            is_not_on_page("contact"),
+            rx.link(
+                get_translation("contact", language),
+                href=get_route("contact", language),
+                color=Colors.primary["700"],
+                font_size=FontSizes.nav_link,
+                font_weight="500",
+                text_decoration="none",
                 width="100%",
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=[WebsiteState.toggle_nav, WebsiteState.nav_to_contact],  #type: ignore
+                on_click=WebsiteState.toggle_nav,  # type: ignore
                 _hover={
-                    "& a": {
-                        "color": Colors.primary["300"],
-                        "text_decoration": "underline",
-                    }
+                    "color": Colors.primary["300"],
+                    "text_decoration": "underline",
                 },
             ),
-            rx.fragment()
+            rx.fragment(),
         ),
     ]
 
@@ -260,14 +319,21 @@ def header() -> rx.Component:
         rx.hstack(
             rx.image(
                 src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
-                width=["66%", "66%", "clamp(200px, calc(200px + (100vw - 768px) * 1.22), 300px)", "300px"],
+                width=[
+                    "66%",
+                    "66%",
+                    "clamp(200px, calc(200px + (100vw - 768px) * 1.22), 300px)",
+                    "300px",
+                ],
                 max_width="300px",
                 height="auto",
             ),
             rx.hstack(
-                rx.hstack(*nav_items, gap="12px", display=["none", "none", "flex", "flex"]),
+                rx.hstack(
+                    *nav_items, gap="12px", display=["none", "none", "flex", "flex"]
+                ),
                 rx.box(
-                    language_switcher(),
+                    language_switcher(language),
                     display=["none", "flex", "flex", "flex"],
                     overflow=["hidden", "visible", "visible", "visible"],
                 ),
@@ -284,9 +350,7 @@ def header() -> rx.Component:
                     padding="8px",
                     border_radius="4px",
                     transition="color 0.2s ease",
-                    _hover={
-                        "color": Colors.primary["300"]
-                    },
+                    _hover={"color": Colors.primary["300"]},
                 ),
                 align="center",
                 justify="end",
@@ -296,7 +360,12 @@ def header() -> rx.Component:
             justify="between",
             width="100%",
         ),
-        padding_x=["1rem", "1.5rem", "clamp(0.5rem, calc(0.5rem + (100vw - 768px) * 0.018), 2rem)", "2rem"],
+        padding_x=[
+            "1rem",
+            "1.5rem",
+            "clamp(0.5rem, calc(0.5rem + (100vw - 768px) * 0.018), 2rem)",
+            "2rem",
+        ],
     )
 
     bar = rx.box(
@@ -329,7 +398,7 @@ def header() -> rx.Component:
             rx.vstack(
                 *mobile_nav_items,
                 rx.box(
-                    language_switcher(mobile=True),
+                    language_switcher(language, mobile=True),
                     width="100%",
                     display=["flex", "none", "none", "none"],
                     justify_content="flex-end",

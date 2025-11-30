@@ -16,6 +16,7 @@ assets/external/
 .web
 *.db
 
-.local/
+local/
 .claude/
 .env
+.ruff_cache/

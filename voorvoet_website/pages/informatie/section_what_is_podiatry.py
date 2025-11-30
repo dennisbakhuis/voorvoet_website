@@ -1,7 +1,8 @@
 """Section explaining what podiatry is and its scope."""
+
 import reflex as rx
 from ...components import container, section, image_text_section
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -20,7 +21,7 @@ TRANSLATIONS = {
 }
 
 
-def section_what_is_podiatry() -> rx.Component:
+def section_what_is_podiatry(language: str) -> rx.Component:
     """
     Create the 'What is podiatry?' explanatory section.
 
@@ -29,25 +30,28 @@ def section_what_is_podiatry() -> rx.Component:
     various treatment options available (custom insoles, shoe advice,
     exercises, orthoses, nail braces, taping, etc.).
 
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
+
     Returns
     -------
     rx.Component
         A section component with an image-text layout explaining podiatry
         services and treatment approaches.
     """
-    paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1")
-    ]
+    paragraphs = [get_translation(TRANSLATIONS, "paragraph1", language)]
 
     return section(
         container(
             image_text_section(
                 image_src="/images/page_information/skelet_botjes_voet_voorvoet_praktijk_voor_podotherapie_enschede.jpg",
-                title=get_translation(TRANSLATIONS, "title"),
+                title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
                 image_position="right",
                 image_max_width="450px",
             )
         ),
-        id="what-is-podiatry"
+        id="what-is-podiatry",
     )

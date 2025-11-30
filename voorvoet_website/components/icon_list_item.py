@@ -1,6 +1,8 @@
 """Icon list item component for CTA boxes and lists."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
+from .fa_icon import fa_icon
 
 
 def icon_list_item(icon: str, text: str, **props) -> rx.Component:
@@ -27,14 +29,19 @@ def icon_list_item(icon: str, text: str, **props) -> rx.Component:
         A Reflex hstack component with icon and text.
     """
     return rx.hstack(
-        rx.html(f'<i class="fa {icon}" style="color: {Colors.text["content"]}; font-size: 8px; margin-top: 10px;"/>'),
+        fa_icon(
+            icon,
+            color=Colors.text["content"],
+            size="8px",
+            margin_top="10px",
+        ),
         rx.text(
             text,
             font_size=FontSizes.regular,
             color=Colors.text["content"],
-            line_height="1.6"
+            line_height="1.6",
         ),
         spacing="3",
         align="start",
-        **props
+        **props,
     )

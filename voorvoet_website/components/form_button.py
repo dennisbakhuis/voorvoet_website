@@ -1,4 +1,5 @@
 """Form button component with loading and disabled states."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 
@@ -46,24 +47,20 @@ def form_button(
     ...     is_disabled=state.form_invalid
     ... )
     """
-    base_styles = {
-        "border_radius": "3px",
-        "font_weight": "700",
-        "font_size": FontSizes.button,
-        "padding_x": "0.8em",
-        "padding_y": "0.1em",
-        "display": "inline-flex",
-        "align_items": "center",
-        "justify_content": "center",
-        "text_decoration": "none",
-        "border": "none",
-        "white_space": "nowrap",
-    }
-
     loading_button = rx.box(
-        rx.html("⏳ "),
+        rx.text("⏳ ", display="inline"),
         rx.text(loading_text, display="inline"),
-        **base_styles,
+        border_radius="3px",
+        font_weight="700",
+        font_size=FontSizes.button,
+        padding_x="0.8em",
+        padding_y="0.1em",
+        display="inline-flex",
+        align_items="center",
+        justify_content="center",
+        text_decoration="none",
+        border="none",
+        white_space="nowrap",
         cursor="wait",
         bg=Colors.borders["light"],
         color=Colors.text["muted"],
@@ -72,7 +69,17 @@ def form_button(
 
     disabled_button = rx.box(
         rx.text(label),
-        **base_styles,
+        border_radius="3px",
+        font_weight="700",
+        font_size=FontSizes.button,
+        padding_x="0.8em",
+        padding_y="0.1em",
+        display="inline-flex",
+        align_items="center",
+        justify_content="center",
+        text_decoration="none",
+        border="none",
+        white_space="nowrap",
         cursor="not-allowed",
         bg=Colors.borders["light"],
         color=Colors.text["muted"],
@@ -82,16 +89,26 @@ def form_button(
     active_button = rx.box(
         rx.text(label),
         on_click=on_click,
-        **base_styles,
+        border_radius="3px",
+        font_weight="700",
+        font_size=FontSizes.button,
+        padding_x="0.8em",
+        padding_y="0.1em",
+        display="inline-flex",
+        align_items="center",
+        justify_content="center",
+        text_decoration="none",
+        border="none",
+        white_space="nowrap",
         cursor="pointer",
         transition="all 0.2s ease",
-        bg=Colors.primary['300'],
-        color=Colors.text['white'],
+        bg=Colors.primary["300"],
+        color=Colors.text["white"],
         box_shadow="0 4px 12px rgba(5, 168, 162, 0.3)",
         _hover={
-            "bg": Colors.primary['500'],
-            "box_shadow": "0 6px 16px rgba(5, 168, 162, 0.4)"
-        }
+            "bg": Colors.primary["500"],
+            "box_shadow": "0 6px 16px rgba(5, 168, 162, 0.4)",
+        },
     )
 
     return rx.cond(

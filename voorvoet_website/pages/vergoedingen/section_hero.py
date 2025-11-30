@@ -1,4 +1,5 @@
-"""Hero section for the order insoles page."""
+"""Hero section for the reimbursements page."""
+
 import reflex as rx
 
 from ...theme import Colors
@@ -7,11 +8,11 @@ from ...components import section, hero_banner
 
 def section_hero() -> rx.Component:
     """
-    Create the order insoles page hero section with background image.
+    Create the reimbursements page hero section with background image.
 
     The hero section displays a full-width background image with a gradient
     overlay, without any text content overlay. Features an image related to
-    orthopedic insoles.
+    heel pain and plantar fasciitis.
 
     Returns
     -------
@@ -21,13 +22,13 @@ def section_hero() -> rx.Component:
     """
     return section(
         hero_banner(
-            image_src="/images/page_order_insoles/hiking_shoes.jpg",
+            image_src="/images/page_reimbursements/Hielpijn_hielspoor_plantaire_fasciits_tarieven.jpg",
             gradient="linear-gradient(270deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
             content=None,
         ),
         padding_top="0",
         position="relative",
         height="500px",
-        clip_bottom="gentle_2",
-        divider_color=Colors.backgrounds['white']
+        clip_bottom="gentle_1",
+        divider_color=Colors.backgrounds["white"],
     )

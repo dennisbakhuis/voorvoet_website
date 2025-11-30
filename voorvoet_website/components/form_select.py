@@ -1,4 +1,5 @@
 """Form select dropdown component with consistent styling."""
+
 import reflex as rx
 from ..theme import Colors
 
@@ -31,37 +32,27 @@ def form_select(
     rx.Component
         A styled select dropdown component with consistent theming.
     """
-    custom_css = f"""
-        .rt-SelectTrigger:where(.rt-variant-surface) {{
-            color: {Colors.text['content']} !important;
-            background-color: white !important;
-            box-shadow: inset 0 0 0 1px {Colors.borders['light']} !important;
-            min-height: 50px !important;
-        }}
-
-        .rt-SelectContent {{
-            background-color: white !important;
-        }}
-
-        .rt-SelectItem {{
-            color: {Colors.text['content']} !important;
-        }}
-
-        .rt-SelectItem:hover {{
-            background-color: {Colors.primary['300']} !important;
-            color: {Colors.text['white']} !important;
-        }}
-    """
-
-    return rx.fragment(
-        rx.html(f"<style>{custom_css}</style>"),
-        rx.select(
-            items,
-            value=value,
-            on_change=on_change,
+    return rx.select.root(
+        rx.select.trigger(
             placeholder=placeholder,
-            size=size,
             width="100%",
-            variant="surface",
+            color=Colors.text["content"],
+            style={
+                "background_color": "white",
+                "min_height": "50px",
+                "border": f"1px solid {Colors.borders['light']}",
+                "border_radius": "4px",
+            },
         ),
+        rx.select.content(
+            rx.foreach(
+                items,
+                lambda item: rx.select.item(item, value=item),
+            ),
+            background="white",
+            color=Colors.text["content"],
+        ),
+        value=value,
+        on_change=on_change,
+        size=size,
     )

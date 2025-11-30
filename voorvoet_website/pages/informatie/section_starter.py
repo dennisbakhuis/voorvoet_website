@@ -1,9 +1,10 @@
 """Introductory text section for the information page."""
+
 import reflex as rx
 
 from ...theme import Colors
 from ...components import section, container, section_title, regular_text
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -22,13 +23,18 @@ TRANSLATIONS = {
 }
 
 
-def section_starter() -> rx.Component:
+def section_starter(language: str) -> rx.Component:
     """
     Create the introductory section for the information page.
 
     Displays a welcoming title and introductory text explaining what information
     visitors can find on this page, including details about podiatry services,
     common complaints, and treatment processes.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -39,10 +45,10 @@ def section_starter() -> rx.Component:
     return section(
         container(
             section_title(
-                get_translation(TRANSLATIONS, "title"),
+                get_translation(TRANSLATIONS, "title", language),
             ),
             regular_text(
-                get_translation(TRANSLATIONS, "intro"),
+                get_translation(TRANSLATIONS, "intro", language),
                 color=Colors.text["content"],
                 max_width="1200px",
             ),

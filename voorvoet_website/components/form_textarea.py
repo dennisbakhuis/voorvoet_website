@@ -1,4 +1,5 @@
 """Form textarea component with consistent styling."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 
@@ -36,7 +37,7 @@ def form_textarea(
     ...     on_change=state.set_description
     ... )
     """
-    return rx.text_area(
+    return rx.el.textarea(
         placeholder=placeholder,
         value=value,
         on_change=on_change,
@@ -48,16 +49,17 @@ def form_textarea(
         resize="vertical",
         background="white",
         color=Colors.text["content"],
+        font_size=FontSizes.regular,
+        line_height="1.6",
         style={
-            "fontSize": FontSizes.regular,
-            "lineHeight": "1.6",
             "::placeholder": {
-                "color": f"{Colors.text['placeholder']} !important",
-                "opacity": "1 !important",
+                "color": f"{Colors.text['placeholder']}",
+                "opacity": "1",
             },
-            ".rt-TextAreaRoot .rt-TextAreaInput": {
-                "font-size": f"{FontSizes.regular} !important",
-                "line-height": "1.6 !important",
+            "&:focus": {
+                "outline": "none",
+                "border_color": f"{Colors.primary['300']}",
+                "box_shadow": f"0 0 0 3px {Colors.primary['300']}40",
             },
         },
     )

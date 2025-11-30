@@ -1,8 +1,17 @@
 """Section explaining risk foot classification and care."""
+
 import reflex as rx
-from ...components import container, section, image_text_section, section_sub_title, regular_text, centered_image, risk_level_card
+from ...components import (
+    container,
+    section,
+    image_text_section,
+    section_sub_title,
+    regular_text,
+    centered_image,
+    risk_level_card,
+)
 from ...theme import Colors
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -99,7 +108,7 @@ TRANSLATIONS = {
 }
 
 
-def section_risicovoet() -> rx.Component:
+def section_risicovoet(language: str) -> rx.Component:
     """
     Create the risk foot (risicovoet) information section.
 
@@ -111,6 +120,11 @@ def section_risicovoet() -> rx.Component:
     foot care advice, shoe recommendations, pressure-distributing insoles,
     and orthoses.
 
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
+
     Returns
     -------
     rx.Component
@@ -119,22 +133,22 @@ def section_risicovoet() -> rx.Component:
         insurance coverage for each risk level (0-4).
     """
     paragraphs_1 = [
-        get_translation(TRANSLATIONS, "paragraph1_1"),
-        get_translation(TRANSLATIONS, "paragraph1_2"),
-        get_translation(TRANSLATIONS, "paragraph1_3"),
+        get_translation(TRANSLATIONS, "paragraph1_1", language),
+        get_translation(TRANSLATIONS, "paragraph1_2", language),
+        get_translation(TRANSLATIONS, "paragraph1_3", language),
     ]
 
     paragraphs_2 = [
-        get_translation(TRANSLATIONS, "paragraph2_1"),
-        get_translation(TRANSLATIONS, "paragraph2_2"),
-        get_translation(TRANSLATIONS, "paragraph2_3"),
+        get_translation(TRANSLATIONS, "paragraph2_1", language),
+        get_translation(TRANSLATIONS, "paragraph2_2", language),
+        get_translation(TRANSLATIONS, "paragraph2_3", language),
     ]
 
     return section(
         container(
             image_text_section(
                 image_src="/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.jpg",
-                title=get_translation(TRANSLATIONS, "title"),
+                title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs_1,
                 image_position="right",
                 image_max_width="450px",
@@ -144,7 +158,6 @@ def section_risicovoet() -> rx.Component:
                 paragraphs_2,
                 color=Colors.text["content"],
             ),
-
             rx.center(
                 centered_image(
                     src="/images/page_information/nagelbeugel_nagelproblemen_voorvoet_podotherapie_enschede.jpg",
@@ -155,54 +168,58 @@ def section_risicovoet() -> rx.Component:
                 width="100%",
                 margin_bottom="2rem",
             ),
-            section_sub_title(get_translation(TRANSLATIONS, "classifications_title"), margin_bottom="1rem"),
+            section_sub_title(
+                get_translation(TRANSLATIONS, "classifications_title", language),
+                margin_bottom="1rem",
+            ),
             regular_text(
-                get_translation(TRANSLATIONS, "classifications_intro"),
+                get_translation(TRANSLATIONS, "classifications_intro", language),
                 color=Colors.text["content"],
                 margin_bottom="2rem",
             ),
-
             risk_level_card(
                 level=0,
-                risk_label=get_translation(TRANSLATIONS, "level0_risk"),
-                title=get_translation(TRANSLATIONS, "level0_title"),
-                description=get_translation(TRANSLATIONS, "level0_desc")
+                risk_label=get_translation(TRANSLATIONS, "level0_risk", language),
+                title=get_translation(TRANSLATIONS, "level0_title", language),
+                description=get_translation(TRANSLATIONS, "level0_desc", language),
             ),
             risk_level_card(
                 level=1,
-                risk_label=get_translation(TRANSLATIONS, "level1_risk"),
-                title=get_translation(TRANSLATIONS, "level1_title"),
-                description=get_translation(TRANSLATIONS, "level1_desc")
+                risk_label=get_translation(TRANSLATIONS, "level1_risk", language),
+                title=get_translation(TRANSLATIONS, "level1_title", language),
+                description=get_translation(TRANSLATIONS, "level1_desc", language),
             ),
             risk_level_card(
                 level=2,
-                risk_label=get_translation(TRANSLATIONS, "level2_risk"),
-                title=get_translation(TRANSLATIONS, "level2_title"),
-                description=get_translation(TRANSLATIONS, "level2_desc")
+                risk_label=get_translation(TRANSLATIONS, "level2_risk", language),
+                title=get_translation(TRANSLATIONS, "level2_title", language),
+                description=get_translation(TRANSLATIONS, "level2_desc", language),
             ),
             risk_level_card(
                 level=3,
-                risk_label=get_translation(TRANSLATIONS, "level3_risk"),
-                title=get_translation(TRANSLATIONS, "level3_title"),
-                description=get_translation(TRANSLATIONS, "level3_desc")
+                risk_label=get_translation(TRANSLATIONS, "level3_risk", language),
+                title=get_translation(TRANSLATIONS, "level3_title", language),
+                description=get_translation(TRANSLATIONS, "level3_desc", language),
             ),
             risk_level_card(
                 level=4,
-                risk_label=get_translation(TRANSLATIONS, "level4_risk"),
-                title=get_translation(TRANSLATIONS, "level4_title"),
-                description=get_translation(TRANSLATIONS, "level4_desc")
+                risk_label=get_translation(TRANSLATIONS, "level4_risk", language),
+                title=get_translation(TRANSLATIONS, "level4_title", language),
+                description=get_translation(TRANSLATIONS, "level4_desc", language),
             ),
-
             rx.box(height="1rem"),
-            section_sub_title(get_translation(TRANSLATIONS, "reimbursement_title"), margin_bottom="1rem"),
+            section_sub_title(
+                get_translation(TRANSLATIONS, "reimbursement_title", language),
+                margin_bottom="1rem",
+            ),
             rx.text(
-                get_translation(TRANSLATIONS, "reimbursement_text"),
+                get_translation(TRANSLATIONS, "reimbursement_text", language),
                 rx.link(
-                    get_translation(TRANSLATIONS, "reimbursement_link"),
-                    href="/reimbursements/",
+                    get_translation(TRANSLATIONS, "reimbursement_link", language),
+                    href=f"/{language}/vergoedingen/",
                     color=Colors.text["link"],
                     text_decoration="underline",
-                    _hover={"color": Colors.primary["700"]}
+                    _hover={"color": Colors.primary["700"]},
                 ),
                 ".",
                 font_size="18px",
@@ -211,10 +228,10 @@ def section_risicovoet() -> rx.Component:
                 margin_bottom="1rem",
             ),
             regular_text(
-                get_translation(TRANSLATIONS, "reimbursement_footnote"),
+                get_translation(TRANSLATIONS, "reimbursement_footnote", language),
                 color=Colors.text["muted"],
                 font_style="italic",
             ),
         ),
-        id="de-risicovoet"
+        id="de-risicovoet",
     )

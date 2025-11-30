@@ -1,11 +1,14 @@
 ---
 title: "Everything about orthotic insoles or podiatric insoles"
-slug: "steunzolen-of-podotherapeutische-zolen"
+slug: "orthotic-insoles-or-podiatric-insoles"
 summary: "In our daily lives, we often underestimate the importance of healthy feet. They literally carry us through life, but often don't receive the attention they deserve. Orthotic insoles or podiatric insoles are a solution that more and more people are discovering to improve their foot comfort and alleviate various health problems. In this article, we explore the world of podiatric insoles and discover how they can have a positive impact on your foot health."
 author: "Kim Bakhuis"
 date: "2023-11-26"
+date_modified: "2023-11-26"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "For the perfect orthotic insole, a 3D scan is made of the foot."
+tags: ["orthotic insoles", "podiatric insoles", "insoles", "foot complaints", "custom-made"]
+category: "Treatments"
 ---
 # The basics: what are orthotic insoles or podiatric insoles?
 Podiatric insoles, also called orthotic insoles, insoles or inlays, are specially designed to correct or support the position and movement of the feet. They are custom-made by podiatrists, paramedical specialists who specialize in examining and treating foot problems. Orthotic insoles are nowadays often digitally measured and designed for the individual needs of the patient.

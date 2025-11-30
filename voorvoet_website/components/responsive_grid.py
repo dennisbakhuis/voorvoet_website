@@ -1,8 +1,11 @@
 """Responsive Grid component."""
+
 import reflex as rx
 
 
-def responsive_grid(*children, columns=[1, 1, 2], spacing="8", **styles) -> rx.Component:
+def responsive_grid(
+    *children, columns=[1, 1, 2], spacing="8", **styles
+) -> rx.Component:
     """
     Create a responsive grid that adapts to different screen sizes.
 

@@ -6,10 +6,17 @@ in blog post pages. Uses mistletoe for proper AST-based markdown parsing instead
 of regex, enabling support for various content types including headings,
 paragraphs, images, buttons, and lists.
 """
+
 import re
 from typing import Any
 from pathlib import Path
-from mistletoe.block_token import Document, Heading, Paragraph, List as MarkdownList, BlockToken, ListItem
+from mistletoe.block_token import (
+    Document,
+    Heading,
+    Paragraph,
+    List as MarkdownList,
+    BlockToken,
+)
 from mistletoe.span_token import RawText, Image, Link
 
 
@@ -54,7 +61,7 @@ def parse_blog_content(
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
 
-    button_pattern = r'!button\[([^\]]+)\]\(([^)]+)\)'
+    button_pattern = r"!button\[([^\]]+)\]\(([^)]+)\)"
     button_placeholder = "BUTTON_PLACEHOLDER_{index}"
 
     buttons = []
@@ -62,10 +69,12 @@ def parse_blog_content(
 
     def replace_button(match):
         nonlocal button_index
-        buttons.append({
-            'label': match.group(1),
-            'url': match.group(2),
-        })
+        buttons.append(
+            {
+                "label": match.group(1),
+                "url": match.group(2),
+            }
+        )
         placeholder = button_placeholder.format(index=button_index)
         button_index += 1
         return placeholder
@@ -116,23 +125,23 @@ def _process_block_token(
         content = _render_span_tokens(children, filename, buttons, project_root)
         if content.strip():
             return {
-                'type': 'heading',
-                'level': token.level,
-                'content': content,
+                "type": "heading",
+                "level": token.level,
+                "content": content,
             }
 
     elif isinstance(token, Paragraph):
         children = token.children if token.children is not None else []
         content = _render_span_tokens(children, filename, buttons, project_root)
 
-        button_match = re.match(r'^BUTTON_PLACEHOLDER_(\d+)$', content.strip())
+        button_match = re.match(r"^BUTTON_PLACEHOLDER_(\d+)$", content.strip())
         if button_match:
             button_index = int(button_match.group(1))
             if button_index < len(buttons):
                 return {
-                    'type': 'button',
-                    'label': buttons[button_index]['label'],
-                    'url': buttons[button_index]['url'],
+                    "type": "button",
+                    "label": buttons[button_index]["label"],
+                    "url": buttons[button_index]["url"],
                 }
 
         children_list = list(children)
@@ -142,32 +151,36 @@ def _process_block_token(
 
         if content.strip():
             return {
-                'type': 'paragraph',
-                'content': content,
+                "type": "paragraph",
+                "content": content,
             }
 
     elif isinstance(token, MarkdownList):
         items = []
         list_children = token.children if token.children is not None else []
         for item in list_children:
-            if hasattr(item, 'children'):
+            if hasattr(item, "children"):
                 item_children = item.children if item.children is not None else []
-                item_content = _render_span_tokens(item_children, filename, buttons, project_root)
+                item_content = _render_span_tokens(
+                    item_children, filename, buttons, project_root
+                )
                 if item_content.strip():
                     items.append(item_content)
 
         if items:
             is_ordered = token.start is not None
             if is_ordered:
-                markdown_list = '\n'.join([f"{i+1}. {item}" for i, item in enumerate(items)])
+                markdown_list = "\n".join(
+                    [f"{i+1}. {item}" for i, item in enumerate(items)]
+                )
             else:
-                markdown_list = '\n'.join([f"- {item}" for item in items])
+                markdown_list = "\n".join([f"- {item}" for item in items])
 
             return {
-                'type': 'list',
-                'ordered': is_ordered,
-                'items': items,
-                'markdown': markdown_list,
+                "type": "list",
+                "ordered": is_ordered,
+                "items": items,
+                "markdown": markdown_list,
             }
 
     return None
@@ -193,9 +206,15 @@ def _process_image(image: Image, filename: str, project_root: Path) -> dict[str,
     """
     src = image.src
     image_children = image.children if image.children is not None else []
-    alt = _render_span_tokens(image_children, filename, [], project_root) if image_children else ""
+    alt = (
+        _render_span_tokens(image_children, filename, [], project_root)
+        if image_children
+        else ""
+    )
 
-    if not (src.startswith('http://') or src.startswith('https://') or src.startswith('/')):
+    if not (
+        src.startswith("http://") or src.startswith("https://") or src.startswith("/")
+    ):
         resolved_path = f"/images/page_blog/{filename}/{src}"
         file_system_path = project_root / f"assets{resolved_path}"
 
@@ -205,10 +224,10 @@ def _process_image(image: Image, filename: str, project_root: Path) -> dict[str,
         src = resolved_path
 
     return {
-        'type': 'image',
-        'src': src,
-        'alt': alt,
-        'caption': alt,  # Use alt text as caption
+        "type": "image",
+        "src": src,
+        "alt": alt,
+        "caption": alt,  # Use alt text as caption
     }
 
 
@@ -244,16 +263,26 @@ def _render_span_tokens(
             result.append(token.content)
         elif isinstance(token, Image):
             img_children = token.children if token.children is not None else []
-            alt = _render_span_tokens(img_children, filename, buttons, project_root) if img_children else ""
+            alt = (
+                _render_span_tokens(img_children, filename, buttons, project_root)
+                if img_children
+                else ""
+            )
             result.append(f"![{alt}]({token.src})")
         elif isinstance(token, Link):
             link_children = token.children if token.children is not None else []
-            text = _render_span_tokens(link_children, filename, buttons, project_root) if link_children else ""
+            text = (
+                _render_span_tokens(link_children, filename, buttons, project_root)
+                if link_children
+                else ""
+            )
             result.append(f"[{text}]({token.target})")
-        elif hasattr(token, 'children'):
+        elif hasattr(token, "children"):
             nested_children = token.children if token.children is not None else []
-            result.append(_render_span_tokens(nested_children, filename, buttons, project_root))
+            result.append(
+                _render_span_tokens(nested_children, filename, buttons, project_root)
+            )
         else:
-            result.append(getattr(token, 'content', str(token)))
+            result.append(getattr(token, "content", str(token)))
 
-    return ''.join(result)
+    return "".join(result)

@@ -1,8 +1,9 @@
 """Order insoles section promoting extra insole purchases."""
+
 import reflex as rx
 from ...components import container, section, image_text_section, button
 from ...theme import Colors
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -27,14 +28,14 @@ TRANSLATIONS = {
 }
 
 
-def section_order_insoles() -> rx.Component:
+def section_order_insoles(language: str) -> rx.Component:
     """
     Create the section for ordering extra pairs of insoles.
 
-    This section promotes the option to order additional pairs of orthopedic
-    insoles online for use with different shoes. It features an image-text
-    layout with outdoor shoes imagery and explains the benefits of having
-    multiple pairs and the practice's collaborative approach.
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -44,31 +45,31 @@ def section_order_insoles() -> rx.Component:
         text on the left, with a call-to-action button.
     """
     paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1"),
-        get_translation(TRANSLATIONS, "paragraph2")
+        get_translation(TRANSLATIONS, "paragraph1", language),
+        get_translation(TRANSLATIONS, "paragraph2", language),
     ]
 
     return section(
         container(
             image_text_section(
                 image_src="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.jpg",
-                title=get_translation(TRANSLATIONS, "title"),
+                title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
-                image_position="right"
+                image_position="right",
             ),
             rx.box(
                 button(
-                    label=get_translation(TRANSLATIONS, "button"),
-                    href="/order-insoles"
+                    label=get_translation(TRANSLATIONS, "button", language),
+                    href=f"/{language}/zolen-bestellen/",
                 ),
                 display="flex",
                 justify_content="center",
-                margin_top="2rem"
-            )
+                margin_top="2rem",
+            ),
         ),
         id="order-insoles",
         background_color=Colors.backgrounds["green_light"],
         divider_color=Colors.backgrounds["white"],
         clip_top="gentle_2",
-        clip_bottom="gentle_3"
+        clip_bottom="gentle_3",
     )

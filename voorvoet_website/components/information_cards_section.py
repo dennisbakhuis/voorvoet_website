@@ -1,4 +1,5 @@
 """Configuration-driven information cards section."""
+
 import reflex as rx
 from typing import List, Union
 
@@ -28,6 +29,7 @@ class CardConfig:
     button_link : str | rx.Var
         URL for the call-to-action button. Default is "#".
     """
+
     def __init__(
         self,
         title: Union[str, rx.Var],
@@ -36,7 +38,7 @@ class CardConfig:
         bg_color: str = "white",
         show_box: bool = False,
         button_text: Union[str, rx.Var] = "Lees meer",
-        button_link: Union[str, rx.Var] = "#"
+        button_link: Union[str, rx.Var] = "#",
     ):
         self.title = title
         self.description = description
@@ -52,7 +54,7 @@ def information_cards_grid(
     columns: List[int] = [1, 2, 3],
     spacing: str | None = None,
     justify_items: str = "center",
-    **grid_props
+    **grid_props,
 ) -> rx.Component:
     """
     Create a responsive grid of information cards from configuration.
@@ -96,7 +98,7 @@ def information_cards_grid(
                 bg_color=card.bg_color,
                 show_box=card.show_box,
                 button_text=card.button_text,  # type: ignore
-                button_link=card.button_link
+                button_link=card.button_link,
             )
         )
 
@@ -105,5 +107,5 @@ def information_cards_grid(
         columns=columns,
         spacing=spacing,
         justify_items=justify_items,
-        **grid_props
+        **grid_props,
     )
