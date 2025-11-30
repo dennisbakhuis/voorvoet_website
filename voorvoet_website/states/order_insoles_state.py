@@ -1,4 +1,5 @@
 """Order insoles form state management."""
+
 import reflex as rx
 import re
 import asyncio
@@ -8,7 +9,7 @@ from typing import TYPE_CHECKING
 from ..services import send_order_insoles_email
 
 if TYPE_CHECKING:
-    from .website_state import WebsiteState
+    pass
 
 
 class OrderInsolesState(rx.State):
@@ -157,7 +158,7 @@ class OrderInsolesState(rx.State):
         email = email_str.strip()
         if not email:
             return False
-        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         return bool(re.match(email_pattern, email))
 
     def _is_valid_birth_date(self, date_str: str) -> bool:
@@ -178,7 +179,7 @@ class OrderInsolesState(rx.State):
         if not date_str.strip():
             return False
 
-        date_pattern = r'^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$'
+        date_pattern = r"^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$"
         match = re.match(date_pattern, date_str)
         if not match:
             return False
@@ -229,7 +230,9 @@ class OrderInsolesState(rx.State):
             True if the user has interacted with the birth date field and it
             contains invalid data, False otherwise
         """
-        return self.birth_date_blurred and not self._is_valid_birth_date(self.birth_date)
+        return self.birth_date_blurred and not self._is_valid_birth_date(
+            self.birth_date
+        )
 
     @rx.var
     def can_submit_form(self) -> bool:
@@ -285,6 +288,7 @@ class OrderInsolesState(rx.State):
             self.form_submitting = False
 
             from .website_state import WebsiteState
+
             website_state = await self.get_state(WebsiteState)
 
             if email_sent:
@@ -300,7 +304,7 @@ class OrderInsolesState(rx.State):
 
                 website_state.show_toast(
                     "Bedankt voor je bestelling! We nemen zo snel mogelijk contact met je op.",
-                    "success"
+                    "success",
                 )
                 yield
 
@@ -309,7 +313,7 @@ class OrderInsolesState(rx.State):
             else:
                 website_state.show_toast(
                     "Het verzenden is mislukt. Probeer het later opnieuw of neem telefonisch contact op.",
-                    "error"
+                    "error",
                 )
                 yield
 

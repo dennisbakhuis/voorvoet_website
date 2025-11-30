@@ -1,8 +1,9 @@
 """Email service for sending contact form and order notifications."""
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 import logging
 from datetime import datetime
 
@@ -15,13 +16,28 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 DUTCH_DAYS = [
-    "Maandag", "Dinsdag", "Woensdag", "Donderdag",
-    "Vrijdag", "Zaterdag", "Zondag"
+    "Maandag",
+    "Dinsdag",
+    "Woensdag",
+    "Donderdag",
+    "Vrijdag",
+    "Zaterdag",
+    "Zondag",
 ]
 
 DUTCH_MONTHS = [
-    "januari", "februari", "maart", "april", "mei", "juni",
-    "juli", "augustus", "september", "oktober", "november", "december"
+    "januari",
+    "februari",
+    "maart",
+    "april",
+    "mei",
+    "juni",
+    "juli",
+    "augustus",
+    "september",
+    "oktober",
+    "november",
+    "december",
 ]
 
 
@@ -183,7 +199,9 @@ def send_order_insoles_email(order_state: "OrderInsolesState") -> bool:
         timestamp = format_dutch_datetime(datetime.now())
 
         msg = MIMEMultipart("alternative")
-        msg["Subject"] = f"Nieuw bestelling extra paar zolen: {order_state.first_name} {order_state.last_name}"
+        msg["Subject"] = (
+            f"Nieuw bestelling extra paar zolen: {order_state.first_name} {order_state.last_name}"
+        )
         msg["From"] = from_email
         msg["To"] = to_email
 

@@ -1,4 +1,5 @@
 """Section explaining what podiatry is and its scope."""
+
 import reflex as rx
 from ...components import container, section, image_text_section
 from ...utils.get_translation import get_translation
@@ -40,9 +41,7 @@ def section_what_is_podiatry(language: str) -> rx.Component:
         A section component with an image-text layout explaining podiatry
         services and treatment approaches.
     """
-    paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1", language)
-    ]
+    paragraphs = [get_translation(TRANSLATIONS, "paragraph1", language)]
 
     return section(
         container(
@@ -54,5 +53,5 @@ def section_what_is_podiatry(language: str) -> rx.Component:
                 image_max_width="450px",
             )
         ),
-        id="what-is-podiatry"
+        id="what-is-podiatry",
     )

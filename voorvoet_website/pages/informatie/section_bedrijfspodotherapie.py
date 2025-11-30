@@ -1,6 +1,14 @@
 """Section explaining company podiatry services."""
+
 import reflex as rx
-from ...components import container, section, section_title, regular_text, icon_list_item, column
+from ...components import (
+    container,
+    section,
+    section_title,
+    regular_text,
+    icon_list_item,
+    column,
+)
 from ...theme import Colors, Layout, Spacing
 from ...utils.get_translation import get_translation
 
@@ -87,7 +95,10 @@ def section_bedrijfspodotherapie(language: str) -> rx.Component:
     )
 
     text_column = column(
-        section_title(get_translation(TRANSLATIONS, "title", language), margin_bottom=Spacing.text_margin_bottom),
+        section_title(
+            get_translation(TRANSLATIONS, "title", language),
+            margin_bottom=Spacing.text_margin_bottom,
+        ),
         regular_text(
             get_translation(TRANSLATIONS, "intro", language),
             text_align="left",
@@ -101,11 +112,21 @@ def section_bedrijfspodotherapie(language: str) -> rx.Component:
             color=Colors.text["content"],
         ),
         rx.vstack(
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item1", language)),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item2", language)),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item3", language)),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item4", language)),
-            icon_list_item("fa-solid fa-circle", get_translation(TRANSLATIONS, "item5", language)),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item1", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item2", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item3", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item4", language)
+            ),
+            icon_list_item(
+                "fa-solid fa-circle", get_translation(TRANSLATIONS, "item5", language)
+            ),
             gap="0.5rem",
             align="start",
             width="100%",

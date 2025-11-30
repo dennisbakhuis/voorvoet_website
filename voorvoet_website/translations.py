@@ -1,4 +1,5 @@
 """Translation strings for multi-language support."""
+
 import reflex as rx
 
 from voorvoet_website.config import config
@@ -11,7 +12,7 @@ PAGE_TITLES = {
         "information": "VoorVoet - Informatie",
         "reimbursements": "VoorVoet - Vergoedingen",
         "contact": "VoorVoet - Contact",
-        "order_insoles": "VoorVoet - Steunzolen Bestellen"
+        "order_insoles": "VoorVoet - Steunzolen Bestellen",
     },
     "de": {
         "home": "VoorVoet - Praxis für Podologie",
@@ -19,7 +20,7 @@ PAGE_TITLES = {
         "information": "VoorVoet - Informationen",
         "reimbursements": "VoorVoet - Erstattungen",
         "contact": "VoorVoet - Kontakt",
-        "order_insoles": "VoorVoet - Einlagen Bestellen"
+        "order_insoles": "VoorVoet - Einlagen Bestellen",
     },
     "en": {
         "home": "VoorVoet - Podiatry Practice",
@@ -27,8 +28,8 @@ PAGE_TITLES = {
         "information": "VoorVoet - Information",
         "reimbursements": "VoorVoet - Reimbursements",
         "contact": "VoorVoet - Contact",
-        "order_insoles": "VoorVoet - Order Insoles"
-    }
+        "order_insoles": "VoorVoet - Order Insoles",
+    },
 }
 
 PAGE_DESCRIPTIONS = {
@@ -38,7 +39,7 @@ PAGE_DESCRIPTIONS = {
         "information": "Informatie over podotherapie, behandelmethoden en veelvoorkomende voetklachten. Ontdek hoe VoorVoet u kan helpen met professionele podotherapie in Enschede.",
         "reimbursements": "Informatie over vergoedingen voor podotherapie en steunzolen. Bekijk de tarieven en zorgverzekering vergoedingen voor podotherapie bij VoorVoet Enschede.",
         "contact": "Neem contact op met VoorVoet podotherapie in Enschede. Maak een afspraak of stel uw vraag. Wij helpen u graag met uw voetklachten.",
-        "order_insoles": "Bestel steunzolen op maat bij VoorVoet podotherapie Enschede. Professionele podotherapeutische zolen voor optimale ondersteuning en comfort."
+        "order_insoles": "Bestel steunzolen op maat bij VoorVoet podotherapie Enschede. Professionele podotherapeutische zolen voor optimale ondersteuning en comfort.",
     },
     "de": {
         "home": "VoorVoet ist Ihr Podologe in Enschede. Professionelle Behandlung von Fußbeschwerden, maßgefertigte Einlagen und Podologie. Vereinbaren Sie einen Termin.",
@@ -46,7 +47,7 @@ PAGE_DESCRIPTIONS = {
         "information": "Informationen über Podologie, Behandlungsmethoden und häufige Fußbeschwerden. Erfahren Sie, wie VoorVoet Ihnen mit professioneller Podologie in Enschede helfen kann.",
         "reimbursements": "Informationen über Erstattungen für Podologie und Einlagen. Sehen Sie die Tarife und Krankenkassenerstattungen für Podologie bei VoorVoet Enschede.",
         "contact": "Kontaktieren Sie VoorVoet Podologie in Enschede. Vereinbaren Sie einen Termin oder stellen Sie Ihre Frage. Wir helfen Ihnen gerne bei Ihren Fußbeschwerden.",
-        "order_insoles": "Bestellen Sie maßgefertigte Einlagen bei VoorVoet Podologie Enschede. Professionelle podologische Einlagen für optimale Unterstützung und Komfort."
+        "order_insoles": "Bestellen Sie maßgefertigte Einlagen bei VoorVoet Podologie Enschede. Professionelle podologische Einlagen für optimale Unterstützung und Komfort.",
     },
     "en": {
         "home": "VoorVoet is your podiatrist in Enschede. Professional treatment of foot complaints, custom insoles and podiatry. Make an appointment for personalized care.",
@@ -54,8 +55,8 @@ PAGE_DESCRIPTIONS = {
         "information": "Information about podiatry, treatment methods and common foot complaints. Discover how VoorVoet can help you with professional podiatry in Enschede.",
         "reimbursements": "Information about reimbursements for podiatry and insoles. View rates and health insurance reimbursements for podiatry at VoorVoet Enschede.",
         "contact": "Contact VoorVoet podiatry in Enschede. Make an appointment or ask your question. We are happy to help you with your foot complaints.",
-        "order_insoles": "Order custom insoles at VoorVoet podiatry Enschede. Professional podiatric insoles for optimal support and comfort."
-    }
+        "order_insoles": "Order custom insoles at VoorVoet podiatry Enschede. Professional podiatric insoles for optimal support and comfort.",
+    },
 }
 
 
@@ -65,15 +66,11 @@ PAGE_IMAGES = {
     "information": "/images/voorvoet-informatie.jpg",
     "reimbursements": "/images/voorvoet-vergoedingen.jpg",
     "contact": "/images/voorvoet-contact.jpg",
-    "order_insoles": "/images/voorvoet-steunzolen.jpg"
+    "order_insoles": "/images/voorvoet-steunzolen.jpg",
 }
 
 
-LOCALE_MAP = {
-    "nl": "nl_NL",
-    "de": "de_DE",
-    "en": "en_US"
-}
+LOCALE_MAP = {"nl": "nl_NL", "de": "de_DE", "en": "en_US"}
 
 
 BREADCRUMB_NAMES = {
@@ -83,7 +80,7 @@ BREADCRUMB_NAMES = {
         "information": "Informatie",
         "reimbursements": "Vergoedingen",
         "contact": "Contact",
-        "order_insoles": "Steunzolen Bestellen"
+        "order_insoles": "Steunzolen Bestellen",
     },
     "de": {
         "home": "Startseite",
@@ -91,7 +88,7 @@ BREADCRUMB_NAMES = {
         "information": "Informationen",
         "reimbursements": "Erstattungen",
         "contact": "Kontakt",
-        "order_insoles": "Einlagen Bestellen"
+        "order_insoles": "Einlagen Bestellen",
     },
     "en": {
         "home": "Home",
@@ -99,42 +96,30 @@ BREADCRUMB_NAMES = {
         "information": "Information",
         "reimbursements": "Reimbursements",
         "contact": "Contact",
-        "order_insoles": "Order Insoles"
-    }
+        "order_insoles": "Order Insoles",
+    },
 }
 
 
 PAGE_ROUTES = {
-    "home": {
-        "nl": "/nl",
-        "de": "/de",
-        "en": "/en"
-    },
-    "blog": {
-        "nl": "/nl/blog/",
-        "de": "/de/blog/",
-        "en": "/en/blog/"
-    },
+    "home": {"nl": "/nl", "de": "/de", "en": "/en"},
+    "blog": {"nl": "/nl/blog/", "de": "/de/blog/", "en": "/en/blog/"},
     "information": {
         "nl": "/nl/informatie",
         "de": "/de/informationen",
-        "en": "/en/information"
+        "en": "/en/information",
     },
     "reimbursements": {
         "nl": "/nl/vergoedingen",
         "de": "/de/erstattungen",
-        "en": "/en/reimbursements"
+        "en": "/en/reimbursements",
     },
-    "contact": {
-        "nl": "/nl/contact",
-        "de": "/de/kontakt",
-        "en": "/en/contact"
-    },
+    "contact": {"nl": "/nl/contact", "de": "/de/kontakt", "en": "/en/contact"},
     "order_insoles": {
         "nl": "/nl/zolen-bestellen",
         "de": "/de/einlagen-bestellen",
-        "en": "/en/order-insoles"
-    }
+        "en": "/en/order-insoles",
+    },
 }
 
 
@@ -190,7 +175,9 @@ def get_hreflang_tags(page_key: str) -> list:
     return hreflang_tags
 
 
-def get_blog_post_hreflang_tags(story_number: str, all_blog_posts: dict[str, list[dict]]) -> list:
+def get_blog_post_hreflang_tags(
+    story_number: str, all_blog_posts: dict[str, list[dict]]
+) -> list:
     """Generate hreflang tags for blog posts based on story number."""
     hreflang_tags = []
     nl_slug = None
@@ -224,7 +211,13 @@ def get_blog_post_hreflang_tags(story_number: str, all_blog_posts: dict[str, lis
     return hreflang_tags
 
 
-def get_page_meta_tags(page_key: str, language: str, route: str, page_type: str = "website", image_url: str | None = None) -> list:
+def get_page_meta_tags(
+    page_key: str,
+    language: str,
+    route: str,
+    page_type: str = "website",
+    image_url: str | None = None,
+) -> list:
     """
     Generate complete meta tags for SEO including Open Graph and Twitter Cards.
 
@@ -253,14 +246,12 @@ def get_page_meta_tags(page_key: str, language: str, route: str, page_type: str 
 
     meta_tags: list = [
         {"name": "description", "content": description},
-
         {"property": "og:title", "content": title},
         {"property": "og:description", "content": description},
         {"property": "og:url", "content": page_url},
         {"property": "og:type", "content": page_type},
         {"property": "og:locale", "content": locale},
         {"property": "og:site_name", "content": "VoorVoet"},
-
         {"name": "twitter:card", "content": "summary_large_image"},
         {"name": "twitter:title", "content": title},
         {"name": "twitter:description", "content": description},
@@ -289,7 +280,7 @@ def get_blog_post_meta_tags(
     route: str,
     story_number: str = "",
     all_blog_posts: dict[str, list[dict]] = {},
-    image_url: str | None = None
+    image_url: str | None = None,
 ) -> list:
     """Generate post-specific meta tags for individual blog posts."""
     full_title = f"{post_title} - VoorVoet Blog"
@@ -299,14 +290,12 @@ def get_blog_post_meta_tags(
 
     meta_tags: list = [
         {"name": "description", "content": post_summary},
-
         {"property": "og:title", "content": full_title},
         {"property": "og:description", "content": post_summary},
         {"property": "og:url", "content": page_url},
         {"property": "og:type", "content": "article"},
         {"property": "og:locale", "content": locale},
         {"property": "og:site_name", "content": "VoorVoet"},
-
         {"name": "twitter:card", "content": "summary_large_image"},
         {"name": "twitter:title", "content": full_title},
         {"name": "twitter:description", "content": post_summary},

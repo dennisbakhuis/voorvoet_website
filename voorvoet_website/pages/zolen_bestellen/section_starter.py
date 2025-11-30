@@ -1,4 +1,5 @@
 """Starter section introducing the order insoles page purpose."""
+
 import reflex as rx
 
 from ...theme import Colors

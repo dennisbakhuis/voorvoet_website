@@ -1,9 +1,11 @@
 """Main website state management for global UI components and navigation."""
+
 import reflex as rx
 
 
 class WebsiteState(rx.State):
     """Global state for navigation, toast notifications, and language switching."""
+
     nav_open: bool = False
 
     toast_visible: bool = False

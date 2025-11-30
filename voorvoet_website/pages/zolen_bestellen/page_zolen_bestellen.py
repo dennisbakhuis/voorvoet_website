@@ -1,4 +1,5 @@
 """Order insoles page composition with all sections."""
+
 import reflex as rx
 
 from .section_hero import section_hero
@@ -9,7 +10,7 @@ from ..shared_sections import footer, header
 from ...components import toast
 
 
-def page_zolen_bestellen(language: str="nl") -> rx.Component:
+def page_zolen_bestellen(language: str = "nl") -> rx.Component:
     """
     Create the complete zolen bestellen page with all sections.
 

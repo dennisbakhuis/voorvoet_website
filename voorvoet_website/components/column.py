@@ -1,8 +1,9 @@
 """Enhanced column component for flexible layout with responsive helpers."""
+
 import reflex as rx
 from typing import Union, List, Optional
 
-from ..theme import Layout, Spacing
+from ..theme import Spacing
 
 
 def column(
@@ -10,7 +11,7 @@ def column(
     size: Optional[Union[str, List[str]]] = None,
     spacing_direction: Optional[str] = None,
     responsive_spacing: Optional[List[str]] = None,
-    **props
+    **props,
 ) -> rx.Component:
     """
     Create a flexible column with responsive sizing and spacing.
@@ -80,8 +81,4 @@ def column(
         elif spacing_direction == "right":
             flex_props["padding_right"] = responsive_spacing
 
-    return rx.box(
-        *children,
-        **flex_props,
-        **props
-    )
+    return rx.box(*children, **flex_props, **props)

@@ -1,4 +1,5 @@
 """Form input component with consistent styling and error states."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 
@@ -45,7 +46,9 @@ def form_input(
         error state.
     """
     if isinstance(show_error, bool):
-        border_value = "3px solid red" if show_error else f"1px solid {Colors.borders['light']}"
+        border_value = (
+            "3px solid red" if show_error else f"1px solid {Colors.borders['light']}"
+        )
     else:
         border_value = rx.cond(
             show_error,

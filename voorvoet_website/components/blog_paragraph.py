@@ -1,4 +1,5 @@
 """Blog paragraph component for rendering paragraph text with markdown support."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes, Spacing
 
@@ -40,7 +41,7 @@ def blog_paragraph(content: str) -> rx.Component:
     return rx.box(
         rx.markdown(
             content,
-            color=Colors.text['content'],
+            color=Colors.text["content"],
             font_size=FontSizes.regular,
         ),
         margin_bottom=Spacing.blog_content_margin_bottom,

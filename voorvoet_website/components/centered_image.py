@@ -1,14 +1,12 @@
 """Centered image component for reusable centered image layouts."""
+
 import reflex as rx
 from typing import Optional
 from ..theme import Layout
 
 
 def centered_image(
-    src: str,
-    alt: Optional[str] = None,
-    max_width: str = "500px",
-    **props
+    src: str, alt: Optional[str] = None, max_width: str = "500px", **props
 ) -> rx.Component:
     """
     Create a centered image with standard styling and shadow.

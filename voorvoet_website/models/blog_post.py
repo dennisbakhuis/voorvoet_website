@@ -1,11 +1,13 @@
 """BlogPost data model definition."""
+
 from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
-from typing import Optional, Any, Literal, Union
+from typing import Optional, Any, Literal
 
 
 ContentType = Literal["heading", "paragraph", "markdown", "image", "button", "list"]
 ContentDict = dict[str, Any]
+
 
 class BlogPost(BaseModel):
     """
@@ -67,7 +69,7 @@ class BlogPost(BaseModel):
     category: Optional[str] = None
     story_number: str
 
-    @field_validator('date', mode='before')
+    @field_validator("date", mode="before")
     @classmethod
     def parse_date(cls, v):
         """Parse date from string or datetime."""
@@ -75,7 +77,7 @@ class BlogPost(BaseModel):
             return datetime.fromisoformat(v)
         return v
 
-    @field_validator('date_modified', mode='before')
+    @field_validator("date_modified", mode="before")
     @classmethod
     def parse_date_modified(cls, v):
         """Parse date_modified from string or datetime."""
@@ -85,7 +87,7 @@ class BlogPost(BaseModel):
             return datetime.fromisoformat(v)
         return v
 
-    @field_validator('read_time', mode='before')
+    @field_validator("read_time", mode="before")
     @classmethod
     def parse_read_time(cls, v):
         """Parse read_time from string or int."""
@@ -95,17 +97,17 @@ class BlogPost(BaseModel):
             return int(v)
         return v
 
-    @field_validator('tags', mode='before')
+    @field_validator("tags", mode="before")
     @classmethod
     def parse_tags(cls, v):
         """Parse tags from string or list."""
         if isinstance(v, str):
             if v == "":
                 return []
-            return [tag.strip() for tag in v.split(',')]
+            return [tag.strip() for tag in v.split(",")]
         return v
 
-    @field_validator('thumbnail_alt', mode='before')
+    @field_validator("thumbnail_alt", mode="before")
     @classmethod
     def ensure_thumbnail_alt(cls, v):
         """Ensure thumbnail_alt is never None."""

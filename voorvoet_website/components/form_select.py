@@ -1,4 +1,5 @@
 """Form select dropdown component with consistent styling."""
+
 import reflex as rx
 from ..theme import Colors
 
@@ -35,7 +36,7 @@ def form_select(
         rx.select.trigger(
             placeholder=placeholder,
             width="100%",
-            color=Colors.text['content'],
+            color=Colors.text["content"],
             style={
                 "background_color": "white",
                 "min_height": "50px",
@@ -49,7 +50,7 @@ def form_select(
                 lambda item: rx.select.item(item, value=item),
             ),
             background="white",
-            color=Colors.text['content'],
+            color=Colors.text["content"],
         ),
         value=value,
         on_change=on_change,

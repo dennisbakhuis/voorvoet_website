@@ -1,4 +1,5 @@
 """Blog markdown component for rendering mixed markdown content blocks."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes, Spacing
 
@@ -47,7 +48,7 @@ def blog_markdown(content: str) -> rx.Component:
     return rx.box(
         rx.markdown(
             content,
-            color=Colors.text['content'],
+            color=Colors.text["content"],
             font_size=FontSizes.regular,
         ),
         margin_bottom=Spacing.blog_content_margin_bottom,
@@ -59,7 +60,7 @@ def blog_markdown(content: str) -> rx.Component:
             "& h1, & h2, & h3, & h4, & h5, & h6": {
                 "marginTop": Spacing.blog_heading_margin_top,
                 "marginBottom": Spacing.blog_heading_margin_bottom,
-                "color": Colors.text['heading'],
+                "color": Colors.text["heading"],
             },
             "& a": {
                 "color": f"{Colors.primary['300']} !important",

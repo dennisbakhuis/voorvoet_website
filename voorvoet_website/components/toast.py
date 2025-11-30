@@ -1,4 +1,5 @@
 """Toast notification component."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 from ..states import WebsiteState
@@ -66,7 +67,7 @@ def toast() -> rx.Component:
             box_shadow="0 10px 25px rgba(0, 0, 0, 0.15)",
             min_width="320px",
             max_width="500px",
-            animation=f"slideDown 0.3s ease-out",
+            animation="slideDown 0.3s ease-out",
         ),
         position="fixed",
         top="2rem",

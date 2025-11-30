@@ -1,4 +1,5 @@
 """Section displaying insurance reimbursement information in a searchable table."""
+
 import reflex as rx
 import json
 from pathlib import Path
@@ -94,15 +95,19 @@ def load_reimbursement_data() -> tuple[list[str], list[list[str]]]:
         - Table rows as a list of lists, where each inner list represents
           one row with [verzekeraar, pakket, vergoeding]
     """
-    data_path = Path(__file__).parent.parent.parent / "data" / "reimbursements" / "reimbursements_2025.json"
-    with open(data_path, 'r', encoding='utf-8') as f:
+    data_path = (
+        Path(__file__).parent.parent.parent
+        / "data"
+        / "reimbursements"
+        / "reimbursements_2025.json"
+    )
+    with open(data_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     columns = ["Verzekeraar", "Pakket", "Vergoeding"]
 
     rows = [
-        [item["verzekeraar"], item["pakket"], item["vergoeding"]]
-        for item in data[1:]
+        [item["verzekeraar"], item["pakket"], item["vergoeding"]] for item in data[1:]
     ]
 
     return columns, rows
@@ -136,6 +141,7 @@ def section_reimbursement_table(language: str) -> rx.Component:
             "background-color": f"{Colors.primary['500']} !important",
             "color": f"{Colors.text['white']} !important",
             "font-weight": "600",
+            "white-space": "normal !important",
         },
         ".gridjs-th .gridjs-th-content": {
             "color": f"{Colors.text['white']} !important",
@@ -190,9 +196,6 @@ def section_reimbursement_table(language: str) -> rx.Component:
             "word-wrap": "break-word !important",
             "line-height": "1.4",
         },
-        ".gridjs-th": {
-            "white-space": "normal !important",
-        },
         ".gridjs-th:nth-child(1), td:nth-child(1)": {
             "min-width": "150px",
         },
@@ -239,7 +242,6 @@ def section_reimbursement_table(language: str) -> rx.Component:
                     margin_bottom="1rem",
                 ),
             ),
-
             rx.box(
                 rx.cond(
                     WebsiteState.current_language == "nl",
@@ -253,11 +255,21 @@ def section_reimbursement_table(language: str) -> rx.Component:
                         custom_attrs={
                             "language": {
                                 "search": {"placeholder": "Typ om te zoeken..."},
-                                "sort": {"sortAsc": "Kolom oplopend sorteren", "sortDesc": "Kolom aflopend sorteren"},
-                                "pagination": {"previous": "Vorige", "next": "Volgende", "showing": "Tonen", "of": "van", "to": "tot", "results": "resultaten"},
+                                "sort": {
+                                    "sortAsc": "Kolom oplopend sorteren",
+                                    "sortDesc": "Kolom aflopend sorteren",
+                                },
+                                "pagination": {
+                                    "previous": "Vorige",
+                                    "next": "Volgende",
+                                    "showing": "Tonen",
+                                    "of": "van",
+                                    "to": "tot",
+                                    "results": "resultaten",
+                                },
                                 "loading": "Laden...",
                                 "noRecordsFound": "Geen resultaten gevonden",
-                                "error": "Er is een fout opgetreden bij het ophalen van de gegevens"
+                                "error": "Er is een fout opgetreden bij het ophalen van de gegevens",
                             }
                         },
                     ),
@@ -273,11 +285,21 @@ def section_reimbursement_table(language: str) -> rx.Component:
                             custom_attrs={
                                 "language": {
                                     "search": {"placeholder": "Zum Suchen tippen..."},
-                                    "sort": {"sortAsc": "Spalte aufsteigend sortieren", "sortDesc": "Spalte absteigend sortieren"},
-                                    "pagination": {"previous": "Zurück", "next": "Weiter", "showing": "Anzeigen", "of": "von", "to": "bis", "results": "Ergebnisse"},
+                                    "sort": {
+                                        "sortAsc": "Spalte aufsteigend sortieren",
+                                        "sortDesc": "Spalte absteigend sortieren",
+                                    },
+                                    "pagination": {
+                                        "previous": "Zurück",
+                                        "next": "Weiter",
+                                        "showing": "Anzeigen",
+                                        "of": "von",
+                                        "to": "bis",
+                                        "results": "Ergebnisse",
+                                    },
                                     "loading": "Lädt...",
                                     "noRecordsFound": "Keine Ergebnisse gefunden",
-                                    "error": "Beim Abrufen der Daten ist ein Fehler aufgetreten"
+                                    "error": "Beim Abrufen der Daten ist ein Fehler aufgetreten",
                                 }
                             },
                         ),
@@ -291,11 +313,21 @@ def section_reimbursement_table(language: str) -> rx.Component:
                             custom_attrs={
                                 "language": {
                                     "search": {"placeholder": "Type to search..."},
-                                    "sort": {"sortAsc": "Sort column ascending", "sortDesc": "Sort column descending"},
-                                    "pagination": {"previous": "Previous", "next": "Next", "showing": "Showing", "of": "of", "to": "to", "results": "results"},
+                                    "sort": {
+                                        "sortAsc": "Sort column ascending",
+                                        "sortDesc": "Sort column descending",
+                                    },
+                                    "pagination": {
+                                        "previous": "Previous",
+                                        "next": "Next",
+                                        "showing": "Showing",
+                                        "of": "of",
+                                        "to": "to",
+                                        "results": "results",
+                                    },
                                     "loading": "Loading...",
                                     "noRecordsFound": "No results found",
-                                    "error": "An error occurred while fetching the data"
+                                    "error": "An error occurred while fetching the data",
                                 }
                             },
                         ),
@@ -306,7 +338,6 @@ def section_reimbursement_table(language: str) -> rx.Component:
                 margin_bottom="2rem",
                 style=table_styles,
             ),
-
             rx.box(
                 rx.text(
                     get_translation(TRANSLATIONS, "disclaimer", language),

@@ -1,4 +1,5 @@
 """Introductory text section for the information page."""
+
 import reflex as rx
 
 from ...theme import Colors

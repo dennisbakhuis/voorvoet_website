@@ -1,4 +1,5 @@
 """Form label component with optional required indicator and tooltip."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 from .fa_icon import fa_icon

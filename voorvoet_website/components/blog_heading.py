@@ -1,4 +1,5 @@
 """Blog heading component for rendering headings with dynamic levels."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes, Spacing
 
@@ -46,10 +47,11 @@ def blog_heading(content: str, level: int = 2) -> rx.Component:
         content,
         as_=f"h{level}",
         font_size=rx.cond(
-            level == 1, FontSizes.blog_heading_h1,
-            rx.cond(level == 2, FontSizes.blog_heading_h2, FontSizes.blog_heading_h3)
+            level == 1,
+            FontSizes.blog_heading_h1,
+            rx.cond(level == 2, FontSizes.blog_heading_h2, FontSizes.blog_heading_h3),
         ),
-        color=Colors.text['heading'],
+        color=Colors.text["heading"],
         margin_top=Spacing.blog_heading_margin_top,
         margin_bottom=Spacing.blog_heading_margin_bottom,
         font_weight="700",

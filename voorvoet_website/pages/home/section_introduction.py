@@ -1,4 +1,5 @@
 """Introduction section with personal story from the practice owner."""
+
 import reflex as rx
 from ...components import container, section, image_text_section
 from ...utils.get_translation import get_translation
@@ -44,7 +45,7 @@ def section_introduction(language: str) -> rx.Component:
     """
     paragraphs = [
         get_translation(TRANSLATIONS, "paragraph1", language),
-        get_translation(TRANSLATIONS, "paragraph2", language)
+        get_translation(TRANSLATIONS, "paragraph2", language),
     ]
 
     return section(
@@ -53,8 +54,8 @@ def section_introduction(language: str) -> rx.Component:
                 image_src="/images/page_home/podotherapeut_enschede_kim_bakhuis_loopt_op_strand_voorvoet_praktijk_voor_podotherapie.jpg",
                 title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
-                image_position="left"
+                image_position="left",
             )
         ),
-        id="introduction"
+        id="introduction",
     )

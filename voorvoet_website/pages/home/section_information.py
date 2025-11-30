@@ -1,4 +1,5 @@
 """Information cards section displaying practice services and details."""
+
 import reflex as rx
 
 from ...components import container, section, information_cards_grid, CardConfig
@@ -93,7 +94,7 @@ def section_information(language: str) -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card1_button", language),
-            button_link=f"/{language}/informatie/#what-is-podiatry"
+            button_link=f"/{language}/informatie/#what-is-podiatry",
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card2_title", language),
@@ -102,7 +103,7 @@ def section_information(language: str) -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card2_button", language),
-            button_link=f"/{language}/informatie/#veel-voorkomende-klachten"
+            button_link=f"/{language}/informatie/#veel-voorkomende-klachten",
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card3_title", language),
@@ -111,7 +112,7 @@ def section_information(language: str) -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card3_button", language),
-            button_link=f"/{language}/vergoedingen/"
+            button_link=f"/{language}/vergoedingen/",
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card4_title", language),
@@ -120,7 +121,7 @@ def section_information(language: str) -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card4_button", language),
-            button_link=f"/{language}/informatie/#het-behandeltraject"
+            button_link=f"/{language}/informatie/#het-behandeltraject",
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card5_title", language),
@@ -129,7 +130,7 @@ def section_information(language: str) -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card5_button", language),
-            button_link=f"/{language}/informatie/#bedrijfspodotherapie"
+            button_link=f"/{language}/informatie/#bedrijfspodotherapie",
         ),
         CardConfig(
             title=get_translation(TRANSLATIONS, "card6_title", language),
@@ -138,22 +139,17 @@ def section_information(language: str) -> rx.Component:
             bg_color="white",
             show_box=False,
             button_text=get_translation(TRANSLATIONS, "card6_button", language),
-            button_link=f"/{language}/informatie/#for-everyone"
-        )
+            button_link=f"/{language}/informatie/#for-everyone",
+        ),
     ]
 
     return section(
         container(
-            information_cards_grid(
-                cards=cards,
-                columns=[1, 2, 3],
-                spacing="2rem"
-            )
+            information_cards_grid(cards=cards, columns=[1, 2, 3], spacing="2rem")
         ),
         id="services",
-        background_color= Colors.backgrounds["green_light"],
+        background_color=Colors.backgrounds["green_light"],
         divider_color=Colors.backgrounds["white"],
         clip_top="gentle_4",
-        clip_bottom="gentle_1"
-
+        clip_bottom="gentle_1",
     )

@@ -1,4 +1,5 @@
 """Risk level card component for displaying zorgprofiel information."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 

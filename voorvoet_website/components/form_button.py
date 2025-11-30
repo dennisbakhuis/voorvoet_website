@@ -1,4 +1,5 @@
 """Form button component with loading and disabled states."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 
@@ -101,13 +102,13 @@ def form_button(
         white_space="nowrap",
         cursor="pointer",
         transition="all 0.2s ease",
-        bg=Colors.primary['300'],
-        color=Colors.text['white'],
+        bg=Colors.primary["300"],
+        color=Colors.text["white"],
         box_shadow="0 4px 12px rgba(5, 168, 162, 0.3)",
         _hover={
-            "bg": Colors.primary['500'],
-            "box_shadow": "0 6px 16px rgba(5, 168, 162, 0.4)"
-        }
+            "bg": Colors.primary["500"],
+            "box_shadow": "0 6px 16px rgba(5, 168, 162, 0.4)",
+        },
     )
 
     return rx.cond(

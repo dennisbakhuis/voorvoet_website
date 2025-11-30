@@ -5,6 +5,7 @@ dynamically selecting the appropriate blog component based on content type.
 All actual rendering is delegated to specialized blog components for
 maintainability and reusability.
 """
+
 import reflex as rx
 from ..models import BlogPost
 from .blog_heading import blog_heading

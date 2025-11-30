@@ -1,4 +1,5 @@
 """Phone number validation model."""
+
 from pydantic import field_validator
 from .validated_field import ValidatedField
 
@@ -23,7 +24,7 @@ class PhoneNumber(ValidatedField):
         Whether the field has lost focus at least once.
     """
 
-    @field_validator('value')
+    @field_validator("value")
     @classmethod
     def validate_value(cls, v: str) -> str:
         """Validate that value is a string (allows any string for flexibility)."""
@@ -88,5 +89,5 @@ class PhoneNumber(ValidatedField):
         str
             Cleaned value containing only digits, max 10 characters.
         """
-        numeric_value = ''.join(char for char in new_value if char.isdigit())
+        numeric_value = "".join(char for char in new_value if char.isdigit())
         return numeric_value[:10]

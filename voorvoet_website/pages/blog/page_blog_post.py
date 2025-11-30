@@ -1,11 +1,19 @@
 """Individual blog post page displaying full content."""
+
 import reflex as rx
 from typing import Optional, Any
 from ...models import BlogPost
 from ...theme import Colors, FontSizes, Spacing
 from ...components import (
-    container, section, article_schema,
-    blog_heading, blog_paragraph, blog_markdown, blog_image, blog_list, button
+    container,
+    section,
+    article_schema,
+    blog_heading,
+    blog_paragraph,
+    blog_markdown,
+    blog_image,
+    blog_list,
+    button,
 )
 from ..shared_sections import footer, header
 from .section_hero import section_hero
@@ -47,9 +55,7 @@ def _build_content_component(obj: dict[str, Any]) -> rx.Component:
         return blog_markdown(obj.get("content", ""))
     elif content_type == "image":
         return blog_image(
-            obj.get("src", ""),
-            obj.get("alt", ""),
-            obj.get("caption", "")
+            obj.get("src", ""), obj.get("alt", ""), obj.get("caption", "")
         )
     elif content_type == "button":
         return rx.box(
@@ -66,12 +72,14 @@ def _build_content_component(obj: dict[str, Any]) -> rx.Component:
         return rx.box()
 
 
-def _build_content_components(content_objects: list[dict[str, Any]]) -> list[rx.Component]:
+def _build_content_components(
+    content_objects: list[dict[str, Any]],
+) -> list[rx.Component]:
     """Build all content components from content_objects list at compile time."""
     return [_build_content_component(obj) for obj in content_objects]
 
 
-def page_blog_post(language: str="nl", post: Optional[dict] = None) -> rx.Component:
+def page_blog_post(language: str = "nl", post: Optional[dict] = None) -> rx.Component:
     """
     Create the individual blog post page with full content.
 
@@ -106,20 +114,32 @@ def page_blog_post(language: str="nl", post: Optional[dict] = None) -> rx.Compon
         # Build metadata section
         metadata_components = []
         if config.blog_show_author and author_val:
-            metadata_components.append(rx.text(author_val, color=Colors.text['content'], font_size="1rem"))
-            metadata_components.append(rx.text("•", color=Colors.text['content'], font_size="1rem"))
+            metadata_components.append(
+                rx.text(author_val, color=Colors.text["content"], font_size="1rem")
+            )
+            metadata_components.append(
+                rx.text("•", color=Colors.text["content"], font_size="1rem")
+            )
 
         if config.blog_show_publication_date:
-            metadata_components.append(rx.text(formatted_date_val, color=Colors.text['content'], font_size="1rem"))
+            metadata_components.append(
+                rx.text(
+                    formatted_date_val, color=Colors.text["content"], font_size="1rem"
+                )
+            )
 
         if config.blog_show_reading_time and read_time_val:
             if metadata_components:
-                metadata_components.append(rx.text("•", color=Colors.text['content'], font_size="1rem"))
+                metadata_components.append(
+                    rx.text("•", color=Colors.text["content"], font_size="1rem")
+                )
             metadata_components.append(
                 rx.text(
-                    read_time_val + " " + get_translation(TRANSLATIONS, "reading_time", language),
-                    color=Colors.text['content'],
-                    font_size="1rem"
+                    read_time_val
+                    + " "
+                    + get_translation(TRANSLATIONS, "reading_time", language),
+                    color=Colors.text["content"],
+                    font_size="1rem",
                 )
             )
 
@@ -127,7 +147,7 @@ def page_blog_post(language: str="nl", post: Optional[dict] = None) -> rx.Compon
             rx.heading(
                 title_val,
                 font_size=FontSizes.section_title,
-                color=Colors.text['heading'],
+                color=Colors.text["heading"],
                 margin_bottom=Spacing.blog_heading_margin_bottom,
             )
         ]
@@ -150,7 +170,7 @@ def page_blog_post(language: str="nl", post: Optional[dict] = None) -> rx.Compon
             rx.link(
                 rx.text(get_translation(TRANSLATIONS, "back_to_blog", language)),
                 href=f"/{language}/blog/",
-                color=Colors.primary['500'],
+                color=Colors.primary["500"],
                 font_size=FontSizes.regular,
                 font_weight="600",
                 text_decoration="none",
@@ -179,19 +199,19 @@ def page_blog_post(language: str="nl", post: Optional[dict] = None) -> rx.Compon
         content_component = rx.vstack(
             rx.text(
                 get_translation(TRANSLATIONS, "post_not_found", language),
-                color=Colors.text['muted'],
+                color=Colors.text["muted"],
                 font_size=FontSizes.regular,
             ),
             rx.text(
                 get_translation(TRANSLATIONS, "translation_not_available", language),
-                color=Colors.text['content'],
+                color=Colors.text["content"],
                 font_size=FontSizes.regular,
                 text_align="center",
             ),
             rx.link(
                 rx.text(get_translation(TRANSLATIONS, "back_to_blog", language)),
                 href=f"/{language}/blog/",
-                color=Colors.primary['500'],
+                color=Colors.primary["500"],
                 font_size=FontSizes.regular,
                 font_weight="600",
                 text_decoration="none",

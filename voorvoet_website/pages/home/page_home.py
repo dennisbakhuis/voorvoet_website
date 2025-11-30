@@ -1,4 +1,5 @@
 """Home page composition with all sections."""
+
 import reflex as rx
 
 from .section_hero import section_hero
@@ -12,7 +13,7 @@ from ..shared_sections import footer, header
 from ...components import organization_schema
 
 
-def page_home(language: str="nl") -> rx.Component:
+def page_home(language: str = "nl") -> rx.Component:
     """
     Create the complete home page with all sections.
 

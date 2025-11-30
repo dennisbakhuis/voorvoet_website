@@ -66,6 +66,7 @@ class Colors:
         "success": "#05847c",
     }
 
+
 class FontSizes:
     """Typography scale for responsive text sizing.
 

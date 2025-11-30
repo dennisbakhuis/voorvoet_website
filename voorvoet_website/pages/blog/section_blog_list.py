@@ -1,4 +1,5 @@
 """Blog list section displaying grid of blog post cards."""
+
 import reflex as rx
 from ...theme import Colors, FontSizes
 from ...components import container, blog_card, section
@@ -46,7 +47,9 @@ def section_blog_list(language: str, posts: list = []) -> rx.Component:
                 rx.vstack(
                     rx.foreach(
                         posts,
-                        lambda post, index: blog_card(post, language=language, flip=index % 2 == 1),
+                        lambda post, index: blog_card(
+                            post, language=language, flip=index % 2 == 1
+                        ),
                     ),
                     spacing="5",
                     width="100%",
@@ -54,12 +57,12 @@ def section_blog_list(language: str, posts: list = []) -> rx.Component:
                 rx.vstack(
                     rx.text(
                         get_translation(TRANSLATIONS, "no_posts", language),
-                        color=Colors.text['muted'],
+                        color=Colors.text["muted"],
                         font_size=FontSizes.regular,
                     ),
                     align_items="center",
                 ),
             ),
         ),
-        background=Colors.backgrounds['white'],
+        background=Colors.backgrounds["white"],
     )

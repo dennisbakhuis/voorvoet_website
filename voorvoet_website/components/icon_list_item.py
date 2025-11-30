@@ -1,4 +1,5 @@
 """Icon list item component for CTA boxes and lists."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 from .fa_icon import fa_icon
@@ -38,9 +39,9 @@ def icon_list_item(icon: str, text: str, **props) -> rx.Component:
             text,
             font_size=FontSizes.regular,
             color=Colors.text["content"],
-            line_height="1.6"
+            line_height="1.6",
         ),
         spacing="3",
         align="start",
-        **props
+        **props,
     )

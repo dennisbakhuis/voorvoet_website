@@ -4,6 +4,7 @@ This module contains the ContactState class which manages the state for the
 contact form including field values, validation state, and form submission
 with email notifications and toast feedback.
 """
+
 import reflex as rx
 import asyncio
 from typing import TYPE_CHECKING
@@ -12,7 +13,7 @@ from ..models import ContactForm
 from ..services import send_contact_form_email
 
 if TYPE_CHECKING:
-    from .website_state import WebsiteState
+    pass
 
 
 class ContactState(rx.State):
@@ -324,6 +325,7 @@ class ContactState(rx.State):
             self.form_submitting = False
 
             from .website_state import WebsiteState
+
             website_state = await self.get_state(WebsiteState)
 
             if email_sent:
@@ -331,7 +333,7 @@ class ContactState(rx.State):
 
                 website_state.show_toast(
                     "Bedankt voor je bericht! We nemen zo snel mogelijk contact met je op.",
-                    "success"
+                    "success",
                 )
                 yield
 
@@ -340,7 +342,7 @@ class ContactState(rx.State):
             else:
                 website_state.show_toast(
                     "Het verzenden is mislukt. Probeer het later opnieuw of neem telefonisch contact op.",
-                    "error"
+                    "error",
                 )
                 yield
 

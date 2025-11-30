@@ -1,4 +1,5 @@
 """Hero section for the blog page."""
+
 import reflex as rx
 
 from ...theme import Colors
@@ -28,5 +29,5 @@ def section_hero() -> rx.Component:
         position="relative",
         height="500px",
         clip_bottom="gentle_1",
-        divider_color=Colors.backgrounds['white']
+        divider_color=Colors.backgrounds["white"],
     )

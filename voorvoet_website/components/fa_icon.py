@@ -1,13 +1,11 @@
 """FontAwesome icon component for consistent icon rendering."""
+
 import reflex as rx
 from ..theme import Colors
 
 
 def fa_icon(
-    icon: str,
-    color: str = Colors.text["content"],
-    size: str = "1rem",
-    **props
+    icon: str, color: str = Colors.text["content"], size: str = "1rem", **props
 ) -> rx.Component:
     """
     Create a FontAwesome icon element.
@@ -39,9 +37,4 @@ def fa_icon(
     >>> fa_icon("fa-check", color=Colors.primary, size="2rem")
     >>> fa_icon("fa-heart", size="24px", margin_top="10px")
     """
-    return rx.el.i(
-        class_name=f"fa {icon}",
-        color=color,
-        font_size=size,
-        **props
-    )
+    return rx.el.i(class_name=f"fa {icon}", color=color, font_size=size, **props)

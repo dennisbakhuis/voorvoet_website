@@ -1,4 +1,5 @@
 """Hero section for the home page with title, subtitle, and CTA."""
+
 import reflex as rx
 from ...theme import Colors, FontSizes, Layout
 from ...components import container, section, hero_banner
@@ -75,7 +76,7 @@ def section_hero(language: str) -> rx.Component:
             display="flex",
             justify_content="center",
             padding_bottom=["0.5rem", "0.75rem", "1rem", "1rem"],
-            margin_bottom="4rem"
+            margin_bottom="4rem",
         ),
         position="relative",
         z_index="2",
@@ -95,5 +96,5 @@ def section_hero(language: str) -> rx.Component:
         position="relative",
         min_height=Layout.hero_min_height,
         clip_bottom="gentle_1",
-        divider_color=Colors.backgrounds['white']
+        divider_color=Colors.backgrounds["white"],
     )

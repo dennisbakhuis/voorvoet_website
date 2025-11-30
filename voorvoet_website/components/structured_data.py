@@ -87,7 +87,7 @@ def organization_schema() -> rx.Component:
                 "streetAddress": "Eeftinksweg 13",
                 "addressLocality": "Enschede",
                 "postalCode": "7541 WE",
-                "addressCountry": "NL"
+                "addressCountry": "NL",
             },
             {
                 "@type": "PostalAddress",
@@ -95,132 +95,105 @@ def organization_schema() -> rx.Component:
                 "streetAddress": "Beethovenlaan 10",
                 "addressLocality": "Enschede",
                 "postalCode": "7522 HJ",
-                "addressCountry": "NL"
-            }
+                "addressCountry": "NL",
+            },
         ],
         "geo": [
             {
                 "@type": "GeoCoordinates",
                 "latitude": "52.20872",
                 "longitude": "6.89328",
-                "name": "Locatie Eeftinksweg"
+                "name": "Locatie Eeftinksweg",
             },
             {
                 "@type": "GeoCoordinates",
                 "latitude": "52.22145",
                 "longitude": "6.88534",
-                "name": "Locatie Beethovenlaan"
-            }
+                "name": "Locatie Beethovenlaan",
+            },
         ],
         "areaServed": [
-            {
-                "@type": "City",
-                "name": "Enschede"
-            },
-            {
-                "@type": "City",
-                "name": "Hengelo"
-            },
-            {
-                "@type": "City",
-                "name": "Wierden"
-            },
-            {
-                "@type": "City",
-                "name": "Glanerbrug"
-            },
-            {
-                "@type": "City",
-                "name": "Haaksbergen"
-            },
-            {
-                "@type": "City",
-                "name": "Boekelo"
-            },
-            {
-                "@type": "City",
-                "name": "Lonneker"
-            },
-            {
-                "@type": "City",
-                "name": "Losser"
-            },
-            {
-                "@type": "City",
-                "name": "Oldenzaal"
-            },
-            {
-                "@type": "City",
-                "name": "Gronau"
-            },
-            {
-                "@type": "AdministrativeArea",
-                "name": "Overijssel"
-            }
+            {"@type": "City", "name": "Enschede"},
+            {"@type": "City", "name": "Hengelo"},
+            {"@type": "City", "name": "Wierden"},
+            {"@type": "City", "name": "Glanerbrug"},
+            {"@type": "City", "name": "Haaksbergen"},
+            {"@type": "City", "name": "Boekelo"},
+            {"@type": "City", "name": "Lonneker"},
+            {"@type": "City", "name": "Losser"},
+            {"@type": "City", "name": "Oldenzaal"},
+            {"@type": "City", "name": "Gronau"},
+            {"@type": "AdministrativeArea", "name": "Overijssel"},
         ],
         "hasMap": [
             "https://maps.google.com/?q=Eeftinksweg+13,+7541+WE+Enschede",
-            "https://maps.google.com/?q=Beethovenlaan+10,+7522+HJ+Enschede"
+            "https://maps.google.com/?q=Beethovenlaan+10,+7522+HJ+Enschede",
         ],
         "paymentAccepted": "Cash, Debit Card, Bank Transfer",
         "priceRange": "€€",
         "medicalSpecialty": "Podiatry",
-        "knowsAbout": ["Podotherapie", "Orthopedische schoentechniek", "Zolen op maat", "Voetklachten", "Diabetes voetzorg"],
+        "knowsAbout": [
+            "Podotherapie",
+            "Orthopedische schoentechniek",
+            "Zolen op maat",
+            "Voetklachten",
+            "Diabetes voetzorg",
+        ],
         "openingHoursSpecification": [
             {
                 "@type": "OpeningHoursSpecification",
                 "dayOfWeek": "Monday",
                 "opens": "08:00",
-                "closes": "17:00"
+                "closes": "17:00",
             },
             {
                 "@type": "OpeningHoursSpecification",
                 "dayOfWeek": "Tuesday",
                 "opens": "09:30",
-                "closes": "19:30"
+                "closes": "19:30",
             },
             {
                 "@type": "OpeningHoursSpecification",
                 "dayOfWeek": "Wednesday",
                 "opens": "08:30",
-                "closes": "17:00"
+                "closes": "17:00",
             },
             {
                 "@type": "OpeningHoursSpecification",
                 "dayOfWeek": "Thursday",
                 "opens": "08:00",
-                "closes": "17:00"
+                "closes": "17:00",
             },
             {
                 "@type": "OpeningHoursSpecification",
                 "dayOfWeek": "Friday",
                 "opens": "08:00",
-                "closes": "13:00"
-            }
+                "closes": "13:00",
+            },
         ],
         "availableLanguage": ["nl", "de", "en"],
         "identifier": {
             "@type": "PropertyValue",
             "propertyID": "KvK",
-            "value": "87984814"
+            "value": "87984814",
         },
         "taxID": "87984814",
         "sameAs": [
             "https://www.linkedin.com/company/voorvoet/",
-            "https://www.linkedin.com/in/dennisbakhuis/"
+            "https://www.linkedin.com/in/dennisbakhuis/",
         ],
         "founder": {
             "@type": "Person",
             "name": "Kim Bakhuis",
             "jobTitle": "Founder/Podiatrist",
-            "sameAs": "https://www.linkedin.com/in/kimbakhuis/"
+            "sameAs": "https://www.linkedin.com/in/kimbakhuis/",
         },
         "employee": {
             "@type": "Person",
             "name": "Dennis Bakhuis",
             "jobTitle": "Head of Data Science",
-            "sameAs": "https://www.linkedin.com/in/dennisbakhuis/"
-        }
+            "sameAs": "https://www.linkedin.com/in/dennisbakhuis/",
+        },
     }
 
     json_ld = json.dumps(org_data, ensure_ascii=False, indent=2)
@@ -275,9 +248,11 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
     image_url = f"{base_url}{post.thumbnail_url}"
     words = post.content.split()
     snippet_words = words[:200] if len(words) > 200 else words
-    article_snippet = ' '.join(snippet_words)
+    article_snippet = " ".join(snippet_words)
     # Clean up markdown formatting for snippet
-    article_snippet = article_snippet.replace('#', '').replace('*', '').replace('!', '').strip()
+    article_snippet = (
+        article_snippet.replace("#", "").replace("*", "").replace("!", "").strip()
+    )
 
     # Build article data
     article_data: Dict[str, Any] = {
@@ -289,15 +264,17 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
         "image": {
             "@type": "ImageObject",
             "url": image_url,
-            "caption": post.thumbnail_alt if post.thumbnail_alt else post.title
+            "caption": post.thumbnail_alt if post.thumbnail_alt else post.title,
         },
         "datePublished": post.date.isoformat(),
-        "dateModified": post.date_modified.isoformat() if post.date_modified else post.date.isoformat(),
+        "dateModified": post.date_modified.isoformat()
+        if post.date_modified
+        else post.date.isoformat(),
         "author": {
             "@type": "Person",
             "name": post.author if post.author else "Kim Bakhuis",
             "url": base_url,
-            "sameAs": "https://www.linkedin.com/in/kimbakhuis/"
+            "sameAs": "https://www.linkedin.com/in/kimbakhuis/",
         },
         "publisher": {
             "@type": "Organization",
@@ -305,13 +282,10 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
             "url": base_url,
             "logo": {
                 "@type": "ImageObject",
-                "url": f"{base_url}/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg"
-            }
+                "url": f"{base_url}/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
+            },
         },
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": full_url
-        },
+        "mainEntityOfPage": {"@type": "WebPage", "@id": full_url},
         "url": full_url,
         "inLanguage": language,
     }

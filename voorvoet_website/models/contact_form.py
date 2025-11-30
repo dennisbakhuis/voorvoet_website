@@ -1,4 +1,5 @@
 """Contact form model."""
+
 from pydantic import BaseModel, Field, ConfigDict
 from .phone_number import PhoneNumber
 from .email_address import EmailAddress
@@ -32,8 +33,8 @@ class ContactForm(BaseModel):
     """
 
     model_config = ConfigDict(
-        frozen=False,                  # Allow mutation for Reflex state compatibility
-        validate_assignment=True,      # Validate on assignment for type safety
+        frozen=False,  # Allow mutation for Reflex state compatibility
+        validate_assignment=True,  # Validate on assignment for type safety
         arbitrary_types_allowed=True,  # Arbitrary types allowed for nested Pydantic models
     )
 

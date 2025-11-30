@@ -1,4 +1,5 @@
 """Blog page composition with all sections."""
+
 import reflex as rx
 
 from .section_hero import section_hero
@@ -8,7 +9,7 @@ from .section_starter import section_starter
 from ..shared_sections import footer, header
 
 
-def page_blog(language: str="nl", posts: list = []) -> rx.Component:
+def page_blog(language: str = "nl", posts: list = []) -> rx.Component:
     """
     Create the complete blog page with all sections.
 

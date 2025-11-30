@@ -1,4 +1,5 @@
 """Starter section introducing the contact page purpose."""
+
 import reflex as rx
 
 from ...theme import Colors

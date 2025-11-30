@@ -1,4 +1,5 @@
 """Language switcher component with flag icons and popup selector."""
+
 import reflex as rx
 from ..theme import Colors
 from ..states import WebsiteState
@@ -30,20 +31,18 @@ def get_language_url(target_lang: str):
             rx.cond(
                 current_path.startswith("/en"),
                 rx.cond(current_path.length() > 3, current_path[3:], "/"),
-                current_path
-            )
-        )
+                current_path,
+            ),
+        ),
     )
 
     # Build new URL with target language
-    return rx.cond(
-        base_path == "/",
-        f"/{target_lang}",
-        f"/{target_lang}" + base_path
-    )
+    return rx.cond(base_path == "/", f"/{target_lang}", f"/{target_lang}" + base_path)
 
 
-def language_option(flag_emoji: str, language_name: str, language_code: str, toggle_handler) -> rx.Component:
+def language_option(
+    flag_emoji: str, language_name: str, language_code: str, toggle_handler
+) -> rx.Component:
     """
     Create a single language option in the selector.
 
@@ -94,7 +93,7 @@ def language_option(flag_emoji: str, language_name: str, language_code: str, tog
             "& .language-name": {
                 "color": Colors.primary["300"],
                 "text_decoration": "underline",
-            }
+            },
         },
         width="100%",
         text_decoration="none",
@@ -125,8 +124,16 @@ def language_switcher(language: str, mobile: bool = False) -> rx.Component:
 
     current_flag = language_info.get(language, language_info["nl"])["flag"]
 
-    selector_open_state = WebsiteState.language_selector_mobile_open if mobile else WebsiteState.language_selector_open
-    toggle_handler = WebsiteState.toggle_language_selector_mobile if mobile else WebsiteState.toggle_language_selector
+    selector_open_state = (
+        WebsiteState.language_selector_mobile_open
+        if mobile
+        else WebsiteState.language_selector_open
+    )
+    toggle_handler = (
+        WebsiteState.toggle_language_selector_mobile
+        if mobile
+        else WebsiteState.toggle_language_selector
+    )
 
     trigger_button = rx.box(
         rx.box(
@@ -148,7 +155,7 @@ def language_switcher(language: str, mobile: bool = False) -> rx.Component:
                     "transform": rx.cond(
                         selector_open_state,
                         "translateX(-50%) rotate(180deg)",
-                        "translateX(-50%) rotate(0deg)"
+                        "translateX(-50%) rotate(0deg)",
                     )
                 },
             ),
@@ -176,19 +183,19 @@ def language_switcher(language: str, mobile: bool = False) -> rx.Component:
                     flag_emoji=language_info["nl"]["flag"],
                     language_name=language_info["nl"]["name"],
                     language_code="nl",
-                    toggle_handler=toggle_handler
+                    toggle_handler=toggle_handler,
                 ),
                 language_option(
                     flag_emoji=language_info["de"]["flag"],
                     language_name=language_info["de"]["name"],
                     language_code="de",
-                    toggle_handler=toggle_handler
+                    toggle_handler=toggle_handler,
                 ),
                 language_option(
                     flag_emoji=language_info["en"]["flag"],
                     language_name=language_info["en"]["name"],
                     language_code="en",
-                    toggle_handler=toggle_handler
+                    toggle_handler=toggle_handler,
                 ),
                 spacing="0",
                 width="100%",

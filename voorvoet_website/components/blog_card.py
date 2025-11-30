@@ -1,4 +1,5 @@
 """Blog card component for displaying blog post previews."""
+
 import reflex as rx
 from ..models import BlogPost
 from ..theme import Colors, FontSizes, Layout
@@ -31,20 +32,22 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
         rx.heading(
             post.title,
             size="6",
-            color=Colors.text['heading'],
+            color=Colors.text["heading"],
             margin_top="1.0rem",
             margin_bottom="-0.2rem",
             line_height="1.3",
         ),
         rx.text(
             post.summary,
-            color=Colors.text['content'],
+            color=Colors.text["content"],
             font_size=FontSizes.regular,
             line_height="1.6",
             margin_bottom="0.5rem",
         ),
         rx.cond(
-            config.blog_show_author | config.blog_show_publication_date | config.blog_show_reading_time,
+            config.blog_show_author
+            | config.blog_show_publication_date
+            | config.blog_show_reading_time,
             rx.hstack(
                 rx.cond(
                     config.blog_show_author,
@@ -53,12 +56,12 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
                         rx.fragment(
                             rx.text(
                                 post.author,
-                                color=Colors.text['muted'],
+                                color=Colors.text["muted"],
                                 font_size="0.85rem",
                             ),
                             rx.text(
                                 "•",
-                                color=Colors.text['muted'],
+                                color=Colors.text["muted"],
                                 font_size="0.85rem",
                             ),
                         ),
@@ -68,7 +71,7 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
                     config.blog_show_publication_date,
                     rx.text(
                         post.formatted_date,
-                        color=Colors.text['muted'],
+                        color=Colors.text["muted"],
                         font_size="0.85rem",
                     ),
                 ),
@@ -81,13 +84,13 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
                                 config.blog_show_publication_date,
                                 rx.text(
                                     "•",
-                                    color=Colors.text['muted'],
+                                    color=Colors.text["muted"],
                                     font_size="0.85rem",
                                 ),
                             ),
                             rx.text(
                                 f"{post.read_time} min leestijd",
-                                color=Colors.text['muted'],
+                                color=Colors.text["muted"],
                                 font_size="0.85rem",
                             ),
                         ),
@@ -99,7 +102,7 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
         ),
         rx.text(
             "Lees meer →",
-            color=Colors.primary['500'],
+            color=Colors.primary["500"],
             font_weight="600",
             font_size=FontSizes.regular,
             margin_top="auto",
@@ -154,7 +157,7 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
         rx.box(
             card_content,
             border_radius="8px",
-            background=Colors.backgrounds['white'],
+            background=Colors.backgrounds["white"],
             padding="1.5rem",
             margin_y="1rem",
             box_shadow="0 8px 24px rgba(0, 0, 0, 0.12)",

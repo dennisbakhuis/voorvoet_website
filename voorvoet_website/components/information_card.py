@@ -1,4 +1,5 @@
 """Information card component for displaying service or feature information."""
+
 import reflex as rx
 from typing import Union
 
@@ -7,7 +8,15 @@ from .button import button
 from .fa_icon import fa_icon
 
 
-def information_card(title: Union[str, rx.Var], description: Union[str, rx.Var], icon: str, bg_color="white", show_box=True, button_text: Union[str, rx.Var] = "Lees meer", button_link: Union[str, rx.Var] = "#") -> rx.Component:
+def information_card(
+    title: Union[str, rx.Var],
+    description: Union[str, rx.Var],
+    icon: str,
+    bg_color="white",
+    show_box=True,
+    button_text: Union[str, rx.Var] = "Lees meer",
+    button_link: Union[str, rx.Var] = "#",
+) -> rx.Component:
     """
     Create an information card with icon, title, description, and button.
 
@@ -49,15 +58,12 @@ def information_card(title: Union[str, rx.Var], description: Union[str, rx.Var],
             "transition": "all 0.3s ease",
             "_hover": {
                 "transform": "translateY(-4px)",
-                "box_shadow": "0 8px 25px rgba(0, 0, 0, 0.1)"
-            }
+                "box_shadow": "0 8px 25px rgba(0, 0, 0, 0.1)",
+            },
         }
     else:
-        box_styles = {
-            "bg": "transparent",
-            "padding": "2rem"
-        }
-    
+        box_styles = {"bg": "transparent", "padding": "2rem"}
+
     return rx.box(
         rx.vstack(
             rx.vstack(
@@ -68,13 +74,19 @@ def information_card(title: Union[str, rx.Var], description: Union[str, rx.Var],
                     align_items="center",
                     margin_bottom="1rem",
                 ),
-                rx.text(title, font_size=FontSizes.card_title, font_weight="600", color=Colors.text["heading"], text_align="center"),
                 rx.text(
-                    description, 
-                    text_align="center", 
-                    color=Colors.text["heading"], 
+                    title,
+                    font_size=FontSizes.card_title,
+                    font_weight="600",
+                    color=Colors.text["heading"],
+                    text_align="center",
+                ),
+                rx.text(
+                    description,
+                    text_align="center",
+                    color=Colors.text["heading"],
                     line_height="1.6",
-                    font_size=FontSizes.regular
+                    font_size=FontSizes.regular,
                 ),
                 spacing="3",
                 align="center",

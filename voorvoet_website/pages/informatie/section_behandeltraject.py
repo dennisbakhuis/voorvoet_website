@@ -1,4 +1,5 @@
 """Section explaining the podiatry treatment process."""
+
 import reflex as rx
 from ...components import container, section, image_text_section
 from ...utils.get_translation import get_translation
@@ -40,9 +41,7 @@ def section_behandeltraject(language: str) -> rx.Component:
         A section component with an image-text layout explaining the
         step-by-step treatment process at the practice.
     """
-    paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1", language)
-    ]
+    paragraphs = [get_translation(TRANSLATIONS, "paragraph1", language)]
 
     return section(
         container(
@@ -55,5 +54,5 @@ def section_behandeltraject(language: str) -> rx.Component:
             ),
         ),
         padding_bottom="2rem",
-        id="het-behandeltraject"
+        id="het-behandeltraject",
     )

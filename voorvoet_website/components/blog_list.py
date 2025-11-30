@@ -1,4 +1,5 @@
 """Blog list component for rendering ordered and unordered lists."""
+
 import reflex as rx
 from ..theme import Colors, FontSizes, Spacing
 
@@ -52,7 +53,7 @@ def blog_list(markdown: str) -> rx.Component:
     return rx.box(
         rx.markdown(
             markdown,
-            color=Colors.text['content'],
+            color=Colors.text["content"],
             font_size=FontSizes.regular,
         ),
         margin_bottom=Spacing.blog_content_margin_bottom,

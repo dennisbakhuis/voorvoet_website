@@ -1,4 +1,5 @@
 """Hero call-to-action box component for appointment booking."""
+
 import reflex as rx
 from ...components import button, section_sub_title, icon_list_item
 from ...theme import Colors, Layout, Spacing
@@ -48,24 +49,39 @@ def hero_cta_box(language: str) -> rx.Component:
     """
     return rx.box(
         rx.vstack(
-            section_sub_title(get_translation(TRANSLATIONS, "cta_title", language), text_align="center"),
+            section_sub_title(
+                get_translation(TRANSLATIONS, "cta_title", language),
+                text_align="center",
+            ),
             rx.box(
                 rx.vstack(
-                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "no_referral", language)),
-                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "quick_help", language)),
-                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "fastest_route", language)),
+                    icon_list_item(
+                        "fa-check-square-o",
+                        get_translation(TRANSLATIONS, "no_referral", language),
+                    ),
+                    icon_list_item(
+                        "fa-check-square-o",
+                        get_translation(TRANSLATIONS, "quick_help", language),
+                    ),
+                    icon_list_item(
+                        "fa-check-square-o",
+                        get_translation(TRANSLATIONS, "fastest_route", language),
+                    ),
                     spacing="3",
                     align="start",
                 ),
                 width="100%",
                 display="flex",
-                justify_content="center"
+                justify_content="center",
             ),
             rx.box(
-                button(get_translation(TRANSLATIONS, "make_appointment", language), href=config.link_plan_portal),
+                button(
+                    get_translation(TRANSLATIONS, "make_appointment", language),
+                    href=config.link_plan_portal,
+                ),
                 width="100%",
                 display="flex",
-                justify_content="center"
+                justify_content="center",
             ),
             spacing="4",
             align="center",

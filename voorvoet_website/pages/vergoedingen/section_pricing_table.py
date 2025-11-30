@@ -1,4 +1,5 @@
 """Section displaying VoorVoet pricing information in a searchable table."""
+
 import reflex as rx
 import csv
 from pathlib import Path
@@ -51,9 +52,14 @@ def load_pricing_data() -> tuple[list[str], list[list[str]]]:
         - Table rows as a list of lists, where each inner list represents
           one row with [behandeling, prijs]
     """
-    data_path = Path(__file__).parent.parent.parent / "data" / "reimbursements" / "pricing_2025.csv"
+    data_path = (
+        Path(__file__).parent.parent.parent
+        / "data"
+        / "reimbursements"
+        / "pricing_2025.csv"
+    )
 
-    with open(data_path, 'r', encoding='utf-8') as f:
+    with open(data_path, "r", encoding="utf-8") as f:
         reader = csv.reader(f)
         rows = list(reader)
 
@@ -90,6 +96,7 @@ def section_pricing_table(language: str) -> rx.Component:
             "background-color": f"{Colors.primary['500']} !important",
             "color": f"{Colors.text['white']} !important",
             "font-weight": "600",
+            "white-space": "normal !important",
         },
         ".gridjs-th .gridjs-th-content": {
             "color": f"{Colors.text['white']} !important",
@@ -114,9 +121,6 @@ def section_pricing_table(language: str) -> rx.Component:
             "white-space": "normal !important",
             "word-wrap": "break-word !important",
             "line-height": "1.4",
-        },
-        ".gridjs-th": {
-            "white-space": "normal !important",
         },
         ".gridjs-th:nth-child(1), td:nth-child(1)": {
             "min-width": "150px",
@@ -170,7 +174,6 @@ def section_pricing_table(language: str) -> rx.Component:
                 margin_bottom="2rem",
                 style=table_styles,
             ),
-
             rx.box(
                 rx.text(
                     get_translation(TRANSLATIONS, "disclaimer", language),

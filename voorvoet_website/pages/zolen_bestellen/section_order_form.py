@@ -1,4 +1,5 @@
 """Order form section for ordering extra insoles."""
+
 import reflex as rx
 from ...components import (
     container,
@@ -102,18 +103,28 @@ def section_order_form(language: str) -> rx.Component:
             rx.box(
                 rx.box(
                     rx.box(
-                        form_label(get_translation(TRANSLATIONS, "first_name", language), required=True),
+                        form_label(
+                            get_translation(TRANSLATIONS, "first_name", language),
+                            required=True,
+                        ),
                         form_input(
-                            placeholder=get_translation(TRANSLATIONS, "first_name_placeholder", language),
+                            placeholder=get_translation(
+                                TRANSLATIONS, "first_name_placeholder", language
+                            ),
                             value=OrderInsolesState.first_name,  # type: ignore
                             on_change=OrderInsolesState.set_first_name,
                         ),
                         flex="1",
                     ),
                     rx.box(
-                        form_label(get_translation(TRANSLATIONS, "last_name", language), required=True),
+                        form_label(
+                            get_translation(TRANSLATIONS, "last_name", language),
+                            required=True,
+                        ),
                         form_input(
-                            placeholder=get_translation(TRANSLATIONS, "last_name_placeholder", language),
+                            placeholder=get_translation(
+                                TRANSLATIONS, "last_name_placeholder", language
+                            ),
                             value=OrderInsolesState.last_name,  # type: ignore
                             on_change=OrderInsolesState.set_last_name,
                         ),
@@ -128,10 +139,14 @@ def section_order_form(language: str) -> rx.Component:
                     form_label(
                         get_translation(TRANSLATIONS, "email_label", language),
                         required=True,
-                        tooltip_text=get_translation(TRANSLATIONS, "email_tooltip", language),
+                        tooltip_text=get_translation(
+                            TRANSLATIONS, "email_tooltip", language
+                        ),
                     ),
                     form_input(
-                        placeholder=get_translation(TRANSLATIONS, "email_placeholder", language),
+                        placeholder=get_translation(
+                            TRANSLATIONS, "email_placeholder", language
+                        ),
                         value=OrderInsolesState.email,  # type: ignore
                         on_change=OrderInsolesState.set_email,
                         input_type="email",
@@ -141,9 +156,14 @@ def section_order_form(language: str) -> rx.Component:
                     margin_bottom="1.5rem",
                 ),
                 rx.box(
-                    form_label(get_translation(TRANSLATIONS, "birth_date_label", language), required=True),
+                    form_label(
+                        get_translation(TRANSLATIONS, "birth_date_label", language),
+                        required=True,
+                    ),
                     form_input(
-                        placeholder=get_translation(TRANSLATIONS, "birth_date_placeholder", language),
+                        placeholder=get_translation(
+                            TRANSLATIONS, "birth_date_placeholder", language
+                        ),
                         value=OrderInsolesState.birth_date,  # type: ignore
                         on_change=OrderInsolesState.set_birth_date,
                         input_type="text",
@@ -154,11 +174,18 @@ def section_order_form(language: str) -> rx.Component:
                     max_width="250px",
                 ),
                 rx.box(
-                    form_label(get_translation(TRANSLATIONS, "insole_type_label", language), required=True),
+                    form_label(
+                        get_translation(TRANSLATIONS, "insole_type_label", language),
+                        required=True,
+                    ),
                     form_radio(
                         items=[
-                            get_translation(TRANSLATIONS, "insole_type_daily", language),
-                            get_translation(TRANSLATIONS, "insole_type_sport", language),
+                            get_translation(
+                                TRANSLATIONS, "insole_type_daily", language
+                            ),
+                            get_translation(
+                                TRANSLATIONS, "insole_type_sport", language
+                            ),
                             get_translation(TRANSLATIONS, "insole_type_work", language),
                         ],
                         value=OrderInsolesState.insole_type,
@@ -167,20 +194,30 @@ def section_order_form(language: str) -> rx.Component:
                     margin_bottom="1.5rem",
                 ),
                 rx.box(
-                    form_label(get_translation(TRANSLATIONS, "quantity_label", language), required=True),
+                    form_label(
+                        get_translation(TRANSLATIONS, "quantity_label", language),
+                        required=True,
+                    ),
                     form_select(
                         items=["1", "2", "3"],
                         value=OrderInsolesState.quantity,
                         on_change=OrderInsolesState.set_quantity,
-                        placeholder=get_translation(TRANSLATIONS, "quantity_placeholder", language),
+                        placeholder=get_translation(
+                            TRANSLATIONS, "quantity_placeholder", language
+                        ),
                     ),
                     margin_bottom="1.5rem",
                     max_width="250px",
                 ),
                 rx.box(
-                    form_label(get_translation(TRANSLATIONS, "comments_label", language), required=False),
+                    form_label(
+                        get_translation(TRANSLATIONS, "comments_label", language),
+                        required=False,
+                    ),
                     form_textarea(
-                        placeholder=get_translation(TRANSLATIONS, "comments_placeholder", language),
+                        placeholder=get_translation(
+                            TRANSLATIONS, "comments_placeholder", language
+                        ),
                         value=OrderInsolesState.comments,  # type: ignore
                         on_change=OrderInsolesState.set_comments,
                     ),

@@ -1,4 +1,5 @@
 """Header component used across all pages."""
+
 import reflex as rx
 
 from ...theme import Colors, FontSizes, Layout
@@ -83,6 +84,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
     - Handle navigation between pages
     - Toggle the mobile menu visibility
     """
+
     def get_translation(key: str, lang: str) -> rx.Var:
         """
         Get translation for a key based on provided language.
@@ -102,11 +104,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
         return rx.cond(
             lang == "nl",
             TRANSLATIONS["nl"][key],
-            rx.cond(
-                lang == "de",
-                TRANSLATIONS["de"][key],
-                TRANSLATIONS["en"][key]
-            )
+            rx.cond(lang == "de", TRANSLATIONS["de"][key], TRANSLATIONS["en"][key]),
         )
 
     def get_route(page_key: str, lang: str) -> str:
@@ -149,28 +147,63 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
     nav_items = [
         rx.cond(
             is_not_on_page("home"),
-            rx.link(get_translation("home", language), href=get_route("home", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
-            rx.fragment()
+            rx.link(
+                get_translation("home", language),
+                href=get_route("home", language),
+                color=Colors.text["heading"],
+                font_size=FontSizes.nav_link,
+                font_weight="600",
+                _hover={"color": Colors.primary["300"]},
+            ),
+            rx.fragment(),
         ),
         rx.cond(
             is_not_on_page("blog"),
-            rx.link(get_translation("blog", language), href=get_route("blog", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
-            rx.fragment()
+            rx.link(
+                get_translation("blog", language),
+                href=get_route("blog", language),
+                color=Colors.text["heading"],
+                font_size=FontSizes.nav_link,
+                font_weight="600",
+                _hover={"color": Colors.primary["300"]},
+            ),
+            rx.fragment(),
         ),
         rx.cond(
             is_not_on_page("informatie"),
-            rx.link(get_translation("informatie", language), href=get_route("informatie", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
-            rx.fragment()
+            rx.link(
+                get_translation("informatie", language),
+                href=get_route("informatie", language),
+                color=Colors.text["heading"],
+                font_size=FontSizes.nav_link,
+                font_weight="600",
+                _hover={"color": Colors.primary["300"]},
+            ),
+            rx.fragment(),
         ),
         rx.cond(
             is_not_on_page("vergoedingen"),
-            rx.link(get_translation("vergoedingen", language), href=get_route("vergoedingen", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
-            rx.fragment()
+            rx.link(
+                get_translation("vergoedingen", language),
+                href=get_route("vergoedingen", language),
+                color=Colors.text["heading"],
+                font_size=FontSizes.nav_link,
+                font_weight="600",
+                _hover={"color": Colors.primary["300"]},
+            ),
+            rx.fragment(),
         ),
         rx.cond(
             is_not_on_page("contact"),
-            rx.link(get_translation("contact", language), href=get_route("contact", language), color=Colors.text["heading"], font_size=FontSizes.nav_link, font_weight="600", _hover={"color": Colors.primary["300"]}),
-            rx.fragment()
+            rx.link(
+                get_translation("contact", language),
+                href=get_route("contact", language),
+                color=Colors.text["heading"],
+                font_size=FontSizes.nav_link,
+                font_weight="600",
+                _hover={"color": Colors.primary["300"]},
+            ),
+            rx.fragment(),
         ),
     ]
 
@@ -188,13 +221,13 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=WebsiteState.toggle_nav,  #type: ignore
+                on_click=WebsiteState.toggle_nav,  # type: ignore
                 _hover={
                     "color": Colors.primary["300"],
                     "text_decoration": "underline",
                 },
             ),
-            rx.fragment()
+            rx.fragment(),
         ),
         rx.cond(
             is_not_on_page("blog"),
@@ -209,13 +242,13 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=WebsiteState.toggle_nav,  #type: ignore
+                on_click=WebsiteState.toggle_nav,  # type: ignore
                 _hover={
                     "color": Colors.primary["300"],
                     "text_decoration": "underline",
                 },
             ),
-            rx.fragment()
+            rx.fragment(),
         ),
         rx.cond(
             is_not_on_page("informatie"),
@@ -230,13 +263,13 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=WebsiteState.toggle_nav,  #type: ignore
+                on_click=WebsiteState.toggle_nav,  # type: ignore
                 _hover={
                     "color": Colors.primary["300"],
                     "text_decoration": "underline",
                 },
             ),
-            rx.fragment()
+            rx.fragment(),
         ),
         rx.cond(
             is_not_on_page("vergoedingen"),
@@ -251,13 +284,13 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=WebsiteState.toggle_nav,  #type: ignore
+                on_click=WebsiteState.toggle_nav,  # type: ignore
                 _hover={
                     "color": Colors.primary["300"],
                     "text_decoration": "underline",
                 },
             ),
-            rx.fragment()
+            rx.fragment(),
         ),
         rx.cond(
             is_not_on_page("contact"),
@@ -272,13 +305,13 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=WebsiteState.toggle_nav,  #type: ignore
+                on_click=WebsiteState.toggle_nav,  # type: ignore
                 _hover={
                     "color": Colors.primary["300"],
                     "text_decoration": "underline",
                 },
             ),
-            rx.fragment()
+            rx.fragment(),
         ),
     ]
 
@@ -286,12 +319,19 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
         rx.hstack(
             rx.image(
                 src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
-                width=["66%", "66%", "clamp(200px, calc(200px + (100vw - 768px) * 1.22), 300px)", "300px"],
+                width=[
+                    "66%",
+                    "66%",
+                    "clamp(200px, calc(200px + (100vw - 768px) * 1.22), 300px)",
+                    "300px",
+                ],
                 max_width="300px",
                 height="auto",
             ),
             rx.hstack(
-                rx.hstack(*nav_items, gap="12px", display=["none", "none", "flex", "flex"]),
+                rx.hstack(
+                    *nav_items, gap="12px", display=["none", "none", "flex", "flex"]
+                ),
                 rx.box(
                     language_switcher(language),
                     display=["none", "flex", "flex", "flex"],
@@ -310,9 +350,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                     padding="8px",
                     border_radius="4px",
                     transition="color 0.2s ease",
-                    _hover={
-                        "color": Colors.primary["300"]
-                    },
+                    _hover={"color": Colors.primary["300"]},
                 ),
                 align="center",
                 justify="end",
@@ -322,7 +360,12 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             justify="between",
             width="100%",
         ),
-        padding_x=["1rem", "1.5rem", "clamp(0.5rem, calc(0.5rem + (100vw - 768px) * 0.018), 2rem)", "2rem"],
+        padding_x=[
+            "1rem",
+            "1.5rem",
+            "clamp(0.5rem, calc(0.5rem + (100vw - 768px) * 0.018), 2rem)",
+            "2rem",
+        ],
     )
 
     bar = rx.box(

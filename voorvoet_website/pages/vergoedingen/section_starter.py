@@ -1,4 +1,5 @@
 """Introductory text section for the reimbursements page."""
+
 import reflex as rx
 
 from ...theme import Colors, FontSizes
@@ -60,5 +61,4 @@ def section_starter(language: str) -> rx.Component:
         ),
         background=Colors.backgrounds["white"],
         padding_y="2rem",
-
     )

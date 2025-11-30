@@ -1,4 +1,5 @@
 """Blog service for loading and managing blog posts from the file system."""
+
 from datetime import datetime
 from pathlib import Path
 import frontmatter
@@ -40,10 +41,10 @@ def _resolve_thumbnail_path(filename: str, thumbnail_filename: str) -> str:
 def _parse_date(date_str: str, filename: str) -> datetime:
     """Parse date string from frontmatter (YYYY-MM-DD or DD-MM-YYYY)."""
     try:
-        return datetime.strptime(date_str, '%Y-%m-%d')
+        return datetime.strptime(date_str, "%Y-%m-%d")
     except ValueError:
         try:
-            return datetime.strptime(date_str, '%d-%m-%Y')
+            return datetime.strptime(date_str, "%d-%m-%Y")
         except ValueError:
             print(f"Warning: Could not parse date '{date_str}' in {filename}")
             return FALLBACK_DATE
@@ -52,9 +53,18 @@ def _parse_date(date_str: str, filename: str) -> datetime:
 def _format_date_dutch(date: datetime) -> str:
     """Format datetime as Dutch locale date string (e.g., '15 maart 2024')."""
     months_nl = {
-        1: "januari", 2: "februari", 3: "maart", 4: "april",
-        5: "mei", 6: "juni", 7: "juli", 8: "augustus",
-        9: "september", 10: "oktober", 11: "november", 12: "december"
+        1: "januari",
+        2: "februari",
+        3: "maart",
+        4: "april",
+        5: "mei",
+        6: "juni",
+        7: "juli",
+        8: "augustus",
+        9: "september",
+        10: "oktober",
+        11: "november",
+        12: "december",
     }
     return f"{date.day} {months_nl[date.month]} {date.year}"
 
@@ -62,59 +72,59 @@ def _format_date_dutch(date: datetime) -> str:
 def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
     """Parse a single blog post markdown file into a BlogPost object."""
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(file_path, "r", encoding="utf-8") as f:
             post = frontmatter.load(f)
 
         metadata = post.metadata
         content = post.content
         filename = file_path.stem
-        if '.' in filename:
-            filename = filename.rsplit('.', 1)[0]
+        if "." in filename:
+            filename = filename.rsplit(".", 1)[0]
 
-        story_number = filename.split('_')[0]
+        story_number = filename.split("_")[0]
 
-        date_str = str(metadata.get('date', ''))
+        date_str = str(metadata.get("date", ""))
         date = _parse_date(date_str, filename)
         formatted_date = _format_date_dutch(date)
 
         date_modified = None
-        if 'date_modified' in metadata:
-            date_modified_str = str(metadata.get('date_modified', ''))
+        if "date_modified" in metadata:
+            date_modified_str = str(metadata.get("date_modified", ""))
             date_modified = _parse_date(date_modified_str, filename)
 
         try:
-            read_time = int(str(metadata.get('read_time', "")))
+            read_time = int(str(metadata.get("read_time", "")))
             if read_time <= 0:
                 raise ValueError("Invalid read_time value")
         except (ValueError, TypeError):
             read_time = calculate_read_time(content)
 
-        author = metadata.get('author')
-        thumbnail_filename: str = str(metadata.get('thumbnail', 'thumbnail.jpg'))
+        author = metadata.get("author")
+        thumbnail_filename: str = str(metadata.get("thumbnail", "thumbnail.jpg"))
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
 
-        tags_raw = metadata.get('tags', [])
+        tags_raw = metadata.get("tags", [])
         if isinstance(tags_raw, list):
             tags = [str(tag).strip() for tag in tags_raw]
         elif isinstance(tags_raw, str):
-            tags = [tag.strip() for tag in tags_raw.split(',') if tag.strip()]
+            tags = [tag.strip() for tag in tags_raw.split(",") if tag.strip()]
         else:
             tags = []
 
-        category = metadata.get('category')
+        category = metadata.get("category")
 
         content_objects = parse_blog_content(content, filename)
 
         blog_post = BlogPost(
-            title=str(metadata.get('title', 'Untitled')),
-            slug=str(metadata.get('slug', filename)),
-            summary=str(metadata.get('summary', '')),
+            title=str(metadata.get("title", "Untitled")),
+            slug=str(metadata.get("slug", filename)),
+            summary=str(metadata.get("summary", "")),
             author=str(author) if author else None,
             date=date,
             date_modified=date_modified,
             formatted_date=formatted_date,
             thumbnail=str(thumbnail_filename),
-            thumbnail_alt=str(metadata.get('thumbnail_alt', '')),
+            thumbnail_alt=str(metadata.get("thumbnail_alt", "")),
             content=content,
             filename=filename,
             thumbnail_url=thumbnail_url,
@@ -132,7 +142,9 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         return None
 
 
-def load_all_posts(force_reload: bool = False, language: Optional[str] = None) -> list[BlogPost]:
+def load_all_posts(
+    force_reload: bool = False, language: Optional[str] = None
+) -> list[BlogPost]:
     """Load all blog posts for a specific language, sorted by date (newest first)."""
     global _posts_cache
 
@@ -177,7 +189,9 @@ def load_all_blog_posts_dict() -> dict[str, list[dict[str, str]]]:
                 "summary": post.summary,
                 "author": post.author or "",
                 "date": post.date.isoformat(),
-                "date_modified": post.date_modified.isoformat() if post.date_modified else "",
+                "date_modified": post.date_modified.isoformat()
+                if post.date_modified
+                else "",
                 "formatted_date": post.formatted_date,
                 "thumbnail": post.thumbnail,
                 "thumbnail_alt": post.thumbnail_alt or "",

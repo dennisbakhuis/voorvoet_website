@@ -1,7 +1,9 @@
 """Translation utilities for multilingual support."""
 
 
-def get_translation(translations: dict[str, dict[str, str]], key: str, language="nl") -> str:
+def get_translation(
+    translations: dict[str, dict[str, str]], key: str, language="nl"
+) -> str:
     """
     Get translated text based on specified language.
 

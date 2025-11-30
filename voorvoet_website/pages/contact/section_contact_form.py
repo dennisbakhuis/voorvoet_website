@@ -1,4 +1,5 @@
 """Contact form section with form fields for user inquiries."""
+
 import reflex as rx
 from ...components import (
     container,
@@ -11,7 +12,6 @@ from ...components import (
 )
 from ...theme import Colors, Spacing
 from ...states.contact_state import ContactState
-from ...config import config
 from ...utils.get_translation import get_translation
 
 
@@ -103,18 +103,28 @@ def section_contact_form(language: str) -> rx.Component:
             rx.box(
                 rx.box(
                     rx.box(
-                        form_label(get_translation(TRANSLATIONS, "first_name", language), required=True),
+                        form_label(
+                            get_translation(TRANSLATIONS, "first_name", language),
+                            required=True,
+                        ),
                         form_input(
-                            placeholder=get_translation(TRANSLATIONS, "first_name_placeholder", language),
+                            placeholder=get_translation(
+                                TRANSLATIONS, "first_name_placeholder", language
+                            ),
                             value=ContactState.contact_first_name,  # type: ignore
                             on_change=ContactState.set_contact_first_name,
                         ),
                         flex="1",
                     ),
                     rx.box(
-                        form_label(get_translation(TRANSLATIONS, "last_name", language), required=True),
+                        form_label(
+                            get_translation(TRANSLATIONS, "last_name", language),
+                            required=True,
+                        ),
                         form_input(
-                            placeholder=get_translation(TRANSLATIONS, "last_name_placeholder", language),
+                            placeholder=get_translation(
+                                TRANSLATIONS, "last_name_placeholder", language
+                            ),
                             value=ContactState.contact_last_name,  # type: ignore
                             on_change=ContactState.set_contact_last_name,
                         ),
@@ -126,31 +136,44 @@ def section_contact_form(language: str) -> rx.Component:
                     flex_direction=["column", "column", "row", "row"],
                 ),
                 rx.box(
-                    form_label(get_translation(TRANSLATIONS, "request_type", language), required=True),
+                    form_label(
+                        get_translation(TRANSLATIONS, "request_type", language),
+                        required=True,
+                    ),
                     form_radio(
-                        items=[get_translation(TRANSLATIONS, "call_back", language), get_translation(TRANSLATIONS, "email_question", language)],
+                        items=[
+                            get_translation(TRANSLATIONS, "call_back", language),
+                            get_translation(TRANSLATIONS, "email_question", language),
+                        ],
                         value=ContactState.contact_request_type,
                         on_change=ContactState.set_contact_request_type,
                     ),
                     margin_bottom="1.5rem",
                 ),
                 rx.cond(
-                    ContactState.contact_request_type == get_translation(TRANSLATIONS, "call_back", language),
+                    ContactState.contact_request_type
+                    == get_translation(TRANSLATIONS, "call_back", language),
                     rx.box(
                         form_label(
                             get_translation(TRANSLATIONS, "phone_label", language),
                             required=True,
-                            tooltip_text=get_translation(TRANSLATIONS, "phone_tooltip", language),
+                            tooltip_text=get_translation(
+                                TRANSLATIONS, "phone_tooltip", language
+                            ),
                         ),
                         form_input(
-                            placeholder=get_translation(TRANSLATIONS, "phone_placeholder", language),
+                            placeholder=get_translation(
+                                TRANSLATIONS, "phone_placeholder", language
+                            ),
                             value=ContactState.contact_phone_value,
                             on_change=ContactState.set_contact_phone_number,
                             on_blur=ContactState.on_phone_blur,
                             input_type="tel",
                             input_mode="numeric",
                             max_length=10,
-                            custom_attrs={"oninput": "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"},
+                            custom_attrs={
+                                "oninput": "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"
+                            },
                             show_error=ContactState.should_show_phone_error,
                         ),
                         margin_bottom="1.5rem",
@@ -159,10 +182,14 @@ def section_contact_form(language: str) -> rx.Component:
                         form_label(
                             get_translation(TRANSLATIONS, "email_label", language),
                             required=True,
-                            tooltip_text=get_translation(TRANSLATIONS, "email_tooltip", language),
+                            tooltip_text=get_translation(
+                                TRANSLATIONS, "email_tooltip", language
+                            ),
                         ),
                         form_input(
-                            placeholder=get_translation(TRANSLATIONS, "email_placeholder", language),
+                            placeholder=get_translation(
+                                TRANSLATIONS, "email_placeholder", language
+                            ),
                             value=ContactState.contact_email,  # type: ignore
                             on_change=ContactState.set_contact_email,
                             input_type="email",
@@ -173,9 +200,14 @@ def section_contact_form(language: str) -> rx.Component:
                     ),
                 ),
                 rx.box(
-                    form_label(get_translation(TRANSLATIONS, "description_label", language), required=True),
+                    form_label(
+                        get_translation(TRANSLATIONS, "description_label", language),
+                        required=True,
+                    ),
                     form_textarea(
-                        placeholder=get_translation(TRANSLATIONS, "description_placeholder", language),
+                        placeholder=get_translation(
+                            TRANSLATIONS, "description_placeholder", language
+                        ),
                         value=ContactState.contact_description,  # type: ignore
                         on_change=ContactState.set_contact_description,
                     ),

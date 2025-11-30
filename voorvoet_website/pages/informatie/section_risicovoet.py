@@ -1,6 +1,15 @@
 """Section explaining risk foot classification and care."""
+
 import reflex as rx
-from ...components import container, section, image_text_section, section_sub_title, regular_text, centered_image, risk_level_card
+from ...components import (
+    container,
+    section,
+    image_text_section,
+    section_sub_title,
+    regular_text,
+    centered_image,
+    risk_level_card,
+)
 from ...theme import Colors
 from ...utils.get_translation import get_translation
 
@@ -149,7 +158,6 @@ def section_risicovoet(language: str) -> rx.Component:
                 paragraphs_2,
                 color=Colors.text["content"],
             ),
-
             rx.center(
                 centered_image(
                     src="/images/page_information/nagelbeugel_nagelproblemen_voorvoet_podotherapie_enschede.jpg",
@@ -160,46 +168,50 @@ def section_risicovoet(language: str) -> rx.Component:
                 width="100%",
                 margin_bottom="2rem",
             ),
-            section_sub_title(get_translation(TRANSLATIONS, "classifications_title", language), margin_bottom="1rem"),
+            section_sub_title(
+                get_translation(TRANSLATIONS, "classifications_title", language),
+                margin_bottom="1rem",
+            ),
             regular_text(
                 get_translation(TRANSLATIONS, "classifications_intro", language),
                 color=Colors.text["content"],
                 margin_bottom="2rem",
             ),
-
             risk_level_card(
                 level=0,
                 risk_label=get_translation(TRANSLATIONS, "level0_risk", language),
                 title=get_translation(TRANSLATIONS, "level0_title", language),
-                description=get_translation(TRANSLATIONS, "level0_desc", language)
+                description=get_translation(TRANSLATIONS, "level0_desc", language),
             ),
             risk_level_card(
                 level=1,
                 risk_label=get_translation(TRANSLATIONS, "level1_risk", language),
                 title=get_translation(TRANSLATIONS, "level1_title", language),
-                description=get_translation(TRANSLATIONS, "level1_desc", language)
+                description=get_translation(TRANSLATIONS, "level1_desc", language),
             ),
             risk_level_card(
                 level=2,
                 risk_label=get_translation(TRANSLATIONS, "level2_risk", language),
                 title=get_translation(TRANSLATIONS, "level2_title", language),
-                description=get_translation(TRANSLATIONS, "level2_desc", language)
+                description=get_translation(TRANSLATIONS, "level2_desc", language),
             ),
             risk_level_card(
                 level=3,
                 risk_label=get_translation(TRANSLATIONS, "level3_risk", language),
                 title=get_translation(TRANSLATIONS, "level3_title", language),
-                description=get_translation(TRANSLATIONS, "level3_desc", language)
+                description=get_translation(TRANSLATIONS, "level3_desc", language),
             ),
             risk_level_card(
                 level=4,
                 risk_label=get_translation(TRANSLATIONS, "level4_risk", language),
                 title=get_translation(TRANSLATIONS, "level4_title", language),
-                description=get_translation(TRANSLATIONS, "level4_desc", language)
+                description=get_translation(TRANSLATIONS, "level4_desc", language),
             ),
-
             rx.box(height="1rem"),
-            section_sub_title(get_translation(TRANSLATIONS, "reimbursement_title", language), margin_bottom="1rem"),
+            section_sub_title(
+                get_translation(TRANSLATIONS, "reimbursement_title", language),
+                margin_bottom="1rem",
+            ),
             rx.text(
                 get_translation(TRANSLATIONS, "reimbursement_text", language),
                 rx.link(
@@ -207,7 +219,7 @@ def section_risicovoet(language: str) -> rx.Component:
                     href=f"/{language}/vergoedingen/",
                     color=Colors.text["link"],
                     text_decoration="underline",
-                    _hover={"color": Colors.primary["700"]}
+                    _hover={"color": Colors.primary["700"]},
                 ),
                 ".",
                 font_size="18px",
@@ -221,5 +233,5 @@ def section_risicovoet(language: str) -> rx.Component:
                 font_style="italic",
             ),
         ),
-        id="de-risicovoet"
+        id="de-risicovoet",
     )

@@ -10,3 +10,8 @@ dependencies = [
     "python-frontmatter>=1.1.0",
     "reflex>=0.8.7",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.0",
+]
