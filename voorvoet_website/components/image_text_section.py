@@ -4,7 +4,7 @@ import reflex as rx
 from typing import Optional, Union, Sequence
 
 from ..theme import Layout, Spacing
-from .section_title import section_title
+from .header import header
 from .regular_text import regular_text
 from .button import button
 
@@ -87,7 +87,7 @@ def image_text_section(
         else ["1", "1", "2", "2"],
     )
 
-    text_content = [section_title(title, margin_bottom=Spacing.text_margin_bottom)]
+    text_content = [header(title, level=2, margin_bottom=Spacing.text_margin_bottom)]
 
     for i, paragraph in enumerate(paragraph_list):
         margin_bottom = (

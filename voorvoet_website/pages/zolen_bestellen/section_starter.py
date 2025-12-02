@@ -3,7 +3,7 @@
 import reflex as rx
 
 from ...theme import Colors
-from ...components import section, container, section_title, regular_text
+from ...components import section, container, header, regular_text
 from ...utils.get_translation import get_translation
 
 
@@ -59,8 +59,9 @@ def section_starter(language: str) -> rx.Component:
     """
     return section(
         container(
-            section_title(
+            header(
                 get_translation(TRANSLATIONS, "title", language),
+                level=2,
             ),
             rx.box(
                 regular_text(

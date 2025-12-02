@@ -5,7 +5,7 @@ from ...components import (
     container,
     section,
     image_text_section,
-    section_sub_title,
+    header,
     regular_text,
     centered_image,
     risk_level_card,
@@ -168,8 +168,9 @@ def section_risicovoet(language: str) -> rx.Component:
                 width="100%",
                 margin_bottom="2rem",
             ),
-            section_sub_title(
+            header(
                 get_translation(TRANSLATIONS, "classifications_title", language),
+                level=3,
                 margin_bottom="1rem",
             ),
             regular_text(
@@ -208,8 +209,9 @@ def section_risicovoet(language: str) -> rx.Component:
                 description=get_translation(TRANSLATIONS, "level4_desc", language),
             ),
             rx.box(height="1rem"),
-            section_sub_title(
+            header(
                 get_translation(TRANSLATIONS, "reimbursement_title", language),
+                level=3,
                 margin_bottom="1rem",
             ),
             rx.text(

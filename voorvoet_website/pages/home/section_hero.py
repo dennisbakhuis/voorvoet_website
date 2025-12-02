@@ -2,7 +2,7 @@
 
 import reflex as rx
 from ...theme import Colors, FontSizes, Layout
-from ...components import container, section, hero_banner
+from ...components import container, section, hero_banner, header
 from ...utils.get_translation import get_translation
 from .section_hero_cta import hero_cta_box
 
@@ -43,13 +43,13 @@ def section_hero(language: str) -> rx.Component:
     hero_content = container(
         rx.box(
             rx.vstack(
-                rx.text(
+                header(
                     get_translation(TRANSLATIONS, "hero_title", language),
+                    level=1,
                     color=Colors.primary["300"],
                     font_weight="900",
                     text_align="center",
                     line_height="1.05",
-                    font_size=FontSizes.hero_title,
                 ),
                 rx.text(
                     get_translation(TRANSLATIONS, "hero_subtitle", language),

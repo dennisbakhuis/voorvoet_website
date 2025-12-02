@@ -1,7 +1,7 @@
 """Hero call-to-action box component for appointment booking."""
 
 import reflex as rx
-from ...components import button, section_sub_title, icon_list_item
+from ...components import button, header, icon_list_item
 from ...theme import Colors, Layout, Spacing
 from ...config import config
 from ...utils.get_translation import get_translation
@@ -49,8 +49,9 @@ def hero_cta_box(language: str) -> rx.Component:
     """
     return rx.box(
         rx.vstack(
-            section_sub_title(
+            header(
                 get_translation(TRANSLATIONS, "cta_title", language),
+                level=3,
                 text_align="center",
             ),
             rx.box(

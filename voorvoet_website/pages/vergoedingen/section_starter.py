@@ -2,8 +2,8 @@
 
 import reflex as rx
 
-from ...theme import Colors, FontSizes
-from ...components import section, container
+from ...theme import Colors
+from ...components import section, container, header, regular_text
 from ...utils.get_translation import get_translation
 
 
@@ -45,18 +45,14 @@ def section_starter(language: str) -> rx.Component:
     """
     return section(
         container(
-            rx.text(
+            header(
                 get_translation(TRANSLATIONS, "title", language),
-                font_size=FontSizes.section_title,
-                font_weight="700",
-                color=Colors.text["heading"],
+                level=2,
                 margin_bottom="1rem",
             ),
-            rx.text(
+            regular_text(
                 get_translation(TRANSLATIONS, "intro", language),
                 color=Colors.text["content"],
-                font_size="1.125rem",
-                line_height="1.6",
             ),
         ),
         background=Colors.backgrounds["white"],

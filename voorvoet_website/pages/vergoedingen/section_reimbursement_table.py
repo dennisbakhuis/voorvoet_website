@@ -4,8 +4,8 @@ import reflex as rx
 import json
 from pathlib import Path
 
-from ...theme import Colors, FontSizes
-from ...components import section, container
+from ...theme import Colors
+from ...components import section, container, header
 from ...utils.get_translation import get_translation
 from ...states import WebsiteState
 
@@ -214,10 +214,9 @@ def section_reimbursement_table(language: str) -> rx.Component:
 
     return section(
         container(
-            rx.text(
+            header(
                 get_translation(TRANSLATIONS, "title", language),
-                font_size=FontSizes.section_sub_title,
-                font_weight="700",
+                level=3,
                 color=Colors.text["subheading"],
             ),
             rx.box(

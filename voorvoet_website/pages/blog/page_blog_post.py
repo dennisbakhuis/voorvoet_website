@@ -9,7 +9,7 @@ from ...components import (
     section,
     article_schema,
     breadcrumb_schema,
-    blog_heading,
+    blog_header,
     blog_paragraph,
     blog_markdown,
     blog_image,
@@ -50,7 +50,7 @@ def _build_content_component(obj: dict[str, Any]) -> rx.Component:
     content_type = obj.get("type", "")
 
     if content_type == "heading":
-        return blog_heading(obj.get("content", ""), obj.get("level", 2))
+        return blog_header(obj.get("content", ""), obj.get("level", 2))
     elif content_type == "paragraph":
         return blog_paragraph(obj.get("content", ""))
     elif content_type == "markdown":

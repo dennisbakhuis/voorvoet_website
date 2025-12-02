@@ -5,7 +5,7 @@ from typing import List
 
 from ..theme import Colors, Layout, Spacing
 from .column import column
-from .section_title import section_title
+from .header import header
 from .regular_text import regular_text
 from .button import button
 
@@ -114,8 +114,9 @@ def location_map_item(
     )
 
     info_column = column(
-        section_title(
+        header(
             title,
+            level=2,
             margin_bottom="0.5rem",
             text_align=["center", "center", "left", "left"],
         ),
@@ -211,8 +212,9 @@ def location_section(
         )
 
     return rx.vstack(
-        section_title(
+        header(
             title,
+            level=2,
             text_align=["center", "center", "left", "left"],
             margin_bottom=Spacing.grid_gap,
             width="100%",

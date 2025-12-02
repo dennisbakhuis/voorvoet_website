@@ -4,7 +4,7 @@ import reflex as rx
 from ...components import (
     container,
     section,
-    section_title,
+    header,
     regular_text,
     icon_list_item,
     column,
@@ -89,8 +89,9 @@ def section_veel_voorkomende_klachten(language: str) -> rx.Component:
     )
 
     text_column = column(
-        section_title(
+        header(
             get_translation(TRANSLATIONS, "title", language),
+            level=2,
             margin_bottom=Spacing.text_margin_bottom,
         ),
         regular_text(

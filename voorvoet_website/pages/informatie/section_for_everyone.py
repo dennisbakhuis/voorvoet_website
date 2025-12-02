@@ -4,8 +4,7 @@ import reflex as rx
 from ...components import (
     container,
     section,
-    section_title,
-    section_sub_title,
+    header,
     regular_text,
     centered_image,
     icon_list_item,
@@ -120,13 +119,14 @@ def section_for_everyone(language: str) -> rx.Component:
     return section(
         container(
             rx.vstack(
-                section_title(get_translation(TRANSLATIONS, "main_title", language)),
+                header(get_translation(TRANSLATIONS, "main_title", language), level=2),
                 regular_text(
                     get_translation(TRANSLATIONS, "main_intro", language),
                     color=Colors.text["content"],
                 ),
-                section_sub_title(
-                    get_translation(TRANSLATIONS, "children_title", language)
+                header(
+                    get_translation(TRANSLATIONS, "children_title", language),
+                    level=3,
                 ),
                 regular_text(
                     get_translation(TRANSLATIONS, "children_intro", language),
@@ -171,8 +171,9 @@ def section_for_everyone(language: str) -> rx.Component:
                     ),
                     width="100%",
                 ),
-                section_sub_title(
-                    get_translation(TRANSLATIONS, "athletes_title", language)
+                header(
+                    get_translation(TRANSLATIONS, "athletes_title", language),
+                    level=3,
                 ),
                 regular_text(
                     get_translation(TRANSLATIONS, "athletes_intro", language),
@@ -204,8 +205,9 @@ def section_for_everyone(language: str) -> rx.Component:
                     get_translation(TRANSLATIONS, "athletes_conclusion", language),
                     color=Colors.text["content"],
                 ),
-                section_sub_title(
-                    get_translation(TRANSLATIONS, "elderly_title", language)
+                header(
+                    get_translation(TRANSLATIONS, "elderly_title", language),
+                    level=3,
                 ),
                 regular_text(
                     get_translation(TRANSLATIONS, "elderly_intro", language),

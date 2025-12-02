@@ -1,7 +1,7 @@
 """Components module used across the Reflex web app"""
 
 from .blog_card import blog_card
-from .blog_heading import blog_heading
+from .blog_heading import blog_header
 from .blog_image import blog_image
 from .blog_list import blog_list
 from .blog_markdown import blog_markdown
@@ -29,8 +29,7 @@ from .regular_text import regular_text
 from .responsive_grid import responsive_grid
 from .risk_level_card import risk_level_card
 from .section import section
-from .section_title import section_title
-from .section_sub_title import section_sub_title
+from .header import header
 from .structured_data import organization_schema, article_schema, breadcrumb_schema
 from .toast import toast
 
@@ -38,8 +37,8 @@ from .toast import toast
 __all__ = [
     "article_schema",
     "blog_card",
+    "blog_header",
     "breadcrumb_schema",
-    "blog_heading",
     "blog_image",
     "blog_list",
     "blog_markdown",
@@ -55,6 +54,7 @@ __all__ = [
     "form_radio",
     "form_select",
     "form_textarea",
+    "header",
     "hero_banner",
     "icon_list_item",
     "image_text_section",
@@ -70,7 +70,5 @@ __all__ = [
     "responsive_grid",
     "risk_level_card",
     "section",
-    "section_title",
-    "section_sub_title",
     "toast",
 ]

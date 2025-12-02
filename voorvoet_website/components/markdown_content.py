@@ -8,7 +8,7 @@ maintainability and reusability.
 
 import reflex as rx
 from ..models import BlogPost
-from .blog_heading import blog_heading
+from .blog_heading import blog_header
 from .blog_paragraph import blog_paragraph
 from .blog_markdown import blog_markdown
 from .blog_image import blog_image
@@ -80,7 +80,7 @@ def render_content_object(obj) -> rx.Component:
 
 def _render_heading(obj) -> rx.Component:
     """
-    Render a heading content object using blog_heading component.
+    Render a heading content object using blog_header component.
 
     Parameters
     ----------
@@ -90,9 +90,9 @@ def _render_heading(obj) -> rx.Component:
     Returns
     -------
     rx.Component
-        Styled heading component via blog_heading
+        Styled heading component via blog_header
     """
-    return blog_heading(obj["content"], obj["level"])
+    return blog_header(obj["content"], obj["level"])
 
 
 def _render_paragraph(obj) -> rx.Component:
