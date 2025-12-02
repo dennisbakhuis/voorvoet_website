@@ -1,16 +1,4 @@
-"""Main application entry point for the VoorVoet Reflex web application.
-
-Routes
-------
-Language-prefixed routes (nl, de, en):
-/[lang] : Home page (nl, de, en)
-/[lang]/blog/ : Blog listing page
-/[lang]/blog/[slug] : Individual blog post pages
-/[lang]/informatie : Information page
-/[lang]/vergoedingen : Insurance reimbursements page
-/[lang]/contact : Contact form page
-/[lang]/zolen-bestellen : Order insoles page
-"""
+"""Main application entry point for the VoorVoet Reflex web application."""
 
 import reflex as rx
 
@@ -34,11 +22,6 @@ from .services.blog_service import load_all_blog_posts_dict
 from .config import config
 
 
-def redirect_placeholder() -> rx.Component:
-    """Placeholder component for redirect routes."""
-    return rx.fragment()
-
-
 app = rx.App(
     stylesheets=[
         "https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css",
@@ -49,25 +32,6 @@ app = rx.App(
         "font-family": "Lato, ui-sans-serif, system-ui, sans-serif",
     },
 )
-
-###############
-## Redirects ##
-###############
-redirect_routes = [
-    ("/", "/nl"),
-    ("/blog/", "/nl/blog/"),
-    ("/informatie", "/nl/informatie"),
-    ("/vergoedingen", "/nl/vergoedingen"),
-    ("/contact", "/nl/contact"),
-    ("/zolen-bestellen", "/nl/zolen-bestellen"),
-]
-
-for route, redirect_to in redirect_routes:
-    app.add_page(
-        component=redirect_placeholder,
-        route=route,
-        on_load=lambda target=redirect_to: rx.redirect(target),
-    )
 
 
 ################
@@ -89,6 +53,12 @@ main_pages = [
     ("de", "reimbursements", "/de/erstattungen", page_vergoedingen),
     ("de", "contact", "/de/kontakt", page_contact),
     ("de", "order_insoles", "/de/einlagen-bestellen", page_zolen_bestellen),
+    # Default redirects
+    ("nl", "home", "/", page_home),
+    ("nl", "information", "/informatie", page_informatie),
+    ("nl", "reimbursements", "/vergoedingen", page_vergoedingen),
+    ("nl", "contact", "/contact", page_contact),
+    ("nl", "order_insoles", "/zolen-bestellen", page_zolen_bestellen),
 ]
 
 for language, page_key, page_route, page in main_pages:
@@ -140,6 +110,13 @@ for language in ["nl", "en", "de"]:
         blog_config["image"] = full_blog_image_url
 
     app.add_page(**blog_config)
+
+app.add_page(
+    component=lambda: page_blog(language="nl", posts=blog_posts.get("nl", [])),
+    route="/blog/",
+    title=get_translation(PAGE_TITLES, "blog", "nl"),
+    meta=get_page_meta_tags("blog", "nl", "/blog/", image_url=full_blog_image_url),
+)
 
 for language, posts in blog_posts.items():
     for post in posts:
