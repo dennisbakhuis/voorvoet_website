@@ -140,7 +140,7 @@ for language, posts in blog_posts.items():
             "component": make_blog_post_page(language, post),
             "route": route,
             "title": title,
-            "meta": get_blog_post_meta_tags(  # type: ignore
+            "meta": get_blog_post_meta_tags(  # type: ignore  # TODO: send PR to Reflex for type change
                 post_title=post["title"],
                 post_summary=post["summary"],
                 language=language,

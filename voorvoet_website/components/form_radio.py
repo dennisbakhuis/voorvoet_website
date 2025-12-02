@@ -52,11 +52,11 @@ def form_radio(
         style={
             ".rt-BaseRadioRoot:where(.rt-variant-classic):where(:not(:checked), [data-state='unchecked'])::before": {
                 "background_color": "transparent !important",
-                "box_shadow": f"inset 0 0 0 2px {Colors.text["placeholder"]} !important",
+                "box_shadow": f"inset 0 0 0 2px {Colors.text['placeholder']} !important",
             },
             ".rt-BaseRadioRoot:where(.rt-variant-classic):where(:checked, [data-state='checked'])::before": {
                 "background_color": "transparent !important",
-                "box_shadow": f"inset 0 0 0 2px {Colors.text["placeholder"]} !important",
+                "box_shadow": f"inset 0 0 0 2px {Colors.text['placeholder']} !important",
             },
             ".rt-BaseRadioRoot:where(.rt-variant-classic):where(:checked, [data-state='checked'])::after": {
                 "background_color": f"{Colors.primary['300']} !important",

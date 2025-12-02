@@ -171,7 +171,7 @@ def _process_block_token(
             is_ordered = token.start is not None
             if is_ordered:
                 markdown_list = "\n".join(
-                    [f"{i+1}. {item}" for i, item in enumerate(items)]
+                    [f"{i + 1}. {item}" for i, item in enumerate(items)]
                 )
             else:
                 markdown_list = "\n".join([f"- {item}" for item in items])

@@ -132,9 +132,9 @@ Bericht:
     <hr style="border: none; border-top: 1px solid #ddd; margin: 1rem 0;">
     <p><strong>Naam:</strong> {form.first_name} {form.last_name}</p>
     <p><strong>Verzoek type:</strong> {form.request_type}</p>
-    <p><strong>{contact_method.split(':')[0]}:</strong> {contact_method.split(':')[1].strip()}</p>
+    <p><strong>{contact_method.split(":")[0]}:</strong> {contact_method.split(":")[1].strip()}</p>
     <h3>Bericht:</h3>
-    <p>{form.description.replace(chr(10), '<br>')}</p>
+    <p>{form.description.replace(chr(10), "<br>")}</p>
 </body>
 </html>
 """
@@ -233,7 +233,7 @@ Opmerkingen:
     <p><strong>Soort zolen:</strong> {order_state.insole_type}</p>
     <p><strong>Aantal:</strong> {order_state.quantity}</p>
     <h3>Opmerkingen:</h3>
-    <p>{order_state.comments.replace(chr(10), '<br>') if order_state.comments.strip() else "<em>(geen opmerkingen)</em>"}</p>
+    <p>{order_state.comments.replace(chr(10), "<br>") if order_state.comments.strip() else "<em>(geen opmerkingen)</em>"}</p>
 </body>
 </html>
 """
