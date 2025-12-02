@@ -243,7 +243,7 @@ def page_blog_post(language: str = "nl", post: Optional[dict] = None) -> rx.Comp
         article_schema_component,
         breadcrumb_schema_component,
         header(language, page_key="blog"),
-        section_hero(),
+        section_hero(language),
         section(
             container(
                 content_component,

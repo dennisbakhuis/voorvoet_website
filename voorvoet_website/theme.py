@@ -120,7 +120,8 @@ class FontSizes:
     small = ["1rem", "1.125rem", "1.375rem", "1.5rem"]
 
     hero_title = ["2.5rem", "4rem", "5rem", "6rem"]
-    hero_subtitle = ["1.75rem", "2.25rem", "2.7rem", "3rem"]
+    hero_subtitle = ["1.75rem", "2.25rem", "2.5rem", "2.7rem"]
+    hero_cta_title = ["1.25rem", "1.375rem", "1.5rem", "1.625rem"]
 
     blog_heading_h1 = ["1.375rem", "1.5rem", "1.75rem", "1.875rem"]
     blog_heading_h2 = ["1.25rem", "1.375rem", "1.5rem", "1.625rem"]

@@ -49,7 +49,7 @@ def page_informatie(language: str = "nl") -> rx.Component:
     return rx.fragment(
         breadcrumb_schema(breadcrumb_items),
         header(language, page_key="information"),
-        section_hero(),
+        section_hero(language),
         section_starter(language),
         section_what_is_podiatry(language),
         section_for_everyone(language),

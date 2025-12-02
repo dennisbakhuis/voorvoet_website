@@ -14,6 +14,7 @@ TRANSLATIONS = {
         "informatie": "Informatie",
         "vergoedingen": "Vergoedingen",
         "contact": "Contact",
+        "logo_alt": "VoorVoet Praktijk voor Podotherapie logo",
     },
     "de": {
         "home": "Home",
@@ -21,6 +22,7 @@ TRANSLATIONS = {
         "informatie": "Informationen",
         "vergoedingen": "Erstattungen",
         "contact": "Kontakt",
+        "logo_alt": "VoorVoet Praktijk voor Podotherapie Logo",
     },
     "en": {
         "home": "Home",
@@ -28,6 +30,7 @@ TRANSLATIONS = {
         "informatie": "Information",
         "vergoedingen": "Reimbursements",
         "contact": "Contact",
+        "logo_alt": "VoorVoet Praktijk voor Podotherapie logo",
     },
 }
 
@@ -319,6 +322,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
         rx.hstack(
             rx.image(
                 src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
+                alt=get_translation("logo_alt", language),
                 width=[
                     "66%",
                     "66%",

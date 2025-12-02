@@ -40,7 +40,7 @@ def page_contact(language: str = "nl") -> rx.Component:
     return rx.fragment(
         breadcrumb_schema(breadcrumb_items),
         header(language, page_key="contact"),
-        section_hero(),
+        section_hero(language),
         section_starter(language),
         section_contact_form(language),
         footer(language),

@@ -30,6 +30,7 @@ from .responsive_grid import responsive_grid
 from .risk_level_card import risk_level_card
 from .section import section
 from .header import header
+from .jumbo_text import jumbo_text
 from .structured_data import organization_schema, article_schema, breadcrumb_schema
 from .toast import toast
 
@@ -61,6 +62,7 @@ __all__ = [
     "information_card",
     "information_cards_grid",
     "CardConfig",
+    "jumbo_text",
     "language_switcher",
     "location_section",
     "LocationConfig",
