@@ -102,23 +102,23 @@ BREADCRUMB_NAMES = {
 
 
 PAGE_ROUTES = {
-    "home": {"nl": "/nl", "de": "/de", "en": "/en"},
+    "home": {"nl": "/nl/", "de": "/de/", "en": "/en/"},
     "blog": {"nl": "/nl/blog/", "de": "/de/blog/", "en": "/en/blog/"},
     "information": {
-        "nl": "/nl/informatie",
-        "de": "/de/informationen",
-        "en": "/en/information",
+        "nl": "/nl/informatie/",
+        "de": "/de/informationen/",
+        "en": "/en/information/",
     },
     "reimbursements": {
-        "nl": "/nl/vergoedingen",
-        "de": "/de/erstattungen",
-        "en": "/en/reimbursements",
+        "nl": "/nl/vergoedingen/",
+        "de": "/de/erstattungen/",
+        "en": "/en/reimbursements/",
     },
-    "contact": {"nl": "/nl/contact", "de": "/de/kontakt", "en": "/en/contact"},
+    "contact": {"nl": "/nl/contact/", "de": "/de/kontakt/", "en": "/en/contact/"},
     "order_insoles": {
-        "nl": "/nl/zolen-bestellen",
-        "de": "/de/einlagen-bestellen",
-        "en": "/en/order-insoles",
+        "nl": "/nl/zolen-bestellen/",
+        "de": "/de/einlagen-bestellen/",
+        "en": "/en/order-insoles/",
     },
 }
 

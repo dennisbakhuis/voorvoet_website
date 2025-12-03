@@ -65,6 +65,10 @@ for language, page_key, page_route, page in main_pages:
     page_image = PAGE_IMAGES.get(page_key)
     full_image_url = f"{config.site_url}{page_image}" if page_image else None
 
+    # Determine sitemap priority based on page type
+    priority = 1.0 if page_key == "home" else 0.6
+    changefreq = "weekly" if page_key == "home" else "monthly"
+
     page_config = {
         "component": lambda page_func=page, lang=language: page_func(language=lang),
         "route": page_route,
@@ -72,6 +76,12 @@ for language, page_key, page_route, page in main_pages:
         "meta": get_page_meta_tags(
             page_key, language, page_route, image_url=full_image_url
         ),
+        "context": {
+            "sitemap": {
+                "changefreq": changefreq,
+                "priority": priority,
+            }
+        },
     }
 
     if full_image_url:
@@ -104,6 +114,12 @@ for language in ["nl", "en", "de"]:
         "meta": get_page_meta_tags(
             "blog", language, f"/{language}/blog/", image_url=full_blog_image_url
         ),
+        "context": {
+            "sitemap": {
+                "changefreq": "weekly",
+                "priority": 0.8,
+            }
+        },
     }
 
     if full_blog_image_url:
@@ -116,6 +132,12 @@ app.add_page(
     route="/blog/",
     title=get_translation(PAGE_TITLES, "blog", "nl"),
     meta=get_page_meta_tags("blog", "nl", "/blog/", image_url=full_blog_image_url),
+    context={
+        "sitemap": {
+            "changefreq": "weekly",
+            "priority": 0.8,
+        }
+    },
 )
 
 for language, posts in blog_posts.items():
@@ -149,6 +171,12 @@ for language, posts in blog_posts.items():
                 all_blog_posts=blog_posts,
                 image_url=post_image,
             ),
+            "context": {
+                "sitemap": {
+                    "changefreq": "monthly",
+                    "priority": 0.7,
+                }
+            },
         }
 
         if post_image:
