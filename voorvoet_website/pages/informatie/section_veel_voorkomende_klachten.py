@@ -24,6 +24,7 @@ TRANSLATIONS = {
         "item5": "Peesontstekingen en verrekkingen.",
         "item6": "Klachten als gevolg van diabetes, reuma of andere aandoeningen die invloed hebben op de voeten.",
         "item7": "Pijn of ongemak tijdens het lopen of sporten.",
+        "image_alt": "Anatomie van de voet met hielpijn - VoorVoet podotherapie Enschede",
     },
     "de": {
         "title": "Häufige Beschwerden",
@@ -35,6 +36,7 @@ TRANSLATIONS = {
         "item5": "Sehnenentzündungen und Zerrungen.",
         "item6": "Beschwerden als Folge von Diabetes, Rheuma oder anderen Erkrankungen, die die Füße beeinflussen.",
         "item7": "Schmerzen oder Unbehagen beim Gehen oder Sport.",
+        "image_alt": "Fußanatomie mit Fersenschmerzen - VoorVoet Podotherapie Enschede",
     },
     "en": {
         "title": "Common complaints",
@@ -46,6 +48,7 @@ TRANSLATIONS = {
         "item5": "Tendon inflammations and strains.",
         "item6": "Complaints as a result of diabetes, rheumatism or other conditions that affect the feet.",
         "item7": "Pain or discomfort during walking or sports.",
+        "image_alt": "Foot anatomy with heel pain - VoorVoet podotherapy Enschede",
     },
 }
 
@@ -73,6 +76,7 @@ def section_veel_voorkomende_klachten(language: str) -> rx.Component:
     image_column = column(
         rx.image(
             src="/images/page_information/anatomie-voet-hielpijn_voorvoet_podotherapie_enschede.jpg",
+            alt=get_translation(TRANSLATIONS, "image_alt", language),
             width="100%",
             max_width="450px",
             height="auto",

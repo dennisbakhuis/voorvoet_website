@@ -2,7 +2,7 @@
 
 from typing import Union
 import reflex as rx
-from ..theme import Colors
+from ..theme import Colors, FontSizes
 
 
 def jumbo_text(text: Union[str, rx.Var], **props) -> rx.Component:
@@ -23,7 +23,7 @@ def jumbo_text(text: Union[str, rx.Var], **props) -> rx.Component:
         A styled text component with jumbo sizing.
     """
     default_styles = {
-        "font_size": ["2.5rem", "4rem", "5rem", "6rem"],
+        "font_size": FontSizes.hero_title,
         "font_weight": "900",
         "color": Colors.primary["300"],
         "line_height": "1.05",

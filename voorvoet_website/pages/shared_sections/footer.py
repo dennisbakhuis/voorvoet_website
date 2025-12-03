@@ -22,6 +22,8 @@ TRANSLATIONS = {
         "privacy_policy": "Privacy beleid",
         "terms_conditions": "Algemene voorwaarden",
         "made_with_love": "Gemaakt met ❤️ door Dennis",
+        "nvvp_logo_alt": "Nederlandse Vereniging van Podotherapeuten logo",
+        "krp_logo_alt": "Kwaliteit Register Paramedici - Kim Bakhuis geregistreerd podotherapeut",
     },
     "de": {
         "location_eeftinksweg": "Standort Eeftinksweg",
@@ -38,6 +40,8 @@ TRANSLATIONS = {
         "privacy_policy": "Datenschutzrichtlinie",
         "terms_conditions": "Allgemeine Geschäftsbedingungen",
         "made_with_love": "Mit ❤️ gemacht von Dennis",
+        "nvvp_logo_alt": "Niederländischer Verband der Podotherapeuten Logo",
+        "krp_logo_alt": "Qualitätsregister Paramedici - Kim Bakhuis registrierter Podotherapeut",
     },
     "en": {
         "location_eeftinksweg": "Location Eeftinksweg",
@@ -54,6 +58,8 @@ TRANSLATIONS = {
         "privacy_policy": "Privacy Policy",
         "terms_conditions": "Terms & Conditions",
         "made_with_love": "Made with ❤️ by Dennis",
+        "nvvp_logo_alt": "Dutch Association of Podotherapists logo",
+        "krp_logo_alt": "Quality Register Paramedics - Kim Bakhuis registered podotherapist",
     },
 }
 
@@ -402,6 +408,7 @@ def footer(language: str) -> rx.Component:
                     rx.link(
                         rx.image(
                             src="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png",
+                            alt=get_translation("nvvp_logo_alt", language),
                             height="60px",
                             loading="lazy",
                         ),
@@ -416,6 +423,7 @@ def footer(language: str) -> rx.Component:
                     rx.link(
                         rx.image(
                             src="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png",
+                            alt=get_translation("krp_logo_alt", language),
                             height="60px",
                             loading="lazy",
                         ),

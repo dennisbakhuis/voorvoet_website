@@ -145,6 +145,7 @@ def page_blog_post(language: str = "nl", post: Optional[dict] = None) -> rx.Comp
         page_components: list[rx.Component] = [
             rx.heading(
                 title_val,
+                as_="h1",
                 font_size=FontSizes.section_title,
                 color=Colors.text["heading"],
                 margin_bottom=Spacing.blog_heading_margin_bottom,

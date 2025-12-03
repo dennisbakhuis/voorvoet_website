@@ -145,7 +145,7 @@ def section_information(language: str) -> rx.Component:
 
     return section(
         container(
-            information_cards_grid(cards=cards, columns=[1, 2, 3], spacing="2rem")
+            information_cards_grid(cards=cards, columns=[1, 2, 3], spacing="2rem"),
         ),
         id="services",
         background_color=Colors.backgrounds["green_light"],

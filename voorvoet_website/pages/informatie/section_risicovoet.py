@@ -174,7 +174,7 @@ def section_risicovoet(language: str) -> rx.Component:
             ),
             header(
                 get_translation(TRANSLATIONS, "classifications_title", language),
-                level=3,
+                level=2,
                 margin_bottom="1rem",
             ),
             regular_text(
