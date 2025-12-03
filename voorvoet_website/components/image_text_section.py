@@ -11,6 +11,7 @@ from .button import button
 
 def image_text_section(
     image_src: Union[str, rx.Var],
+    image_alt: str,
     title: Union[str, rx.Var],
     paragraphs: Union[str, rx.Var, Sequence[Union[str, rx.Var]]],
     image_position: str = "left",
@@ -31,6 +32,8 @@ def image_text_section(
     ----------
     image_src : str | rx.Var
         Path or URL to the image to display.
+    image_alt : str
+        Alt text for the image for accessibility and SEO.
     title : str | rx.Var
         Section title text.
     paragraphs : str | rx.Var | Sequence[str | rx.Var]
@@ -69,6 +72,7 @@ def image_text_section(
     image_column = rx.box(
         rx.image(
             src=image_src,
+            alt=image_alt,
             width="100%",
             max_width=image_max_width or Layout.image_max_width,
             height="auto",

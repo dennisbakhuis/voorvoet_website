@@ -46,8 +46,12 @@ def page_blog(language: str = "nl", posts: list = []) -> rx.Component:
     return rx.fragment(
         breadcrumb_schema(breadcrumb_items),
         header(language, page_key="blog"),
-        section_hero(),
-        section_starter(language),
-        section_blog_list(language, posts),
+        rx.box(
+            section_hero(language),
+            section_starter(language),
+            section_blog_list(language, posts),
+            id="main-content",
+            role="main",
+        ),
         footer(language),
     )

@@ -32,7 +32,6 @@ def icon_list_item(icon: str, text: str, **props) -> rx.Component:
         fa_icon(
             icon,
             color=Colors.text["content"],
-            size="8px",
             margin_top="10px",
         ),
         rx.text(

@@ -20,6 +20,7 @@ TRANSLATIONS = {
         "paragraph1_1": "Met een risicovoet wordt bedoeld dat er een aantal factoren aanwezig zijn die de kans op het ontstaan van wonden vergroten, en daarbij ook alle mogelijke complicaties zoals een slechte genezing of zelfs amputatie. De risicofactoren voor het ontstaan van deze problemen zijn o.a. gevoelsstoornissen (neuropathie), verminderde doorbloeding (angiopathie), verminderde beweeglijkheid en/of een afwijkende voetstand. Dit kan leiden tot overmatige druk en wrijving waardoor er eelt, likdoorns, blaren of wonden kunnen ontstaan.",
         "paragraph1_2": "Bij een verminderd gevoel in de voeten wordt dit minder snel of helemaal niet opgemerkt. Bij een slechte doorbloeding zal de wond ook slecht of niet genezen. Een combinatie van deze factoren kan leiden tot grote problemen en in het uiterste geval een amputatie. Dat willen we natuurlijk allemaal het liefst voorkomen.",
         "paragraph1_3": "Er zijn veel verschillende oorzaken voor het ontstaan van neuropathie. Dat kan bijvoorbeeld een neurologische aandoening zijn, of als gevolg van o.a. diabetes of reuma. Ook kan het een bijwerking zijn van chemotherapie. Dit zijn slechts enkele voorbeelden.",
+        "image_alt": "Sportieve persoon met voetklachten en hielpijn",
         "paragraph2_1": "Als uw hoofdbehandelaar of praktijkondersteuner u heeft doorgestuurd naar VoorVoet Podotherapie Enschede i.v.m. een risicovoet, dan zal de podotherapeut uw voeten onderzoeken op deze risicofactoren. De risicofactoren worden in kaart gebracht en bij een verhoogd risico zal er een persoonlijk behandelplan worden opgesteld. Dit is per persoon verschillend en kan bestaan uit voetzorg adviezen, schoenadvies, het aanmeten van drukverdelende zolen, het vervaardigen van een orthese of een combinatie van bovenstaande.",
         "paragraph2_2": "Er zal voor de voetbehandelingen nauw worden samengewerkt met de medisch pedicure die medisch noodzakelijke voetzorg zal uitvoeren. Ook werken we waar nodig samen met de praktijkondersteuner, huisarts of specialist om uw voeten in een zo goed mogelijke conditie te houden.",
         "paragraph2_3": "Vanaf een bepaalde risicoclassificatie kunt in aanmerking komen voor een vergoeding vanuit de basisverzekering. Hiervoor heeft u een verwijzing nodig van uw hoofdbehandelaar.",
@@ -50,6 +51,7 @@ TRANSLATIONS = {
         "paragraph1_1": "Mit einem Risikofuß ist gemeint, dass eine Reihe von Faktoren vorhanden sind, die das Risiko für die Entstehung von Wunden erhöhen, und damit auch alle möglichen Komplikationen wie schlechte Heilung oder sogar Amputation. Die Risikofaktoren für die Entstehung dieser Probleme sind u.a. Gefühlsstörungen (Neuropathie), verminderte Durchblutung (Angiopathie), eingeschränkte Beweglichkeit und/oder eine abnormale Fußstellung. Dies kann zu übermäßigem Druck und Reibung führen, wodurch Hornhaut, Hühneraugen, Blasen oder Wunden entstehen können.",
         "paragraph1_2": "Bei vermindertem Gefühl in den Füßen wird dies weniger schnell oder gar nicht bemerkt. Bei schlechter Durchblutung wird die Wunde auch schlecht oder nicht heilen. Eine Kombination dieser Faktoren kann zu großen Problemen und im Extremfall zu einer Amputation führen. Das möchten wir natürlich alle am liebsten vermeiden.",
         "paragraph1_3": "Es gibt viele verschiedene Ursachen für die Entstehung von Neuropathie. Das kann zum Beispiel eine neurologische Erkrankung sein oder als Folge von u.a. Diabetes oder Rheuma. Es kann auch eine Nebenwirkung von Chemotherapie sein. Dies sind nur einige Beispiele.",
+        "image_alt": "Sportliche Person mit Fußbeschwerden und Fersenschmerzen",
         "paragraph2_1": "Wenn Ihr Hauptbehandler oder Praxisunterstützer Sie wegen eines Risikofußes an VoorVoet Podotherapie Enschede überwiesen hat, wird der Podotherapeut Ihre Füße auf diese Risikofaktoren untersuchen. Die Risikofaktoren werden erfasst und bei erhöhtem Risiko wird ein persönlicher Behandlungsplan erstellt. Dies ist von Person zu Person unterschiedlich und kann aus Fußpflegeberatung, Schuhberatung, dem Anpassen von druckverteilenden Einlagen, der Anfertigung einer Orthese oder einer Kombination der oben genannten bestehen.",
         "paragraph2_2": "Für die Fußbehandlungen wird eng mit dem medizinischen Fußpfleger zusammengearbeitet, der medizinisch notwendige Fußpflege durchführt. Auch arbeiten wir bei Bedarf mit dem Praxisunterstützer, Hausarzt oder Spezialisten zusammen, um Ihre Füße in einem möglichst guten Zustand zu halten.",
         "paragraph2_3": "Ab einer bestimmten Risikoeinstufung können Sie für eine Erstattung aus der Grundversicherung in Frage kommen. Dafür benötigen Sie eine Überweisung von Ihrem Hauptbehandler.",
@@ -80,6 +82,7 @@ TRANSLATIONS = {
         "paragraph1_1": "A risk foot means that there are a number of factors present that increase the risk of developing wounds, and also all possible complications such as poor healing or even amputation. The risk factors for the development of these problems include sensory disturbances (neuropathy), reduced blood flow (angiopathy), reduced mobility and/or an abnormal foot position. This can lead to excessive pressure and friction, which can cause calluses, corns, blisters or wounds.",
         "paragraph1_2": "With reduced feeling in the feet, this is noticed less quickly or not at all. With poor blood flow, the wound will also heal poorly or not at all. A combination of these factors can lead to major problems and in extreme cases amputation. We naturally want to prevent that as much as possible.",
         "paragraph1_3": "There are many different causes for the development of neuropathy. This can be, for example, a neurological condition, or as a result of diabetes or rheumatism. It can also be a side effect of chemotherapy. These are just a few examples.",
+        "image_alt": "Athletic person with foot complaints and heel pain",
         "paragraph2_1": "If your primary care provider or practice assistant has referred you to VoorVoet Podotherapie Enschede due to a risk foot, the podotherapist will examine your feet for these risk factors. The risk factors will be mapped and if there is an increased risk, a personal treatment plan will be drawn up. This differs per person and can consist of foot care advice, shoe advice, fitting pressure-distributing insoles, manufacturing an orthosis or a combination of the above.",
         "paragraph2_2": "For foot treatments, close cooperation will be made with the medical pedicurist who will perform medically necessary foot care. We also work together with the practice assistant, general practitioner or specialist where necessary to keep your feet in the best possible condition.",
         "paragraph2_3": "From a certain risk classification you may be eligible for reimbursement from basic insurance. You need a referral from your primary care provider for this.",
@@ -148,6 +151,7 @@ def section_risicovoet(language: str) -> rx.Component:
         container(
             image_text_section(
                 image_src="/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.jpg",
+                image_alt=get_translation(TRANSLATIONS, "image_alt", language),
                 title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs_1,
                 image_position="right",
@@ -170,7 +174,7 @@ def section_risicovoet(language: str) -> rx.Component:
             ),
             header(
                 get_translation(TRANSLATIONS, "classifications_title", language),
-                level=3,
+                level=2,
                 margin_bottom="1rem",
             ),
             regular_text(

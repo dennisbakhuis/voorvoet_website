@@ -25,6 +25,7 @@ TRANSLATIONS = {
         "item5": "Preventie van voetproblemen door het verbeteren van de werkomgeving en werkverrichtingsproces.",
         "conclusion": "Bedrijfspodotherapie kan helpen bij het voorkomen en behandelen van voetklachten en verminderen van het ziekteverzuim en de kosten die daarmee gepaard gaan. Het kan ook bijdragen aan het verbeteren van de productiviteit en tevredenheid van de werknemers.",
         "contact": "Neem voor meer informatie vrijblijvend contact op.",
+        "image_alt": "Werknemer met pijnlijke voeten en hielpijn - bedrijfspodotherapie VoorVoet Enschede",
     },
     "de": {
         "title": "Betriebspodotherapie über VoorVoet Podotherapie Enschede",
@@ -37,6 +38,7 @@ TRANSLATIONS = {
         "item5": "Prävention von Fußproblemen durch Verbesserung der Arbeitsumgebung und des Arbeitsprozesses.",
         "conclusion": "Betriebspodotherapie kann helfen, Fußbeschwerden vorzubeugen und zu behandeln sowie Krankheitsausfälle und damit verbundene Kosten zu reduzieren. Sie kann auch zur Verbesserung der Produktivität und Zufriedenheit der Mitarbeiter beitragen.",
         "contact": "Nehmen Sie für weitere Informationen unverbindlich Kontakt auf.",
+        "image_alt": "Arbeitnehmer mit schmerzenden Füßen und Fersenschmerzen - Betriebspodotherapie VoorVoet Enschede",
     },
     "en": {
         "title": "Company podotherapy via VoorVoet podotherapie Enschede",
@@ -49,6 +51,7 @@ TRANSLATIONS = {
         "item5": "Prevention of foot problems by improving the work environment and work process.",
         "conclusion": "Company podotherapy can help prevent and treat foot complaints and reduce absenteeism and associated costs. It can also contribute to improving employee productivity and satisfaction.",
         "contact": "Please contact us for more information without obligation.",
+        "image_alt": "Employee with painful feet and heel pain - company podotherapy VoorVoet Enschede",
     },
 }
 
@@ -78,6 +81,7 @@ def section_bedrijfspodotherapie(language: str) -> rx.Component:
     image_column = column(
         rx.image(
             src="/images/page_information/bedrijfs_podotherapie_pijnlijke_voeten_hielpijn_voorvoet_podotherapie_enschede.jpg",
+            alt=get_translation(TRANSLATIONS, "image_alt", language),
             width="100%",
             max_width="450px",
             height="auto",

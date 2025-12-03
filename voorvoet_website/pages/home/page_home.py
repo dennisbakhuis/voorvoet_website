@@ -25,11 +25,15 @@ def page_home(language: str = "nl") -> rx.Component:
     return rx.fragment(
         organization_schema(),
         header(language, page_key="home"),
-        section_hero(language),
-        section_who_is_voorvoet(language),
-        section_order_insoles(language),
-        section_introduction(language),
-        section_information(language),
-        section_locations(language),
+        rx.box(
+            section_hero(language),
+            section_who_is_voorvoet(language),
+            section_order_insoles(language),
+            section_introduction(language),
+            section_information(language),
+            section_locations(language),
+            id="main-content",
+            role="main",
+        ),
         footer(language),
     )

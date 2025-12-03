@@ -6,6 +6,7 @@ from typing import Union
 from ..theme import Colors, FontSizes, Layout
 from .button import button
 from .fa_icon import fa_icon
+from .header import header
 
 
 def information_card(
@@ -74,8 +75,9 @@ def information_card(
                     align_items="center",
                     margin_bottom="1rem",
                 ),
-                rx.text(
+                header(
                     title,
+                    level=2,
                     font_size=FontSizes.card_title,
                     font_weight="600",
                     color=Colors.text["heading"],

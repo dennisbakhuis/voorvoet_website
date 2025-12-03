@@ -14,6 +14,8 @@ TRANSLATIONS = {
         "informatie": "Informatie",
         "vergoedingen": "Vergoedingen",
         "contact": "Contact",
+        "logo_alt": "VoorVoet Praktijk voor Podotherapie logo",
+        "skip_to_content": "Spring naar hoofdinhoud",
     },
     "de": {
         "home": "Home",
@@ -21,6 +23,8 @@ TRANSLATIONS = {
         "informatie": "Informationen",
         "vergoedingen": "Erstattungen",
         "contact": "Kontakt",
+        "logo_alt": "VoorVoet Praktijk voor Podotherapie Logo",
+        "skip_to_content": "Zum Hauptinhalt springen",
     },
     "en": {
         "home": "Home",
@@ -28,6 +32,8 @@ TRANSLATIONS = {
         "informatie": "Information",
         "vergoedingen": "Reimbursements",
         "contact": "Contact",
+        "logo_alt": "VoorVoet Praktijk voor Podotherapie logo",
+        "skip_to_content": "Skip to main content",
     },
 }
 
@@ -319,6 +325,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
         rx.hstack(
             rx.image(
                 src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
+                alt=get_translation("logo_alt", language),
                 width=[
                     "66%",
                     "66%",
@@ -330,7 +337,11 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             ),
             rx.hstack(
                 rx.hstack(
-                    *nav_items, gap="12px", display=["none", "none", "flex", "flex"]
+                    *nav_items,
+                    role="navigation",
+                    aria_label="Main",
+                    gap="12px",
+                    display=["none", "none", "flex", "flex"],
                 ),
                 rx.box(
                     language_switcher(language),
@@ -370,6 +381,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
 
     bar = rx.box(
         header_container,
+        role="banner",
         position="fixed",
         top="0",
         left="0",
@@ -404,6 +416,8 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                     justify_content="flex-end",
                     padding_top="4px",
                 ),
+                role="navigation",
+                aria_label="Mobile menu",
                 spacing="0",
                 width="100%",
             ),
@@ -427,4 +441,26 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
         rx.box(),
     )
 
-    return rx.fragment(overlay, bar, mobile_menu)
+    skip_link = rx.link(
+        get_translation("skip_to_content", language),
+        href="#main-content",
+        position="fixed",
+        top="0",
+        left="0",
+        z_index="30",
+        padding="0.75rem 1rem",
+        background_color=Colors.primary["700"],
+        color="white",
+        font_weight="600",
+        border_radius="0 0 4px 0",
+        text_decoration="none",
+        transform="translateY(-100%)",
+        _focus={
+            "transform": "translateY(0)",
+            "outline": f"2px solid {Colors.primary['300']}",
+            "outline_offset": "2px",
+        },
+        transition="transform 0.2s ease-in-out",
+    )
+
+    return rx.fragment(skip_link, overlay, bar, mobile_menu)

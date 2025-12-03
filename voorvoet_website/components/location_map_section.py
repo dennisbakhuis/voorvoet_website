@@ -116,7 +116,7 @@ def location_map_item(
     info_column = column(
         header(
             title,
-            level=2,
+            level=3,
             margin_bottom="0.5rem",
             text_align=["center", "center", "left", "left"],
         ),

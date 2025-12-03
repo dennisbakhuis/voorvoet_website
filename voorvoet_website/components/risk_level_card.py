@@ -2,6 +2,7 @@
 
 import reflex as rx
 from ..theme import Colors, FontSizes
+from .header import header
 
 
 def risk_level_card(
@@ -79,11 +80,9 @@ def risk_level_card(
             margin_bottom=["1rem", "1rem", "0", "0"],
         ),
         rx.box(
-            rx.text(
+            header(
                 title,
-                font_size=FontSizes.regular,
-                font_weight="700",
-                color=Colors.text["heading"],
+                level=4,
                 margin_bottom="0.5rem",
                 text_align=["center", "center", "left", "left"],
             ),

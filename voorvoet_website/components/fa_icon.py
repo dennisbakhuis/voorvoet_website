@@ -31,10 +31,5 @@ def fa_icon(
     -------
     rx.Component
         A Reflex i element component for FontAwesome icons.
-
-    Examples
-    --------
-    >>> fa_icon("fa-check", color=Colors.primary, size="2rem")
-    >>> fa_icon("fa-heart", size="24px", margin_top="10px")
     """
     return rx.el.i(class_name=f"fa {icon}", color=color, font_size=size, **props)

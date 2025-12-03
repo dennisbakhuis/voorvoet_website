@@ -2,7 +2,7 @@
 
 import reflex as rx
 from ...components import button, header, icon_list_item
-from ...theme import Colors, Layout, Spacing
+from ...theme import Colors, Layout, Spacing, FontSizes
 from ...config import config
 from ...utils.get_translation import get_translation
 
@@ -51,8 +51,9 @@ def hero_cta_box(language: str) -> rx.Component:
         rx.vstack(
             header(
                 get_translation(TRANSLATIONS, "cta_title", language),
-                level=3,
+                level=2,
                 text_align="center",
+                font_size=FontSizes.hero_cta_title,
             ),
             rx.box(
                 rx.vstack(

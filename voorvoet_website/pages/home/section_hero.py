@@ -2,7 +2,7 @@
 
 import reflex as rx
 from ...theme import Colors, FontSizes, Layout
-from ...components import container, section, hero_banner, header
+from ...components import container, section, hero_banner, header, jumbo_text
 from ...utils.get_translation import get_translation
 from .section_hero_cta import hero_cta_box
 
@@ -11,14 +11,17 @@ TRANSLATIONS = {
     "nl": {
         "hero_title": "Voetklachten?",
         "hero_subtitle": "Loop er niet mee door!",
+        "hero_image_alt": "Voeten in bed - podotherapie helpt bij voetklachten in Enschede",
     },
     "de": {
         "hero_title": "Fußbeschwerden?",
         "hero_subtitle": "Laufen Sie nicht damit weiter!",
+        "hero_image_alt": "Füße im Bett - Podotherapie hilft bei Fußbeschwerden in Enschede",
     },
     "en": {
         "hero_title": "Foot complaints?",
         "hero_subtitle": "Don't walk with them!",
+        "hero_image_alt": "Feet in bed - podotherapy helps with foot complaints in Enschede",
     },
 }
 
@@ -43,16 +46,13 @@ def section_hero(language: str) -> rx.Component:
     hero_content = container(
         rx.box(
             rx.vstack(
-                header(
+                jumbo_text(
                     get_translation(TRANSLATIONS, "hero_title", language),
-                    level=1,
-                    color=Colors.primary["300"],
-                    font_weight="900",
                     text_align="center",
-                    line_height="1.05",
                 ),
-                rx.text(
+                header(
                     get_translation(TRANSLATIONS, "hero_subtitle", language),
+                    level=1,
                     color=Colors.text["heading"],
                     text_align="center",
                     opacity="0.95",
@@ -88,6 +88,7 @@ def section_hero(language: str) -> rx.Component:
     return section(
         hero_banner(
             image_src="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpeg",
+            alt_text=get_translation(TRANSLATIONS, "hero_image_alt", language),
             gradient="linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
             content=hero_content,
         ),

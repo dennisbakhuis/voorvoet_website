@@ -12,18 +12,21 @@ TRANSLATIONS = {
         "paragraph1": "Een extra paar zolen kan handig zijn om bijvoorbeeld met een ander paar schoenen te gebruiken, bijvoorbeeld in uw sport- of wandelschoenen. Dit scheelt niet alleen gedoe met wisselen maar verlengt ook de levensduur van de zolen.",
         "paragraph2": "Een extra paar zolen kan alleen als u al eens eerder bij VoorVoet bent geweest en wij een digitale scan van de voet hebben. Als het langer dan een jaar geleden is dat u een scan van u voet heeft laten maken is het raadzaam om een controle in te plannen.",
         "button": "Bestel een extra paar",
+        "image_alt": "Outdoor wandelschoenen - geschikt voor podotherapeutische steunzolen",
     },
     "de": {
         "title": "Zusätzliches Paar podotherapeutische Einlagen",
         "paragraph1": "Ein zusätzliches Paar Einlagen kann praktisch sein, um sie beispielsweise mit einem anderen Paar Schuhen zu verwenden, etwa in Ihren Sport- oder Wanderschuhen. Dies erspart nicht nur den Aufwand des Wechselns, sondern verlängert auch die Lebensdauer der Einlagen.",
         "paragraph2": "Ein zusätzliches Paar Einlagen ist nur möglich, wenn Sie bereits bei VoorVoet waren und wir einen digitalen Scan Ihres Fußes haben. Wenn der Scan Ihres Fußes länger als ein Jahr zurückliegt, ist es ratsam, eine Kontrolle zu vereinbaren.",
         "button": "Bestellen Sie ein zusätzliches Paar",
+        "image_alt": "Outdoor-Wanderschuhe - geeignet für podotherapeutische Einlagen",
     },
     "en": {
         "title": "Extra pair of podotherapeutic insoles",
         "paragraph1": "An extra pair of insoles can be handy to use with a different pair of shoes, for example in your sports or hiking shoes. This not only saves the hassle of switching but also extends the lifespan of the insoles.",
         "paragraph2": "An extra pair of insoles is only possible if you have been to VoorVoet before and we have a digital scan of your foot. If it has been longer than a year since you had a scan of your foot, it is advisable to schedule a check-up.",
         "button": "Order an extra pair",
+        "image_alt": "Outdoor hiking shoes - suitable for podotherapeutic insoles",
     },
 }
 
@@ -53,6 +56,7 @@ def section_order_insoles(language: str) -> rx.Component:
         container(
             image_text_section(
                 image_src="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.jpg",
+                image_alt=get_translation(TRANSLATIONS, "image_alt", language),
                 title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
                 image_position="right",

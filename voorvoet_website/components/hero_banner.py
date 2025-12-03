@@ -5,6 +5,7 @@ import reflex as rx
 
 def hero_banner(
     image_src: str,
+    alt_text: str,
     gradient: str = "linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
     content: rx.Component | None = None,
 ) -> rx.Component:
@@ -22,6 +23,8 @@ def hero_banner(
     ----------
     image_src : str
         Path to the background image.
+    alt_text : str
+        Alt text for the background image for accessibility and SEO.
     gradient : str, optional
         CSS gradient overlay applied over the image.
         Default is a white-to-green gradient with screen blend mode.
@@ -58,6 +61,7 @@ def hero_banner(
     children = [
         rx.image(
             src=image_src,
+            alt=alt_text,
             object_fit="cover",
             position="absolute",
             inset="0",

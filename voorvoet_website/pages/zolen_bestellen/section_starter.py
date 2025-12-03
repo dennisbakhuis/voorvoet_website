@@ -61,7 +61,7 @@ def section_starter(language: str) -> rx.Component:
         container(
             header(
                 get_translation(TRANSLATIONS, "title", language),
-                level=2,
+                level=1,
             ),
             rx.box(
                 regular_text(
