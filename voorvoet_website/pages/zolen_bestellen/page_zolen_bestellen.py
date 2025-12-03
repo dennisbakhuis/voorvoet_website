@@ -45,9 +45,13 @@ def page_zolen_bestellen(language: str = "nl") -> rx.Component:
     return rx.fragment(
         breadcrumb_schema(breadcrumb_items),
         header(language, page_key="order_insoles"),
-        section_hero(language),
-        section_starter(language),
-        section_order_form(language),
+        rx.box(
+            section_hero(language),
+            section_starter(language),
+            section_order_form(language),
+            id="main-content",
+            role="main",
+        ),
         footer(language),
         toast(),
     )

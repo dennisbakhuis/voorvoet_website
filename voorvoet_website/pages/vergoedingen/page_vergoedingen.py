@@ -49,9 +49,13 @@ def page_vergoedingen(language: str = "nl") -> rx.Component:
     return rx.fragment(
         breadcrumb_schema(breadcrumb_items),
         header(language, page_key="reimbursements"),
-        section_hero(language),
-        section_starter(language),
-        section_reimbursement_table(language),
-        section_pricing_table(language),
+        rx.box(
+            section_hero(language),
+            section_starter(language),
+            section_reimbursement_table(language),
+            section_pricing_table(language),
+            id="main-content",
+            role="main",
+        ),
         footer(language),
     )

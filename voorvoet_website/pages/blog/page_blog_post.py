@@ -244,13 +244,17 @@ def page_blog_post(language: str = "nl", post: Optional[dict] = None) -> rx.Comp
         article_schema_component,
         breadcrumb_schema_component,
         header(language, page_key="blog"),
-        section_hero(language),
-        section(
-            container(
-                content_component,
+        rx.box(
+            section_hero(language),
+            section(
+                container(
+                    content_component,
+                ),
+                padding_top="1em",
+                padding_bottom="2em",
             ),
-            padding_top="1em",
-            padding_bottom="2em",
+            id="main-content",
+            role="main",
         ),
         footer(language),
     )

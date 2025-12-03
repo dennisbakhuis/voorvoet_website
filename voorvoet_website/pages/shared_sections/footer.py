@@ -402,6 +402,7 @@ def footer(language: str) -> rx.Component:
                 gap=["0", "0", "0", "2rem"],
                 align_items=["center", "center", "center", "flex-start"],
                 text_align=["center", "center", "center", "left"],
+                role="contentinfo",
             ),
             rx.box(
                 rx.box(
