@@ -3,45 +3,15 @@
 import reflex as rx
 from ..theme import Colors
 from ..states import WebsiteState
-
-
-def get_language_url(target_lang: str):
-    """
-    Build URL for switching to a different language.
-
-    Parameters
-    ----------
-    target_lang : str
-        Target language code ("nl", "de", or "en")
-
-    Returns
-    -------
-    Var
-        URL with the language prefix replaced (as a reactive Var)
-    """
-    current_path = rx.State.router.page.path
-
-    # Extract base path (remove language prefix) using rx.cond
-    base_path = rx.cond(
-        current_path.startswith("/nl"),
-        rx.cond(current_path.length() > 3, current_path[3:], "/"),
-        rx.cond(
-            current_path.startswith("/de"),
-            rx.cond(current_path.length() > 3, current_path[3:], "/"),
-            rx.cond(
-                current_path.startswith("/en"),
-                rx.cond(current_path.length() > 3, current_path[3:], "/"),
-                current_path,
-            ),
-        ),
-    )
-
-    # Build new URL with target language
-    return rx.cond(base_path == "/", f"/{target_lang}", f"/{target_lang}" + base_path)
+from ..translations import ROUTE_MAPPINGS
 
 
 def language_option(
-    flag_emoji: str, language_name: str, language_code: str, toggle_handler
+    flag_emoji: str,
+    language_name: str,
+    language_code: str,
+    page_key: str,
+    toggle_handler,
 ) -> rx.Component:
     """
     Create a single language option in the selector.
@@ -54,6 +24,8 @@ def language_option(
         Full name of the language (e.g., "Nederlands", "Deutsch", "English")
     language_code : str
         ISO language code (e.g., "nl", "de", "en")
+    page_key : str
+        Current page key (e.g., "home", "informatie", "contact")
     toggle_handler : callable
         Function to close the language selector menu
 
@@ -81,7 +53,7 @@ def language_option(
             spacing="3",
             align="center",
         ),
-        href=get_language_url(language_code),
+        href=ROUTE_MAPPINGS[language_code][page_key],
         padding="10px 16px",
         cursor="pointer",
         transition="all 0.2s ease",
@@ -100,7 +72,9 @@ def language_option(
     )
 
 
-def language_switcher(language: str, mobile: bool = False) -> rx.Component:
+def language_switcher(
+    language: str, page_key: str, mobile: bool = False
+) -> rx.Component:
     """
     Create the language switcher component with popup selector.
 
@@ -108,6 +82,8 @@ def language_switcher(language: str, mobile: bool = False) -> rx.Component:
     ----------
     language : str
         Current language code ("nl", "de", or "en")
+    page_key : str
+        Current page key (e.g., "home", "informatie", "contact")
     mobile : bool
         Whether this is the mobile version (in hamburger menu) or header version
 
@@ -183,18 +159,21 @@ def language_switcher(language: str, mobile: bool = False) -> rx.Component:
                     flag_emoji=language_info["nl"]["flag"],
                     language_name=language_info["nl"]["name"],
                     language_code="nl",
+                    page_key=page_key,
                     toggle_handler=toggle_handler,
                 ),
                 language_option(
                     flag_emoji=language_info["de"]["flag"],
                     language_name=language_info["de"]["name"],
                     language_code="de",
+                    page_key=page_key,
                     toggle_handler=toggle_handler,
                 ),
                 language_option(
                     flag_emoji=language_info["en"]["flag"],
                     language_name=language_info["en"]["name"],
                     language_code="en",
+                    page_key=page_key,
                     toggle_handler=toggle_handler,
                 ),
                 spacing="0",

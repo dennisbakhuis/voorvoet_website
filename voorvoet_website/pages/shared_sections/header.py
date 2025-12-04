@@ -5,6 +5,7 @@ import reflex as rx
 from ...theme import Colors, FontSizes, Layout
 from ...states import WebsiteState
 from ...components import container, language_switcher
+from ...translations import ROUTE_MAPPINGS
 
 
 TRANSLATIONS = {
@@ -37,29 +38,13 @@ TRANSLATIONS = {
     },
 }
 
-# Route segments for each page in each language
-ROUTE_SEGMENTS = {
-    "nl": {
-        "home": "",
-        "blog": "blog/",
-        "informatie": "informatie",
-        "vergoedingen": "vergoedingen",
-        "contact": "contact",
-    },
-    "de": {
-        "home": "",
-        "blog": "blog/",
-        "informatie": "informationen",
-        "vergoedingen": "erstattungen",
-        "contact": "kontakt",
-    },
-    "en": {
-        "home": "",
-        "blog": "blog/",
-        "informatie": "information",
-        "vergoedingen": "reimbursements",
-        "contact": "contact",
-    },
+# Map page_key values from header to ROUTE_MAPPINGS keys
+PAGE_KEY_MAPPING = {
+    "home": "home",
+    "blog": "blog",
+    "informatie": "information",
+    "vergoedingen": "reimbursements",
+    "contact": "contact",
 }
 
 
@@ -129,10 +114,8 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
         str
             The full route path for the page in the specified language.
         """
-        segment = ROUTE_SEGMENTS[lang][page_key]
-        if segment:
-            return f"/{lang}/{segment}"
-        return f"/{lang}"
+        mapped_key = PAGE_KEY_MAPPING.get(page_key, page_key)
+        return ROUTE_MAPPINGS[lang][mapped_key]
 
     def is_not_on_page(check_page_key: str) -> bool:
         """
@@ -344,7 +327,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                     display=["none", "none", "flex", "flex"],
                 ),
                 rx.box(
-                    language_switcher(language),
+                    language_switcher(language, page_key or "home"),
                     display=["none", "flex", "flex", "flex"],
                     overflow=["hidden", "visible", "visible", "visible"],
                 ),
@@ -410,7 +393,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             rx.vstack(
                 *mobile_nav_items,
                 rx.box(
-                    language_switcher(language, mobile=True),
+                    language_switcher(language, page_key or "home", mobile=True),
                     width="100%",
                     display=["flex", "none", "none", "none"],
                     justify_content="flex-end",

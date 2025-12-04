@@ -436,6 +436,10 @@ def footer(language: str) -> rx.Component:
                     flex="1",
                     margin_top=["1rem", "1rem", "0", "0"],
                 ),
+                rx.link(
+                    "# TODO: remove this",  # TODO: remove this
+                    href="/this-page-does-not-exist",
+                ),
                 rx.box(
                     rx.link(
                         rx.text("© ", get_translation("made_with_love", language)),

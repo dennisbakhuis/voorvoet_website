@@ -101,6 +101,33 @@ BREADCRUMB_NAMES = {
 }
 
 
+ROUTE_MAPPINGS = {
+    "nl": {
+        "home": "/nl",
+        "information": "/nl/informatie",
+        "reimbursements": "/nl/vergoedingen",
+        "contact": "/nl/contact",
+        "order_insoles": "/nl/zolen-bestellen",
+        "blog": "/nl/blog/",
+    },
+    "de": {
+        "home": "/de",
+        "information": "/de/informationen",
+        "reimbursements": "/de/erstattungen",
+        "contact": "/de/kontakt",
+        "order_insoles": "/de/einlagen-bestellen",
+        "blog": "/de/blog/",
+    },
+    "en": {
+        "home": "/en",
+        "information": "/en/information",
+        "reimbursements": "/en/reimbursements",
+        "contact": "/en/contact",
+        "order_insoles": "/en/order-insoles",
+        "blog": "/en/blog/",
+    },
+}
+
 PAGE_ROUTES = {
     "home": {"nl": "/nl/", "de": "/de/", "en": "/en/"},
     "blog": {"nl": "/nl/blog/", "de": "/de/blog/", "en": "/en/blog/"},
