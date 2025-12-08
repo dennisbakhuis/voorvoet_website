@@ -2,16 +2,16 @@
 
 import reflex as rx
 from typing import Any
-from reflex.event import EventType
+from reflex.event import EventCallback
 from ..theme import Colors, FontSizes
 
 
 def form_input(
     placeholder: str | rx.Var,
     value: str | rx.Var,
-    on_change: EventType[()],
+    on_change: EventCallback,
     input_type: str = "text",
-    on_blur: EventType[()] | None = None,
+    on_blur: EventCallback | None = None,
     show_error: bool | rx.Var = False,
     custom_attrs: dict | None = None,
     input_mode: str | None = None,

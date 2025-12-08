@@ -7,6 +7,7 @@ from datetime import datetime
 from typing import TYPE_CHECKING, AsyncGenerator
 
 from ..services import send_order_insoles_email
+from .website_state import WebsiteState
 
 if TYPE_CHECKING:
     pass
@@ -47,7 +48,7 @@ class OrderInsolesState(rx.State):
     comments: str = ""
     form_submitting: bool = False
 
-    @rx.event
+    @rx.event.EventCallback
     def set_first_name(self, value: str) -> None:
         """
         Update first name field.
@@ -59,7 +60,7 @@ class OrderInsolesState(rx.State):
         """
         self.first_name = value
 
-    @rx.event
+    @rx.event.EventCallback
     def set_last_name(self, value: str) -> None:
         """
         Update last name field.
@@ -71,7 +72,7 @@ class OrderInsolesState(rx.State):
         """
         self.last_name = value
 
-    @rx.event
+    @rx.event.EventCallback
     def set_email(self, value: str) -> None:
         """
         Update email field.
@@ -83,12 +84,12 @@ class OrderInsolesState(rx.State):
         """
         self.email = value
 
-    @rx.event
+    @rx.event.EventCallback
     def on_email_blur(self) -> None:
         """Mark email field as blurred to enable error display."""
         self.email_blurred = True
 
-    @rx.event
+    @rx.event.EventCallback
     def set_birth_date(self, value: str) -> None:
         """
         Update birth date field.
@@ -100,12 +101,12 @@ class OrderInsolesState(rx.State):
         """
         self.birth_date = value
 
-    @rx.event
+    @rx.event.EventCallback
     def on_birth_date_blur(self) -> None:
         """Mark birth date field as blurred to enable error display."""
         self.birth_date_blurred = True
 
-    @rx.event
+    @rx.event.EventCallback
     def set_insole_type(self, value: str) -> None:
         """
         Update insole type field.
@@ -117,7 +118,7 @@ class OrderInsolesState(rx.State):
         """
         self.insole_type = value
 
-    @rx.event
+    @rx.event.EventCallback
     def set_quantity(self, value: str) -> None:
         """
         Update quantity field.
@@ -129,7 +130,7 @@ class OrderInsolesState(rx.State):
         """
         self.quantity = value
 
-    @rx.event
+    @rx.event.EventCallback
     def set_comments(self, value: str) -> None:
         """
         Update comments field.
@@ -270,7 +271,7 @@ class OrderInsolesState(rx.State):
 
         return True
 
-    @rx.event
+    @rx.event.EventCallback
     async def submit_order(self) -> AsyncGenerator[None, None]:
         """
         Submit the order form and send email notification.
@@ -286,8 +287,6 @@ class OrderInsolesState(rx.State):
             email_sent = send_order_insoles_email(self)
 
             self.form_submitting = False
-
-            from .website_state import WebsiteState
 
             website_state = await self.get_state(WebsiteState)
 

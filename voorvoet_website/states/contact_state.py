@@ -176,7 +176,7 @@ class ContactState(rx.State):
         """
         return self.contact_form.is_valid()
 
-    @rx.event
+    @rx.event.EventCallback
     def set_contact_first_name(self, value: str) -> None:
         """
         Update the first name field.
@@ -188,7 +188,7 @@ class ContactState(rx.State):
         """
         self.contact_form = self.contact_form.set_first_name(value)
 
-    @rx.event
+    @rx.event.EventCallback
     def set_contact_last_name(self, value: str) -> None:
         """
         Update the last name field.
@@ -200,7 +200,7 @@ class ContactState(rx.State):
         """
         self.contact_form = self.contact_form.set_last_name(value)
 
-    @rx.event
+    @rx.event.EventCallback
     def set_contact_request_type(self, value: str) -> None:
         """
         Update the request type field.
@@ -212,7 +212,7 @@ class ContactState(rx.State):
         """
         self.contact_form = self.contact_form.set_request_type(value)
 
-    @rx.event
+    @rx.event.EventCallback
     def set_contact_phone_number(self, value: str) -> None:
         """
         Update the phone number field.
@@ -224,7 +224,7 @@ class ContactState(rx.State):
         """
         self.contact_form = self.contact_form.set_phone(value)
 
-    @rx.event
+    @rx.event.EventCallback
     def on_phone_blur(self) -> None:
         """
         Handle phone input field losing focus.
@@ -244,7 +244,7 @@ class ContactState(rx.State):
             description=self.contact_form.description,
         )
 
-    @rx.event
+    @rx.event.EventCallback
     def on_email_blur(self) -> None:
         """
         Handle email input field losing focus.
@@ -264,7 +264,7 @@ class ContactState(rx.State):
             description=self.contact_form.description,
         )
 
-    @rx.event
+    @rx.event.EventCallback
     def set_contact_email(self, value: str) -> None:
         """
         Update the email field.
@@ -276,7 +276,7 @@ class ContactState(rx.State):
         """
         self.contact_form = self.contact_form.set_email(value)
 
-    @rx.event
+    @rx.event.EventCallback
     def set_contact_description(self, value: str) -> None:
         """
         Update the description/message field.
@@ -288,7 +288,7 @@ class ContactState(rx.State):
         """
         self.contact_form = self.contact_form.set_description(value)
 
-    @rx.event
+    @rx.event.EventCallback
     def set_turnstile_token(self, token: str) -> None:
         """
         Update the Cloudflare Turnstile verification token.
@@ -300,7 +300,7 @@ class ContactState(rx.State):
         """
         self.contact_form = self.contact_form.set_turnstile_token(token)
 
-    @rx.event
+    @rx.event.EventCallback
     async def submit_contact_form(self) -> AsyncGenerator[None, None]:
         """
         Submit the contact form and send email notification.
