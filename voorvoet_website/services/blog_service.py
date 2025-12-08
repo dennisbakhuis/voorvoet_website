@@ -3,7 +3,6 @@
 from datetime import datetime
 from pathlib import Path
 import frontmatter
-from typing import Optional
 
 from ..models import BlogPost
 from .content_parser import parse_blog_content
@@ -95,7 +94,7 @@ def _format_date_dutch(date: datetime) -> str:
     return f"{date.day} {months_nl[date.month]} {date.year}"
 
 
-def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
+def parse_blog_post(file_path: Path) -> BlogPost | None:
     """Parse a single blog post markdown file into a BlogPost object."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -175,7 +174,7 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
 
 
 def load_all_posts(
-    force_reload: bool = False, language: Optional[str] = None
+    force_reload: bool = False, language: str | None = None
 ) -> list[BlogPost]:
     """Load all blog posts for a specific language, sorted by date (newest first)."""
     global _posts_cache

@@ -1,11 +1,10 @@
 """Regular text component for body content."""
 
 import reflex as rx
-from typing import Union
 from ..theme import Colors, FontSizes, Spacing
 
 
-def regular_text(text: Union[str, list[str], rx.Var], **props) -> rx.Component:
+def regular_text(text: str | list[str] | rx.Var, **props) -> rx.Component:
     """
     Create regular body text with consistent styling.
 

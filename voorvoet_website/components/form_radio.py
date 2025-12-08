@@ -1,18 +1,18 @@
 """Form radio button component with consistent styling."""
 
 import reflex as rx
-from typing import List, Union, Literal
+from typing import Literal
 from ..theme import FontSizes, Colors
 
 
 def form_radio(
-    items: Union[List[Union[str, rx.Var]], rx.Var],
-    value: Union[str, rx.Var],
+    items: list[str | rx.Var] | rx.Var,
+    value: str | rx.Var,
     on_change,
     direction: Literal["column", "column-reverse", "row", "row-reverse"] = "column",
     spacing: Literal["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"] = "2",
-    color: Union[str, rx.Var, None] = None,
-    font_size: Union[str, rx.Var, None] = None,
+    color: str | rx.Var | None = None,
+    font_size: str | rx.Var | None = None,
 ) -> rx.Component:
     """
     Create a styled radio button group with consistent theming.

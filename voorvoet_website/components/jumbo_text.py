@@ -1,11 +1,10 @@
 """Jumbo text component for extra-large display text."""
 
-from typing import Union
 import reflex as rx
 from ..theme import Colors, FontSizes
 
 
-def jumbo_text(text: Union[str, rx.Var], **props) -> rx.Component:
+def jumbo_text(text: str | rx.Var, **props) -> rx.Component:
     """
     Create extra-large display text for hero sections.
 

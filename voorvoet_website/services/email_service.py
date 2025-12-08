@@ -87,7 +87,6 @@ def send_contact_form_email(form: ContactForm) -> bool:
         logger.error("SMTP configuration incomplete. Check environment variables.")
         return False
 
-    # Type narrowing: after the check above, we know these are not None
     assert smtp_username is not None
     assert smtp_password is not None
     assert from_email is not None
@@ -186,7 +185,6 @@ def send_order_insoles_email(order_state: "OrderInsolesState") -> bool:
         logger.error("SMTP configuration incomplete. Check environment variables.")
         return False
 
-    # Type narrowing: after the check above, we know these are not None
     assert smtp_username is not None
     assert smtp_password is not None
     assert from_email is not None

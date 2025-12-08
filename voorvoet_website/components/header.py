@@ -1,11 +1,10 @@
 """Standard header component for all semantic heading levels h1-h6."""
 
-from typing import Union
 import reflex as rx
 from ..theme import Colors, FontSizes
 
 
-def header(text: Union[str, rx.Var], level: int = 2, **props) -> rx.Component:
+def header(text: str | rx.Var, level: int = 2, **props) -> rx.Component:
     """
     Create a semantic heading with standardized styling.
 

@@ -1,7 +1,7 @@
 """Reusable image-text section component to eliminate layout duplication."""
 
 import reflex as rx
-from typing import Optional, Union, Sequence
+from collections.abc import Sequence
 
 from ..theme import Layout, Spacing
 from .header import header
@@ -13,14 +13,14 @@ from .responsive_image import responsive_image
 def image_text_section(
     image_fallback: str,
     image_alt: str,
-    title: Union[str, rx.Var],
-    paragraphs: Union[str, rx.Var, Sequence[Union[str, rx.Var]]],
+    title: str | rx.Var,
+    paragraphs: str | rx.Var | Sequence[str | rx.Var],
     image_avif: str = "",
     image_webp: str = "",
     image_position: str = "left",
-    button_text: Optional[Union[str, rx.Var]] = None,
-    button_link: Optional[Union[str, rx.Var]] = None,
-    image_max_width: Optional[str] = None,
+    button_text: str | rx.Var | None = None,
+    button_link: str | rx.Var | None = None,
+    image_max_width: str | None = None,
     **section_props,
 ) -> rx.Component:
     """

@@ -1,7 +1,7 @@
 """Structured data components for SEO optimization."""
 
 import reflex as rx
-from typing import Dict, Any
+from typing import Any
 import json
 
 from ..models import BlogPost
@@ -34,7 +34,7 @@ def organization_schema() -> rx.Component:
         A script tag containing JSON-LD structured data.
     """
 
-    org_data: Dict[str, Any] = {
+    org_data: dict[str, Any] = {
         "@context": "https://schema.org",
         "@type": "Podiatrist",
         "name": "VoorVoet",
@@ -197,7 +197,7 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
         article_snippet.replace("#", "").replace("*", "").replace("!", "").strip()
     )
 
-    article_data: Dict[str, Any] = {
+    article_data: dict[str, Any] = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "headline": post.title,
@@ -267,7 +267,7 @@ def breadcrumb_schema(items: list[dict[str, str]]) -> rx.Component:
     rx.Component
         A script tag containing JSON-LD BreadcrumbList structured data.
     """
-    breadcrumb_data: Dict[str, Any] = {
+    breadcrumb_data: dict[str, Any] = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [

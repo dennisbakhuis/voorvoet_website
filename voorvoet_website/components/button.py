@@ -1,12 +1,11 @@
 """Button component based on voorvoet.nl CTA button styling."""
 
 import reflex as rx
-from typing import Union
 from ..theme import Colors, FontSizes
 
 
 def button(
-    label: Union[str, rx.Var], href: Union[str, rx.Var, None] = None, on_click=None
+    label: str | rx.Var, href: str | rx.Var | None = None, on_click=None
 ) -> rx.Component:
     """
     Create a styled call-to-action button component.
@@ -61,11 +60,11 @@ def button(
         return rx.link(
             button_content,
             href=href,
-            **base_styles,  # type: ignore
+            **base_styles,
         )
     else:
         return rx.box(
             button_content,
             on_click=on_click,
-            **base_styles,  # type: ignore
+            **base_styles,
         )

@@ -1,7 +1,6 @@
 """Reusable location map section component."""
 
 import reflex as rx
-from typing import List
 
 from ..theme import Colors, Layout, Spacing
 from .column import column
@@ -172,7 +171,7 @@ def location_map_item(
 
 
 def location_section(
-    title: str, description: str, locations: List[LocationConfig], **section_props
+    title: str, description: str, locations: list[LocationConfig], **section_props
 ) -> rx.Component:
     """
     Create a complete location section with multiple locations.

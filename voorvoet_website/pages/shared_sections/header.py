@@ -38,7 +38,6 @@ TRANSLATIONS = {
     },
 }
 
-# Map page_key values from header to ROUTE_MAPPINGS keys
 PAGE_KEY_MAPPING = {
     "home": "home",
     "blog": "blog",

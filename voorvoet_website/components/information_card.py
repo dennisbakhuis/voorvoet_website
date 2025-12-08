@@ -1,7 +1,7 @@
 """Information card component for displaying service or feature information."""
 
 import reflex as rx
-from typing import Union
+from typing import Any
 
 from ..theme import Colors, FontSizes, Layout
 from .button import button
@@ -10,20 +10,16 @@ from .header import header
 
 
 def information_card(
-    title: Union[str, rx.Var],
-    description: Union[str, rx.Var],
+    title: str | rx.Var,
+    description: str | rx.Var,
     icon: str,
     bg_color="white",
     show_box=True,
-    button_text: Union[str, rx.Var] = "Lees meer",
-    button_link: Union[str, rx.Var] = "#",
+    button_text: str | rx.Var = "Lees meer",
+    button_link: str | rx.Var = "#",
 ) -> rx.Component:
     """
     Create an information card with icon, title, description, and button.
-
-    Creates a styled card component with a FontAwesome icon, title text,
-    description text, and a call-to-action button. The card can be rendered
-    with or without a visible box border and shadow, and includes hover effects.
 
     Parameters
     ----------
@@ -48,22 +44,22 @@ def information_card(
     rx.Component
         A Reflex box component styled as an information card.
     """
-    box_styles = {}
+    box_styles: dict[str, Any] = {"bg": "transparent", "padding": "2rem"}
     if show_box:
-        box_styles = {
-            "bg": bg_color,
-            "border_radius": "12px",
-            "padding": "2rem",
-            "box_shadow": "0 4px 6px rgba(0, 0, 0, 0.05)",
-            "border": f"1px solid {Colors.borders['light']}",
-            "transition": "all 0.3s ease",
-            "_hover": {
-                "transform": "translateY(-4px)",
-                "box_shadow": "0 8px 25px rgba(0, 0, 0, 0.1)",
-            },
-        }
-    else:
-        box_styles = {"bg": "transparent", "padding": "2rem"}
+        box_styles.update(
+            {
+                "bg": bg_color,
+                "border_radius": "12px",
+                "padding": "2rem",
+                "box_shadow": "0 4px 6px rgba(0, 0, 0, 0.05)",
+                "border": f"1px solid {Colors.borders['light']}",
+                "transition": "all 0.3s ease",
+                "_hover": {
+                    "transform": "translateY(-4px)",
+                    "box_shadow": "0 8px 25px rgba(0, 0, 0, 0.1)",
+                },
+            }
+        )
 
     return rx.box(
         rx.vstack(
@@ -110,5 +106,5 @@ def information_card(
         max_width=Layout.card_max_width,
         min_width=Layout.card_min_width,
         display="flex",
-        **box_styles,  # type: ignore
+        **box_styles,
     )

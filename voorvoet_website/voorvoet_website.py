@@ -34,10 +34,6 @@ app = rx.App(
     },
 )
 
-
-################
-## Main pages ##
-################
 PAGE_COMPONENTS = {
     "home": page_home,
     "information": page_informatie,
@@ -88,10 +84,6 @@ for language, page_key, page_route, page in main_pages:
 
     app.add_page(**page_config)
 
-
-#######################
-## Blog / blog posts ##
-#######################
 blog_posts = load_all_blog_posts_dict()
 
 for language in ["nl", "en", "de"]:

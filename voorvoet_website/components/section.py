@@ -1,7 +1,7 @@
 """Section component with optional SVG dividers for visual separation."""
 
 import reflex as rx
-from typing import Optional, Literal
+from typing import Literal
 from ..theme import Colors, Spacing
 
 SVG_DIVIDERS = {
@@ -87,12 +87,12 @@ def section(
     *children,
     background_color: str = Colors.backgrounds["white"],
     divider_color: str = Colors.backgrounds["green_light"],
-    clip_top: Optional[
-        Literal["wave", "curve", "gentle_1", "gentle_2", "gentle_3", "gentle_4"]
-    ] = None,
-    clip_bottom: Optional[
-        Literal["wave", "curve", "gentle_1", "gentle_2", "gentle_3", "gentle_4"]
-    ] = None,
+    clip_top: Literal["wave", "curve", "gentle_1", "gentle_2", "gentle_3", "gentle_4"]
+    | None = None,
+    clip_bottom: Literal[
+        "wave", "curve", "gentle_1", "gentle_2", "gentle_3", "gentle_4"
+    ]
+    | None = None,
     **styles,
 ) -> rx.Component:
     """

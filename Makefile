@@ -1,4 +1,4 @@
-.PHONY: format test test-verbose
+.PHONY: format test types
 
 format:
 	uv run ruff check --fix .
@@ -6,3 +6,6 @@ format:
 
 test:
 	uv run pytest
+
+types:
+	uv run mypy .

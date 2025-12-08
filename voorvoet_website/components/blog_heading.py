@@ -1,12 +1,11 @@
 """Blog header component with blog-specific styling overrides."""
 
-from typing import Union
 import reflex as rx
 from ..theme import Spacing
 from .header import header
 
 
-def blog_header(text: Union[str, rx.Var], level: int = 2) -> rx.Component:
+def blog_header(text: str | rx.Var, level: int = 2) -> rx.Component:
     """
     Create a blog-styled heading with appropriate spacing.
 

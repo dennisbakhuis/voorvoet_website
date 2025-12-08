@@ -1,16 +1,15 @@
 """Enhanced column component for flexible layout with responsive helpers."""
 
 import reflex as rx
-from typing import Union, List, Optional
 
 from ..theme import Spacing
 
 
 def column(
     *children,
-    size: Optional[Union[str, List[str]]] = None,
-    spacing_direction: Optional[str] = None,
-    responsive_spacing: Optional[List[str]] = None,
+    size: str | list[str] | None = None,
+    spacing_direction: str | None = None,
+    responsive_spacing: list[str] | None = None,
     **props,
 ) -> rx.Component:
     """

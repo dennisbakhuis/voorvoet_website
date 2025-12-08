@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
-from typing import Optional, Any, Literal
+from typing import Any, Literal
 
 
 ContentType = Literal["heading", "paragraph", "markdown", "image", "button", "list"]
@@ -21,11 +21,11 @@ class BlogPost(BaseModel):
         URL-friendly identifier for the blog post.
     summary : str
         Brief summary or excerpt of the blog post.
-    author : Optional[str]
+    author : str | None
         Author name, defaults to None if not specified.
     date : datetime
         Publication date and time.
-    date_modified : Optional[datetime]
+    date_modified : datetime | None
         Last modification date, defaults to None (uses publication date).
     formatted_date : str
         Pre-formatted date string in Dutch locale.
@@ -45,13 +45,13 @@ class BlogPost(BaseModel):
         AVIF format image URL (empty string if not available).
     thumbnail_webp : str
         WebP format image URL (empty string if not available).
-    read_time : Optional[int]
+    read_time : int | None
         Estimated reading time in minutes, defaults to None.
     content_objects : list[ContentDict]
         Parsed content as structured dictionaries.
     tags : list[str]
         Keywords/tags for the blog post for SEO and categorization.
-    category : Optional[str]
+    category : str | None
         Article category/section, defaults to None.
     url : str
         Computed URL path for the blog post (read-only property).
@@ -60,9 +60,9 @@ class BlogPost(BaseModel):
     title: str
     slug: str
     summary: str
-    author: Optional[str] = None
+    author: str | None = None
     date: datetime
-    date_modified: Optional[datetime] = None
+    date_modified: datetime | None = None
     formatted_date: str
     thumbnail: str
     thumbnail_alt: str = ""
@@ -72,10 +72,10 @@ class BlogPost(BaseModel):
     thumbnail_fallback: str = ""
     thumbnail_avif: str = ""
     thumbnail_webp: str = ""
-    read_time: Optional[int] = None
+    read_time: int | None = None
     content_objects: Any = Field(default_factory=list)
     tags: list[str] = Field(default_factory=list)
-    category: Optional[str] = None
+    category: str | None = None
     story_number: str
 
     @field_validator("date", mode="before")
