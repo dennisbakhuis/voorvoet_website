@@ -27,11 +27,6 @@ def parse_blog_content(
     """
     Parse markdown content into structured content dictionaries for rendering.
 
-    Transforms raw markdown text into a list of content objects representing
-    different content types (headings, paragraphs, images, buttons, lists).
-    Handles image path resolution with fallbacks and custom button syntax.
-    Uses mistletoe for proper Abstract Syntax Tree (AST) based parsing.
-
     Parameters
     ----------
     markdown_content : str
@@ -49,14 +44,6 @@ def parse_blog_content(
         - image: {'type': 'image', 'src': str, 'alt': str, 'caption': str}
         - button: {'type': 'button', 'label': str, 'url': str}
         - list: {'type': 'list', 'ordered': bool, 'items': list[str]}
-
-    Notes
-    -----
-    - Image paths are resolved relative to /images/page_blog/{filename}/
-    - Non-existent images fall back to default_image_filler.jpg
-    - Custom button syntax: !button[label](url) is converted to button objects
-    - Empty content blocks are filtered out
-    - Lists can be ordered (numbered) or unordered (bullet points)
     """
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
@@ -67,7 +54,7 @@ def parse_blog_content(
     buttons = []
     button_index = 0
 
-    def replace_button(match):
+    def replace_button(match: re.Match[str]) -> str:
         nonlocal button_index
         buttons.append(
             {

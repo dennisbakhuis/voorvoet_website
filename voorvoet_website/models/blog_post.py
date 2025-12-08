@@ -80,7 +80,7 @@ class BlogPost(BaseModel):
 
     @field_validator("date", mode="before")
     @classmethod
-    def parse_date(cls, v):
+    def parse_date(cls, v: str | datetime) -> datetime:
         """Parse date from string or datetime."""
         if isinstance(v, str):
             return datetime.fromisoformat(v)
@@ -88,7 +88,7 @@ class BlogPost(BaseModel):
 
     @field_validator("date_modified", mode="before")
     @classmethod
-    def parse_date_modified(cls, v):
+    def parse_date_modified(cls, v: str | datetime | None) -> datetime | None:
         """Parse date_modified from string or datetime."""
         if v is None or v == "":
             return None
@@ -98,7 +98,7 @@ class BlogPost(BaseModel):
 
     @field_validator("read_time", mode="before")
     @classmethod
-    def parse_read_time(cls, v):
+    def parse_read_time(cls, v: str | int | None) -> int | None:
         """Parse read_time from string or int."""
         if v is None or v == "":
             return None
@@ -108,7 +108,7 @@ class BlogPost(BaseModel):
 
     @field_validator("tags", mode="before")
     @classmethod
-    def parse_tags(cls, v):
+    def parse_tags(cls, v: str | list[str]) -> list[str]:
         """Parse tags from string or list."""
         if isinstance(v, str):
             if v == "":
@@ -118,7 +118,7 @@ class BlogPost(BaseModel):
 
     @field_validator("thumbnail_alt", mode="before")
     @classmethod
-    def ensure_thumbnail_alt(cls, v):
+    def ensure_thumbnail_alt(cls, v: str | None) -> str:
         """Ensure thumbnail_alt is never None."""
         if v is None or v == "":
             return ""

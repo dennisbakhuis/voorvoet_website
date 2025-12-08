@@ -7,7 +7,7 @@ import reflex as rx
 from ..theme import Layout, Spacing
 
 
-def container(*children, **props) -> rx.Component:
+def container(*children: rx.Component, **props: Any) -> rx.Component:
     """
     Create a centered container with max-width constraints.
 

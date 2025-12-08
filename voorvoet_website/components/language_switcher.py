@@ -1,6 +1,7 @@
 """Language switcher component with flag icons and popup selector."""
 
 import reflex as rx
+from reflex.event import EventType
 from ..theme import Colors
 from ..states import WebsiteState
 from ..translations import ROUTE_MAPPINGS
@@ -11,7 +12,7 @@ def language_option(
     language_name: str,
     language_code: str,
     page_key: str,
-    toggle_handler,
+    toggle_handler: EventType,
 ) -> rx.Component:
     """
     Create a single language option in the selector.
@@ -57,7 +58,7 @@ def language_option(
         padding="10px 16px",
         cursor="pointer",
         transition="all 0.2s ease",
-        on_click=toggle_handler,  # type: ignore
+        on_click=toggle_handler,
         _hover={
             "& .flag-emoji": {
                 "transform": "scale(1.2)",
@@ -119,7 +120,7 @@ def language_switcher(
                 transition="transform 0.2s ease",
                 class_name="flag-text",
             ),
-            rx.icon(
+            rx.icon(  # type: ignore
                 "chevron-down",
                 size=12,
                 color=Colors.text["heading"],
@@ -148,7 +149,7 @@ def language_switcher(
                 "transform": "scale(1.1)",
             }
         },
-        on_click=toggle_handler,  # type: ignore
+        on_click=toggle_handler,
     )
 
     popup_menu = rx.cond(

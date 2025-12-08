@@ -13,8 +13,8 @@ def information_card(
     title: str | rx.Var,
     description: str | rx.Var,
     icon: str,
-    bg_color="white",
-    show_box=True,
+    bg_color: str = "white",
+    show_box: bool = True,
     button_text: str | rx.Var = "Lees meer",
     button_link: str | rx.Var = "#",
 ) -> rx.Component:

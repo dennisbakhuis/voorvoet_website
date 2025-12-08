@@ -2,7 +2,9 @@
 
 
 def get_translation(
-    translations: dict[str, dict[str, str]], key: str, language="nl"
+    translations: dict[str, dict[str, str]],
+    key: str,
+    language: str = "nl",
 ) -> str:
     """
     Get translated text based on specified language.

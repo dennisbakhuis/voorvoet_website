@@ -1,6 +1,7 @@
 """Reusable image-text section component to eliminate layout duplication."""
 
 import reflex as rx
+from typing import Any
 from collections.abc import Sequence
 
 from ..theme import Layout, Spacing
@@ -21,7 +22,7 @@ def image_text_section(
     button_text: str | rx.Var | None = None,
     button_link: str | rx.Var | None = None,
     image_max_width: str | None = None,
-    **section_props,
+    **section_props: Any,
 ) -> rx.Component:
     """
     Create a responsive section with image and text content.
@@ -71,10 +72,11 @@ def image_text_section(
     Both button_text and button_link must be provided for the button to appear.
     """
 
+    paragraph_list: list[str | rx.Var]
     if isinstance(paragraphs, (str, rx.Var)):
         paragraph_list = [paragraphs]
     else:
-        paragraph_list = paragraphs
+        paragraph_list = list(paragraphs)
 
     image_element = responsive_image(
         src_fallback=image_fallback,

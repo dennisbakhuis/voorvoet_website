@@ -111,7 +111,7 @@ def section_contact_form(language: str) -> rx.Component:
                             placeholder=get_translation(
                                 TRANSLATIONS, "first_name_placeholder", language
                             ),
-                            value=ContactState.contact_first_name,  # type: ignore
+                            value=ContactState.contact_first_name,
                             on_change=ContactState.set_contact_first_name,
                         ),
                         flex="1",
@@ -125,7 +125,7 @@ def section_contact_form(language: str) -> rx.Component:
                             placeholder=get_translation(
                                 TRANSLATIONS, "last_name_placeholder", language
                             ),
-                            value=ContactState.contact_last_name,  # type: ignore
+                            value=ContactState.contact_last_name,
                             on_change=ContactState.set_contact_last_name,
                         ),
                         flex="1",
@@ -190,11 +190,11 @@ def section_contact_form(language: str) -> rx.Component:
                             placeholder=get_translation(
                                 TRANSLATIONS, "email_placeholder", language
                             ),
-                            value=ContactState.contact_email,  # type: ignore
+                            value=ContactState.contact_email,
                             on_change=ContactState.set_contact_email,
                             input_type="email",
                             on_blur=ContactState.on_email_blur,
-                            show_error=ContactState.should_show_email_error,  # type: ignore
+                            show_error=ContactState.should_show_email_error,
                         ),
                         margin_bottom="1.5rem",
                     ),
@@ -208,7 +208,7 @@ def section_contact_form(language: str) -> rx.Component:
                         placeholder=get_translation(
                             TRANSLATIONS, "description_placeholder", language
                         ),
-                        value=ContactState.contact_description,  # type: ignore
+                        value=ContactState.contact_description,
                         on_change=ContactState.set_contact_description,
                     ),
                     margin_bottom="1.5rem",

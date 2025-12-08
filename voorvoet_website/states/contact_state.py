@@ -7,7 +7,7 @@ with email notifications and toast feedback.
 
 import reflex as rx
 import asyncio
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, AsyncGenerator
 
 from ..models import ContactForm
 from ..services import send_contact_form_email
@@ -177,7 +177,7 @@ class ContactState(rx.State):
         return self.contact_form.is_valid()
 
     @rx.event
-    def set_contact_first_name(self, value: str):
+    def set_contact_first_name(self, value: str) -> None:
         """
         Update the first name field.
 
@@ -189,7 +189,7 @@ class ContactState(rx.State):
         self.contact_form = self.contact_form.set_first_name(value)
 
     @rx.event
-    def set_contact_last_name(self, value: str):
+    def set_contact_last_name(self, value: str) -> None:
         """
         Update the last name field.
 
@@ -201,7 +201,7 @@ class ContactState(rx.State):
         self.contact_form = self.contact_form.set_last_name(value)
 
     @rx.event
-    def set_contact_request_type(self, value: str):
+    def set_contact_request_type(self, value: str) -> None:
         """
         Update the request type field.
 
@@ -213,7 +213,7 @@ class ContactState(rx.State):
         self.contact_form = self.contact_form.set_request_type(value)
 
     @rx.event
-    def set_contact_phone_number(self, value: str):
+    def set_contact_phone_number(self, value: str) -> None:
         """
         Update the phone number field.
 
@@ -225,7 +225,7 @@ class ContactState(rx.State):
         self.contact_form = self.contact_form.set_phone(value)
 
     @rx.event
-    def on_phone_blur(self):
+    def on_phone_blur(self) -> None:
         """
         Handle phone input field losing focus.
 
@@ -245,7 +245,7 @@ class ContactState(rx.State):
         )
 
     @rx.event
-    def on_email_blur(self):
+    def on_email_blur(self) -> None:
         """
         Handle email input field losing focus.
 
@@ -265,7 +265,7 @@ class ContactState(rx.State):
         )
 
     @rx.event
-    def set_contact_email(self, value: str):
+    def set_contact_email(self, value: str) -> None:
         """
         Update the email field.
 
@@ -277,7 +277,7 @@ class ContactState(rx.State):
         self.contact_form = self.contact_form.set_email(value)
 
     @rx.event
-    def set_contact_description(self, value: str):
+    def set_contact_description(self, value: str) -> None:
         """
         Update the description/message field.
 
@@ -289,7 +289,7 @@ class ContactState(rx.State):
         self.contact_form = self.contact_form.set_description(value)
 
     @rx.event
-    def set_turnstile_token(self, token: str):
+    def set_turnstile_token(self, token: str) -> None:
         """
         Update the Cloudflare Turnstile verification token.
 
@@ -301,7 +301,7 @@ class ContactState(rx.State):
         self.contact_form = self.contact_form.set_turnstile_token(token)
 
     @rx.event
-    async def submit_contact_form(self):
+    async def submit_contact_form(self) -> AsyncGenerator[None, None]:
         """
         Submit the contact form and send email notification.
 

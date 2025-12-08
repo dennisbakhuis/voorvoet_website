@@ -1,6 +1,7 @@
 """Responsive image component with AVIF, WebP, and fallback format support."""
 
 import reflex as rx
+from typing import Any
 from ..theme import Layout
 
 
@@ -17,8 +18,7 @@ def responsive_image(
     margin_y: str | None = None,
     class_name: str | None = None,
     loading: str = "lazy",
-    src: str | list[str] | None = None,  # Legacy parameter for backward compatibility
-    **props,
+    **props: Any,
 ) -> rx.Component:
     """
     Create a responsive image with modern format support and styling.

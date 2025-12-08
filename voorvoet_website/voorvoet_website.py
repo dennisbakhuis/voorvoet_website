@@ -1,6 +1,7 @@
 """Main application entry point for the VoorVoet Reflex web application."""
 
 import reflex as rx
+from typing import Any, Callable
 
 from .pages import (
     page_home,
@@ -64,7 +65,7 @@ for language, page_key, page_route, page in main_pages:
     priority = 1.0 if page_key == "home" else 0.6
     changefreq = "weekly" if page_key == "home" else "monthly"
 
-    page_config = {
+    page_config: dict[str, Any] = {
         "component": lambda page_func=page, lang=language: page_func(language=lang),
         "route": page_route,
         "title": get_translation(PAGE_TITLES, page_key, language),
@@ -89,8 +90,8 @@ blog_posts = load_all_blog_posts_dict()
 for language in ["nl", "en", "de"]:
     posts_for_lang = blog_posts.get(language, [])
 
-    def make_blog_page(lang: str, posts_list: list):
-        def _page():
+    def make_blog_page(lang: str, posts_list: list[Any]) -> Callable[[], rx.Component]:
+        def _page() -> rx.Component:
             return page_blog(language=lang, posts=posts_list)
 
         return _page
@@ -99,7 +100,7 @@ for language in ["nl", "en", "de"]:
     full_blog_image_url = f"{config.site_url}{blog_image}" if blog_image else None
     blog_route = ROUTE_MAPPINGS[language]["blog"]
 
-    blog_config = {
+    blog_config: dict[str, Any] = {
         "component": make_blog_page(language, posts_for_lang),
         "route": blog_route,
         "title": get_translation(PAGE_TITLES, "blog", language),
@@ -140,8 +141,10 @@ for language, posts in blog_posts.items():
         blog_base = ROUTE_MAPPINGS[language]["blog"]
         route = f"{blog_base}{slug}/"
 
-        def make_blog_post_page(lang: str, post_data: dict):
-            def _page():
+        def make_blog_post_page(
+            lang: str, post_data: dict[str, Any]
+        ) -> Callable[[], rx.Component]:
+            def _page() -> rx.Component:
                 return page_blog_post(language=lang, post=post_data)
 
             return _page
@@ -152,11 +155,11 @@ for language, posts in blog_posts.items():
             else None
         )
 
-        post_config = {
+        post_config: dict[str, Any] = {
             "component": make_blog_post_page(language, post),
             "route": route,
             "title": title,
-            "meta": get_blog_post_meta_tags(  # type: ignore  # TODO: send PR to Reflex for type change
+            "meta": get_blog_post_meta_tags(
                 post_title=post["title"],
                 post_summary=post["summary"],
                 language=language,

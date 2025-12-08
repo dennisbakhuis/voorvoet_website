@@ -1,6 +1,7 @@
 """Configuration-driven information cards section."""
 
 import reflex as rx
+from typing import Any
 
 from ..theme import Spacing
 from .responsive_grid import responsive_grid
@@ -53,7 +54,7 @@ def information_cards_grid(
     columns: list[int] = [1, 2, 3],
     spacing: str | None = None,
     justify_items: str = "center",
-    **grid_props,
+    **grid_props: Any,
 ) -> rx.Component:
     """
     Create a responsive grid of information cards from configuration.
@@ -92,11 +93,11 @@ def information_cards_grid(
         card_components.append(
             information_card(
                 title=card.title,
-                description=card.description,  # type: ignore
+                description=card.description,
                 icon=card.icon,
                 bg_color=card.bg_color,
                 show_box=card.show_box,
-                button_text=card.button_text,  # type: ignore
+                button_text=card.button_text,
                 button_link=card.button_link,
             )
         )

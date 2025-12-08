@@ -1,12 +1,13 @@
 """Form button component with loading and disabled states."""
 
 import reflex as rx
+from reflex.event import EventType
 from ..theme import Colors, FontSizes
 
 
 def form_button(
     label: str | rx.Var,
-    on_click,
+    on_click: EventType[()],
     is_loading: bool | rx.Var = False,
     is_disabled: bool | rx.Var = False,
     loading_text: str = "Versturen...",

@@ -4,7 +4,7 @@ import requests
 from reflex.testing import AppHarness
 
 
-def test_server_is_running(reflex_app: AppHarness):
+def test_server_is_running(reflex_app: AppHarness) -> None:
     """
     Test that the Reflex server starts and is accessible.
 
@@ -18,7 +18,7 @@ def test_server_is_running(reflex_app: AppHarness):
     assert reflex_app.backend.started
 
 
-def test_frontend_responds(server_url: str):
+def test_frontend_responds(server_url: str) -> None:
     """
     Test that the frontend server responds to HTTP requests.
 

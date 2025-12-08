@@ -209,7 +209,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=WebsiteState.toggle_nav,  # type: ignore
+                on_click=WebsiteState.toggle_nav,
                 _hover={
                     "color": Colors.primary["300"],
                     "text_decoration": "underline",
@@ -230,7 +230,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=WebsiteState.toggle_nav,  # type: ignore
+                on_click=WebsiteState.toggle_nav,
                 _hover={
                     "color": Colors.primary["300"],
                     "text_decoration": "underline",
@@ -251,7 +251,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=WebsiteState.toggle_nav,  # type: ignore
+                on_click=WebsiteState.toggle_nav,
                 _hover={
                     "color": Colors.primary["300"],
                     "text_decoration": "underline",
@@ -272,7 +272,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=WebsiteState.toggle_nav,  # type: ignore
+                on_click=WebsiteState.toggle_nav,
                 _hover={
                     "color": Colors.primary["300"],
                     "text_decoration": "underline",
@@ -293,7 +293,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 padding="10px 16px",
                 cursor="pointer",
                 transition="all 0.2s ease",
-                on_click=WebsiteState.toggle_nav,  # type: ignore
+                on_click=WebsiteState.toggle_nav,
                 _hover={
                     "color": Colors.primary["300"],
                     "text_decoration": "underline",
@@ -333,10 +333,10 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 rx.box(
                     rx.cond(
                         WebsiteState.nav_open,
-                        rx.icon("x", size=28),
-                        rx.icon("menu", size=28),
+                        rx.icon("x", size=28),  # type: ignore
+                        rx.icon("menu", size=28),  # type: ignore
                     ),
-                    on_click=WebsiteState.toggle_nav,  # type: ignore
+                    on_click=WebsiteState.toggle_nav,
                     display=Layout.mobile_only_inline_flex,
                     color=Colors.primary["700"],
                     cursor="pointer",
@@ -381,7 +381,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             right="0",
             bottom="0",
             z_index="20",
-            on_click=WebsiteState.toggle_nav,  # type: ignore
+            on_click=WebsiteState.toggle_nav,
         ),
         rx.fragment(),
     )

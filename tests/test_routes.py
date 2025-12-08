@@ -6,7 +6,7 @@ import requests
 from voorvoet_website.translations import ROUTE_MAPPINGS
 
 
-def test_home_page_accessible(server_url: str):
+def test_home_page_accessible(server_url: str) -> None:
     """
     Test that the Dutch home page is accessible.
 
@@ -19,7 +19,7 @@ def test_home_page_accessible(server_url: str):
     assert response.status_code == 200
 
 
-def test_multiple_language_routes(server_url: str):
+def test_multiple_language_routes(server_url: str) -> None:
     """
     Test that all language variants of the home page are accessible.
 
@@ -36,7 +36,7 @@ def test_multiple_language_routes(server_url: str):
 
 
 @pytest.mark.slow
-def test_all_main_routes_accessible(server_url: str):
+def test_all_main_routes_accessible(server_url: str) -> None:
     """
     Test that all main routes are accessible across all languages.
 

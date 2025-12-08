@@ -7,6 +7,7 @@ maintainability and reusability.
 """
 
 import reflex as rx
+from typing import Any
 from ..models import BlogPost
 from .blog_heading import blog_header
 from .blog_paragraph import blog_paragraph
@@ -16,7 +17,7 @@ from .blog_list import blog_list
 from .button import button
 
 
-def render_content_object(obj) -> rx.Component:
+def render_content_object(obj: dict[str, Any]) -> rx.Component:
     """
     Render a single content object based on its type.
 
@@ -42,15 +43,6 @@ def render_content_object(obj) -> rx.Component:
     rx.Component
         A Reflex component appropriate for the content type with consistent
         styling from the site theme
-
-    Notes
-    -----
-    - Headings use dynamic font sizes based on level (h1-h6)
-    - Paragraphs use standard content text styling
-    - Markdown blocks support full markdown rendering
-    - Images are centered with optional captions and responsive sizing
-    - Buttons use primary color scheme with hover effects
-    - Lists support both ordered (numbered) and unordered (bulleted) formats
     """
     return rx.cond(
         obj["type"] == "heading",
@@ -78,7 +70,7 @@ def render_content_object(obj) -> rx.Component:
     )
 
 
-def _render_heading(obj) -> rx.Component:
+def _render_heading(obj: dict[str, Any]) -> rx.Component:
     """
     Render a heading content object using blog_header component.
 
@@ -95,7 +87,7 @@ def _render_heading(obj) -> rx.Component:
     return blog_header(obj["content"], obj["level"])
 
 
-def _render_paragraph(obj) -> rx.Component:
+def _render_paragraph(obj: dict[str, Any]) -> rx.Component:
     """
     Render a paragraph content object using blog_paragraph component.
 
@@ -112,7 +104,7 @@ def _render_paragraph(obj) -> rx.Component:
     return blog_paragraph(obj["content"])
 
 
-def _render_markdown(obj) -> rx.Component:
+def _render_markdown(obj: dict[str, Any]) -> rx.Component:
     """
     Render a markdown content object using blog_markdown component.
 
@@ -129,7 +121,7 @@ def _render_markdown(obj) -> rx.Component:
     return blog_markdown(obj["content"])
 
 
-def _render_image(obj) -> rx.Component:
+def _render_image(obj: dict[str, Any]) -> rx.Component:
     """
     Render an image content object using blog_image component.
 
@@ -146,7 +138,7 @@ def _render_image(obj) -> rx.Component:
     return blog_image(obj["src"], obj.get("alt", ""), obj.get("caption", ""))
 
 
-def _render_button(obj) -> rx.Component:
+def _render_button(obj: dict[str, Any]) -> rx.Component:
     """
     Render a button content object using button component.
 
@@ -169,7 +161,7 @@ def _render_button(obj) -> rx.Component:
     )
 
 
-def _render_list(obj) -> rx.Component:
+def _render_list(obj: dict[str, Any]) -> rx.Component:
     """
     Render a list content object using blog_list component.
 

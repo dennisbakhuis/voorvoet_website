@@ -1,13 +1,14 @@
 """Form select dropdown component with consistent styling."""
 
 import reflex as rx
+from reflex.event import EventType
 from ..theme import Colors
 
 
 def form_select(
     items: list[str] | rx.Var,
     value: str | rx.Var,
-    on_change,
+    on_change: EventType[()],
     placeholder: str | rx.Var = "",
     size: str = "3",
 ) -> rx.Component:

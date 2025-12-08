@@ -111,7 +111,7 @@ def section_order_form(language: str) -> rx.Component:
                             placeholder=get_translation(
                                 TRANSLATIONS, "first_name_placeholder", language
                             ),
-                            value=OrderInsolesState.first_name,  # type: ignore
+                            value=OrderInsolesState.first_name,
                             on_change=OrderInsolesState.set_first_name,
                         ),
                         flex="1",
@@ -125,7 +125,7 @@ def section_order_form(language: str) -> rx.Component:
                             placeholder=get_translation(
                                 TRANSLATIONS, "last_name_placeholder", language
                             ),
-                            value=OrderInsolesState.last_name,  # type: ignore
+                            value=OrderInsolesState.last_name,
                             on_change=OrderInsolesState.set_last_name,
                         ),
                         flex="1",
@@ -147,11 +147,11 @@ def section_order_form(language: str) -> rx.Component:
                         placeholder=get_translation(
                             TRANSLATIONS, "email_placeholder", language
                         ),
-                        value=OrderInsolesState.email,  # type: ignore
+                        value=OrderInsolesState.email,
                         on_change=OrderInsolesState.set_email,
                         input_type="email",
                         on_blur=OrderInsolesState.on_email_blur,
-                        show_error=OrderInsolesState.should_show_email_error,  # type: ignore
+                        show_error=OrderInsolesState.should_show_email_error,
                     ),
                     margin_bottom="1.5rem",
                 ),
@@ -164,11 +164,11 @@ def section_order_form(language: str) -> rx.Component:
                         placeholder=get_translation(
                             TRANSLATIONS, "birth_date_placeholder", language
                         ),
-                        value=OrderInsolesState.birth_date,  # type: ignore
+                        value=OrderInsolesState.birth_date,
                         on_change=OrderInsolesState.set_birth_date,
                         input_type="text",
                         on_blur=OrderInsolesState.on_birth_date_blur,
-                        show_error=OrderInsolesState.should_show_birth_date_error,  # type: ignore
+                        show_error=OrderInsolesState.should_show_birth_date_error,
                     ),
                     margin_bottom="1.5rem",
                     max_width="250px",
@@ -218,7 +218,7 @@ def section_order_form(language: str) -> rx.Component:
                         placeholder=get_translation(
                             TRANSLATIONS, "comments_placeholder", language
                         ),
-                        value=OrderInsolesState.comments,  # type: ignore
+                        value=OrderInsolesState.comments,
                         on_change=OrderInsolesState.set_comments,
                     ),
                     margin_bottom="1.5rem",

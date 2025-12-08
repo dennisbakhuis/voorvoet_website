@@ -1,11 +1,16 @@
 """Button component based on voorvoet.nl CTA button styling."""
 
+from typing import Any
+
 import reflex as rx
+from reflex.event import EventType
 from ..theme import Colors, FontSizes
 
 
 def button(
-    label: str | rx.Var, href: str | rx.Var | None = None, on_click=None
+    label: str | rx.Var,
+    href: str | rx.Var | None = None,
+    on_click: EventType[()] | None = None,
 ) -> rx.Component:
     """
     Create a styled call-to-action button component.
@@ -31,7 +36,7 @@ def button(
         A Reflex link component (if href provided) or box component
         (if on_click provided) styled as a button.
     """
-    base_styles = {
+    base_styles: dict[str, Any] = {
         "border_radius": "3px",
         "font_weight": "700",
         "font_size": FontSizes.button,

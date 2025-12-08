@@ -172,7 +172,7 @@ def get_hreflang_tags(page_key: str) -> list:
     - Adds x-default pointing to Dutch (nl) as the default language
     - Required for multi-language SEO per Google guidelines
     """
-    hreflang_tags = []
+    hreflang_tags: list[rx.Component] = []
 
     page_routes = PAGE_ROUTES.get(page_key, {})
 
