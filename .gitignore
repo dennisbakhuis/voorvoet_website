@@ -22,3 +22,4 @@ local/
 .ruff_cache/
 original_images/
 .web/
+.mypy_cach/

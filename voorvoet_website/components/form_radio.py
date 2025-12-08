@@ -1,15 +1,16 @@
 """Form radio button component with consistent styling."""
 
+from typing import Any
+
 import reflex as rx
 from typing import Literal
-from reflex.event import EventCallback
 from ..theme import FontSizes, Colors
 
 
 def form_radio(
     items: list[str | rx.Var] | rx.Var,
     value: str | rx.Var,
-    on_change: EventCallback,
+    on_change: Any,
     direction: Literal["column", "column-reverse", "row", "row-reverse"] = "column",
     spacing: Literal["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"] = "2",
     color: str | rx.Var | None = None,

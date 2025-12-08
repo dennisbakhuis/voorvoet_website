@@ -230,12 +230,12 @@ def _process_image(image: Image, filename: str, project_root: Path) -> dict[str,
         "src_avif": src_avif,
         "src_webp": src_webp,
         "alt": alt,
-        "caption": alt,  # Use alt text as caption
+        "caption": alt,
     }
 
 
 def _render_span_tokens(
-    tokens: Any,  # Can be Iterable or list from mistletoe
+    tokens: Any,
     filename: str,
     buttons: list[dict[str, str]],
     project_root: Path,

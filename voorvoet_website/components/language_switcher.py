@@ -120,7 +120,7 @@ def language_switcher(
                 transition="transform 0.2s ease",
                 class_name="flag-text",
             ),
-            rx.icon(  # type: ignore
+            rx.icon(  # type: ignore[operator]  # Due to missing stubs in Relfex
                 "chevron-down",
                 size=12,
                 color=Colors.text["heading"],

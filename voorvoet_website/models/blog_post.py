@@ -73,7 +73,7 @@ class BlogPost(BaseModel):
     thumbnail_avif: str = ""
     thumbnail_webp: str = ""
     read_time: int | None = None
-    content_objects: Any = Field(default_factory=list)
+    content_objects: Any = Field(default_factory=lambda: [])
     tags: list[str] = Field(default_factory=list)
     category: str | None = None
     story_number: str
@@ -126,12 +126,5 @@ class BlogPost(BaseModel):
 
     @property
     def url(self) -> str:
-        """
-        Get the URL path for this blog post.
-
-        Returns
-        -------
-        str
-            URL path in the format '/blog/{slug}/'.
-        """
+        """Get the URL path for this blog post."""
         return f"/blog/{self.slug}/"

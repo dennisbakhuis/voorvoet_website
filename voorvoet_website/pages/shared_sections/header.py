@@ -333,8 +333,8 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
                 rx.box(
                     rx.cond(
                         WebsiteState.nav_open,
-                        rx.icon("x", size=28),  # type: ignore
-                        rx.icon("menu", size=28),  # type: ignore
+                        rx.icon("x", size=28),  # type: ignore[operator]
+                        rx.icon("menu", size=28),  # type: ignore[operator]
                     ),
                     on_click=WebsiteState.toggle_nav,
                     display=Layout.mobile_only_inline_flex,

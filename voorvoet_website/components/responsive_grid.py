@@ -42,8 +42,10 @@ def responsive_grid(
     Only the first len(columns) breakpoints are configured.
     """
     labels = ["initial", "sm", "md", "lg", "xl", "2xl"]
-    bp = {labels[i]: str(c) for i, c in enumerate(columns) if i < len(labels)}
-    cols = rx.breakpoints(**bp)  # type: ignore
+    bp: dict[str, Any] = {
+        labels[i]: str(c) for i, c in enumerate(columns) if i < len(labels)
+    }
+    cols = rx.breakpoints(**bp)
     props = dict(columns=cols, gap=spacing)
     props.update(props)
     return rx.grid(*children, **props)

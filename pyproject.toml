@@ -61,3 +61,10 @@ module = [
     "frontmatter.*",
 ]
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+    "voorvoet_website.components.language_switcher",
+    "voorvoet_website.pages.shared_sections.header",
+]
+warn_unused_ignores = false
