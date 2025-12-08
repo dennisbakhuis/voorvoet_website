@@ -20,3 +20,5 @@ local/
 .claude/
 .env
 .ruff_cache/
+original_images/
+.web/

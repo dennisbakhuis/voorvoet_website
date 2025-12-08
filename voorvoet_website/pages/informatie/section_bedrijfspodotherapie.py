@@ -8,9 +8,10 @@ from ...components import (
     regular_text,
     icon_list_item,
     column,
+    responsive_image,
 )
 from ...theme import Colors, Layout, Spacing
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {
@@ -79,8 +80,12 @@ def section_bedrijfspodotherapie(language: str) -> rx.Component:
         information about company podiatry services and benefits.
     """
     image_column = column(
-        rx.image(
-            src="/images/page_information/bedrijfs_podotherapie_pijnlijke_voeten_hielpijn_voorvoet_podotherapie_enschede.jpg",
+        responsive_image(
+            src=[
+                "/images/page_information/bedrijfs_podotherapie_pijnlijke_voeten_hielpijn_voorvoet_podotherapie_enschede.avif",
+                "/images/page_information/bedrijfs_podotherapie_pijnlijke_voeten_hielpijn_voorvoet_podotherapie_enschede.webp",
+                "/images/page_information/bedrijfs_podotherapie_pijnlijke_voeten_hielpijn_voorvoet_podotherapie_enschede.jpg",
+            ],
             alt=get_translation(TRANSLATIONS, "image_alt", language),
             width="100%",
             max_width="450px",

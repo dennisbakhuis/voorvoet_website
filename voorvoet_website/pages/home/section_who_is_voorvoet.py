@@ -51,7 +51,11 @@ def section_who_is_voorvoet(language: str) -> rx.Component:
     return section(
         container(
             image_text_section(
-                image_src="/images/page_home/podotherapeut_enschede_kim_bakhuis_van_voorvoet_praktijk_voor_podotherapie.jpg",
+                image_src=[
+                    "/images/page_home/podotherapeut_enschede_kim_bakhuis_van_voorvoet_praktijk_voor_podotherapie.avif",
+                    "/images/page_home/podotherapeut_enschede_kim_bakhuis_van_voorvoet_praktijk_voor_podotherapie.webp",
+                    "/images/page_home/podotherapeut_enschede_kim_bakhuis_van_voorvoet_praktijk_voor_podotherapie.jpg",
+                ],
                 image_alt=get_translation(TRANSLATIONS, "image_alt", language),
                 title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,

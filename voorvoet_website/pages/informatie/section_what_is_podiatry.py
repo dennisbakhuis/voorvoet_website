@@ -49,7 +49,11 @@ def section_what_is_podiatry(language: str) -> rx.Component:
     return section(
         container(
             image_text_section(
-                image_src="/images/page_information/skelet_botjes_voet_voorvoet_praktijk_voor_podotherapie_enschede.jpg",
+                image_src=[
+                    "/images/page_information/skelet_botjes_voet_voorvoet_praktijk_voor_podotherapie_enschede.avif",
+                    "/images/page_information/skelet_botjes_voet_voorvoet_praktijk_voor_podotherapie_enschede.webp",
+                    "/images/page_information/skelet_botjes_voet_voorvoet_praktijk_voor_podotherapie_enschede.jpg",
+                ],
                 image_alt=get_translation(TRANSLATIONS, "image_alt", language),
                 title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,

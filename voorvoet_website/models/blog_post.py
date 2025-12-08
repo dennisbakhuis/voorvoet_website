@@ -39,6 +39,12 @@ class BlogPost(BaseModel):
         Original filename of the blog post source.
     thumbnail_url : str
         Full resolved URL to thumbnail with fallback.
+    thumbnail_sources : list[str]
+        List of all thumbnail image URLs (AVIF, WebP, fallback).
+    thumbnail_picture_sources : list[dict[str, str]]
+        Pre-computed list of source dicts for <picture> element.
+    thumbnail_fallback : str
+        Fallback image URL for <picture> element.
     read_time : Optional[int]
         Estimated reading time in minutes, defaults to None.
     content_objects : list[ContentDict]
@@ -63,6 +69,9 @@ class BlogPost(BaseModel):
     content: str = ""
     filename: str
     thumbnail_url: str
+    thumbnail_sources: list[str] = Field(default_factory=list)
+    thumbnail_picture_sources: list[dict[str, str]] = Field(default_factory=list)
+    thumbnail_fallback: str = ""
     read_time: Optional[int] = None
     content_objects: Any = Field(default_factory=list)
     tags: list[str] = Field(default_factory=list)
@@ -126,3 +135,42 @@ class BlogPost(BaseModel):
             URL path in the format '/blog/{slug}/'.
         """
         return f"/blog/{self.slug}/"
+
+    @property
+    def thumbnail_component_data(self) -> dict[str, Any]:
+        """
+        Get pre-computed data structure for responsive image component.
+
+        Returns
+        -------
+        dict
+            Dictionary with 'sources' (list of dicts) and 'fallback' (str) for building
+            <picture> element with AVIF/WebP sources and fallback image.
+        """
+        mime_types = {
+            ".avif": "image/avif",
+            ".webp": "image/webp",
+            ".jpg": "image/jpeg",
+            ".jpeg": "image/jpeg",
+            ".png": "image/png",
+        }
+
+        sources = []
+        fallback_src = None
+
+        for img_path in self.thumbnail_sources:
+            ext = img_path[img_path.rfind(".") :].lower() if "." in img_path else ""
+            mime_type = mime_types.get(ext)
+
+            if mime_type in ("image/jpeg", "image/png"):
+                fallback_src = img_path
+            elif mime_type:
+                sources.append({"type": mime_type, "srcset": img_path})
+
+        if not fallback_src and self.thumbnail_sources:
+            fallback_src = self.thumbnail_sources[-1]
+
+        if not fallback_src:
+            fallback_src = self.thumbnail_url
+
+        return {"sources": sources, "fallback": fallback_src}

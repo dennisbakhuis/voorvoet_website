@@ -37,7 +37,11 @@ def section_hero(language: str) -> rx.Component:
     """
     return section(
         hero_banner(
-            image_src="/images/page_information/podotherapie_enschede_wandeling_in_het_bos_zonder_hielpijn_voorvoet_podotherapie_enschede.jpg",
+            image_src=[
+                "/images/page_information/podotherapie_enschede_wandeling_in_het_bos_zonder_hielpijn_voorvoet_podotherapie_enschede.avif",
+                "/images/page_information/podotherapie_enschede_wandeling_in_het_bos_zonder_hielpijn_voorvoet_podotherapie_enschede.webp",
+                "/images/page_information/podotherapie_enschede_wandeling_in_het_bos_zonder_hielpijn_voorvoet_podotherapie_enschede.jpg",
+            ],
             alt_text=get_translation(TRANSLATIONS, "hero_image_alt", language),
             gradient="linear-gradient(270deg, rgba(255,255,255,.35) 0%, rgba(16,185,129,.35) 100%)",
             content=None,

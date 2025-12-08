@@ -38,6 +38,59 @@ def _resolve_thumbnail_path(filename: str, thumbnail_filename: str) -> str:
     return thumbnail_path
 
 
+def _build_thumbnail_sources(thumbnail_url: str) -> list[str]:
+    """Build list of thumbnail image sources with AVIF, WebP, and fallback formats."""
+    current_file = Path(__file__)
+    project_root = current_file.parent.parent.parent
+
+    url_path = Path(thumbnail_url)
+    base_path = str(url_path.with_suffix(""))
+    asset_base = base_path.lstrip("/")
+
+    sources = []
+    if (project_root / f"assets/{asset_base}.avif").exists():
+        sources.append(f"{base_path}.avif")
+    if (project_root / f"assets/{asset_base}.webp").exists():
+        sources.append(f"{base_path}.webp")
+    sources.append(thumbnail_url)
+
+    return sources
+
+
+def _build_picture_sources(
+    thumbnail_sources: list[str],
+) -> tuple[list[dict[str, str]], str]:
+    """
+    Build picture element sources and fallback from thumbnail sources.
+
+    Returns tuple of (sources_list, fallback_url).
+    """
+    mime_types = {
+        ".avif": "image/avif",
+        ".webp": "image/webp",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+    }
+
+    sources = []
+    fallback_src = None
+
+    for img_path in thumbnail_sources:
+        ext = img_path[img_path.rfind(".") :].lower() if "." in img_path else ""
+        mime_type = mime_types.get(ext)
+
+        if mime_type in ("image/jpeg", "image/png"):
+            fallback_src = img_path
+        elif mime_type:
+            sources.append({"type": mime_type, "srcset": img_path})
+
+    if not fallback_src and thumbnail_sources:
+        fallback_src = thumbnail_sources[-1]
+
+    return sources, fallback_src or ""
+
+
 def _parse_date(date_str: str, filename: str) -> datetime:
     """Parse date string from frontmatter (YYYY-MM-DD or DD-MM-YYYY)."""
     try:
@@ -102,6 +155,10 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         author = metadata.get("author")
         thumbnail_filename: str = str(metadata.get("thumbnail", "thumbnail.jpg"))
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
+        thumbnail_sources = _build_thumbnail_sources(thumbnail_url)
+        thumbnail_picture_sources, thumbnail_fallback = _build_picture_sources(
+            thumbnail_sources
+        )
 
         tags_raw = metadata.get("tags", [])
         if isinstance(tags_raw, list):
@@ -128,6 +185,9 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
             content=content,
             filename=filename,
             thumbnail_url=thumbnail_url,
+            thumbnail_sources=thumbnail_sources,
+            thumbnail_picture_sources=thumbnail_picture_sources,
+            thumbnail_fallback=thumbnail_fallback,
             read_time=read_time,
             content_objects=content_objects,
             tags=tags,
@@ -173,10 +233,10 @@ def load_all_posts(
     return posts
 
 
-def load_all_blog_posts_dict() -> dict[str, list[dict[str, str]]]:
+def load_all_blog_posts_dict() -> dict[str, list[dict]]:
     """Load all blog posts for all languages as dictionaries."""
     languages = ["nl", "en", "de"]
-    result: dict[str, list[dict[str, str]]] = {}
+    result: dict[str, list[dict]] = {}
 
     for lang in languages:
         posts = load_all_posts(force_reload=False, language=lang)
@@ -196,6 +256,9 @@ def load_all_blog_posts_dict() -> dict[str, list[dict[str, str]]]:
                 "thumbnail": post.thumbnail,
                 "thumbnail_alt": post.thumbnail_alt or "",
                 "thumbnail_url": post.thumbnail_url,
+                "thumbnail_sources": post.thumbnail_sources,
+                "thumbnail_picture_sources": post.thumbnail_picture_sources,
+                "thumbnail_fallback": post.thumbnail_fallback,
                 "read_time": str(post.read_time) if post.read_time else "",
                 "category": post.category or "",
                 "tags": ",".join(post.tags),

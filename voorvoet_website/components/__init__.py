@@ -27,6 +27,7 @@ from .location_map_section import location_section, LocationConfig
 from .markdown_content import markdown_content
 from .regular_text import regular_text
 from .responsive_grid import responsive_grid
+from .responsive_image import responsive_image
 from .risk_level_card import risk_level_card
 from .section import section
 from .header import header
@@ -70,6 +71,7 @@ __all__ = [
     "organization_schema",
     "regular_text",
     "responsive_grid",
+    "responsive_image",
     "risk_level_card",
     "section",
     "toast",

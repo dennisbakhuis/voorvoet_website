@@ -150,7 +150,11 @@ def section_risicovoet(language: str) -> rx.Component:
     return section(
         container(
             image_text_section(
-                image_src="/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.jpg",
+                image_src=[
+                    "/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.avif",
+                    "/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.webp",
+                    "/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.jpg",
+                ],
                 image_alt=get_translation(TRANSLATIONS, "image_alt", language),
                 title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs_1,

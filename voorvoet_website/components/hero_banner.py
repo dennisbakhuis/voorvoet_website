@@ -1,23 +1,17 @@
 """Hero banner component with background image and optional content overlay."""
 
 import reflex as rx
+from .responsive_image import responsive_image
 
 
 def hero_banner(
-    image_src: str,
+    image_src: str | list[str],
     alt_text: str,
     gradient: str = "linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
     content: rx.Component | None = None,
 ) -> rx.Component:
     """
     Create a hero banner with background image and optional overlay content.
-
-    The hero banner displays a full-width background image with an optional
-    gradient overlay and custom content. It absolutely positions itself to fill
-    its parent container (typically a section with height and clip_bottom set).
-
-    Important: The parent section should set the height, not this component.
-    This allows the banner to properly extend to edges for clip path effects.
 
     Parameters
     ----------
@@ -38,28 +32,9 @@ def hero_banner(
     rx.Component
         An absolutely positioned box that fills its parent container,
         containing the background image, gradient overlay, and optional content.
-
-    Examples
-    --------
-    Simple hero banner (parent section controls height):
-        >>> section(
-        ...     hero_banner(image_src="/images/hero.jpg"),
-        ...     height="500px",
-        ...     clip_bottom="gentle_1"
-        ... )
-
-    Hero banner with custom content:
-        >>> section(
-        ...     hero_banner(
-        ...         image_src="/images/hero.jpg",
-        ...         content=rx.text("Welcome", font_size="3rem")
-        ...     ),
-        ...     height=["70vh", "80vh"],
-        ...     clip_bottom="gentle_1"
-        ... )
     """
     children = [
-        rx.image(
+        responsive_image(
             src=image_src,
             alt=alt_text,
             object_fit="cover",
@@ -68,6 +43,7 @@ def hero_banner(
             width="100%",
             height="100%",
             filter="brightness(1.05) saturate(1.06)",
+            loading="eager",
         ),
         rx.box(
             position="absolute",
