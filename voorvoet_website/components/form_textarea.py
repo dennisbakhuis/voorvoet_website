@@ -1,5 +1,7 @@
 """Form textarea component with consistent styling."""
 
+from typing import Any
+
 import reflex as rx
 from ..theme import Colors, FontSizes
 
@@ -7,7 +9,7 @@ from ..theme import Colors, FontSizes
 def form_textarea(
     placeholder: str | rx.Var,
     value: str | rx.Var,
-    on_change,
+    on_change: Any,
     min_height: str = "120px",
 ) -> rx.Component:
     """
@@ -28,14 +30,6 @@ def form_textarea(
     -------
     rx.Component
         A styled textarea component with consistent theming.
-
-    Examples
-    --------
-    >>> form_textarea(
-    ...     "Enter description...",
-    ...     value=state.description,
-    ...     on_change=state.set_description
-    ... )
     """
     return rx.el.textarea(
         placeholder=placeholder,

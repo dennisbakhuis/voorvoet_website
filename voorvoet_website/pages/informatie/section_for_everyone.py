@@ -6,7 +6,7 @@ from ...components import (
     section,
     header,
     regular_text,
-    centered_image,
+    responsive_image,
     icon_list_item,
 )
 from ...theme import Colors
@@ -163,11 +163,12 @@ def section_for_everyone(language: str) -> rx.Component:
                     padding_left="1.5rem",
                 ),
                 rx.center(
-                    centered_image(
-                        src="/images/page_information/podotherapeut_enschede_kim_bakhuis_legt_het_met_een_lach_uit-VoorVoet_podotherapie_enschede.jpg",
+                    responsive_image(
+                        src_fallback="/images/page_information/podotherapeut_enschede_kim_bakhuis_legt_het_met_een_lach_uit-VoorVoet_podotherapie_enschede.jpg",
                         alt="Kim Bakhuis legt podotherapie uit",
                         width="100%",
                         max_width="840px",
+                        margin_y="2rem",
                     ),
                     width="100%",
                 ),

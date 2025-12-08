@@ -1,11 +1,12 @@
 """Icon list item component for CTA boxes and lists."""
 
 import reflex as rx
+from typing import Any
 from ..theme import Colors, FontSizes
 from .fa_icon import fa_icon
 
 
-def icon_list_item(icon: str, text: str, **props) -> rx.Component:
+def icon_list_item(icon: str, text: str, **props: Any) -> rx.Component:
     """
     Create a list item with a FontAwesome icon and text.
 

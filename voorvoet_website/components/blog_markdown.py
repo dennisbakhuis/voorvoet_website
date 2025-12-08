@@ -23,27 +23,6 @@ def blog_markdown(content: str) -> rx.Component:
     -------
     rx.Component
         A Reflex markdown component styled for blog content blocks
-
-    Notes
-    -----
-    - Uses content text color from theme
-    - Regular font size (18px) for readability
-    - Bottom margin of 1rem for spacing between blocks
-    - Links styled with brand colors (brand 500) with hover effect (brand 300)
-    - Supports full markdown syntax including:
-        - Headings (# ## ###)
-        - Lists (ordered and unordered)
-        - Code blocks (```language```)
-        - Blockquotes (>)
-        - Links and images
-        - Bold, italic, strikethrough
-        - Tables
-    - Use this for content that doesn't need to be split into separate components
-
-    Examples
-    --------
-    >>> blog_markdown("This is **bold** and this is *italic*.")
-    >>> blog_markdown("# Heading\\n\\nParagraph text\\n\\n- List item\\n- Another item")
     """
     return rx.box(
         rx.markdown(

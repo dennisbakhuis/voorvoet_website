@@ -10,10 +10,6 @@ class ContactForm(BaseModel):
     """
     Contact form data model with validation.
 
-    Groups all contact form fields and provides validation methods.
-    Uses Pydantic BaseModel for serialization and type safety.
-    Follows an immutable pattern where all mutations return new instances.
-
     Attributes
     ----------
     first_name : str
@@ -33,9 +29,9 @@ class ContactForm(BaseModel):
     """
 
     model_config = ConfigDict(
-        frozen=False,  # Allow mutation for Reflex state compatibility
-        validate_assignment=True,  # Validate on assignment for type safety
-        arbitrary_types_allowed=True,  # Arbitrary types allowed for nested Pydantic models
+        frozen=False,
+        validate_assignment=True,
+        arbitrary_types_allowed=True,
     )
 
     first_name: str = ""
@@ -47,19 +43,7 @@ class ContactForm(BaseModel):
     turnstile_token: str = ""
 
     def set_first_name(self, value: str) -> "ContactForm":
-        """
-        Update first name.
-
-        Parameters
-        ----------
-        value : str
-            The new first name value.
-
-        Returns
-        -------
-        ContactForm
-            A new ContactForm instance with updated first name.
-        """
+        """Update first name."""
         return ContactForm(
             first_name=value,
             last_name=self.last_name,
@@ -71,19 +55,7 @@ class ContactForm(BaseModel):
         )
 
     def set_last_name(self, value: str) -> "ContactForm":
-        """
-        Update last name.
-
-        Parameters
-        ----------
-        value : str
-            The new last name value.
-
-        Returns
-        -------
-        ContactForm
-            A new ContactForm instance with updated last name.
-        """
+        """Update last name."""
         return ContactForm(
             first_name=self.first_name,
             last_name=value,
@@ -95,19 +67,7 @@ class ContactForm(BaseModel):
         )
 
     def set_request_type(self, value: str) -> "ContactForm":
-        """
-        Update request type.
-
-        Parameters
-        ----------
-        value : str
-            The new request type value.
-
-        Returns
-        -------
-        ContactForm
-            A new ContactForm instance with updated request type.
-        """
+        """Update request type."""
         return ContactForm(
             first_name=self.first_name,
             last_name=self.last_name,
@@ -119,19 +79,7 @@ class ContactForm(BaseModel):
         )
 
     def set_phone(self, value: str) -> "ContactForm":
-        """
-        Update phone number.
-
-        Parameters
-        ----------
-        value : str
-            The new phone number value.
-
-        Returns
-        -------
-        ContactForm
-            A new ContactForm instance with updated phone number.
-        """
+        """Update phone number."""
         return ContactForm(
             first_name=self.first_name,
             last_name=self.last_name,
@@ -143,19 +91,7 @@ class ContactForm(BaseModel):
         )
 
     def set_email(self, value: str) -> "ContactForm":
-        """
-        Update email.
-
-        Parameters
-        ----------
-        value : str
-            The new email value.
-
-        Returns
-        -------
-        ContactForm
-            A new ContactForm instance with updated email.
-        """
+        """Update email."""
         return ContactForm(
             first_name=self.first_name,
             last_name=self.last_name,
@@ -167,19 +103,7 @@ class ContactForm(BaseModel):
         )
 
     def set_description(self, value: str) -> "ContactForm":
-        """
-        Update description.
-
-        Parameters
-        ----------
-        value : str
-            The new description value.
-
-        Returns
-        -------
-        ContactForm
-            A new ContactForm instance with updated description.
-        """
+        """Update description."""
         return ContactForm(
             first_name=self.first_name,
             last_name=self.last_name,
@@ -191,19 +115,7 @@ class ContactForm(BaseModel):
         )
 
     def set_turnstile_token(self, token: str) -> "ContactForm":
-        """
-        Update Turnstile verification token.
-
-        Parameters
-        ----------
-        token : str
-            The new Turnstile token value.
-
-        Returns
-        -------
-        ContactForm
-            A new ContactForm instance with updated token.
-        """
+        """Update Turnstile verification token."""
         return ContactForm(
             first_name=self.first_name,
             last_name=self.last_name,
@@ -215,14 +127,7 @@ class ContactForm(BaseModel):
         )
 
     def is_valid(self) -> bool:
-        """
-        Check if the entire form is valid and ready to submit.
-
-        Returns
-        -------
-        bool
-            True if all required fields are valid, False otherwise.
-        """
+        """Check if the entire form is valid and ready to submit."""
         if not self.first_name or not self.last_name:
             return False
 
@@ -242,12 +147,5 @@ class ContactForm(BaseModel):
         return True
 
     def reset(self) -> "ContactForm":
-        """
-        Reset the form to default values.
-
-        Returns
-        -------
-        ContactForm
-            A new ContactForm instance with all fields reset to defaults.
-        """
+        """Reset the form to default values."""
         return ContactForm()

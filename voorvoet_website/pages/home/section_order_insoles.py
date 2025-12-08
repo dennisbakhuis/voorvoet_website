@@ -55,7 +55,9 @@ def section_order_insoles(language: str) -> rx.Component:
     return section(
         container(
             image_text_section(
-                image_src="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.jpg",
+                image_fallback="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.jpg",
+                image_avif="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.avif",
+                image_webp="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.webp",
                 image_alt=get_translation(TRANSLATIONS, "image_alt", language),
                 title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,

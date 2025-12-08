@@ -1,12 +1,13 @@
 """Form button component with loading and disabled states."""
 
 import reflex as rx
+from reflex.event import EventType
 from ..theme import Colors, FontSizes
 
 
 def form_button(
     label: str | rx.Var,
-    on_click,
+    on_click: EventType[()],
     is_loading: bool | rx.Var = False,
     is_disabled: bool | rx.Var = False,
     loading_text: str = "Versturen...",
@@ -37,15 +38,6 @@ def form_button(
     rx.Component
         A button component that renders different states based on
         is_loading and is_disabled parameters.
-
-    Examples
-    --------
-    >>> form_button(
-    ...     "Submit",
-    ...     on_click=state.submit,
-    ...     is_loading=state.submitting,
-    ...     is_disabled=state.form_invalid
-    ... )
     """
     loading_button = rx.box(
         rx.text("⏳ ", display="inline"),

@@ -87,7 +87,9 @@ def section_hero(language: str) -> rx.Component:
 
     return section(
         hero_banner(
-            image_src="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpeg",
+            image_src_fallback="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpg",
+            image_src_avif="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.avif",
+            image_src_webp="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.webp",
             alt_text=get_translation(TRANSLATIONS, "hero_image_alt", language),
             gradient="linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
             content=hero_content,

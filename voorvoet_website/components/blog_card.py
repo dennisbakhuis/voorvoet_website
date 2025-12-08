@@ -1,12 +1,17 @@
 """Blog card component for displaying blog post previews."""
 
 import reflex as rx
+
+from .responsive_image import responsive_image
+
 from ..models import BlogPost
 from ..theme import Colors, FontSizes, Layout
 from ..config import config
 
 
-def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
+def blog_card(
+    post: BlogPost | dict, language: str = "nl", flip: bool = False
+) -> rx.Component:
     """
     Display a blog post card in landscape layout with thumbnail and content.
 
@@ -114,8 +119,10 @@ def blog_card(post, language: str = "nl", flip: bool = False) -> rx.Component:
     )
 
     thumbnail = rx.box(
-        rx.image(
-            src=post.thumbnail_url,
+        responsive_image(
+            src_fallback=post.thumbnail_fallback,
+            src_avif=post.thumbnail_avif,
+            src_webp=post.thumbnail_webp,
             alt=str(post.thumbnail_alt),
             width="100%",
             height="100%",

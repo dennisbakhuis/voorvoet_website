@@ -1,24 +1,28 @@
 """Reusable image-text section component to eliminate layout duplication."""
 
 import reflex as rx
-from typing import Optional, Union, Sequence
+from typing import Any
+from collections.abc import Sequence
 
 from ..theme import Layout, Spacing
 from .header import header
 from .regular_text import regular_text
 from .button import button
+from .responsive_image import responsive_image
 
 
 def image_text_section(
-    image_src: Union[str, rx.Var],
+    image_fallback: str,
     image_alt: str,
-    title: Union[str, rx.Var],
-    paragraphs: Union[str, rx.Var, Sequence[Union[str, rx.Var]]],
+    title: str | rx.Var,
+    paragraphs: str | rx.Var | Sequence[str | rx.Var],
+    image_avif: str = "",
+    image_webp: str = "",
     image_position: str = "left",
-    button_text: Optional[Union[str, rx.Var]] = None,
-    button_link: Optional[Union[str, rx.Var]] = None,
-    image_max_width: Optional[str] = None,
-    **section_props,
+    button_text: str | rx.Var | None = None,
+    button_link: str | rx.Var | None = None,
+    image_max_width: str | None = None,
+    **section_props: Any,
 ) -> rx.Component:
     """
     Create a responsive section with image and text content.
@@ -30,8 +34,8 @@ def image_text_section(
 
     Parameters
     ----------
-    image_src : str | rx.Var
-        Path or URL to the image to display.
+    image_fallback : str
+        Path to the fallback image (JPG or PNG).
     image_alt : str
         Alt text for the image for accessibility and SEO.
     title : str | rx.Var
@@ -40,6 +44,10 @@ def image_text_section(
         Single paragraph string or sequence of paragraph strings.
         Multiple paragraphs are automatically spaced.
         Can be reactive variables from translations.
+    image_avif : str, optional
+        Path to the AVIF format image (empty string if not available).
+    image_webp : str, optional
+        Path to the WebP format image (empty string if not available).
     image_position : str, optional
         Position of image relative to text: "left" or "right".
         Default is "left".
@@ -64,22 +72,27 @@ def image_text_section(
     Both button_text and button_link must be provided for the button to appear.
     """
 
+    paragraph_list: list[str | rx.Var]
     if isinstance(paragraphs, (str, rx.Var)):
         paragraph_list = [paragraphs]
     else:
-        paragraph_list = paragraphs
+        paragraph_list = list(paragraphs)
+
+    image_element = responsive_image(
+        src_fallback=image_fallback,
+        src_avif=image_avif,
+        src_webp=image_webp,
+        alt=image_alt,
+        width="100%",
+        max_width=image_max_width or Layout.image_max_width,
+        height="auto",
+        border_radius=Layout.image_border_radius,
+        box_shadow=Layout.image_box_shadow,
+        loading="lazy",
+    )
 
     image_column = rx.box(
-        rx.image(
-            src=image_src,
-            alt=image_alt,
-            width="100%",
-            max_width=image_max_width or Layout.image_max_width,
-            height="auto",
-            border_radius=Layout.image_border_radius,
-            box_shadow=Layout.image_box_shadow,
-            loading="lazy",
-        ),
+        image_element,
         width=["100%", "100%", "35%", "35%"],
         flex=["1", "1", "0 0 auto", "0 0 auto"],
         display="flex",

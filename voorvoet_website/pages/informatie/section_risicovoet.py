@@ -7,7 +7,7 @@ from ...components import (
     image_text_section,
     header,
     regular_text,
-    centered_image,
+    responsive_image,
     risk_level_card,
 )
 from ...theme import Colors
@@ -150,7 +150,9 @@ def section_risicovoet(language: str) -> rx.Component:
     return section(
         container(
             image_text_section(
-                image_src="/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.jpg",
+                image_fallback="/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.jpg",
+                image_avif="/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.avif",
+                image_webp="/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.webp",
                 image_alt=get_translation(TRANSLATIONS, "image_alt", language),
                 title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs_1,
@@ -163,11 +165,12 @@ def section_risicovoet(language: str) -> rx.Component:
                 color=Colors.text["content"],
             ),
             rx.center(
-                centered_image(
-                    src="/images/page_information/nagelbeugel_nagelproblemen_voorvoet_podotherapie_enschede.jpg",
+                responsive_image(
+                    src_fallback="/images/page_information/nagelbeugel_nagelproblemen_voorvoet_podotherapie_enschede.jpg",
                     alt="Kim Bakhuis legt podotherapie uit",
                     width="100%",
                     max_width="840px",
+                    margin_y="2rem",
                 ),
                 width="100%",
                 margin_bottom="2rem",

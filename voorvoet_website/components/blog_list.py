@@ -25,30 +25,6 @@ def blog_list(markdown: str) -> rx.Component:
     -------
     rx.Component
         A Reflex markdown component that renders the list with proper styling
-
-    Notes
-    -----
-    - Uses content text color from theme for readability
-    - Regular font size (18px) for comfortable reading
-    - Bottom margin of 1rem for spacing between content blocks
-    - Links styled with brand colors (brand 500) with hover effect (brand 300)
-    - Supports both ordered (numbered) and unordered (bulleted) lists
-    - Supports nested lists if properly formatted in markdown
-    - List items can contain inline markdown (bold, italic, links, code)
-    - Rendered as markdown due to Reflex limitation with nested foreach
-
-    Technical Note
-    --------------
-    This component exists because Reflex cannot nest rx.foreach calls.
-    The ideal approach would be to use rx.foreach to iterate over list items,
-    but this causes compilation errors. Instead, we keep the list in markdown
-    format and let Reflex's markdown renderer handle it.
-
-    Examples
-    --------
-    >>> blog_list("- First item\\n- Second item\\n- Third item")
-    >>> blog_list("1. First step\\n2. Second step\\n3. Third step")
-    >>> blog_list("- Item with **bold** text\\n- Item with [link](url)")
     """
     return rx.box(
         rx.markdown(

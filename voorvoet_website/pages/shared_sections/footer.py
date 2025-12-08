@@ -2,7 +2,7 @@
 
 import reflex as rx
 
-from ...components import container, section, regular_text, fa_icon
+from ...components import container, section, regular_text, fa_icon, responsive_image
 from ...theme import Colors, FontSizes, Layout
 
 
@@ -96,26 +96,12 @@ def footer(language: str) -> rx.Component:
     - Includes gentle wave clip-path styling at the top
     """
 
-    def get_translation(key: str, lang: str) -> rx.Var:
-        """
-        Get translation for a key based on provided language.
-
-        Parameters
-        ----------
-        key : str
-            Translation key to look up in TRANSLATIONS dict.
-        lang : str
-            Language code (nl, de, or en).
-
-        Returns
-        -------
-        rx.Var
-            Reactive variable containing the translated text for the specified language.
-        """
+    def t(key: str) -> rx.Var:
+        """Get translation for current language."""
         return rx.cond(
-            lang == "nl",
+            language == "nl",
             TRANSLATIONS["nl"][key],
-            rx.cond(lang == "de", TRANSLATIONS["de"][key], TRANSLATIONS["en"][key]),
+            rx.cond(language == "de", TRANSLATIONS["de"][key], TRANSLATIONS["en"][key]),
         )
 
     return section(
@@ -143,7 +129,7 @@ def footer(language: str) -> rx.Component:
                 rx.box(
                     rx.box(
                         regular_text(
-                            get_translation("location_eeftinksweg", language),
+                            t("location_eeftinksweg"),
                             color=Colors.text["muted"],
                             font_weight="700",
                             text_decoration="underline",
@@ -158,7 +144,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             regular_text(
-                                get_translation("monday", language),
+                                t("monday"),
                                 color=Colors.text["secondary"],
                                 display="inline-block",
                                 width="100px",
@@ -172,7 +158,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             regular_text(
-                                get_translation("thursday", language),
+                                t("thursday"),
                                 color=Colors.text["secondary"],
                                 display="inline-block",
                                 width="100px",
@@ -186,7 +172,7 @@ def footer(language: str) -> rx.Component:
                             margin_bottom="0.15rem",
                         ),
                         regular_text(
-                            get_translation("location_beethovenlaan", language),
+                            t("location_beethovenlaan"),
                             color=Colors.text["muted"],
                             font_weight="700",
                             text_decoration="underline",
@@ -204,7 +190,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             regular_text(
-                                get_translation("tuesday", language),
+                                t("tuesday"),
                                 color=Colors.text["secondary"],
                                 display="inline-block",
                                 width="100px",
@@ -218,7 +204,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             regular_text(
-                                get_translation("wednesday", language),
+                                t("wednesday"),
                                 color=Colors.text["secondary"],
                                 display="inline-block",
                                 width="100px",
@@ -232,7 +218,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             regular_text(
-                                get_translation("friday", language),
+                                t("friday"),
                                 color=Colors.text["secondary"],
                                 display="inline-block",
                                 width="100px",
@@ -309,7 +295,7 @@ def footer(language: str) -> rx.Component:
                         rx.box(
                             rx.box(
                                 regular_text(
-                                    get_translation("kvk_number", language),
+                                    t("kvk_number"),
                                     color=Colors.text["muted"],
                                     font_weight="600",
                                     display="inline-block",
@@ -324,7 +310,7 @@ def footer(language: str) -> rx.Component:
                             ),
                             rx.box(
                                 regular_text(
-                                    get_translation("practice_code", language),
+                                    t("practice_code"),
                                     color=Colors.text["muted"],
                                     font_weight="600",
                                     display="inline-block",
@@ -339,7 +325,7 @@ def footer(language: str) -> rx.Component:
                             ),
                             rx.box(
                                 regular_text(
-                                    get_translation("bank_account", language),
+                                    t("bank_account"),
                                     color=Colors.text["muted"],
                                     font_weight="600",
                                     display="inline-block",
@@ -358,7 +344,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             rx.link(
-                                get_translation("credits", language),
+                                t("credits"),
                                 href="#",
                                 color=Colors.text["link"],
                                 text_decoration="underline",
@@ -368,7 +354,7 @@ def footer(language: str) -> rx.Component:
                                 text_align=["center", "center", "left", "left"],
                             ),
                             rx.link(
-                                get_translation("privacy_policy", language),
+                                t("privacy_policy"),
                                 href="/documents/Privacy_beleid_v0.1.1.pdf",
                                 color=Colors.text["link"],
                                 text_decoration="underline",
@@ -379,7 +365,7 @@ def footer(language: str) -> rx.Component:
                                 is_external=True,
                             ),
                             rx.link(
-                                get_translation("terms_conditions", language),
+                                t("terms_conditions"),
                                 href="/documents/Algemene_voorwaarden_v0.1.0.pdf",
                                 color=Colors.text["link"],
                                 text_decoration="underline",
@@ -407,11 +393,15 @@ def footer(language: str) -> rx.Component:
             rx.box(
                 rx.box(
                     rx.link(
-                        rx.image(
-                            src="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png",
-                            alt=get_translation("nvvp_logo_alt", language),
-                            height="60px",
-                            loading="lazy",
+                        rx.box(
+                            responsive_image(
+                                src_fallback="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png",
+                                src_avif="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.avif",
+                                src_webp="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.webp",
+                                alt=TRANSLATIONS[language]["nvvp_logo_alt"],
+                                height="60px",
+                                loading="lazy",
+                            )
                         ),
                         href="https://www.podotherapie.nl/",
                         is_external=True,
@@ -422,11 +412,15 @@ def footer(language: str) -> rx.Component:
                 ),
                 rx.box(
                     rx.link(
-                        rx.image(
-                            src="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png",
-                            alt=get_translation("krp_logo_alt", language),
-                            height="60px",
-                            loading="lazy",
+                        rx.box(
+                            responsive_image(
+                                src_fallback="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png",
+                                src_avif="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.avif",
+                                src_webp="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.webp",
+                                alt=TRANSLATIONS[language]["krp_logo_alt"],
+                                height="60px",
+                                loading="lazy",
+                            )
                         ),
                         href="https://www.kwaliteitsregisterparamedici.nl/kwaliteitsregister/paramedici/33997",
                         is_external=True,
@@ -438,7 +432,7 @@ def footer(language: str) -> rx.Component:
                 ),
                 rx.box(
                     rx.link(
-                        rx.text("© ", get_translation("made_with_love", language)),
+                        rx.text("© ", t("made_with_love")),
                         href="https://linkedin.com/in/dennisbakhuis",
                         color=Colors.text["muted"],
                         font_size=FontSizes.regular,

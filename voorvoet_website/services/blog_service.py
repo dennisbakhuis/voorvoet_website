@@ -3,7 +3,6 @@
 from datetime import datetime
 from pathlib import Path
 import frontmatter
-from typing import Optional
 
 from ..models import BlogPost
 from .content_parser import parse_blog_content
@@ -38,6 +37,32 @@ def _resolve_thumbnail_path(filename: str, thumbnail_filename: str) -> str:
     return thumbnail_path
 
 
+def _build_thumbnail_paths(
+    thumbnail_url: str,
+) -> tuple[str, str, str]:
+    """
+    Build thumbnail paths for fallback, AVIF, and WebP formats.
+
+    Returns tuple of (fallback, avif, webp). Empty string if format doesn't exist.
+    """
+    current_file = Path(__file__)
+    project_root = current_file.parent.parent.parent
+
+    url_path = Path(thumbnail_url)
+    base_path = str(url_path.with_suffix(""))
+    asset_base = base_path.lstrip("/")
+
+    avif_path = ""
+    if (project_root / f"assets/{asset_base}.avif").exists():
+        avif_path = f"{base_path}.avif"
+
+    webp_path = ""
+    if (project_root / f"assets/{asset_base}.webp").exists():
+        webp_path = f"{base_path}.webp"
+
+    return thumbnail_url, avif_path, webp_path
+
+
 def _parse_date(date_str: str, filename: str) -> datetime:
     """Parse date string from frontmatter (YYYY-MM-DD or DD-MM-YYYY)."""
     try:
@@ -69,7 +94,7 @@ def _format_date_dutch(date: datetime) -> str:
     return f"{date.day} {months_nl[date.month]} {date.year}"
 
 
-def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
+def parse_blog_post(file_path: Path) -> BlogPost | None:
     """Parse a single blog post markdown file into a BlogPost object."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -102,6 +127,9 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         author = metadata.get("author")
         thumbnail_filename: str = str(metadata.get("thumbnail", "thumbnail.jpg"))
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
+        thumbnail_fallback, thumbnail_avif, thumbnail_webp = _build_thumbnail_paths(
+            thumbnail_url
+        )
 
         tags_raw = metadata.get("tags", [])
         if isinstance(tags_raw, list):
@@ -128,6 +156,9 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
             content=content,
             filename=filename,
             thumbnail_url=thumbnail_url,
+            thumbnail_fallback=thumbnail_fallback,
+            thumbnail_avif=thumbnail_avif,
+            thumbnail_webp=thumbnail_webp,
             read_time=read_time,
             content_objects=content_objects,
             tags=tags,
@@ -143,7 +174,7 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
 
 
 def load_all_posts(
-    force_reload: bool = False, language: Optional[str] = None
+    force_reload: bool = False, language: str | None = None
 ) -> list[BlogPost]:
     """Load all blog posts for a specific language, sorted by date (newest first)."""
     global _posts_cache
@@ -173,10 +204,10 @@ def load_all_posts(
     return posts
 
 
-def load_all_blog_posts_dict() -> dict[str, list[dict[str, str]]]:
+def load_all_blog_posts_dict() -> dict[str, list[dict]]:
     """Load all blog posts for all languages as dictionaries."""
     languages = ["nl", "en", "de"]
-    result: dict[str, list[dict[str, str]]] = {}
+    result: dict[str, list[dict]] = {}
 
     for lang in languages:
         posts = load_all_posts(force_reload=False, language=lang)
@@ -196,6 +227,9 @@ def load_all_blog_posts_dict() -> dict[str, list[dict[str, str]]]:
                 "thumbnail": post.thumbnail,
                 "thumbnail_alt": post.thumbnail_alt or "",
                 "thumbnail_url": post.thumbnail_url,
+                "thumbnail_fallback": post.thumbnail_fallback,
+                "thumbnail_avif": post.thumbnail_avif,
+                "thumbnail_webp": post.thumbnail_webp,
                 "read_time": str(post.read_time) if post.read_time else "",
                 "category": post.category or "",
                 "tags": ",".join(post.tags),

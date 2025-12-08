@@ -1,7 +1,6 @@
 """Reusable location map section component."""
 
 import reflex as rx
-from typing import List
 
 from ..theme import Colors, Layout, Spacing
 from .column import column
@@ -172,7 +171,9 @@ def location_map_item(
 
 
 def location_section(
-    title: str, description: str, locations: List[LocationConfig], **section_props
+    title: str,
+    description: str,
+    locations: list[LocationConfig],
 ) -> rx.Component:
     """
     Create a complete location section with multiple locations.
@@ -189,9 +190,6 @@ def location_section(
         Section description text.
     locations : list[LocationConfig]
         List of LocationConfig objects defining location content and layout.
-    **section_props : dict
-        Additional style properties to apply to the section.
-        These will override the default styles.
 
     Returns
     -------

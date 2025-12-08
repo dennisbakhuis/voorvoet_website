@@ -27,11 +27,6 @@ def parse_blog_content(
     """
     Parse markdown content into structured content dictionaries for rendering.
 
-    Transforms raw markdown text into a list of content objects representing
-    different content types (headings, paragraphs, images, buttons, lists).
-    Handles image path resolution with fallbacks and custom button syntax.
-    Uses mistletoe for proper Abstract Syntax Tree (AST) based parsing.
-
     Parameters
     ----------
     markdown_content : str
@@ -49,14 +44,6 @@ def parse_blog_content(
         - image: {'type': 'image', 'src': str, 'alt': str, 'caption': str}
         - button: {'type': 'button', 'label': str, 'url': str}
         - list: {'type': 'list', 'ordered': bool, 'items': list[str]}
-
-    Notes
-    -----
-    - Image paths are resolved relative to /images/page_blog/{filename}/
-    - Non-existent images fall back to default_image_filler.jpg
-    - Custom button syntax: !button[label](url) is converted to button objects
-    - Empty content blocks are filtered out
-    - Lists can be ordered (numbered) or unordered (bullet points)
     """
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
@@ -67,7 +54,7 @@ def parse_blog_content(
     buttons = []
     button_index = 0
 
-    def replace_button(match):
+    def replace_button(match: re.Match[str]) -> str:
         nonlocal button_index
         buttons.append(
             {
@@ -204,7 +191,10 @@ def _process_image(image: Image, filename: str, project_root: Path) -> dict[str,
     dict[str, Any]
         Image content object with src, alt, and caption
     """
-    src = image.src
+    src_fallback = image.src
+    src_avif = ""
+    src_webp = ""
+
     image_children = image.children if image.children is not None else []
     alt = (
         _render_span_tokens(image_children, filename, [], project_root)
@@ -213,26 +203,39 @@ def _process_image(image: Image, filename: str, project_root: Path) -> dict[str,
     )
 
     if not (
-        src.startswith("http://") or src.startswith("https://") or src.startswith("/")
+        src_fallback.startswith("http://")
+        or src_fallback.startswith("https://")
+        or src_fallback.startswith("/")
     ):
-        resolved_path = f"/images/page_blog/{filename}/{src}"
+        resolved_path = f"/images/page_blog/{filename}/{src_fallback}"
         file_system_path = project_root / f"assets{resolved_path}"
 
         if not file_system_path.exists():
             resolved_path = "/images/page_blog/default_image_filler.jpg"
 
-        src = resolved_path
+        src_fallback = resolved_path
+
+        base_path = (
+            src_fallback.rsplit(".", 1)[0] if "." in src_fallback else src_fallback
+        )
+        asset_base = base_path.lstrip("/")
+        if (project_root / f"assets/{asset_base}.avif").exists():
+            src_avif = f"{base_path}.avif"
+        if (project_root / f"assets/{asset_base}.webp").exists():
+            src_webp = f"{base_path}.webp"
 
     return {
         "type": "image",
-        "src": src,
+        "src_fallback": src_fallback,
+        "src_avif": src_avif,
+        "src_webp": src_webp,
         "alt": alt,
-        "caption": alt,  # Use alt text as caption
+        "caption": alt,
     }
 
 
 def _render_span_tokens(
-    tokens: Any,  # Can be Iterable or list from mistletoe
+    tokens: Any,
     filename: str,
     buttons: list[dict[str, str]],
     project_root: Path,

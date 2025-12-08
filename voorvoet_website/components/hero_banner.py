@@ -1,30 +1,30 @@
 """Hero banner component with background image and optional content overlay."""
 
 import reflex as rx
+from .responsive_image import responsive_image
 
 
 def hero_banner(
-    image_src: str,
+    image_src_fallback: str,
     alt_text: str,
+    image_src_avif: str = "",
+    image_src_webp: str = "",
     gradient: str = "linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
     content: rx.Component | None = None,
 ) -> rx.Component:
     """
     Create a hero banner with background image and optional overlay content.
 
-    The hero banner displays a full-width background image with an optional
-    gradient overlay and custom content. It absolutely positions itself to fill
-    its parent container (typically a section with height and clip_bottom set).
-
-    Important: The parent section should set the height, not this component.
-    This allows the banner to properly extend to edges for clip path effects.
-
     Parameters
     ----------
-    image_src : str
-        Path to the background image.
+    image_src_fallback : str
+        Path to the fallback background image (JPG or PNG).
     alt_text : str
         Alt text for the background image for accessibility and SEO.
+    image_src_avif : str, optional
+        Path to the AVIF format image (empty string if not available).
+    image_src_webp : str, optional
+        Path to the WebP format image (empty string if not available).
     gradient : str, optional
         CSS gradient overlay applied over the image.
         Default is a white-to-green gradient with screen blend mode.
@@ -38,29 +38,12 @@ def hero_banner(
     rx.Component
         An absolutely positioned box that fills its parent container,
         containing the background image, gradient overlay, and optional content.
-
-    Examples
-    --------
-    Simple hero banner (parent section controls height):
-        >>> section(
-        ...     hero_banner(image_src="/images/hero.jpg"),
-        ...     height="500px",
-        ...     clip_bottom="gentle_1"
-        ... )
-
-    Hero banner with custom content:
-        >>> section(
-        ...     hero_banner(
-        ...         image_src="/images/hero.jpg",
-        ...         content=rx.text("Welcome", font_size="3rem")
-        ...     ),
-        ...     height=["70vh", "80vh"],
-        ...     clip_bottom="gentle_1"
-        ... )
     """
     children = [
-        rx.image(
-            src=image_src,
+        responsive_image(
+            src_fallback=image_src_fallback,
+            src_avif=image_src_avif,
+            src_webp=image_src_webp,
             alt=alt_text,
             object_fit="cover",
             position="absolute",
@@ -68,6 +51,7 @@ def hero_banner(
             width="100%",
             height="100%",
             filter="brightness(1.05) saturate(1.06)",
+            loading="eager",
         ),
         rx.box(
             position="absolute",

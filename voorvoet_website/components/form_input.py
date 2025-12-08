@@ -1,15 +1,16 @@
 """Form input component with consistent styling and error states."""
 
 import reflex as rx
+from typing import Any
 from ..theme import Colors, FontSizes
 
 
 def form_input(
     placeholder: str | rx.Var,
     value: str | rx.Var,
-    on_change,
+    on_change: Any,
     input_type: str = "text",
-    on_blur=None,
+    on_blur: Any | None = None,
     show_error: bool | rx.Var = False,
     custom_attrs: dict | None = None,
     input_mode: str | None = None,
@@ -45,6 +46,7 @@ def form_input(
         A styled input component with consistent theming and optional
         error state.
     """
+    border_value: str | rx.Var
     if isinstance(show_error, bool):
         border_value = (
             "3px solid red" if show_error else f"1px solid {Colors.borders['light']}"
@@ -56,7 +58,7 @@ def form_input(
             f"1px solid {Colors.borders['light']}",
         )
 
-    base_props = {
+    base_props: dict[str, Any] = {
         "placeholder": placeholder,
         "value": value,
         "on_change": on_change,

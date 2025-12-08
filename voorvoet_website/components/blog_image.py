@@ -2,15 +2,18 @@
 
 import reflex as rx
 from ..theme import Colors, FontSizes, Spacing, Layout
+from .responsive_image import responsive_image
 
 
-def blog_image(src: str, alt: str, caption: str = "") -> rx.Component:
+def blog_image(
+    src_fallback: str,
+    alt: str,
+    src_avif: str = "",
+    src_webp: str = "",
+    caption: str = "",
+) -> rx.Component:
     """
     Create a styled image for blog content with optional caption.
-
-    Renders an image with consistent styling including rounded corners, shadow,
-    and centered layout. Optionally displays a caption below the image in italic
-    muted text. Images are lazy-loaded for performance.
 
     Parameters
     ----------
@@ -26,29 +29,12 @@ def blog_image(src: str, alt: str, caption: str = "") -> rx.Component:
     -------
     rx.Component
         A Reflex box component containing the styled image and optional caption
-
-    Notes
-    -----
-    - Images are lazy-loaded for better page performance
-    - Centered display with maximum width of 800px
-    - Responsive: 100% width up to max-width
-    - Rounded corners (8px border radius)
-    - Drop shadow for visual depth (0 4px 12px rgba(0,0,0,0.15))
-    - Caption uses muted text color and italic style
-    - 2rem top and bottom margins for spacing from other content
-
-    Examples
-    --------
-    >>> blog_image("/images/diagram.png", "System diagram")
-    >>> blog_image(
-    ...     "/images/chart.jpg",
-    ...     "Performance chart",
-    ...     caption="Figure 1: Performance over time"
-    ... )
     """
     return rx.box(
-        rx.image(
-            src=src,
+        responsive_image(
+            src_fallback=src_fallback,
+            src_avif=src_avif,
+            src_webp=src_webp,
             alt=alt,
             loading="lazy",
         ),

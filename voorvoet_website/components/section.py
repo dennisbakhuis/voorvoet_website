@@ -1,7 +1,7 @@
 """Section component with optional SVG dividers for visual separation."""
 
 import reflex as rx
-from typing import Optional, Literal
+from typing import Any, Literal
 from ..theme import Colors, Spacing
 
 SVG_DIVIDERS = {
@@ -58,42 +58,44 @@ def _create_divider(
     rx.Component
         A Reflex box component containing the SVG divider.
     """
+    props: dict[str, Any] = {
+        "position": "absolute",
+        position: "-1px",
+        "left": "0",
+        "width": "100%",
+        "overflow": "hidden",
+        "line_height": "0",
+        "& svg": {
+            "position": "relative",
+            "display": "block",
+            "width": "calc(100% + 3px)",
+            "height": "75px",
+        },
+        "& .shape-fill": {"fill": divider_color},
+    }
+
+    if position == "bottom":
+        props["transform"] = "rotate(180deg)"
+
     return rx.box(
         rx.html(
             f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{divider_data["viewBox"]}" preserveAspectRatio="none"><path d="{divider_data["path"]}" class="shape-fill"></path></svg>'
         ),
-        position="absolute",
-        **{
-            position: "-1px",
-            "left": "0",
-            "width": "100%",
-            "overflow": "hidden",
-            "line_height": "0",
-        },  # type: ignore
-        **({"transform": "rotate(180deg)"} if position == "bottom" else {}),
-        **{
-            "& svg": {
-                "position": "relative",
-                "display": "block",
-                "width": "calc(100% + 3px)",
-                "height": "75px",
-            },
-            "& .shape-fill": {"fill": divider_color},
-        },
+        **props,
     )
 
 
 def section(
-    *children,
+    *children: rx.Component,
     background_color: str = Colors.backgrounds["white"],
     divider_color: str = Colors.backgrounds["green_light"],
-    clip_top: Optional[
-        Literal["wave", "curve", "gentle_1", "gentle_2", "gentle_3", "gentle_4"]
-    ] = None,
-    clip_bottom: Optional[
-        Literal["wave", "curve", "gentle_1", "gentle_2", "gentle_3", "gentle_4"]
-    ] = None,
-    **styles,
+    clip_top: Literal["wave", "curve", "gentle_1", "gentle_2", "gentle_3", "gentle_4"]
+    | None = None,
+    clip_bottom: Literal[
+        "wave", "curve", "gentle_1", "gentle_2", "gentle_3", "gentle_4"
+    ]
+    | None = None,
+    **props: Any,
 ) -> rx.Component:
     """
     Create a section with optional SVG dividers for visual separation.
@@ -141,17 +143,17 @@ def section(
         if clip_bottom
         else Spacing.section_vertical
     )
-    padding_top = styles.pop("padding_top", default_padding_top)
-    padding_bottom = styles.pop("padding_bottom", default_padding_bottom)
+    padding_top = props.pop("padding_top", default_padding_top)
+    padding_bottom = props.pop("padding_bottom", default_padding_bottom)
 
-    defaults = {
+    defaults: dict[str, Any] = {
         "width": "100%",
         "padding_top": padding_top,
         "padding_bottom": padding_bottom,
         "bg": background_color,
         "position": "relative",
     }
-    defaults.update(styles)
+    defaults.update(props)
 
     dividers = []
     if clip_top and clip_top in SVG_DIVIDERS:
@@ -167,4 +169,4 @@ def section(
             )
         )
 
-    return rx.box(*children, *dividers, **defaults)  # type: ignore
+    return rx.box(*children, *dividers, **defaults)

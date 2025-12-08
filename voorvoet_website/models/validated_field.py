@@ -8,13 +8,6 @@ class ValidatedField(BaseModel, ABC):
     """
     Abstract base class for form fields with validation and interaction tracking.
 
-    This class provides common functionality for form fields that need to track
-    user interaction state (touched/blurred) and display validation errors
-    appropriately. Subclasses must implement the validation logic.
-
-    Uses Pydantic BaseModel for serialization and type safety.
-    Follows an immutable pattern where all mutations return new instances.
-
     Attributes
     ----------
     value : str
@@ -26,9 +19,9 @@ class ValidatedField(BaseModel, ABC):
     """
 
     model_config = ConfigDict(
-        frozen=False,  # Allow mutation for Reflex state compatibility
-        validate_assignment=True,  # Validate on assignment for type safety
-        extra="forbid",  # Allow extra fields to be ignored
+        frozen=False,
+        validate_assignment=True,
+        extra="forbid",
     )
 
     value: str = ""
@@ -37,70 +30,24 @@ class ValidatedField(BaseModel, ABC):
 
     @abstractmethod
     def is_valid(self) -> bool:
-        """
-        Check if the field value is valid.
-
-        Returns
-        -------
-        bool
-            True if the field value passes validation, False otherwise.
-        """
+        """Check if the field value is valid."""
         pass
 
     @abstractmethod
     def _clean_value(self, new_value: str) -> str:
-        """
-        Clean and format the input value.
-
-        This method should implement any input filtering, formatting,
-        or normalization logic specific to the field type.
-
-        Parameters
-        ----------
-        new_value : str
-            The raw input value to clean.
-
-        Returns
-        -------
-        str
-            The cleaned and formatted value.
-        """
+        """Clean and format the input value."""
         pass
 
     def should_show_error(self) -> bool:
-        """
-        Determine if validation error should be displayed.
-
-        Errors are only shown after the field has been blurred and
-        contains an invalid value. Empty fields don't show errors.
-
-        Returns
-        -------
-        bool
-            True if error should be displayed, False otherwise.
-        """
+        """Determine if validation error should be displayed."""
         if not self.value:
             return False
         return self.blurred and not self.is_valid()
 
     def reset(self) -> "ValidatedField":
-        """
-        Reset the field to its initial state.
-
-        Returns
-        -------
-        ValidatedField
-            A new instance with empty value and reset state flags.
-        """
+        """Reset the field to its initial state."""
         return type(self)(value="", touched=False, blurred=False)
 
     def __str__(self) -> str:
-        """
-        Get string representation of the field value.
-
-        Returns
-        -------
-        str
-            The current field value.
-        """
+        """Get string representation of the field value."""
         return self.value

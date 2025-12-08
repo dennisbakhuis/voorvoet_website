@@ -1,7 +1,7 @@
 """Configuration-driven information cards section."""
 
 import reflex as rx
-from typing import List, Union
+from typing import Any
 
 from ..theme import Spacing
 from .responsive_grid import responsive_grid
@@ -32,13 +32,13 @@ class CardConfig:
 
     def __init__(
         self,
-        title: Union[str, rx.Var],
-        description: Union[str, rx.Var],
+        title: str | rx.Var,
+        description: str | rx.Var,
         icon: str,
         bg_color: str = "white",
         show_box: bool = False,
-        button_text: Union[str, rx.Var] = "Lees meer",
-        button_link: Union[str, rx.Var] = "#",
+        button_text: str | rx.Var = "Lees meer",
+        button_link: str | rx.Var = "#",
     ):
         self.title = title
         self.description = description
@@ -50,11 +50,11 @@ class CardConfig:
 
 
 def information_cards_grid(
-    cards: List[CardConfig],
-    columns: List[int] = [1, 2, 3],
+    cards: list[CardConfig],
+    columns: list[int] = [1, 2, 3],
     spacing: str | None = None,
     justify_items: str = "center",
-    **grid_props,
+    **grid_props: Any,
 ) -> rx.Component:
     """
     Create a responsive grid of information cards from configuration.
@@ -92,12 +92,12 @@ def information_cards_grid(
     for card in cards:
         card_components.append(
             information_card(
-                title=card.title,  # type: ignore
-                description=card.description,  # type: ignore
+                title=card.title,
+                description=card.description,
                 icon=card.icon,
                 bg_color=card.bg_color,
                 show_box=card.show_box,
-                button_text=card.button_text,  # type: ignore
+                button_text=card.button_text,
                 button_link=card.button_link,
             )
         )

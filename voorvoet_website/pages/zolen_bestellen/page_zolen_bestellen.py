@@ -24,7 +24,6 @@ def page_zolen_bestellen(language: str = "nl") -> rx.Component:
     rx.Component
         A fragment containing all sections of the zolen bestellen page in order.
     """
-    # Build breadcrumb items
     breadcrumb_items = [
         {
             "name": BREADCRUMB_NAMES.get(language, {}).get("home", "Home"),

@@ -1,7 +1,7 @@
 """Individual blog post page displaying full content."""
 
 import reflex as rx
-from typing import Optional, Any
+from typing import Any
 from ...models import BlogPost
 from ...theme import Colors, FontSizes, Spacing
 from ...components import (
@@ -57,7 +57,11 @@ def _build_content_component(obj: dict[str, Any]) -> rx.Component:
         return blog_markdown(obj.get("content", ""))
     elif content_type == "image":
         return blog_image(
-            obj.get("src", ""), obj.get("alt", ""), obj.get("caption", "")
+            src_fallback=obj.get("src_fallback", ""),
+            alt=obj.get("alt", ""),
+            src_avif=obj.get("src_avif", ""),
+            src_webp=obj.get("src_webp", ""),
+            caption=obj.get("caption", ""),
         )
     elif content_type == "button":
         return rx.box(
@@ -80,7 +84,7 @@ def _build_content_components(
     return [_build_content_component(obj) for obj in content_objects]
 
 
-def page_blog_post(language: str = "nl", post: Optional[dict] = None) -> rx.Component:
+def page_blog_post(language: str = "nl", post: dict | None = None) -> rx.Component:
     """
     Create the individual blog post page with full content.
 
@@ -93,7 +97,7 @@ def page_blog_post(language: str = "nl", post: Optional[dict] = None) -> rx.Comp
     ----------
     language : str
         Current language code ("nl", "de", or "en")
-    post : Optional[dict]
+    post : dict | None
         Blog post data as dictionary. If None, shows post not found message.
 
     Returns

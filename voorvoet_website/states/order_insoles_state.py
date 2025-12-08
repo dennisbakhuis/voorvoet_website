@@ -4,9 +4,10 @@ import reflex as rx
 import re
 import asyncio
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, AsyncGenerator
 
 from ..services import send_order_insoles_email
+from .website_state import WebsiteState
 
 if TYPE_CHECKING:
     pass
@@ -48,7 +49,7 @@ class OrderInsolesState(rx.State):
     form_submitting: bool = False
 
     @rx.event
-    def set_first_name(self, value: str):
+    def set_first_name(self, value: str) -> None:
         """
         Update first name field.
 
@@ -60,7 +61,7 @@ class OrderInsolesState(rx.State):
         self.first_name = value
 
     @rx.event
-    def set_last_name(self, value: str):
+    def set_last_name(self, value: str) -> None:
         """
         Update last name field.
 
@@ -72,7 +73,7 @@ class OrderInsolesState(rx.State):
         self.last_name = value
 
     @rx.event
-    def set_email(self, value: str):
+    def set_email(self, value: str) -> None:
         """
         Update email field.
 
@@ -84,12 +85,12 @@ class OrderInsolesState(rx.State):
         self.email = value
 
     @rx.event
-    def on_email_blur(self):
+    def on_email_blur(self) -> None:
         """Mark email field as blurred to enable error display."""
         self.email_blurred = True
 
     @rx.event
-    def set_birth_date(self, value: str):
+    def set_birth_date(self, value: str) -> None:
         """
         Update birth date field.
 
@@ -101,12 +102,12 @@ class OrderInsolesState(rx.State):
         self.birth_date = value
 
     @rx.event
-    def on_birth_date_blur(self):
+    def on_birth_date_blur(self) -> None:
         """Mark birth date field as blurred to enable error display."""
         self.birth_date_blurred = True
 
     @rx.event
-    def set_insole_type(self, value: str):
+    def set_insole_type(self, value: str) -> None:
         """
         Update insole type field.
 
@@ -118,7 +119,7 @@ class OrderInsolesState(rx.State):
         self.insole_type = value
 
     @rx.event
-    def set_quantity(self, value: str):
+    def set_quantity(self, value: str) -> None:
         """
         Update quantity field.
 
@@ -130,7 +131,7 @@ class OrderInsolesState(rx.State):
         self.quantity = value
 
     @rx.event
-    def set_comments(self, value: str):
+    def set_comments(self, value: str) -> None:
         """
         Update comments field.
 
@@ -271,7 +272,7 @@ class OrderInsolesState(rx.State):
         return True
 
     @rx.event
-    async def submit_order(self):
+    async def submit_order(self) -> AsyncGenerator[None, None]:
         """
         Submit the order form and send email notification.
 
@@ -287,8 +288,6 @@ class OrderInsolesState(rx.State):
 
             self.form_submitting = False
 
-            from .website_state import WebsiteState
-
             website_state = await self.get_state(WebsiteState)
 
             if email_sent:
@@ -302,20 +301,20 @@ class OrderInsolesState(rx.State):
                 self.quantity = "1"
                 self.comments = ""
 
-                website_state.show_toast(
+                website_state.show_toast(  # type: ignore[operator]
                     "Bedankt voor je bestelling! We nemen zo snel mogelijk contact met je op.",
                     "success",
                 )
                 yield
 
                 await asyncio.sleep(5)
-                website_state.hide_toast()
+                website_state.hide_toast()  # type: ignore[operator]
             else:
-                website_state.show_toast(
+                website_state.show_toast(  # type: ignore[operator]
                     "Het verzenden is mislukt. Probeer het later opnieuw of neem telefonisch contact op.",
                     "error",
                 )
                 yield
 
                 await asyncio.sleep(5)
-                website_state.hide_toast()
+                website_state.hide_toast()  # type: ignore[operator]

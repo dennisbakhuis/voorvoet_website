@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
-from typing import Optional, Any, Literal
+from typing import Any, Literal
 
 
 ContentType = Literal["heading", "paragraph", "markdown", "image", "button", "list"]
@@ -21,11 +21,11 @@ class BlogPost(BaseModel):
         URL-friendly identifier for the blog post.
     summary : str
         Brief summary or excerpt of the blog post.
-    author : Optional[str]
+    author : str | None
         Author name, defaults to None if not specified.
     date : datetime
         Publication date and time.
-    date_modified : Optional[datetime]
+    date_modified : datetime | None
         Last modification date, defaults to None (uses publication date).
     formatted_date : str
         Pre-formatted date string in Dutch locale.
@@ -39,13 +39,19 @@ class BlogPost(BaseModel):
         Original filename of the blog post source.
     thumbnail_url : str
         Full resolved URL to thumbnail with fallback.
-    read_time : Optional[int]
+    thumbnail_fallback : str
+        Fallback image URL (JPG or PNG).
+    thumbnail_avif : str
+        AVIF format image URL (empty string if not available).
+    thumbnail_webp : str
+        WebP format image URL (empty string if not available).
+    read_time : int | None
         Estimated reading time in minutes, defaults to None.
     content_objects : list[ContentDict]
         Parsed content as structured dictionaries.
     tags : list[str]
         Keywords/tags for the blog post for SEO and categorization.
-    category : Optional[str]
+    category : str | None
         Article category/section, defaults to None.
     url : str
         Computed URL path for the blog post (read-only property).
@@ -54,24 +60,27 @@ class BlogPost(BaseModel):
     title: str
     slug: str
     summary: str
-    author: Optional[str] = None
+    author: str | None = None
     date: datetime
-    date_modified: Optional[datetime] = None
+    date_modified: datetime | None = None
     formatted_date: str
     thumbnail: str
     thumbnail_alt: str = ""
     content: str = ""
     filename: str
     thumbnail_url: str
-    read_time: Optional[int] = None
-    content_objects: Any = Field(default_factory=list)
+    thumbnail_fallback: str = ""
+    thumbnail_avif: str = ""
+    thumbnail_webp: str = ""
+    read_time: int | None = None
+    content_objects: Any = Field(default_factory=lambda: [])
     tags: list[str] = Field(default_factory=list)
-    category: Optional[str] = None
+    category: str | None = None
     story_number: str
 
     @field_validator("date", mode="before")
     @classmethod
-    def parse_date(cls, v):
+    def parse_date(cls, v: str | datetime) -> datetime:
         """Parse date from string or datetime."""
         if isinstance(v, str):
             return datetime.fromisoformat(v)
@@ -79,7 +88,7 @@ class BlogPost(BaseModel):
 
     @field_validator("date_modified", mode="before")
     @classmethod
-    def parse_date_modified(cls, v):
+    def parse_date_modified(cls, v: str | datetime | None) -> datetime | None:
         """Parse date_modified from string or datetime."""
         if v is None or v == "":
             return None
@@ -89,7 +98,7 @@ class BlogPost(BaseModel):
 
     @field_validator("read_time", mode="before")
     @classmethod
-    def parse_read_time(cls, v):
+    def parse_read_time(cls, v: str | int | None) -> int | None:
         """Parse read_time from string or int."""
         if v is None or v == "":
             return None
@@ -99,7 +108,7 @@ class BlogPost(BaseModel):
 
     @field_validator("tags", mode="before")
     @classmethod
-    def parse_tags(cls, v):
+    def parse_tags(cls, v: str | list[str]) -> list[str]:
         """Parse tags from string or list."""
         if isinstance(v, str):
             if v == "":
@@ -109,7 +118,7 @@ class BlogPost(BaseModel):
 
     @field_validator("thumbnail_alt", mode="before")
     @classmethod
-    def ensure_thumbnail_alt(cls, v):
+    def ensure_thumbnail_alt(cls, v: str | None) -> str:
         """Ensure thumbnail_alt is never None."""
         if v is None or v == "":
             return ""
@@ -117,12 +126,5 @@ class BlogPost(BaseModel):
 
     @property
     def url(self) -> str:
-        """
-        Get the URL path for this blog post.
-
-        Returns
-        -------
-        str
-            URL path in the format '/blog/{slug}/'.
-        """
+        """Get the URL path for this blog post."""
         return f"/blog/{self.slug}/"

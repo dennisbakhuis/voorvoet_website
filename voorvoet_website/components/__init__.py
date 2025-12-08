@@ -7,7 +7,6 @@ from .blog_list import blog_list
 from .blog_markdown import blog_markdown
 from .blog_paragraph import blog_paragraph
 from .button import button
-from .centered_image import centered_image
 from .column import column
 from .container import container
 from .fa_icon import fa_icon
@@ -27,6 +26,7 @@ from .location_map_section import location_section, LocationConfig
 from .markdown_content import markdown_content
 from .regular_text import regular_text
 from .responsive_grid import responsive_grid
+from .responsive_image import responsive_image
 from .risk_level_card import risk_level_card
 from .section import section
 from .header import header
@@ -45,7 +45,6 @@ __all__ = [
     "blog_markdown",
     "blog_paragraph",
     "button",
-    "centered_image",
     "column",
     "container",
     "fa_icon",
@@ -70,6 +69,7 @@ __all__ = [
     "organization_schema",
     "regular_text",
     "responsive_grid",
+    "responsive_image",
     "risk_level_card",
     "section",
     "toast",

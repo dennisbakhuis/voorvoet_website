@@ -101,24 +101,51 @@ BREADCRUMB_NAMES = {
 }
 
 
+ROUTE_MAPPINGS = {
+    "nl": {
+        "home": "/nl",
+        "information": "/nl/informatie",
+        "reimbursements": "/nl/vergoedingen",
+        "contact": "/nl/contact",
+        "order_insoles": "/nl/zolen-bestellen",
+        "blog": "/nl/blog/",
+    },
+    "de": {
+        "home": "/de",
+        "information": "/de/informationen",
+        "reimbursements": "/de/erstattungen",
+        "contact": "/de/kontakt",
+        "order_insoles": "/de/einlagen-bestellen",
+        "blog": "/de/blog/",
+    },
+    "en": {
+        "home": "/en",
+        "information": "/en/information",
+        "reimbursements": "/en/reimbursements",
+        "contact": "/en/contact",
+        "order_insoles": "/en/order-insoles",
+        "blog": "/en/blog/",
+    },
+}
+
 PAGE_ROUTES = {
-    "home": {"nl": "/nl", "de": "/de", "en": "/en"},
+    "home": {"nl": "/nl/", "de": "/de/", "en": "/en/"},
     "blog": {"nl": "/nl/blog/", "de": "/de/blog/", "en": "/en/blog/"},
     "information": {
-        "nl": "/nl/informatie",
-        "de": "/de/informationen",
-        "en": "/en/information",
+        "nl": "/nl/informatie/",
+        "de": "/de/informationen/",
+        "en": "/en/information/",
     },
     "reimbursements": {
-        "nl": "/nl/vergoedingen",
-        "de": "/de/erstattungen",
-        "en": "/en/reimbursements",
+        "nl": "/nl/vergoedingen/",
+        "de": "/de/erstattungen/",
+        "en": "/en/reimbursements/",
     },
-    "contact": {"nl": "/nl/contact", "de": "/de/kontakt", "en": "/en/contact"},
+    "contact": {"nl": "/nl/contact/", "de": "/de/kontakt/", "en": "/en/contact/"},
     "order_insoles": {
-        "nl": "/nl/zolen-bestellen",
-        "de": "/de/einlagen-bestellen",
-        "en": "/en/order-insoles",
+        "nl": "/nl/zolen-bestellen/",
+        "de": "/de/einlagen-bestellen/",
+        "en": "/en/order-insoles/",
     },
 }
 
@@ -145,7 +172,7 @@ def get_hreflang_tags(page_key: str) -> list:
     - Adds x-default pointing to Dutch (nl) as the default language
     - Required for multi-language SEO per Google guidelines
     """
-    hreflang_tags = []
+    hreflang_tags: list[rx.Component] = []
 
     page_routes = PAGE_ROUTES.get(page_key, {})
 
