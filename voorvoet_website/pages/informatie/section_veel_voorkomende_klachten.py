@@ -76,11 +76,9 @@ def section_veel_voorkomende_klachten(language: str) -> rx.Component:
     """
     image_column = column(
         responsive_image(
-            src=[
-                "/images/page_information/anatomie-voet-hielpijn_voorvoet_podotherapie_enschede.avif",
-                "/images/page_information/anatomie-voet-hielpijn_voorvoet_podotherapie_enschede.webp",
-                "/images/page_information/anatomie-voet-hielpijn_voorvoet_podotherapie_enschede.jpg",
-            ],
+            src_fallback="/images/page_information/anatomie-voet-hielpijn_voorvoet_podotherapie_enschede.jpg",
+            src_avif="/images/page_information/anatomie-voet-hielpijn_voorvoet_podotherapie_enschede.avif",
+            src_webp="/images/page_information/anatomie-voet-hielpijn_voorvoet_podotherapie_enschede.webp",
             alt=get_translation(TRANSLATIONS, "image_alt", language),
             width="100%",
             max_width="450px",

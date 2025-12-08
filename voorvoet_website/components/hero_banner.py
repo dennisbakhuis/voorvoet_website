@@ -5,8 +5,10 @@ from .responsive_image import responsive_image
 
 
 def hero_banner(
-    image_src: str | list[str],
+    image_src_fallback: str,
     alt_text: str,
+    image_src_avif: str = "",
+    image_src_webp: str = "",
     gradient: str = "linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
     content: rx.Component | None = None,
 ) -> rx.Component:
@@ -15,10 +17,14 @@ def hero_banner(
 
     Parameters
     ----------
-    image_src : str
-        Path to the background image.
+    image_src_fallback : str
+        Path to the fallback background image (JPG or PNG).
     alt_text : str
         Alt text for the background image for accessibility and SEO.
+    image_src_avif : str, optional
+        Path to the AVIF format image (empty string if not available).
+    image_src_webp : str, optional
+        Path to the WebP format image (empty string if not available).
     gradient : str, optional
         CSS gradient overlay applied over the image.
         Default is a white-to-green gradient with screen blend mode.
@@ -35,7 +41,9 @@ def hero_banner(
     """
     children = [
         responsive_image(
-            src=image_src,
+            src_fallback=image_src_fallback,
+            src_avif=image_src_avif,
+            src_webp=image_src_webp,
             alt=alt_text,
             object_fit="cover",
             position="absolute",

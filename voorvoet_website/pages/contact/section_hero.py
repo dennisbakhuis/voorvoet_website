@@ -37,11 +37,9 @@ def section_hero(language: str) -> rx.Component:
     """
     return section(
         hero_banner(
-            image_src=[
-                "/images/page_contact/voetklachten_enschede_zere_voeten_voorvoet_contact.avif",
-                "/images/page_contact/voetklachten_enschede_zere_voeten_voorvoet_contact.webp",
-                "/images/page_contact/voetklachten_enschede_zere_voeten_voorvoet_contact.jpg",
-            ],
+            image_src_fallback="/images/page_contact/voetklachten_enschede_zere_voeten_voorvoet_contact.jpg",
+            image_src_avif="/images/page_contact/voetklachten_enschede_zere_voeten_voorvoet_contact.avif",
+            image_src_webp="/images/page_contact/voetklachten_enschede_zere_voeten_voorvoet_contact.webp",
             alt_text=get_translation(TRANSLATIONS, "hero_image_alt", language),
             gradient="linear-gradient(270deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
             content=None,

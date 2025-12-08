@@ -395,11 +395,9 @@ def footer(language: str) -> rx.Component:
                     rx.link(
                         rx.box(
                             responsive_image(
-                                src=[
-                                    "/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.avif",
-                                    "/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.webp",
-                                    "/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png",
-                                ],
+                                src_fallback="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png",
+                                src_avif="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.avif",
+                                src_webp="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.webp",
                                 alt=TRANSLATIONS[language]["nvvp_logo_alt"],
                                 height="60px",
                                 loading="lazy",
@@ -416,11 +414,9 @@ def footer(language: str) -> rx.Component:
                     rx.link(
                         rx.box(
                             responsive_image(
-                                src=[
-                                    "/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.avif",
-                                    "/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.webp",
-                                    "/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png",
-                                ],
+                                src_fallback="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png",
+                                src_avif="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.avif",
+                                src_webp="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.webp",
                                 alt=TRANSLATIONS[language]["krp_logo_alt"],
                                 height="60px",
                                 loading="lazy",

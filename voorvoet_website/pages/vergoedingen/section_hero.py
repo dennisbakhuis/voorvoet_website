@@ -37,11 +37,9 @@ def section_hero(language: str) -> rx.Component:
     """
     return section(
         hero_banner(
-            image_src=[
-                "/images/page_reimbursements/Hielpijn_hielspoor_plantaire_fasciits_tarieven.avif",
-                "/images/page_reimbursements/Hielpijn_hielspoor_plantaire_fasciits_tarieven.webp",
-                "/images/page_reimbursements/Hielpijn_hielspoor_plantaire_fasciits_tarieven.jpg",
-            ],
+            image_src_fallback="/images/page_reimbursements/Hielpijn_hielspoor_plantaire_fasciits_tarieven.jpg",
+            image_src_avif="/images/page_reimbursements/Hielpijn_hielspoor_plantaire_fasciits_tarieven.avif",
+            image_src_webp="/images/page_reimbursements/Hielpijn_hielspoor_plantaire_fasciits_tarieven.webp",
             alt_text=get_translation(TRANSLATIONS, "hero_image_alt", language),
             gradient="linear-gradient(270deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
             content=None,

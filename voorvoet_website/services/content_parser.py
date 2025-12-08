@@ -204,7 +204,10 @@ def _process_image(image: Image, filename: str, project_root: Path) -> dict[str,
     dict[str, Any]
         Image content object with src, alt, and caption
     """
-    src = image.src
+    src_fallback = image.src
+    src_avif = ""
+    src_webp = ""
+
     image_children = image.children if image.children is not None else []
     alt = (
         _render_span_tokens(image_children, filename, [], project_root)
@@ -213,19 +216,32 @@ def _process_image(image: Image, filename: str, project_root: Path) -> dict[str,
     )
 
     if not (
-        src.startswith("http://") or src.startswith("https://") or src.startswith("/")
+        src_fallback.startswith("http://")
+        or src_fallback.startswith("https://")
+        or src_fallback.startswith("/")
     ):
-        resolved_path = f"/images/page_blog/{filename}/{src}"
+        resolved_path = f"/images/page_blog/{filename}/{src_fallback}"
         file_system_path = project_root / f"assets{resolved_path}"
 
         if not file_system_path.exists():
             resolved_path = "/images/page_blog/default_image_filler.jpg"
 
-        src = resolved_path
+        src_fallback = resolved_path
+
+        base_path = (
+            src_fallback.rsplit(".", 1)[0] if "." in src_fallback else src_fallback
+        )
+        asset_base = base_path.lstrip("/")
+        if (project_root / f"assets/{asset_base}.avif").exists():
+            src_avif = f"{base_path}.avif"
+        if (project_root / f"assets/{asset_base}.webp").exists():
+            src_webp = f"{base_path}.webp"
 
     return {
         "type": "image",
-        "src": src,
+        "src_fallback": src_fallback,
+        "src_avif": src_avif,
+        "src_webp": src_webp,
         "alt": alt,
         "caption": alt,  # Use alt text as caption
     }

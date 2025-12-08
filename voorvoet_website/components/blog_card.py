@@ -2,6 +2,8 @@
 
 import reflex as rx
 
+from .responsive_image import responsive_image
+
 from ..models import BlogPost
 from ..theme import Colors, FontSizes, Layout
 from ..config import config
@@ -117,8 +119,10 @@ def blog_card(
     )
 
     thumbnail = rx.box(
-        rx.image(
-            src=post.thumbnail_fallback,
+        responsive_image(
+            src_fallback=post.thumbnail_fallback,
+            src_avif=post.thumbnail_avif,
+            src_webp=post.thumbnail_webp,
             alt=str(post.thumbnail_alt),
             width="100%",
             height="100%",

@@ -37,11 +37,9 @@ def section_hero(language: str) -> rx.Component:
     """
     return section(
         hero_banner(
-            image_src=[
-                "/images/page_order_insoles/hiking_shoes.avif",
-                "/images/page_order_insoles/hiking_shoes.webp",
-                "/images/page_order_insoles/hiking_shoes.jpg",
-            ],
+            image_src_fallback="/images/page_order_insoles/hiking_shoes.jpg",
+            image_src_avif="/images/page_order_insoles/hiking_shoes.avif",
+            image_src_webp="/images/page_order_insoles/hiking_shoes.webp",
             alt_text=get_translation(TRANSLATIONS, "hero_image_alt", language),
             gradient="linear-gradient(270deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
             content=None,

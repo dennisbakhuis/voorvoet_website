@@ -11,10 +11,12 @@ from .responsive_image import responsive_image
 
 
 def image_text_section(
-    image_src: Union[str, list[str], rx.Var],
+    image_fallback: str,
     image_alt: str,
     title: Union[str, rx.Var],
     paragraphs: Union[str, rx.Var, Sequence[Union[str, rx.Var]]],
+    image_avif: str = "",
+    image_webp: str = "",
     image_position: str = "left",
     button_text: Optional[Union[str, rx.Var]] = None,
     button_link: Optional[Union[str, rx.Var]] = None,
@@ -31,8 +33,8 @@ def image_text_section(
 
     Parameters
     ----------
-    image_src : str | list[str] | rx.Var
-        Path, list of paths, or Var to the image to display.
+    image_fallback : str
+        Path to the fallback image (JPG or PNG).
     image_alt : str
         Alt text for the image for accessibility and SEO.
     title : str | rx.Var
@@ -41,6 +43,10 @@ def image_text_section(
         Single paragraph string or sequence of paragraph strings.
         Multiple paragraphs are automatically spaced.
         Can be reactive variables from translations.
+    image_avif : str, optional
+        Path to the AVIF format image (empty string if not available).
+    image_webp : str, optional
+        Path to the WebP format image (empty string if not available).
     image_position : str, optional
         Position of image relative to text: "left" or "right".
         Default is "left".
@@ -70,28 +76,18 @@ def image_text_section(
     else:
         paragraph_list = paragraphs
 
-    if isinstance(image_src, (str, list)):
-        image_element = responsive_image(
-            src=image_src,
-            alt=image_alt,
-            width="100%",
-            max_width=image_max_width or Layout.image_max_width,
-            height="auto",
-            border_radius=Layout.image_border_radius,
-            box_shadow=Layout.image_box_shadow,
-            loading="lazy",
-        )
-    else:
-        image_element = rx.image(
-            src=image_src,
-            alt=image_alt,
-            width="100%",
-            max_width=image_max_width or Layout.image_max_width,
-            height="auto",
-            border_radius=Layout.image_border_radius,
-            box_shadow=Layout.image_box_shadow,
-            loading="lazy",
-        )
+    image_element = responsive_image(
+        src_fallback=image_fallback,
+        src_avif=image_avif,
+        src_webp=image_webp,
+        alt=image_alt,
+        width="100%",
+        max_width=image_max_width or Layout.image_max_width,
+        height="auto",
+        border_radius=Layout.image_border_radius,
+        box_shadow=Layout.image_box_shadow,
+        loading="lazy",
+    )
 
     image_column = rx.box(
         image_element,

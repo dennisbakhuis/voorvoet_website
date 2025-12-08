@@ -38,8 +38,14 @@ def _resolve_thumbnail_path(filename: str, thumbnail_filename: str) -> str:
     return thumbnail_path
 
 
-def _build_thumbnail_sources(thumbnail_url: str) -> list[str]:
-    """Build list of thumbnail image sources with AVIF, WebP, and fallback formats."""
+def _build_thumbnail_paths(
+    thumbnail_url: str,
+) -> tuple[str, str, str]:
+    """
+    Build thumbnail paths for fallback, AVIF, and WebP formats.
+
+    Returns tuple of (fallback, avif, webp). Empty string if format doesn't exist.
+    """
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
 
@@ -47,48 +53,15 @@ def _build_thumbnail_sources(thumbnail_url: str) -> list[str]:
     base_path = str(url_path.with_suffix(""))
     asset_base = base_path.lstrip("/")
 
-    sources = []
+    avif_path = ""
     if (project_root / f"assets/{asset_base}.avif").exists():
-        sources.append(f"{base_path}.avif")
+        avif_path = f"{base_path}.avif"
+
+    webp_path = ""
     if (project_root / f"assets/{asset_base}.webp").exists():
-        sources.append(f"{base_path}.webp")
-    sources.append(thumbnail_url)
+        webp_path = f"{base_path}.webp"
 
-    return sources
-
-
-def _build_picture_sources(
-    thumbnail_sources: list[str],
-) -> tuple[list[dict[str, str]], str]:
-    """
-    Build picture element sources and fallback from thumbnail sources.
-
-    Returns tuple of (sources_list, fallback_url).
-    """
-    mime_types = {
-        ".avif": "image/avif",
-        ".webp": "image/webp",
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-    }
-
-    sources = []
-    fallback_src = None
-
-    for img_path in thumbnail_sources:
-        ext = img_path[img_path.rfind(".") :].lower() if "." in img_path else ""
-        mime_type = mime_types.get(ext)
-
-        if mime_type in ("image/jpeg", "image/png"):
-            fallback_src = img_path
-        elif mime_type:
-            sources.append({"type": mime_type, "srcset": img_path})
-
-    if not fallback_src and thumbnail_sources:
-        fallback_src = thumbnail_sources[-1]
-
-    return sources, fallback_src or ""
+    return thumbnail_url, avif_path, webp_path
 
 
 def _parse_date(date_str: str, filename: str) -> datetime:
@@ -155,9 +128,8 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
         author = metadata.get("author")
         thumbnail_filename: str = str(metadata.get("thumbnail", "thumbnail.jpg"))
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
-        thumbnail_sources = _build_thumbnail_sources(thumbnail_url)
-        thumbnail_picture_sources, thumbnail_fallback = _build_picture_sources(
-            thumbnail_sources
+        thumbnail_fallback, thumbnail_avif, thumbnail_webp = _build_thumbnail_paths(
+            thumbnail_url
         )
 
         tags_raw = metadata.get("tags", [])
@@ -185,9 +157,9 @@ def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
             content=content,
             filename=filename,
             thumbnail_url=thumbnail_url,
-            thumbnail_sources=thumbnail_sources,
-            thumbnail_picture_sources=thumbnail_picture_sources,
             thumbnail_fallback=thumbnail_fallback,
+            thumbnail_avif=thumbnail_avif,
+            thumbnail_webp=thumbnail_webp,
             read_time=read_time,
             content_objects=content_objects,
             tags=tags,
@@ -256,9 +228,9 @@ def load_all_blog_posts_dict() -> dict[str, list[dict]]:
                 "thumbnail": post.thumbnail,
                 "thumbnail_alt": post.thumbnail_alt or "",
                 "thumbnail_url": post.thumbnail_url,
-                "thumbnail_sources": post.thumbnail_sources,
-                "thumbnail_picture_sources": post.thumbnail_picture_sources,
                 "thumbnail_fallback": post.thumbnail_fallback,
+                "thumbnail_avif": post.thumbnail_avif,
+                "thumbnail_webp": post.thumbnail_webp,
                 "read_time": str(post.read_time) if post.read_time else "",
                 "category": post.category or "",
                 "tags": ",".join(post.tags),

@@ -57,7 +57,11 @@ def _build_content_component(obj: dict[str, Any]) -> rx.Component:
         return blog_markdown(obj.get("content", ""))
     elif content_type == "image":
         return blog_image(
-            obj.get("src", ""), obj.get("alt", ""), obj.get("caption", "")
+            src_fallback=obj.get("src_fallback", ""),
+            alt=obj.get("alt", ""),
+            src_avif=obj.get("src_avif", ""),
+            src_webp=obj.get("src_webp", ""),
+            caption=obj.get("caption", ""),
         )
     elif content_type == "button":
         return rx.box(

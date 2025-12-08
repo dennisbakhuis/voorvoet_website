@@ -5,7 +5,13 @@ from ..theme import Colors, FontSizes, Spacing, Layout
 from .responsive_image import responsive_image
 
 
-def blog_image(src: str, alt: str, caption: str = "") -> rx.Component:
+def blog_image(
+    src_fallback: str,
+    alt: str,
+    src_avif: str = "",
+    src_webp: str = "",
+    caption: str = "",
+) -> rx.Component:
     """
     Create a styled image for blog content with optional caption.
 
@@ -26,7 +32,9 @@ def blog_image(src: str, alt: str, caption: str = "") -> rx.Component:
     """
     return rx.box(
         responsive_image(
-            src=src,
+            src_fallback=src_fallback,
+            src_avif=src_avif,
+            src_webp=src_webp,
             alt=alt,
             loading="lazy",
         ),

@@ -4,12 +4,15 @@ import reflex as rx
 
 
 def responsive_image(
-    src: str | list[str],
-    alt: str,
+    src_fallback: str | list[str] | None = None,
+    alt: str | None = None,
+    src_avif: str = "",
+    src_webp: str = "",
     width: str | None = None,
     height: str | None = None,
     class_name: str | None = None,
     loading: str = "lazy",
+    src: str | list[str] | None = None,  # Legacy parameter for backward compatibility
     **props,
 ) -> rx.Component:
     """
@@ -17,12 +20,14 @@ def responsive_image(
 
     Parameters
     ----------
-    src : str | list[str]
-        Image or List of image paths. Can be:
-        - Single element (SVG or any format): returns simple img
-        - Multiple elements: builds picture with sources based on extensions
+    src_fallback : str | list[str], optional
+        Fallback image path (JPG or PNG) or list of paths (for backward compatibility)
     alt : str
         Alt text for accessibility
+    src_avif : str, optional
+        AVIF format image path (empty string if not available)
+    src_webp : str, optional
+        WebP format image path (empty string if not available)
     width : str, optional
         CSS width value
     height : str, optional
@@ -31,15 +36,17 @@ def responsive_image(
         CSS class name
     loading : str, default "lazy"
         Loading strategy: "lazy" or "eager"
+    src : str | list[str], optional
+        Legacy parameter for backward compatibility
     **props
         Additional props passed to img element
 
     Returns
     -------
     rx.Component
-        Simple img element for single source, picture element for multiple sources
+        Picture element with AVIF, WebP sources and fallback img
     """
-    img_props = {"alt": alt, "loading": loading, **props}
+    img_props = {"alt": alt or "", "loading": loading, **props}
 
     if width:
         img_props["width"] = width
@@ -48,34 +55,14 @@ def responsive_image(
     if class_name:
         img_props["class_name"] = class_name
 
-    if isinstance(src, str):
-        src = [src]
-    if len(src) <= 1:
-        return rx.image(src=src[0] if src else "", **img_props)
-
-    mime_types = {
-        ".avif": "image/avif",
-        ".webp": "image/webp",
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-    }
-
-    fallback_src = None
-    sources = []
-
-    for img_path in src:
-        ext = img_path[img_path.rfind(".") :].lower()
-        mime_type = mime_types.get(ext)
-
-        if mime_type in ("image/jpeg", "image/png"):
-            fallback_src = img_path
-        elif mime_type:
-            sources.append(
-                rx.el.source(type=mime_type, custom_attrs={"srcset": img_path})
-            )
-
-    if not fallback_src:
-        fallback_src = src[-1]
-
-    return rx.el.picture(*sources, rx.image(src=fallback_src, **img_props))
+    return rx.el.picture(
+        rx.cond(
+            src_avif != "",
+            rx.el.source(type="image/avif", custom_attrs={"srcset": src_avif}),
+        ),
+        rx.cond(
+            src_webp != "",
+            rx.el.source(type="image/webp", custom_attrs={"srcset": src_webp}),
+        ),
+        rx.image(src=src_fallback, **img_props),
+    )
