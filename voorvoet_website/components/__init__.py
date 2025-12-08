@@ -7,7 +7,6 @@ from .blog_list import blog_list
 from .blog_markdown import blog_markdown
 from .blog_paragraph import blog_paragraph
 from .button import button
-from .centered_image import centered_image
 from .column import column
 from .container import container
 from .fa_icon import fa_icon
@@ -46,7 +45,6 @@ __all__ = [
     "blog_markdown",
     "blog_paragraph",
     "button",
-    "centered_image",
     "column",
     "container",
     "fa_icon",

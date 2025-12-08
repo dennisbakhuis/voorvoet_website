@@ -22,21 +22,6 @@ def blog_paragraph(content: str) -> rx.Component:
     -------
     rx.Component
         A Reflex markdown component styled for blog paragraphs
-
-    Notes
-    -----
-    - Uses content text color from theme for readability
-    - Regular font size (18px) for comfortable reading
-    - Bottom margin of 1rem for proper paragraph spacing
-    - Links styled with brand colors (brand 500) with hover effect (brand 300)
-    - Supports full inline markdown syntax
-    - Renders as a markdown component to preserve formatting
-
-    Examples
-    --------
-    >>> blog_paragraph("This is a simple paragraph.")
-    >>> blog_paragraph("This paragraph has **bold** and *italic* text.")
-    >>> blog_paragraph("Visit [our website](https://example.com) for more info.")
     """
     return rx.box(
         rx.markdown(

@@ -1,26 +1,31 @@
 """Responsive image component with AVIF, WebP, and fallback format support."""
 
 import reflex as rx
+from ..theme import Layout
 
 
 def responsive_image(
-    src_fallback: str | list[str] | None = None,
+    src_fallback: str = "",
     alt: str | None = None,
     src_avif: str = "",
     src_webp: str = "",
     width: str | None = None,
     height: str | None = None,
+    max_width: str | None = None,
+    border_radius: str | None = None,
+    box_shadow: str | None = None,
+    margin_y: str | None = None,
     class_name: str | None = None,
     loading: str = "lazy",
     src: str | list[str] | None = None,  # Legacy parameter for backward compatibility
     **props,
 ) -> rx.Component:
     """
-    Create a responsive image with modern format support.
+    Create a responsive image with modern format support and styling.
 
     Parameters
     ----------
-    src_fallback : str | list[str], optional
+    src_fallback : str
         Fallback image path (JPG or PNG) or list of paths (for backward compatibility)
     alt : str
         Alt text for accessibility
@@ -32,6 +37,14 @@ def responsive_image(
         CSS width value
     height : str, optional
         CSS height value
+    max_width : str, optional
+        Maximum width of the image
+    border_radius : str, optional
+        Border radius for the image (defaults to theme value)
+    box_shadow : str, optional
+        Box shadow for the image (defaults to theme value)
+    margin_y : str, optional
+        Vertical margin for the image
     class_name : str, optional
         CSS class name
     loading : str, default "lazy"
@@ -52,6 +65,18 @@ def responsive_image(
         img_props["width"] = width
     if height:
         img_props["height"] = height
+    if max_width:
+        img_props["max_width"] = max_width
+    if border_radius is not None:
+        img_props["border_radius"] = border_radius
+    elif "border_radius" not in props:
+        img_props["border_radius"] = Layout.image_border_radius
+    if box_shadow is not None:
+        img_props["box_shadow"] = box_shadow
+    elif "box_shadow" not in props:
+        img_props["box_shadow"] = Layout.image_box_shadow
+    if margin_y:
+        img_props["margin_y"] = margin_y
     if class_name:
         img_props["class_name"] = class_name
 

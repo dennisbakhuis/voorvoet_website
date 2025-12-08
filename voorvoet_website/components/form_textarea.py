@@ -28,14 +28,6 @@ def form_textarea(
     -------
     rx.Component
         A styled textarea component with consistent theming.
-
-    Examples
-    --------
-    >>> form_textarea(
-    ...     "Enter description...",
-    ...     value=state.description,
-    ...     on_change=state.set_description
-    ... )
     """
     return rx.el.textarea(
         placeholder=placeholder,

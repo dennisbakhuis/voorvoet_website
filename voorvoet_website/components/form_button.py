@@ -37,15 +37,6 @@ def form_button(
     rx.Component
         A button component that renders different states based on
         is_loading and is_disabled parameters.
-
-    Examples
-    --------
-    >>> form_button(
-    ...     "Submit",
-    ...     on_click=state.submit,
-    ...     is_loading=state.submitting,
-    ...     is_disabled=state.form_invalid
-    ... )
     """
     loading_button = rx.box(
         rx.text("⏳ ", display="inline"),

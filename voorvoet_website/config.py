@@ -4,15 +4,6 @@ This module defines the application configuration using Pydantic settings,
 loading values from environment variables and .env file. Configuration includes
 Cloudflare Turnstile settings, SMTP email settings, external links, and blog
 display preferences.
-
-Examples
---------
-Configuration values are loaded from environment variables:
-
-    TURNSTILE_SITE_KEY=your_site_key
-    TURNSTILE_SECRET_KEY=your_secret_key
-    SMTP_HOST=smtp.protonmail.ch
-    SMTP_PORT=587
 """
 
 from typing import Optional
@@ -61,14 +52,6 @@ class Config(BaseSettings):
         Show publication date on blog posts.
     blog_show_reading_time : bool
         Show estimated reading time on blog posts.
-
-    Examples
-    --------
-    Access configuration values through the singleton instance:
-
-        >>> from voorvoet_website.config import config
-        >>> config.smtp_host
-        'smtp.protonmail.ch'
     """
 
     model_config = SettingsConfigDict(
