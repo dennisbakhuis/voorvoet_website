@@ -25,19 +25,16 @@ from ...translations import BREADCRUMB_NAMES
 
 TRANSLATIONS = {
     "nl": {
-        "reading_time": "min leestijd",
         "back_to_blog": "← Terug naar blog overzicht",
         "post_not_found": "Blogpost niet gevonden",
         "translation_not_available": "Helaas is deze blogpost nog niet beschikbaar in het Nederlands. Schakel naar een andere taal om de inhoud te lezen.",
     },
     "de": {
-        "reading_time": "Min. Lesezeit",
         "back_to_blog": "← Zurück zur Blog-Übersicht",
         "post_not_found": "Blogbeitrag nicht gefunden",
         "translation_not_available": "Leider ist dieser Blogbeitrag noch nicht auf Deutsch verfügbar. Wechseln Sie zu einer anderen Sprache, um den Inhalt zu lesen.",
     },
     "en": {
-        "reading_time": "min read",
         "back_to_blog": "← Back to blog overview",
         "post_not_found": "Blog post not found",
         "translation_not_available": "Unfortunately, this blog post is not yet available in English. Switch to another language to read the content.",
@@ -89,7 +86,7 @@ def page_blog_post(language: str = "nl", post: dict | None = None) -> rx.Compone
     Create the individual blog post page with full content.
 
     Displays the complete blog post including title, metadata (author,
-    date, reading time based on config), rendered markdown content,
+    date based on config), rendered markdown content,
     and a back link to the blog overview. Also includes Article structured
     data (JSON-LD) for SEO optimization.
 
@@ -110,7 +107,6 @@ def page_blog_post(language: str = "nl", post: dict | None = None) -> rx.Compone
         title_val = post.get("title", "")
         author_val = post.get("author", "") or ""
         formatted_date_val = post.get("formatted_date", "")
-        read_time_val = str(post.get("read_time", "")) if post.get("read_time") else ""
         content_objects_val = post.get("content_objects", [])
 
         content_components = _build_content_components(content_objects_val)
@@ -128,21 +124,6 @@ def page_blog_post(language: str = "nl", post: dict | None = None) -> rx.Compone
             metadata_components.append(
                 rx.text(
                     formatted_date_val, color=Colors.text["content"], font_size="1rem"
-                )
-            )
-
-        if config.blog_show_reading_time and read_time_val:
-            if metadata_components:
-                metadata_components.append(
-                    rx.text("•", color=Colors.text["content"], font_size="1rem")
-                )
-            metadata_components.append(
-                rx.text(
-                    read_time_val
-                    + " "
-                    + get_translation(TRANSLATIONS, "reading_time", language),
-                    color=Colors.text["content"],
-                    font_size="1rem",
                 )
             )
 

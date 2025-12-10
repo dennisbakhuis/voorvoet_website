@@ -8,11 +8,6 @@ def blog_list(markdown: str) -> rx.Component:
     """
     Create a styled list for blog content from markdown format.
 
-    Renders list content (both ordered and unordered) by converting it back
-    to markdown format and rendering as a markdown block. This approach is
-    used because Reflex does not support nested rx.foreach operations, which
-    would be needed to dynamically render list items within a foreach loop.
-
     Parameters
     ----------
     markdown : str

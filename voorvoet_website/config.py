@@ -49,8 +49,6 @@ class Config(BaseSettings):
         Show author name on blog posts.
     blog_show_publication_date : bool
         Show publication date on blog posts.
-    blog_show_reading_time : bool
-        Show estimated reading time on blog posts.
     """
 
     model_config = SettingsConfigDict(
@@ -110,10 +108,6 @@ class Config(BaseSettings):
     blog_show_publication_date: bool = Field(
         default=False,
         description="Show publication date on blog posts",
-    )
-    blog_show_reading_time: bool = Field(
-        default=False,
-        description="Show estimated reading time on blog posts",
     )
 
     site_url: str = Field(

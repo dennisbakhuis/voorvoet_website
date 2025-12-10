@@ -10,7 +10,9 @@ from ..config import config
 
 
 def blog_card(
-    post: BlogPost | dict, language: str = "nl", flip: bool = False
+    post: BlogPost | dict,
+    language: str = "nl",
+    flip: bool = False,
 ) -> rx.Component:
     """
     Display a blog post card in landscape layout with thumbnail and content.
@@ -50,9 +52,7 @@ def blog_card(
             margin_bottom="0.5rem",
         ),
         rx.cond(
-            config.blog_show_author
-            | config.blog_show_publication_date
-            | config.blog_show_reading_time,
+            config.blog_show_author | config.blog_show_publication_date,
             rx.hstack(
                 rx.cond(
                     config.blog_show_author,
@@ -80,27 +80,6 @@ def blog_card(
                         font_size="0.85rem",
                     ),
                 ),
-                rx.cond(
-                    config.blog_show_reading_time,
-                    rx.cond(
-                        post.read_time,
-                        rx.fragment(
-                            rx.cond(
-                                config.blog_show_publication_date,
-                                rx.text(
-                                    "•",
-                                    color=Colors.text["muted"],
-                                    font_size="0.85rem",
-                                ),
-                            ),
-                            rx.text(
-                                f"{post.read_time} min leestijd",
-                                color=Colors.text["muted"],
-                                font_size="0.85rem",
-                            ),
-                        ),
-                    ),
-                ),
                 spacing="2",
                 wrap="wrap",
             ),
@@ -123,7 +102,7 @@ def blog_card(
             src_fallback=post.thumbnail_fallback,
             src_avif=post.thumbnail_avif,
             src_webp=post.thumbnail_webp,
-            alt=str(post.thumbnail_alt),
+            alt=post.thumbnail_alt,
             dimensions=ImageDimensions.blog_thumbnail,
             width="100%",
             height="100%",

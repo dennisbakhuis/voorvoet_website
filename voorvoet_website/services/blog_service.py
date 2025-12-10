@@ -18,12 +18,6 @@ def _get_blog_content_dir() -> Path:
     return project_root / "voorvoet_website" / "data" / "blog_content"
 
 
-def calculate_read_time(content: str) -> int:
-    """Calculate estimated reading time (200 words per minute, minimum 1 minute)."""
-    words = len(content.split())
-    return max(1, round(words / 200))
-
-
 def _resolve_thumbnail_path(filename: str, thumbnail_filename: str) -> str:
     """Resolve thumbnail path with fallback to default image."""
     current_file = Path(__file__)
@@ -103,8 +97,11 @@ def parse_blog_post(file_path: Path) -> BlogPost | None:
         metadata = post.metadata
         content = post.content
         filename = file_path.stem
+        language = "nl"
         if "." in filename:
-            filename = filename.rsplit(".", 1)[0]
+            parts = filename.rsplit(".", 1)
+            filename = parts[0]
+            language = parts[1] if len(parts) > 1 else "nl"
 
         story_number = filename.split("_")[0]
 
@@ -112,58 +109,35 @@ def parse_blog_post(file_path: Path) -> BlogPost | None:
         date = _parse_date(date_str, filename)
         formatted_date = _format_date_dutch(date)
 
-        date_modified = None
-        if "date_modified" in metadata:
-            date_modified_str = str(metadata.get("date_modified", ""))
-            date_modified = _parse_date(date_modified_str, filename)
-
-        try:
-            read_time = int(str(metadata.get("read_time", "")))
-            if read_time <= 0:
-                raise ValueError("Invalid read_time value")
-        except (ValueError, TypeError):
-            read_time = calculate_read_time(content)
-
-        author = metadata.get("author")
+        author = metadata.get("author", "")
         thumbnail_filename: str = str(metadata.get("thumbnail", "thumbnail.jpg"))
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
         thumbnail_fallback, thumbnail_avif, thumbnail_webp = _build_thumbnail_paths(
             thumbnail_url
         )
 
-        tags_raw = metadata.get("tags", [])
-        if isinstance(tags_raw, list):
-            tags = [str(tag).strip() for tag in tags_raw]
-        elif isinstance(tags_raw, str):
-            tags = [tag.strip() for tag in tags_raw.split(",") if tag.strip()]
-        else:
-            tags = []
-
         category = metadata.get("category")
 
         content_objects = parse_blog_content(content, filename)
 
         blog_post = BlogPost(
-            title=str(metadata.get("title", "Untitled")),
+            title=str(metadata.get("title")),
             slug=str(metadata.get("slug", filename)),
             summary=str(metadata.get("summary", "")),
-            author=str(author) if author else None,
+            author=str(author),
             date=date,
-            date_modified=date_modified,
             formatted_date=formatted_date,
             thumbnail=str(thumbnail_filename),
             thumbnail_alt=str(metadata.get("thumbnail_alt", "")),
             content=content,
             filename=filename,
-            thumbnail_url=thumbnail_url,
             thumbnail_fallback=thumbnail_fallback,
             thumbnail_avif=thumbnail_avif,
             thumbnail_webp=thumbnail_webp,
-            read_time=read_time,
             content_objects=content_objects,
-            tags=tags,
-            category=str(category) if category else None,
+            category=str(category),
             story_number=story_number,
+            language=language,
         )
 
         return blog_post
@@ -218,26 +192,20 @@ def load_all_blog_posts_dict() -> dict[str, list[dict]]:
                 "title": post.title,
                 "slug": post.slug,
                 "summary": post.summary,
-                "author": post.author or "",
+                "author": post.author,
                 "date": post.date.isoformat(),
-                "date_modified": post.date_modified.isoformat()
-                if post.date_modified
-                else "",
                 "formatted_date": post.formatted_date,
-                "thumbnail": post.thumbnail,
-                "thumbnail_alt": post.thumbnail_alt or "",
-                "thumbnail_url": post.thumbnail_url,
+                "thumbnail_alt": post.thumbnail_alt,
                 "thumbnail_fallback": post.thumbnail_fallback,
                 "thumbnail_avif": post.thumbnail_avif,
                 "thumbnail_webp": post.thumbnail_webp,
-                "read_time": str(post.read_time) if post.read_time else "",
-                "category": post.category or "",
-                "tags": ",".join(post.tags),
+                "category": post.category,
                 "filename": post.filename,
                 "url": post.url,
                 "content": post.content,
                 "content_objects": post.content_objects,
                 "story_number": post.story_number,
+                "language": post.language,
             }
             result[lang].append(post_dict)
 

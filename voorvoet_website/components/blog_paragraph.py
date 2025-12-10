@@ -8,10 +8,6 @@ def blog_paragraph(content: str) -> rx.Component:
     """
     Create a styled paragraph for blog content with markdown support.
 
-    Renders paragraph text using Reflex's markdown component, allowing for
-    inline formatting like bold, italic, links, and code within the paragraph.
-    Provides consistent styling for all paragraph content in blog posts.
-
     Parameters
     ----------
     content : str

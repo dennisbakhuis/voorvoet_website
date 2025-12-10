@@ -7,9 +7,9 @@ from ..theme import Layout
 
 def responsive_image(
     src_fallback: str = "",
-    alt: str | None = None,
     src_avif: str = "",
     src_webp: str = "",
+    alt: str = "",
     dimensions: dict[str, str] | None = None,
     img_width: str | None = None,
     img_height: str | None = None,
@@ -69,7 +69,7 @@ def responsive_image(
     rx.Component
         Picture element with AVIF, WebP sources and fallback img
     """
-    img_props = {"alt": alt or "", "loading": loading, **props}
+    img_props = {"alt": alt, "loading": loading, **props}
 
     if dimensions:
         if "width" in dimensions and dimensions["width"]:

@@ -21,38 +21,34 @@ class BlogPost(BaseModel):
         URL-friendly identifier for the blog post.
     summary : str
         Brief summary or excerpt of the blog post.
-    author : str | None
-        Author name, defaults to None if not specified.
+    author : str
+        Author name.
     date : datetime
         Publication date and time.
-    date_modified : datetime | None
-        Last modification date, defaults to None (uses publication date).
     formatted_date : str
-        Pre-formatted date string in Dutch locale.
+        Pre-formatted date string in locale format.
     thumbnail : str
-        Filename of the thumbnail image.
+        Primary thumbnail image URL.
     thumbnail_alt : str
         Alt text for the thumbnail image.
     content : str
         Raw markdown content after frontmatter extraction.
     filename : str
         Original filename of the blog post source.
-    thumbnail_url : str
-        Full resolved URL to thumbnail with fallback.
     thumbnail_fallback : str
         Fallback image URL (JPG or PNG).
     thumbnail_avif : str
         AVIF format image URL (empty string if not available).
     thumbnail_webp : str
         WebP format image URL (empty string if not available).
-    read_time : int | None
-        Estimated reading time in minutes, defaults to None.
     content_objects : list[ContentDict]
         Parsed content as structured dictionaries.
-    tags : list[str]
-        Keywords/tags for the blog post for SEO and categorization.
-    category : str | None
-        Article category/section, defaults to None.
+    category : str
+        Article category/section.
+    story_number : str
+        Numeric identifier for the story.
+    language : str
+        Language code (nl/de/en).
     url : str
         Computed URL path for the blog post (read-only property).
     """
@@ -60,23 +56,20 @@ class BlogPost(BaseModel):
     title: str
     slug: str
     summary: str
-    author: str | None = None
+    author: str
     date: datetime
-    date_modified: datetime | None = None
     formatted_date: str
     thumbnail: str
-    thumbnail_alt: str = ""
-    content: str = ""
+    thumbnail_alt: str
+    content: str
     filename: str
-    thumbnail_url: str
-    thumbnail_fallback: str = ""
+    thumbnail_fallback: str
     thumbnail_avif: str = ""
     thumbnail_webp: str = ""
-    read_time: int | None = None
     content_objects: Any = Field(default_factory=lambda: [])
-    tags: list[str] = Field(default_factory=list)
-    category: str | None = None
+    category: str
     story_number: str
+    language: str
 
     @field_validator("date", mode="before")
     @classmethod
@@ -85,44 +78,6 @@ class BlogPost(BaseModel):
         if isinstance(v, str):
             return datetime.fromisoformat(v)
         return v
-
-    @field_validator("date_modified", mode="before")
-    @classmethod
-    def parse_date_modified(cls, v: str | datetime | None) -> datetime | None:
-        """Parse date_modified from string or datetime."""
-        if v is None or v == "":
-            return None
-        if isinstance(v, str):
-            return datetime.fromisoformat(v)
-        return v
-
-    @field_validator("read_time", mode="before")
-    @classmethod
-    def parse_read_time(cls, v: str | int | None) -> int | None:
-        """Parse read_time from string or int."""
-        if v is None or v == "":
-            return None
-        if isinstance(v, str):
-            return int(v)
-        return v
-
-    @field_validator("tags", mode="before")
-    @classmethod
-    def parse_tags(cls, v: str | list[str]) -> list[str]:
-        """Parse tags from string or list."""
-        if isinstance(v, str):
-            if v == "":
-                return []
-            return [tag.strip() for tag in v.split(",")]
-        return v
-
-    @field_validator("thumbnail_alt", mode="before")
-    @classmethod
-    def ensure_thumbnail_alt(cls, v: str | None) -> str:
-        """Ensure thumbnail_alt is never None."""
-        if v is None or v == "":
-            return ""
-        return str(v)
 
     @property
     def url(self) -> str:

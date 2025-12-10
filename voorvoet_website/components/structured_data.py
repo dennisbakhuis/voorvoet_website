@@ -8,12 +8,8 @@ from ..models import BlogPost
 
 
 def organization_brand_schema() -> rx.Component:
-    """Generate Organization JSON-LD structured data for brand identity.
-
-    Creates a JSON-LD script tag with Organization schema markup focused on
-    VoorVoet as a business entity and brand. This complements the Podiatrist
-    schema by providing brand-level structured data for better recognition in
-    Google's Knowledge Graph.
+    """
+    Generate Organization JSON-LD structured data for brand identity.
 
     Returns
     -------
@@ -57,25 +53,8 @@ def organization_brand_schema() -> rx.Component:
 
 
 def organization_schema() -> rx.Component:
-    """Generate Organization/Podiatrist JSON-LD structured data.
-
-    Creates a JSON-LD script tag with LocalBusiness/Podiatrist schema markup for VoorVoet.
-    This schema uses the Podiatrist type which extends LocalBusiness and MedicalBusiness,
-    providing optimal SEO for local medical practices.
-
-    The schema includes:
-    - Business name, URL, and logo
-    - Contact information (phone, email)
-    - Physical addresses for both locations (Eeftinksweg and Beethovenlaan)
-    - GPS coordinates (geo) for precise location mapping
-    - Opening hours specification
-    - Area served (Enschede, Overijssel)
-    - Map links for both locations
-    - Payment methods accepted
-    - Medical specialty and services (knowsAbout)
-    - Supported languages
-    - Business registration details (KvK)
-    - Team information (founder and employees)
+    """
+    Generate Organization/Podiatrist JSON-LD structured data.
 
     Returns
     -------
@@ -218,10 +197,8 @@ def organization_schema() -> rx.Component:
 
 
 def article_schema(post: BlogPost, language: str) -> rx.Component:
-    """Generate Article JSON-LD structured data for blog posts.
-
-    Creates schema markup dynamically from blog post data to help
-    search engines understand blog content and display rich snippets in search results.
+    """
+    Generate Article JSON-LD structured data for blog posts.
 
     Parameters
     ----------
@@ -238,7 +215,7 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
     base_url = "https://voorvoet.nl"
 
     full_url = f"{base_url}/{language}/blog/{post.slug}/"
-    image_url = f"{base_url}{post.thumbnail_url}"
+    image_url = f"{base_url}{post.thumbnail_fallback}"
     words = post.content.split()
     snippet_words = words[:200] if len(words) > 200 else words
     article_snippet = " ".join(snippet_words)
@@ -255,12 +232,10 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
         "image": {
             "@type": "ImageObject",
             "url": image_url,
-            "caption": post.thumbnail_alt if post.thumbnail_alt else post.title,
+            "caption": post.thumbnail_alt,
         },
         "datePublished": post.date.isoformat(),
-        "dateModified": post.date_modified.isoformat()
-        if post.date_modified
-        else post.date.isoformat(),
+        "dateModified": post.date.isoformat(),
         "author": {
             "@type": "Person",
             "name": post.author if post.author else "Kim Bakhuis",
@@ -285,9 +260,6 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
     if word_count > 0:
         article_data["wordCount"] = word_count
 
-    if post.tags and len(post.tags) > 0:
-        article_data["keywords"] = post.tags
-
     if post.category:
         article_data["articleSection"] = post.category
 
@@ -301,9 +273,6 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
 
 def breadcrumb_schema(items: list[dict[str, str]]) -> rx.Component:
     """Generate BreadcrumbList JSON-LD structured data for navigation hierarchy.
-
-    Creates schema markup that helps search engines understand the site navigation
-    structure and hierarchy. Can lead to breadcrumb rich snippets in search results.
 
     Parameters
     ----------

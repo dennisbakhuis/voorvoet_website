@@ -1,6 +1,8 @@
 """Blog list section displaying grid of blog post cards."""
 
 import reflex as rx
+
+from voorvoet_website.models.blog_post import BlogPost
 from ...theme import Colors, FontSizes
 from ...components import container, blog_card, section
 from ...utils.get_translation import get_translation
@@ -19,7 +21,9 @@ TRANSLATIONS = {
 }
 
 
-def section_blog_list(language: str, posts: list = []) -> rx.Component:
+def section_blog_list(
+    language: str, posts: list[dict] | list[BlogPost] = []
+) -> rx.Component:
     """
     Display a grid of blog post cards.
 
