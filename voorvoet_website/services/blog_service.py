@@ -59,39 +59,28 @@ def parse_blog_post(file_path: Path) -> BlogPost | None:
     """Parse a single blog post markdown file into a BlogPost object."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
-            metadata, content = frontmatter.parse(f.read())
+            metadata_raw, content = frontmatter.parse(f.read())
+        metadata = {str(key): str(value) for key, value in metadata_raw.items()}
 
         filename, language = (part for part in file_path.stem.rsplit(".", 1))
         story_number = filename.split("_")[0]
 
-        thumbnail_filename: str = str(metadata.get("thumbnail", "thumbnail.jpg"))
+        thumbnail_filename = metadata.get("thumbnail", "thumbnail.jpg")
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
         thumbnail_fallback, thumbnail_avif, thumbnail_webp = _build_thumbnail_paths(
             thumbnail_url
         )
 
-        date_str = str(metadata.get("date", ""))
-        author = metadata.get("author", "")
-
-        category = metadata.get("category")
-
         content_objects = parse_blog_content(content, filename)
 
         blog_post = BlogPost(
-            title=str(metadata.get("title")),
-            slug=str(metadata.get("slug", filename)),
-            summary=str(metadata.get("summary", "")),
-            author=str(author),
-            date=date_str,
-            thumbnail=str(thumbnail_filename),
-            thumbnail_alt=str(metadata.get("thumbnail_alt", "")),
+            **metadata,
             content=content,
             filename=filename,
             thumbnail_fallback=thumbnail_fallback,
             thumbnail_avif=thumbnail_avif,
             thumbnail_webp=thumbnail_webp,
             content_objects=content_objects,
-            category=str(category),
             story_number=story_number,
             language=language,
         )
@@ -99,12 +88,12 @@ def parse_blog_post(file_path: Path) -> BlogPost | None:
         return blog_post
 
     except Exception as e:
-        print(f"Error parsing blog post {file_path}: {e}")
-        return None
+        raise ValueError(f"Failed to parse blog post {file_path}: {e}") from e
 
 
 def load_all_posts(
-    force_reload: bool = False, language: str | None = None
+    force_reload: bool = False,
+    language: str | None = None,
 ) -> list[BlogPost]:
     """Load all blog posts for a specific language, sorted by date (newest first)."""
     global _posts_cache
@@ -149,7 +138,7 @@ def load_all_blog_posts_dict() -> dict[str, list[dict]]:
                 "slug": post.slug,
                 "summary": post.summary,
                 "author": post.author,
-                "date": post.datetime().isoformat(),
+                "date": post.date,
                 "formatted_date": post.formatted_date,
                 "thumbnail_alt": post.thumbnail_alt,
                 "thumbnail_fallback": post.thumbnail_fallback,
