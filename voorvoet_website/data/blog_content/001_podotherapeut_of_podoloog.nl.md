@@ -4,7 +4,6 @@ slug: "podotherapeut-of-podoloog"
 summary: "Benieuwd naar het verschil tussen een podotherapeut en een podoloog? Deze termen lijken vaak door elkaar gehaald te worden, maar er is een belangrijk onderscheid. Terwijl de podotherapeut een uitgebreide HBO opleiding heeft gevolgd en een wettelijk erkende - én beschermde titel heeft kan en mag iedereen zichzelf podoloog noemen, ongeacht hun opleidingsniveau. Het effect van deze keuze op je voetzorg kan aanzienlijk zijn. Lees hier over de verschillen tussen podotherapeut en podoloog."
 author: "Kim Bakhuis"
 date: "2023-11-06"
-date_modified: "2023-11-06"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "De podotherapeut Kim Bakhuis die een podotherapeutische zool controleert aan de hand van de voet."
 tags: ["podotherapie", "podoloog", "voetzorg", "opleiding", "Enschede"]

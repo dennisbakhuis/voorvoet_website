@@ -1,12 +1,14 @@
 """BlogPost data model definition."""
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Any, Literal
 
 
 ContentType = Literal["heading", "paragraph", "markdown", "image", "button", "list"]
 ContentDict = dict[str, Any]
+
+FALLBACK_DATE = datetime(2023, 2, 1)
 
 
 class BlogPost(BaseModel):
@@ -23,10 +25,8 @@ class BlogPost(BaseModel):
         Brief summary or excerpt of the blog post.
     author : str
         Author name.
-    date : datetime
-        Publication date and time.
-    formatted_date : str
-        Pre-formatted date string in locale format.
+    date : str
+        Publication date string (as stored in frontmatter).
     thumbnail : str
         Primary thumbnail image URL.
     thumbnail_alt : str
@@ -49,16 +49,13 @@ class BlogPost(BaseModel):
         Numeric identifier for the story.
     language : str
         Language code (nl/de/en).
-    url : str
-        Computed URL path for the blog post (read-only property).
     """
 
     title: str
     slug: str
     summary: str
     author: str
-    date: datetime
-    formatted_date: str
+    date: str
     thumbnail: str
     thumbnail_alt: str
     content: str
@@ -71,13 +68,39 @@ class BlogPost(BaseModel):
     story_number: str
     language: str
 
-    @field_validator("date", mode="before")
-    @classmethod
-    def parse_date(cls, v: str | datetime) -> datetime:
-        """Parse date from string or datetime."""
-        if isinstance(v, str):
-            return datetime.fromisoformat(v)
-        return v
+    def datetime(self) -> datetime:
+        """Parse date string to datetime (YYYY-MM-DD, DD-MM-YYYY, or ISO format)."""
+        try:
+            return datetime.strptime(self.date, "%Y-%m-%d")
+        except ValueError:
+            try:
+                return datetime.strptime(self.date, "%d-%m-%Y")
+            except ValueError:
+                try:
+                    return datetime.fromisoformat(self.date)
+                except ValueError:
+                    print(f"Warning: Could not parse date '{self.date}'")
+                    return FALLBACK_DATE
+
+    @property
+    def formatted_date(self) -> str:
+        """Format datetime as Dutch locale date string (e.g., '15 maart 2024')."""
+        months_nl = {
+            1: "januari",
+            2: "februari",
+            3: "maart",
+            4: "april",
+            5: "mei",
+            6: "juni",
+            7: "juli",
+            8: "augustus",
+            9: "september",
+            10: "oktober",
+            11: "november",
+            12: "december",
+        }
+        date_obj = self.datetime()
+        return f"{date_obj.day} {months_nl[date_obj.month]} {date_obj.year}"
 
     @property
     def url(self) -> str:

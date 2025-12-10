@@ -1,13 +1,11 @@
 """Blog service for loading and managing blog posts from the file system."""
 
-from datetime import datetime
 from pathlib import Path
 import frontmatter
 
 from ..models import BlogPost
 from .content_parser import parse_blog_content
 
-FALLBACK_DATE = datetime(2023, 2, 1)
 _posts_cache: dict[str, list[BlogPost]] = {}
 
 
@@ -57,64 +55,23 @@ def _build_thumbnail_paths(
     return thumbnail_url, avif_path, webp_path
 
 
-def _parse_date(date_str: str, filename: str) -> datetime:
-    """Parse date string from frontmatter (YYYY-MM-DD or DD-MM-YYYY)."""
-    try:
-        return datetime.strptime(date_str, "%Y-%m-%d")
-    except ValueError:
-        try:
-            return datetime.strptime(date_str, "%d-%m-%Y")
-        except ValueError:
-            print(f"Warning: Could not parse date '{date_str}' in {filename}")
-            return FALLBACK_DATE
-
-
-def _format_date_dutch(date: datetime) -> str:
-    """Format datetime as Dutch locale date string (e.g., '15 maart 2024')."""
-    months_nl = {
-        1: "januari",
-        2: "februari",
-        3: "maart",
-        4: "april",
-        5: "mei",
-        6: "juni",
-        7: "juli",
-        8: "augustus",
-        9: "september",
-        10: "oktober",
-        11: "november",
-        12: "december",
-    }
-    return f"{date.day} {months_nl[date.month]} {date.year}"
-
-
 def parse_blog_post(file_path: Path) -> BlogPost | None:
     """Parse a single blog post markdown file into a BlogPost object."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
-            post = frontmatter.load(f)
+            metadata, content = frontmatter.parse(f.read())
 
-        metadata = post.metadata
-        content = post.content
-        filename = file_path.stem
-        language = "nl"
-        if "." in filename:
-            parts = filename.rsplit(".", 1)
-            filename = parts[0]
-            language = parts[1] if len(parts) > 1 else "nl"
-
+        filename, language = (part for part in file_path.stem.rsplit(".", 1))
         story_number = filename.split("_")[0]
 
-        date_str = str(metadata.get("date", ""))
-        date = _parse_date(date_str, filename)
-        formatted_date = _format_date_dutch(date)
-
-        author = metadata.get("author", "")
         thumbnail_filename: str = str(metadata.get("thumbnail", "thumbnail.jpg"))
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
         thumbnail_fallback, thumbnail_avif, thumbnail_webp = _build_thumbnail_paths(
             thumbnail_url
         )
+
+        date_str = str(metadata.get("date", ""))
+        author = metadata.get("author", "")
 
         category = metadata.get("category")
 
@@ -125,8 +82,7 @@ def parse_blog_post(file_path: Path) -> BlogPost | None:
             slug=str(metadata.get("slug", filename)),
             summary=str(metadata.get("summary", "")),
             author=str(author),
-            date=date,
-            formatted_date=formatted_date,
+            date=date_str,
             thumbnail=str(thumbnail_filename),
             thumbnail_alt=str(metadata.get("thumbnail_alt", "")),
             content=content,
@@ -172,7 +128,7 @@ def load_all_posts(
         if post:
             posts.append(post)
 
-    posts.sort(key=lambda p: p.date, reverse=True)
+    posts.sort(key=lambda p: p.datetime(), reverse=True)
     _posts_cache[language] = posts
 
     return posts
@@ -193,7 +149,7 @@ def load_all_blog_posts_dict() -> dict[str, list[dict]]:
                 "slug": post.slug,
                 "summary": post.summary,
                 "author": post.author,
-                "date": post.date.isoformat(),
+                "date": post.datetime().isoformat(),
                 "formatted_date": post.formatted_date,
                 "thumbnail_alt": post.thumbnail_alt,
                 "thumbnail_fallback": post.thumbnail_fallback,

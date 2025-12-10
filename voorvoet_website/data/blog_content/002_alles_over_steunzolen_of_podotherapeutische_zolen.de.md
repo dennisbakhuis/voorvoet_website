@@ -4,7 +4,6 @@ slug: "stuetzeinlagen-oder-podotherapeutische-einlagen"
 summary: "In unserem täglichen Leben unterschätzen wir oft die Bedeutung gesunder Füße. Sie tragen uns buchstäblich durchs Leben, bekommen aber oft nicht die Aufmerksamkeit, die sie verdienen. Stützeinlagen oder podotherapeutische Einlagen sind eine Lösung, die immer mehr Menschen entdecken, um ihren Fußkomfort zu verbessern und verschiedene Gesundheitsprobleme zu lindern. In diesem Artikel erkunden wir die Welt der podotherapeutischen Einlagen und entdecken, wie sie einen positiven Einfluss auf Ihre Fußgesundheit haben können."
 author: "Kim Bakhuis"
 date: "2023-11-26"
-date_modified: "2023-11-26"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "Für die perfekte Stützeinlage wird ein 3D-Scan des Fußes erstellt."
 tags: ["Stützeinlagen", "podotherapeutische Einlagen", "Einlegesohlen", "Fußbeschwerden", "Maßanfertigung"]

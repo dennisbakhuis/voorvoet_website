@@ -4,7 +4,6 @@ slug: "without-foot-complaints"
 summary: "The fresh start of the new year often brings the urge to make positive changes, and for many this means setting good resolutions. Perhaps sports, more exercise or simply enjoying a relaxing walk are high on your list. And it's so much better if that's possible without foot complaints!"
 author: "Kim Bakhuis"
 date: "2024-01-08"
-date_modified: "2024-01-08"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "A good shoe helps keep feet healthy."
 tags: ["foot complaints", "walking", "sports", "new year resolutions", "prevention"]

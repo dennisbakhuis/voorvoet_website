@@ -4,7 +4,6 @@ slug: "ohne-fussbeschwerden"
 summary: "Der frische Beginn des neuen Jahres bringt oft den Drang mit sich, positive Veränderungen vorzunehmen, und für viele bedeutet dies das Setzen guter Vorsätze. Vielleicht stehen Sport, mehr Bewegung oder einfach das Genießen eines entspannten Spaziergangs hoch auf Ihrer Liste. Und es ist doch schön, wenn das ohne Fußbeschwerden möglich ist!"
 author: "Kim Bakhuis"
 date: "2024-01-08"
-date_modified: "2024-01-08"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "Ein guter Schuh hilft beim Erhalt gesunder Füße."
 tags: ["Fußbeschwerden", "Wandern", "Sport", "gute Vorsätze", "Prävention"]

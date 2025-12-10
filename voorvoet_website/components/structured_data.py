@@ -234,8 +234,8 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
             "url": image_url,
             "caption": post.thumbnail_alt,
         },
-        "datePublished": post.date.isoformat(),
-        "dateModified": post.date.isoformat(),
+        "datePublished": post.datetime().isoformat(),
+        "dateModified": post.datetime().isoformat(),
         "author": {
             "@type": "Person",
             "name": post.author if post.author else "Kim Bakhuis",
