@@ -10,7 +10,7 @@ from .section_information import section_information
 from .section_locations import section_locations
 
 from ..shared_sections import footer, header
-from ...components import organization_schema
+from ...components import organization_brand_schema, organization_schema
 
 
 def page_home(language: str = "nl") -> rx.Component:
@@ -23,6 +23,7 @@ def page_home(language: str = "nl") -> rx.Component:
         A fragment containing all sections of the home page in order.
     """
     return rx.fragment(
+        organization_brand_schema(),
         organization_schema(),
         header(language, page_key="home"),
         rx.box(

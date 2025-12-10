@@ -7,6 +7,55 @@ import json
 from ..models import BlogPost
 
 
+def organization_brand_schema() -> rx.Component:
+    """Generate Organization JSON-LD structured data for brand identity.
+
+    Creates a JSON-LD script tag with Organization schema markup focused on
+    VoorVoet as a business entity and brand. This complements the Podiatrist
+    schema by providing brand-level structured data for better recognition in
+    Google's Knowledge Graph.
+
+    Returns
+    -------
+    rx.Component
+        A script tag containing JSON-LD structured data.
+    """
+    org_data: dict[str, Any] = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "VoorVoet",
+        "alternateName": "Praktijk voor podotherapie",
+        "url": "https://voorvoet.nl",
+        "logo": "https://voorvoet.nl/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
+        "description": "VoorVoet is een moderne podotherapiepraktijk in Enschede gespecialiseerd in voetzorg, podotherapie en orthopedische schoentechniek.",
+        "telephone": "+31657750997",
+        "email": "info@voorvoet.nl",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Eeftinksweg 13",
+            "addressLocality": "Enschede",
+            "postalCode": "7541 WE",
+            "addressCountry": "NL",
+        },
+        "founder": {
+            "@type": "Person",
+            "name": "Kim Bakhuis",
+            "jobTitle": "Founder/Podiatrist",
+            "sameAs": "https://www.linkedin.com/in/kimbakhuis/",
+        },
+        "sameAs": [
+            "https://www.linkedin.com/company/voorvoet/",
+        ],
+    }
+
+    json_ld = json.dumps(org_data, ensure_ascii=False, indent=2)
+
+    return rx.el.script(
+        json_ld,
+        type="application/ld+json",
+    )
+
+
 def organization_schema() -> rx.Component:
     """Generate Organization/Podiatrist JSON-LD structured data.
 

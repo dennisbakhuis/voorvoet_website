@@ -25,6 +25,7 @@ from .config import config
 
 
 app = rx.App(
+    html_lang="nl",
     stylesheets=[
         "https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css",
         "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
@@ -34,6 +35,14 @@ app = rx.App(
         "font-family": "Lato, ui-sans-serif, system-ui, sans-serif",
     },
 )
+
+
+def _wrap_with_lang_script(language: str, content: rx.Component) -> rx.Component:
+    return rx.fragment(
+        rx.html(f"<script>document.documentElement.lang = '{language}';</script>"),
+        content,
+    )
+
 
 PAGE_COMPONENTS = {
     "home": page_home,
@@ -66,7 +75,9 @@ for language, page_key, page_route, page in main_pages:
     changefreq = "weekly" if page_key == "home" else "monthly"
 
     page_config: dict[str, Any] = {
-        "component": lambda page_func=page, lang=language: page_func(language=lang),
+        "component": lambda page_func=page, lang=language: _wrap_with_lang_script(
+            lang, page_func(language=lang)
+        ),
         "route": page_route,
         "title": get_translation(PAGE_TITLES, page_key, language),
         "meta": get_page_meta_tags(
@@ -92,7 +103,9 @@ for language in ["nl", "en", "de"]:
 
     def make_blog_page(lang: str, posts_list: list[Any]) -> Callable[[], rx.Component]:
         def _page() -> rx.Component:
-            return page_blog(language=lang, posts=posts_list)
+            return _wrap_with_lang_script(
+                lang, page_blog(language=lang, posts=posts_list)
+            )
 
         return _page
 
@@ -121,10 +134,12 @@ for language in ["nl", "en", "de"]:
     app.add_page(**blog_config)
 
 app.add_page(
-    component=lambda: page_blog(language="nl", posts=blog_posts.get("nl", [])),
-    route="/blog/",
+    component=lambda: _wrap_with_lang_script(
+        "nl", page_blog(language="nl", posts=blog_posts.get("nl", []))
+    ),
+    route="/blog",
     title=get_translation(PAGE_TITLES, "blog", "nl"),
-    meta=get_page_meta_tags("blog", "nl", "/blog/", image_url=full_blog_image_url),
+    meta=get_page_meta_tags("blog", "nl", "/blog", image_url=full_blog_image_url),
     context={
         "sitemap": {
             "changefreq": "weekly",
@@ -139,13 +154,15 @@ for language, posts in blog_posts.items():
         title = post["title"]
 
         blog_base = ROUTE_MAPPINGS[language]["blog"]
-        route = f"{blog_base}{slug}/"
+        route = f"{blog_base}/{slug}"
 
         def make_blog_post_page(
             lang: str, post_data: dict[str, Any]
         ) -> Callable[[], rx.Component]:
             def _page() -> rx.Component:
-                return page_blog_post(language=lang, post=post_data)
+                return _wrap_with_lang_script(
+                    lang, page_blog_post(language=lang, post=post_data)
+                )
 
             return _page
 

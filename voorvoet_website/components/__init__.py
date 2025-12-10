@@ -31,7 +31,12 @@ from .risk_level_card import risk_level_card
 from .section import section
 from .header import header
 from .jumbo_text import jumbo_text
-from .structured_data import organization_schema, article_schema, breadcrumb_schema
+from .structured_data import (
+    organization_brand_schema,
+    organization_schema,
+    article_schema,
+    breadcrumb_schema,
+)
 from .toast import toast
 
 
@@ -66,6 +71,7 @@ __all__ = [
     "location_section",
     "LocationConfig",
     "markdown_content",
+    "organization_brand_schema",
     "organization_schema",
     "regular_text",
     "responsive_grid",

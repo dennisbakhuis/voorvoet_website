@@ -108,7 +108,7 @@ ROUTE_MAPPINGS = {
         "reimbursements": "/nl/vergoedingen",
         "contact": "/nl/contact",
         "order_insoles": "/nl/zolen-bestellen",
-        "blog": "/nl/blog/",
+        "blog": "/nl/blog",
     },
     "de": {
         "home": "/de",
@@ -116,7 +116,7 @@ ROUTE_MAPPINGS = {
         "reimbursements": "/de/erstattungen",
         "contact": "/de/kontakt",
         "order_insoles": "/de/einlagen-bestellen",
-        "blog": "/de/blog/",
+        "blog": "/de/blog",
     },
     "en": {
         "home": "/en",
@@ -124,28 +124,28 @@ ROUTE_MAPPINGS = {
         "reimbursements": "/en/reimbursements",
         "contact": "/en/contact",
         "order_insoles": "/en/order-insoles",
-        "blog": "/en/blog/",
+        "blog": "/en/blog",
     },
 }
 
 PAGE_ROUTES = {
-    "home": {"nl": "/nl/", "de": "/de/", "en": "/en/"},
-    "blog": {"nl": "/nl/blog/", "de": "/de/blog/", "en": "/en/blog/"},
+    "home": {"nl": "/nl", "de": "/de", "en": "/en"},
+    "blog": {"nl": "/nl/blog", "de": "/de/blog", "en": "/en/blog"},
     "information": {
-        "nl": "/nl/informatie/",
-        "de": "/de/informationen/",
-        "en": "/en/information/",
+        "nl": "/nl/informatie",
+        "de": "/de/informationen",
+        "en": "/en/information",
     },
     "reimbursements": {
-        "nl": "/nl/vergoedingen/",
-        "de": "/de/erstattungen/",
-        "en": "/en/reimbursements/",
+        "nl": "/nl/vergoedingen",
+        "de": "/de/erstattungen",
+        "en": "/en/reimbursements",
     },
-    "contact": {"nl": "/nl/contact/", "de": "/de/kontakt/", "en": "/en/contact/"},
+    "contact": {"nl": "/nl/contact", "de": "/de/kontakt", "en": "/en/contact"},
     "order_insoles": {
-        "nl": "/nl/zolen-bestellen/",
-        "de": "/de/einlagen-bestellen/",
-        "en": "/en/order-insoles/",
+        "nl": "/nl/zolen-bestellen",
+        "de": "/de/einlagen-bestellen",
+        "en": "/en/order-insoles",
     },
 }
 
@@ -213,7 +213,7 @@ def get_blog_post_hreflang_tags(
         for post in posts:
             if post.get("story_number") == story_number:
                 slug = post["slug"]
-                full_url = f"{config.site_url}/{lang}/blog/{slug}/"
+                full_url = f"{config.site_url}/{lang}/blog/{slug}"
                 hreflang_tags.append(
                     rx.el.link(
                         rel="alternate",
@@ -226,7 +226,7 @@ def get_blog_post_hreflang_tags(
                 break
 
     if nl_slug:
-        default_url = f"{config.site_url}/nl/blog/{nl_slug}/"
+        default_url = f"{config.site_url}/nl/blog/{nl_slug}"
         hreflang_tags.append(
             rx.el.link(
                 rel="alternate",
@@ -255,7 +255,7 @@ def get_page_meta_tags(
     language : str
         The language code ("nl", "de", "en")
     route : str
-        The page route (e.g., "/nl", "/de/blog/")
+        The page route (e.g., "/nl", "/de/blog")
     page_type : str, optional
         Open Graph type ("website" or "article"), defaults to "website"
     image_url : str, optional
