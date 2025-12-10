@@ -10,7 +10,7 @@ from ...components import (
     column,
     responsive_image,
 )
-from ...theme import Colors, Layout, Spacing
+from ...theme import Colors, Layout, Spacing, ImageDimensions
 from ...utils import get_translation
 
 
@@ -80,6 +80,7 @@ def section_veel_voorkomende_klachten(language: str) -> rx.Component:
             src_avif="/images/page_information/anatomie-voet-hielpijn_voorvoet_podotherapie_enschede.avif",
             src_webp="/images/page_information/anatomie-voet-hielpijn_voorvoet_podotherapie_enschede.webp",
             alt=get_translation(TRANSLATIONS, "image_alt", language),
+            dimensions=ImageDimensions.content_portrait,
             width="100%",
             max_width="450px",
             height="auto",

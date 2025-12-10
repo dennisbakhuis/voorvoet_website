@@ -18,6 +18,7 @@ def image_text_section(
     paragraphs: str | rx.Var | Sequence[str | rx.Var],
     image_avif: str = "",
     image_webp: str = "",
+    dimensions: dict[str, str] | None = None,
     image_position: str = "left",
     button_text: str | rx.Var | None = None,
     button_link: str | rx.Var | None = None,
@@ -48,6 +49,9 @@ def image_text_section(
         Path to the AVIF format image (empty string if not available).
     image_webp : str, optional
         Path to the WebP format image (empty string if not available).
+    dimensions : dict[str, str], optional
+        Image dimensions dict with 'width' and 'height' keys (e.g., ImageDimensions.content_portrait)
+        Sets HTML attributes for aspect ratio to prevent CLS.
     image_position : str, optional
         Position of image relative to text: "left" or "right".
         Default is "left".
@@ -83,6 +87,7 @@ def image_text_section(
         src_avif=image_avif,
         src_webp=image_webp,
         alt=image_alt,
+        dimensions=dimensions,
         width="100%",
         max_width=image_max_width or Layout.image_max_width,
         height="auto",

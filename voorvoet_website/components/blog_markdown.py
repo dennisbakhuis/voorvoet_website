@@ -25,7 +25,7 @@ def blog_markdown(content: str) -> rx.Component:
         A Reflex markdown component styled for blog content blocks
     """
     return rx.box(
-        rx.markdown(
+        rx.markdown(  # type: ignore[operator]  # Due to missing stubs in Relfex
             content,
             color=Colors.text["content"],
             font_size=FontSizes.regular,

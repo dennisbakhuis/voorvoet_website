@@ -9,7 +9,7 @@ from ...components import (
     responsive_image,
     icon_list_item,
 )
-from ...theme import Colors
+from ...theme import Colors, ImageDimensions
 from ...utils.get_translation import get_translation
 
 
@@ -166,6 +166,7 @@ def section_for_everyone(language: str) -> rx.Component:
                     responsive_image(
                         src_fallback="/images/page_information/podotherapeut_enschede_kim_bakhuis_legt_het_met_een_lach_uit-VoorVoet_podotherapie_enschede.jpg",
                         alt="Kim Bakhuis legt podotherapie uit",
+                        dimensions=ImageDimensions.content_landscape,
                         width="100%",
                         max_width="840px",
                         margin_y="2rem",

@@ -10,7 +10,7 @@ from ...components import (
     responsive_image,
     risk_level_card,
 )
-from ...theme import Colors
+from ...theme import Colors, ImageDimensions
 from ...utils.get_translation import get_translation
 
 
@@ -154,6 +154,7 @@ def section_risicovoet(language: str) -> rx.Component:
                 image_avif="/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.avif",
                 image_webp="/images/page_information/voetklachten_hielpijn_sport_voorvoet_podotherapie_enschede.webp",
                 image_alt=get_translation(TRANSLATIONS, "image_alt", language),
+                dimensions=ImageDimensions.content_landscape,
                 title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs_1,
                 image_position="right",
@@ -168,8 +169,9 @@ def section_risicovoet(language: str) -> rx.Component:
                 responsive_image(
                     src_fallback="/images/page_information/nagelbeugel_nagelproblemen_voorvoet_podotherapie_enschede.jpg",
                     alt="Kim Bakhuis legt podotherapie uit",
+                    dimensions=ImageDimensions.content_square,
                     width="100%",
-                    max_width="840px",
+                    max_width="500px",
                     margin_y="2rem",
                 ),
                 width="100%",

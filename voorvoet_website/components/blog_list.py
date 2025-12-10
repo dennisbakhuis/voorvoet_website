@@ -27,7 +27,7 @@ def blog_list(markdown: str) -> rx.Component:
         A Reflex markdown component that renders the list with proper styling
     """
     return rx.box(
-        rx.markdown(
+        rx.markdown(  # type: ignore[operator]  # Due to missing stubs in Relfex
             markdown,
             color=Colors.text["content"],
             font_size=FontSizes.regular,
