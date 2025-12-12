@@ -8,7 +8,6 @@ maintainability and reusability.
 
 import reflex as rx
 from typing import Any
-from ..models import BlogPost
 from .blog_heading import blog_header
 from .blog_paragraph import blog_paragraph
 from .blog_markdown import blog_markdown
@@ -178,7 +177,7 @@ def _render_list(obj: dict[str, Any]) -> rx.Component:
     return blog_list(obj.get("markdown", ""))
 
 
-def markdown_content(post: BlogPost) -> rx.Component:
+def markdown_content(post: dict) -> rx.Component:
     """
     Render complete blog post content from parsed content objects.
 
@@ -188,8 +187,8 @@ def markdown_content(post: BlogPost) -> rx.Component:
 
     Parameters
     ----------
-    post : BlogPost
-        BlogPost object with parsed content_objects list
+    post : dict
+        Blog post dictionary with parsed content_objects list
 
     Returns
     -------
@@ -205,7 +204,7 @@ def markdown_content(post: BlogPost) -> rx.Component:
     """
     return rx.box(
         rx.foreach(
-            post.content_objects,
+            post["content_objects"],
             render_content_object,
         ),
         width="100%",

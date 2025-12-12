@@ -3,6 +3,8 @@
 import reflex as rx
 from typing import Any, Callable
 
+from .models.blog_post import BlogPostDict
+
 from .pages import (
     page_home,
     page_blog,
@@ -157,7 +159,7 @@ for language, posts in blog_posts.items():
         route = f"{blog_base}/{slug}"
 
         def make_blog_post_page(
-            lang: str, post_data: dict[str, Any]
+            lang: str, post_data: BlogPostDict
         ) -> Callable[[], rx.Component]:
             def _page() -> rx.Component:
                 return _wrap_with_lang_script(
@@ -167,8 +169,8 @@ for language, posts in blog_posts.items():
             return _page
 
         post_image = (
-            f"{config.site_url}{post['thumbnail_url']}"
-            if post.get("thumbnail_url")
+            f"{config.site_url}{post['thumbnail_fallback']}"
+            if post.get("thumbnail_fallback")
             else None
         )
 

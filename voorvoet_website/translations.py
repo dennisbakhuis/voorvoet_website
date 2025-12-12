@@ -2,7 +2,8 @@
 
 import reflex as rx
 
-from voorvoet_website.config import config
+from .config import config
+from .models import BlogPostDict
 
 
 PAGE_TITLES = {
@@ -203,7 +204,7 @@ def get_hreflang_tags(page_key: str) -> list:
 
 
 def get_blog_post_hreflang_tags(
-    story_number: str, all_blog_posts: dict[str, list[dict]]
+    story_number: str, all_blog_posts: dict[str, list[BlogPostDict]]
 ) -> list:
     """Generate hreflang tags for blog posts based on story number."""
     hreflang_tags = []
@@ -306,7 +307,7 @@ def get_blog_post_meta_tags(
     language: str,
     route: str,
     story_number: str = "",
-    all_blog_posts: dict[str, list[dict]] = {},
+    all_blog_posts: dict[str, list[BlogPostDict]] = {},
     image_url: str | None = None,
 ) -> list:
     """Generate post-specific meta tags for individual blog posts."""

@@ -3,10 +3,10 @@
 from pathlib import Path
 import frontmatter
 
-from ..models import BlogPost
+from ..models.blog_post import BlogPostDict, parse_datetime, format_date
 from .content_parser import parse_blog_content
 
-_posts_cache: dict[str, list[BlogPost]] = {}
+_posts_cache: dict[str, list[BlogPostDict]] = {}
 
 
 def _get_blog_content_dir() -> Path:
@@ -55,8 +55,8 @@ def _build_thumbnail_paths(
     return thumbnail_url, avif_path, webp_path
 
 
-def parse_blog_post(file_path: Path) -> BlogPost | None:
-    """Parse a single blog post markdown file into a BlogPost object."""
+def parse_blog_post(file_path: Path) -> BlogPostDict | None:
+    """Parse a single blog post markdown file into a BlogPostDict."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             metadata_raw, content = frontmatter.parse(f.read())
@@ -64,6 +64,7 @@ def parse_blog_post(file_path: Path) -> BlogPost | None:
 
         filename, language = (part for part in file_path.stem.rsplit(".", 1))
         story_number = filename.split("_")[0]
+        slug = metadata.get("slug", filename)
 
         thumbnail_filename = metadata.get("thumbnail", "thumbnail.jpg")
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
@@ -73,17 +74,33 @@ def parse_blog_post(file_path: Path) -> BlogPost | None:
 
         content_objects = parse_blog_content(content, filename)
 
-        blog_post = BlogPost(
-            **metadata,
-            content=content,
-            filename=filename,
-            thumbnail_fallback=thumbnail_fallback,
-            thumbnail_avif=thumbnail_avif,
-            thumbnail_webp=thumbnail_webp,
-            content_objects=content_objects,
-            story_number=story_number,
-            language=language,
-        )
+        date_str = metadata.get("date", "2023-02-01")
+        dt_obj = parse_datetime(date_str)
+        formatted_date = format_date(date_str, language)
+        datetime_iso = dt_obj.isoformat()
+
+        url = f"/blog/{slug}/"
+
+        blog_post: BlogPostDict = {
+            "title": metadata.get("title", ""),
+            "slug": slug,
+            "summary": metadata.get("summary", ""),
+            "author": metadata.get("author", ""),
+            "date": date_str,
+            "formatted_date": formatted_date,
+            "datetime_iso": datetime_iso,
+            "thumbnail_alt": metadata.get("thumbnail_alt", ""),
+            "thumbnail_fallback": thumbnail_fallback,
+            "thumbnail_avif": thumbnail_avif,
+            "thumbnail_webp": thumbnail_webp,
+            "content": content,
+            "content_objects": content_objects,
+            "category": metadata.get("category", ""),
+            "filename": filename,
+            "story_number": story_number,
+            "language": language,
+            "url": url,
+        }
 
         return blog_post
 
@@ -94,7 +111,7 @@ def parse_blog_post(file_path: Path) -> BlogPost | None:
 def load_all_posts(
     force_reload: bool = False,
     language: str | None = None,
-) -> list[BlogPost]:
+) -> list[BlogPostDict]:
     """Load all blog posts for a specific language, sorted by date (newest first)."""
     global _posts_cache
 
@@ -117,41 +134,18 @@ def load_all_posts(
         if post:
             posts.append(post)
 
-    posts.sort(key=lambda p: p.datetime(), reverse=True)
+    posts.sort(key=lambda p: p["datetime_iso"], reverse=True)
     _posts_cache[language] = posts
 
     return posts
 
 
-def load_all_blog_posts_dict() -> dict[str, list[dict]]:
-    """Load all blog posts for all languages as dictionaries."""
+def load_all_blog_posts_dict() -> dict[str, list[BlogPostDict]]:
+    """Load all blog posts for all languages as BlogPostDict dictionaries."""
     languages = ["nl", "en", "de"]
-    result: dict[str, list[dict]] = {}
+    result: dict[str, list[BlogPostDict]] = {}
 
     for lang in languages:
-        posts = load_all_posts(force_reload=False, language=lang)
-        result[lang] = []
-
-        for post in posts:
-            post_dict = {
-                "title": post.title,
-                "slug": post.slug,
-                "summary": post.summary,
-                "author": post.author,
-                "date": post.date,
-                "formatted_date": post.formatted_date,
-                "thumbnail_alt": post.thumbnail_alt,
-                "thumbnail_fallback": post.thumbnail_fallback,
-                "thumbnail_avif": post.thumbnail_avif,
-                "thumbnail_webp": post.thumbnail_webp,
-                "category": post.category,
-                "filename": post.filename,
-                "url": post.url,
-                "content": post.content,
-                "content_objects": post.content_objects,
-                "story_number": post.story_number,
-                "language": post.language,
-            }
-            result[lang].append(post_dict)
+        result[lang] = load_all_posts(force_reload=False, language=lang)
 
     return result

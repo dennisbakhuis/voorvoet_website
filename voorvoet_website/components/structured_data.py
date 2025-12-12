@@ -4,7 +4,7 @@ import reflex as rx
 from typing import Any
 import json
 
-from ..models import BlogPost
+from ..models.blog_post import BlogPostDict
 
 
 def organization_brand_schema() -> rx.Component:
@@ -196,14 +196,14 @@ def organization_schema() -> rx.Component:
     )
 
 
-def article_schema(post: BlogPost, language: str) -> rx.Component:
+def article_schema(post: BlogPostDict, language: str) -> rx.Component:
     """
     Generate Article JSON-LD structured data for blog posts.
 
     Parameters
     ----------
-    post : BlogPost
-        The blog post to generate schema for
+    post : dict
+        The blog post dictionary to generate schema for
     language : str
         Language code ("nl", "de", or "en")
 
@@ -214,9 +214,9 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
     """
     base_url = "https://voorvoet.nl"
 
-    full_url = f"{base_url}/{language}/blog/{post.slug}/"
-    image_url = f"{base_url}{post.thumbnail_fallback}"
-    words = post.content.split()
+    full_url = f"{base_url}/{language}/blog/{post['slug']}/"
+    image_url = f"{base_url}{post['thumbnail_fallback']}"
+    words = post["content"].split()
     snippet_words = words[:200] if len(words) > 200 else words
     article_snippet = " ".join(snippet_words)
     article_snippet = (
@@ -226,19 +226,19 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
     article_data: dict[str, Any] = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": post.title,
-        "description": post.summary,
+        "headline": post["title"],
+        "description": post["summary"],
         "articleBody": article_snippet,
         "image": {
             "@type": "ImageObject",
             "url": image_url,
-            "caption": post.thumbnail_alt,
+            "caption": post["thumbnail_alt"],
         },
-        "datePublished": post.datetime().isoformat(),
-        "dateModified": post.datetime().isoformat(),
+        "datePublished": post["datetime_iso"],
+        "dateModified": post["datetime_iso"],
         "author": {
             "@type": "Person",
-            "name": post.author if post.author else "Kim Bakhuis",
+            "name": post.get("author", "Kim Bakhuis") or "Kim Bakhuis",
             "url": base_url,
             "sameAs": "https://www.linkedin.com/in/kimbakhuis/",
         },
@@ -256,12 +256,12 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
         "inLanguage": language,
     }
 
-    word_count = len(post.content.split())
+    word_count = len(post["content"].split())
     if word_count > 0:
         article_data["wordCount"] = word_count
 
-    if post.category:
-        article_data["articleSection"] = post.category
+    if post.get("category"):
+        article_data["articleSection"] = post["category"]
 
     json_ld = json.dumps(article_data, ensure_ascii=False, indent=2)
 

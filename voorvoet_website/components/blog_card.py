@@ -4,13 +4,12 @@ import reflex as rx
 
 from .responsive_image import responsive_image
 
-from ..models import BlogPost
 from ..theme import Colors, FontSizes, Layout, ImageDimensions
 from ..config import config
 
 
 def blog_card(
-    post: BlogPost | dict,
+    post: dict,
     language: str = "nl",
     flip: bool = False,
 ) -> rx.Component:
@@ -19,8 +18,8 @@ def blog_card(
 
     Parameters
     ----------
-    post : BlogPost or dict
-        BlogPost object or dictionary containing all post data and metadata.
+    post : dict
+        Dictionary containing all post data and metadata.
     language : str
         Current language code ("nl", "de", or "en")
     flip : bool, optional
@@ -32,12 +31,10 @@ def blog_card(
     rx.Component
         A Reflex link component wrapping the styled blog card.
     """
-    if isinstance(post, dict):
-        post = BlogPost(**post)
 
     content_area = rx.vstack(
         rx.heading(
-            post.title,
+            post["title"],
             size="6",
             color=Colors.text["heading"],
             margin_top="1.0rem",
@@ -45,7 +42,7 @@ def blog_card(
             line_height="1.3",
         ),
         rx.text(
-            post.summary,
+            post["summary"],
             color=Colors.text["content"],
             font_size=FontSizes.regular,
             line_height="1.6",
@@ -57,10 +54,10 @@ def blog_card(
                 rx.cond(
                     config.blog_show_author,
                     rx.cond(
-                        post.author,
+                        post["author"],
                         rx.fragment(
                             rx.text(
-                                post.author,
+                                post["author"],
                                 color=Colors.text["muted"],
                                 font_size="0.85rem",
                             ),
@@ -75,7 +72,7 @@ def blog_card(
                 rx.cond(
                     config.blog_show_publication_date,
                     rx.text(
-                        post.formatted_date,
+                        post["formatted_date"],
                         color=Colors.text["muted"],
                         font_size="0.85rem",
                     ),
@@ -99,10 +96,10 @@ def blog_card(
 
     thumbnail = rx.box(
         responsive_image(
-            src_fallback=post.thumbnail_fallback,
-            src_avif=post.thumbnail_avif,
-            src_webp=post.thumbnail_webp,
-            alt=post.thumbnail_alt,
+            src_fallback=post["thumbnail_fallback"],
+            src_avif=post["thumbnail_avif"],
+            src_webp=post["thumbnail_webp"],
+            alt=post["thumbnail_alt"],
             dimensions=ImageDimensions.blog_thumbnail,
             width="100%",
             height="100%",
@@ -154,7 +151,7 @@ def blog_card(
                 "transform": "translateY(-2px)",
             },
         ),
-        href=f"/{language}/blog/{post.slug}/",
+        href=f"/{language}/blog/{post['slug']}/",
         text_decoration="none",
         _hover={"text_decoration": "none"},
     )

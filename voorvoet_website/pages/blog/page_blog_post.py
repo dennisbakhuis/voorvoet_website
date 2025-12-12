@@ -2,7 +2,8 @@
 
 import reflex as rx
 from typing import Any
-from ...models import BlogPost
+
+from voorvoet_website.models.blog_post import BlogPostDict
 from ...theme import Colors, FontSizes, Spacing
 from ...components import (
     container,
@@ -81,7 +82,9 @@ def _build_content_components(
     return [_build_content_component(obj) for obj in content_objects]
 
 
-def page_blog_post(language: str = "nl", post: dict | None = None) -> rx.Component:
+def page_blog_post(
+    language: str = "nl", post: BlogPostDict | None = None
+) -> rx.Component:
     """
     Create the individual blog post page with full content.
 
@@ -171,11 +174,7 @@ def page_blog_post(language: str = "nl", post: dict | None = None) -> rx.Compone
             width="100%",
         )
 
-        try:
-            blog_post_obj = BlogPost(**post)
-            article_schema_component = article_schema(blog_post_obj, language)
-        except Exception:
-            article_schema_component = rx.fragment()
+        article_schema_component = article_schema(post, language)
 
         breadcrumb_items = [
             {
