@@ -69,7 +69,11 @@ def responsive_image(
     rx.Component
         Picture element with AVIF, WebP sources and fallback img
     """
-    img_props = {"alt": alt, "loading": loading, **props}
+    if isinstance(alt, rx.Var):  # Fix to supress Reflex warning
+        alt_value = rx.cond(alt is not None, alt, "").to(str)
+    else:
+        alt_value = alt or ""
+    img_props = {"alt": alt_value, "loading": loading, **props}
 
     if dimensions:
         if "width" in dimensions and dimensions["width"]:
