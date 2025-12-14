@@ -66,5 +66,8 @@ ignore_missing_imports = true
 module = [
     "voorvoet_website.components.language_switcher",
     "voorvoet_website.pages.shared_sections.header",
+    "voorvoet_website.components.blog_paragraph",
+    "voorvoet_website.components.blog_markdown",
+    "voorvoet_website.components.blog_list",
 ]
 warn_unused_ignores = false
