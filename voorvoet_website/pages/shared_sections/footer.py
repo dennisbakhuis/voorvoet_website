@@ -3,7 +3,7 @@
 import reflex as rx
 
 from ...components import container, section, regular_text, fa_icon, responsive_image
-from ...theme import Colors, FontSizes, Layout
+from ...theme import Colors, FontSizes, Layout, ImageDimensions
 
 
 TRANSLATIONS = {
@@ -345,7 +345,15 @@ def footer(language: str) -> rx.Component:
                         rx.box(
                             rx.link(
                                 t("credits"),
-                                href="#",
+                                href=rx.cond(
+                                    language == "nl",
+                                    "/nl/credits",
+                                    rx.cond(
+                                        language == "de",
+                                        "/de/credits",
+                                        "/en/credits",
+                                    ),
+                                ),
                                 color=Colors.text["link"],
                                 text_decoration="underline",
                                 display="block",
@@ -399,7 +407,11 @@ def footer(language: str) -> rx.Component:
                                 src_avif="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.avif",
                                 src_webp="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.webp",
                                 alt=TRANSLATIONS[language]["nvvp_logo_alt"],
-                                height="60px",
+                                dimensions=ImageDimensions.footer_logo_nvvp,
+                                width="auto",
+                                max_height="60px",
+                                border_radius="0",
+                                box_shadow="none",
                                 loading="lazy",
                             )
                         ),
@@ -418,7 +430,11 @@ def footer(language: str) -> rx.Component:
                                 src_avif="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.avif",
                                 src_webp="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.webp",
                                 alt=TRANSLATIONS[language]["krp_logo_alt"],
-                                height="60px",
+                                dimensions=ImageDimensions.footer_logo_krp,
+                                width="auto",
+                                max_height="60px",
+                                border_radius="0",
+                                box_shadow="none",
                                 loading="lazy",
                             )
                         ),

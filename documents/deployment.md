@@ -191,7 +191,7 @@ Nginx acts as a reverse proxy, routing incoming HTTPS traffic to the appropriate
 Create the Nginx configuration file:
 
 ```bash
-vi /etc/nginx/sites-available/voorvoeten.nl.conf
+vi /etc/nginx/sites-available/voorvoet.nl.conf
 ```
 
 Add the following configuration:
@@ -199,23 +199,23 @@ Add the following configuration:
 ```nginx
 server {
     listen 80;
-    server_name voorvoeten.nl www.voorvoeten.nl;
+    server_name voorvoet.nl www.voorvoet.nl;
     return 301 https://$server_name$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name voorvoeten.nl www.voorvoeten.nl;
+    server_name voorvoet.nl www.voorvoet.nl;
 
-    ssl_certificate /etc/ssl/cloudflare/voorvoeten.nl/cert.pem;
-    ssl_certificate_key /etc/ssl/cloudflare/voorvoeten.nl/key.pem;
+    ssl_certificate /etc/ssl/cloudflare/voorvoet.nl/cert.pem;
+    ssl_certificate_key /etc/ssl/cloudflare/voorvoet.nl/key.pem;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers on;
 
-    access_log /var/www/voorvoeten.nl/logs/access.log;
-    error_log /var/www/voorvoeten.nl/logs/error.log;
+    access_log /var/www/voorvoet.nl/logs/access.log;
+    error_log /var/www/voorvoet.nl/logs/error.log;
 
     location /api/ {
         proxy_pass http://localhost:3000;
@@ -253,23 +253,23 @@ server {
 
 server {
     listen 80;
-    server_name dev.voorvoeten.nl;
+    server_name dev.voorvoet.nl;
     return 301 https://$server_name$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name dev.voorvoeten.nl;
+    server_name dev.voorvoet.nl;
 
-    ssl_certificate /etc/ssl/cloudflare/voorvoeten.nl/cert.pem;
-    ssl_certificate_key /etc/ssl/cloudflare/voorvoeten.nl/key.pem;
+    ssl_certificate /etc/ssl/cloudflare/voorvoet.nl/cert.pem;
+    ssl_certificate_key /etc/ssl/cloudflare/voorvoet.nl/key.pem;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers on;
 
-    access_log /var/www/dev.voorvoeten.nl/logs/access.log;
-    error_log /var/www/dev.voorvoeten.nl/logs/error.log;
+    access_log /var/www/dev.voorvoet.nl/logs/access.log;
+    error_log /var/www/dev.voorvoet.nl/logs/error.log;
 
     location /api/ {
         proxy_pass http://localhost:3001;
@@ -307,10 +307,10 @@ server {
 
 server {
     listen 443 ssl http2;
-    server_name deploy.voorvoeten.nl;
+    server_name deploy.voorvoet.nl;
 
-    ssl_certificate /etc/ssl/cloudflare/voorvoeten.nl/cert.pem;
-    ssl_certificate_key /etc/ssl/cloudflare/voorvoeten.nl/key.pem;
+    ssl_certificate /etc/ssl/cloudflare/voorvoet.nl/cert.pem;
+    ssl_certificate_key /etc/ssl/cloudflare/voorvoet.nl/key.pem;
 
     location /hooks/ {
         proxy_pass http://localhost:9000/hooks/;
@@ -324,27 +324,27 @@ server {
 
 This configuration defines three server blocks:
 
-**Production site (voorvoeten.nl):**
+**Production site (voorvoet.nl):**
 - Redirects HTTP to HTTPS
 - Proxies `/api/` requests to backend on port 3000
 - Proxies `/_event` (WebSocket) to backend on port 3000
 - Proxies all other requests to frontend on port 8000
 - Logs access and errors to production logs directory
 
-**Development site (dev.voorvoeten.nl):**
+**Development site (dev.voorvoet.nl):**
 - Same structure as production but uses ports 3001 and 8001
 - Separate logs in the development directory
 
-**Webhook endpoint (deploy.voorvoeten.nl):**
+**Webhook endpoint (deploy.voorvoet.nl):**
 - Proxies webhook requests to the webhook service on port 9000
-- Accessible at `https://deploy.voorvoeten.nl/hooks/deploy-prod` and `https://deploy.voorvoeten.nl/hooks/deploy-dev`
+- Accessible at `https://deploy.voorvoet.nl/hooks/deploy-prod` and `https://deploy.voorvoet.nl/hooks/deploy-dev`
 
 ### Enable the Site
 
 Create a symbolic link to enable the site:
 
 ```bash
-ln -s /etc/nginx/sites-available/voorvoeten.nl.conf /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/voorvoet.nl.conf /etc/nginx/sites-enabled/
 ```
 
 ### Test Nginx Configuration
@@ -380,18 +380,18 @@ This section sets up the Reflex application in two separate environments: produc
 ### Directory Structure
 
 The application will be organized as follows:
-- `/var/www/voorvoeten.nl/` - Production environment
+- `/var/www/voorvoet.nl/` - Production environment
   - `app/` - Contains the application code
   - `logs/` - Contains application and deployment logs
-- `/var/www/dev.voorvoeten.nl/` - Development environment (same structure)
+- `/var/www/dev.voorvoet.nl/` - Development environment (same structure)
 
 ### Production Environment Setup
 
 Create the directory structure and clone the repository:
 
 ```bash
-mkdir -p /var/www/voorvoeten.nl/{app,logs}
-cd /var/www/voorvoeten.nl/app
+mkdir -p /var/www/voorvoet.nl/{app,logs}
+cd /var/www/voorvoet.nl/app
 git clone https://github.com/dennisbakhuis/voorvoet_website.git
 cd voorvoet_website
 uv sync
@@ -404,8 +404,8 @@ The `uv sync` command installs all Python dependencies defined in the project.
 Create a separate environment for development with the dev branch:
 
 ```bash
-mkdir -p /var/www/dev.voorvoeten.nl/{app,logs}
-cd /var/www/dev.voorvoeten.nl/app
+mkdir -p /var/www/dev.voorvoet.nl/{app,logs}
+cd /var/www/dev.voorvoet.nl/app
 git clone https://github.com/dennisbakhuis/voorvoet_website.git
 cd voorvoet_website
 git checkout dev
@@ -432,20 +432,20 @@ Add the following configuration:
 
 ```ini
 [Unit]
-Description=Reflex App - voorvoeten.nl
+Description=Reflex App - voorvoet.nl
 After=network.target
 
 [Service]
 Type=simple
 User=root
 Group=root
-WorkingDirectory=/var/www/voorvoeten.nl/app/voorvoet_website
+WorkingDirectory=/var/www/voorvoet.nl/app/voorvoet_website
 ExecStart=/root/.local/bin/uv run reflex run --env prod --backend-port 3000 --frontend-port 8000
 Restart=always
 RestartSec=10
 
-StandardOutput=append:/var/www/voorvoeten.nl/logs/app.log
-StandardError=append:/var/www/voorvoeten.nl/logs/error.log
+StandardOutput=append:/var/www/voorvoet.nl/logs/app.log
+StandardError=append:/var/www/voorvoet.nl/logs/error.log
 
 [Install]
 WantedBy=multi-user.target
@@ -468,20 +468,20 @@ Add the following configuration:
 
 ```ini
 [Unit]
-Description=Reflex App - dev.voorvoeten.nl
+Description=Reflex App - dev.voorvoet.nl
 After=network.target
 
 [Service]
 Type=simple
 User=root
 Group=root
-WorkingDirectory=/var/www/dev.voorvoeten.nl/app/voorvoet_website
+WorkingDirectory=/var/www/dev.voorvoet.nl/app/voorvoet_website
 ExecStart=/root/.local/bin/uv run reflex run --env prod --backend-port 3001 --frontend-port 8001
 Restart=always
 RestartSec=10
 
-StandardOutput=append:/var/www/dev.voorvoeten.nl/logs/app.log
-StandardError=append:/var/www/dev.voorvoeten.nl/logs/error.log
+StandardOutput=append:/var/www/dev.voorvoet.nl/logs/app.log
+StandardError=append:/var/www/dev.voorvoet.nl/logs/error.log
 
 [Install]
 WantedBy=multi-user.target
@@ -575,7 +575,7 @@ Add the webhook definitions:
   {
     "id": "deploy-prod",
     "execute-command": "/var/www/scripts/deploy-voorvoeten-prod.sh",
-    "command-working-directory": "/var/www/voorvoeten.nl/app/voorvoet_website",
+    "command-working-directory": "/var/www/voorvoet.nl/app/voorvoet_website",
     "response-message": "Production deployment started",
     "pass-arguments-to-command": [],
     "trigger-rule": {
@@ -592,7 +592,7 @@ Add the webhook definitions:
   {
     "id": "deploy-dev",
     "execute-command": "/var/www/scripts/deploy-voorvoeten-dev.sh",
-    "command-working-directory": "/var/www/dev.voorvoeten.nl/app/voorvoet_website",
+    "command-working-directory": "/var/www/dev.voorvoet.nl/app/voorvoet_website",
     "response-message": "Development deployment started",
     "pass-arguments-to-command": [],
     "trigger-rule": {
@@ -658,9 +658,9 @@ Add the following script content:
 ```bash
 #!/bin/bash
 
-REPO_DIR="/var/www/voorvoeten.nl/app/voorvoet_website"
+REPO_DIR="/var/www/voorvoet.nl/app/voorvoet_website"
 SERVICE_NAME="reflex-voorvoeten-prod.service"
-LOG_FILE="/var/www/voorvoeten.nl/logs/deploy.log"
+LOG_FILE="/var/www/voorvoet.nl/logs/deploy.log"
 
 log_message() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$LOG_FILE"
@@ -708,7 +708,7 @@ This script performs the following steps:
 6. Installs or updates Python dependencies using `uv sync`
 7. Restarts the production systemd service
 8. Verifies the service started successfully
-9. Logs all actions with timestamps to `/var/www/voorvoeten.nl/logs/deploy.log`
+9. Logs all actions with timestamps to `/var/www/voorvoet.nl/logs/deploy.log`
 
 ### Development Deployment Script
 
@@ -723,9 +723,9 @@ Add the following script content:
 ```bash
 #!/bin/bash
 
-REPO_DIR="/var/www/dev.voorvoeten.nl/app/voorvoet_website"
+REPO_DIR="/var/www/dev.voorvoet.nl/app/voorvoet_website"
 SERVICE_NAME="reflex-voorvoeten-dev.service"
-LOG_FILE="/var/www/dev.voorvoeten.nl/logs/deploy.log"
+LOG_FILE="/var/www/dev.voorvoet.nl/logs/deploy.log"
 
 log_message() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$LOG_FILE"
@@ -804,8 +804,8 @@ Each service should show "active (running)" in green. If any service shows "fail
 Monitor the application logs in real-time to see requests and application output:
 
 ```bash
-tail -f /var/www/voorvoeten.nl/logs/app.log
-tail -f /var/www/dev.voorvoeten.nl/logs/app.log
+tail -f /var/www/voorvoet.nl/logs/app.log
+tail -f /var/www/dev.voorvoet.nl/logs/app.log
 ```
 
 ### View Deployment Logs
@@ -813,8 +813,8 @@ tail -f /var/www/dev.voorvoeten.nl/logs/app.log
 Check deployment logs to see the history of deployments and their status:
 
 ```bash
-tail -f /var/www/voorvoeten.nl/logs/deploy.log
-tail -f /var/www/dev.voorvoeten.nl/logs/deploy.log
+tail -f /var/www/voorvoet.nl/logs/deploy.log
+tail -f /var/www/dev.voorvoet.nl/logs/deploy.log
 ```
 
 ### View Error Logs
@@ -822,8 +822,8 @@ tail -f /var/www/dev.voorvoeten.nl/logs/deploy.log
 Monitor error logs to identify any issues with the application:
 
 ```bash
-tail -f /var/www/voorvoeten.nl/logs/error.log
-tail -f /var/www/dev.voorvoeten.nl/logs/error.log
+tail -f /var/www/voorvoet.nl/logs/error.log
+tail -f /var/www/dev.voorvoet.nl/logs/error.log
 ```
 
 ### Test Webhook Endpoints
@@ -882,7 +882,7 @@ Then start the service again.
 If deployment fails due to Git errors, check the repository status and branch:
 
 ```bash
-cd /var/www/voorvoeten.nl/app/voorvoet_website
+cd /var/www/voorvoet.nl/app/voorvoet_website
 git status
 git branch -a
 ```

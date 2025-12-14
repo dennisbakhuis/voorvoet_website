@@ -7,9 +7,12 @@ from ..theme import Layout
 
 def responsive_image(
     src_fallback: str = "",
-    alt: str | None = None,
     src_avif: str = "",
     src_webp: str = "",
+    alt: str = "",
+    dimensions: dict[str, str] | None = None,
+    img_width: str | None = None,
+    img_height: str | None = None,
     width: str | None = None,
     height: str | None = None,
     max_width: str | None = None,
@@ -33,6 +36,13 @@ def responsive_image(
         AVIF format image path (empty string if not available)
     src_webp : str, optional
         WebP format image path (empty string if not available)
+    dimensions : dict[str, str], optional
+        Image dimensions dict with 'width' and 'height' keys (e.g., ImageDimensions.hero_banner)
+        Sets HTML attributes for aspect ratio to prevent CLS
+    img_width : str, optional
+        HTML width attribute (alternative to dimensions dict)
+    img_height : str, optional
+        HTML height attribute (alternative to dimensions dict)
     width : str, optional
         CSS width value
     height : str, optional
@@ -59,7 +69,25 @@ def responsive_image(
     rx.Component
         Picture element with AVIF, WebP sources and fallback img
     """
-    img_props = {"alt": alt or "", "loading": loading, **props}
+    if isinstance(alt, rx.Var):  # Fix to supress Reflex warning
+        alt_value = rx.cond(alt is not None, alt, "").to(str)
+    else:
+        alt_value = alt or ""
+    img_props = {"alt": alt_value, "loading": loading, **props}
+
+    if dimensions:
+        if "width" in dimensions and dimensions["width"]:
+            img_props["custom_attrs"] = img_props.get("custom_attrs", {})
+            img_props["custom_attrs"]["width"] = dimensions["width"]
+        if "height" in dimensions and dimensions["height"]:
+            img_props["custom_attrs"] = img_props.get("custom_attrs", {})
+            img_props["custom_attrs"]["height"] = dimensions["height"]
+    elif img_width or img_height:
+        img_props["custom_attrs"] = img_props.get("custom_attrs", {})
+        if img_width:
+            img_props["custom_attrs"]["width"] = img_width
+        if img_height:
+            img_props["custom_attrs"]["height"] = img_height
 
     if width:
         img_props["width"] = width

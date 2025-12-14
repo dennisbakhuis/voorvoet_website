@@ -4,7 +4,6 @@ slug: "steunzolen-of-podotherapeutische-zolen"
 summary: "In ons dagelijks leven onderschatten we vaak het belang van gezonde voeten. Ze dragen ons letterlijk door het leven, maar krijgen vaak niet de aandacht die ze verdienen. Steunzolen of podotherapeutische zolen zijn een oplossing die steeds meer mensen ontdekken om hun voetcomfort te verbeteren en diverse gezondheidsproblemen te verlichten. In dit artikel verkennen we de wereld van podotherapeutische zolen en ontdekken we hoe ze een positieve invloed kunnen hebben op je voetgezondheid."
 author: "Kim Bakhuis"
 date: "2023-11-26"
-date_modified: "2023-11-26"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "Voor de perfecte steunzool wordt een 3D scan gemaakt van de voet."
 tags: ["steunzolen", "podotherapeutische zolen", "inlegzolen", "voetklachten", "maatwerk"]

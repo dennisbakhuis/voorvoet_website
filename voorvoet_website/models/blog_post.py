@@ -1,130 +1,139 @@
-"""BlogPost data model definition."""
+"""BlogPost data model definition using TypedDict."""
 
-from pydantic import BaseModel, Field, field_validator
+from typing import TypedDict, Any, Literal
 from datetime import datetime
-from typing import Any, Literal
 
 
 ContentType = Literal["heading", "paragraph", "markdown", "image", "button", "list"]
 ContentDict = dict[str, Any]
 
+FALLBACK_DATE = datetime(2023, 2, 1)
 
-class BlogPost(BaseModel):
+MONTHS_NL = {
+    1: "januari",
+    2: "februari",
+    3: "maart",
+    4: "april",
+    5: "mei",
+    6: "juni",
+    7: "juli",
+    8: "augustus",
+    9: "september",
+    10: "oktober",
+    11: "november",
+    12: "december",
+}
+
+MONTHS_DE = {
+    1: "Januar",
+    2: "Februar",
+    3: "März",
+    4: "April",
+    5: "Mai",
+    6: "Juni",
+    7: "Juli",
+    8: "August",
+    9: "September",
+    10: "Oktober",
+    11: "November",
+    12: "Dezember",
+}
+
+MONTHS_EN = {
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December",
+}
+
+
+class BlogPostDict(TypedDict):
     """
-    Represents a blog post with metadata and content.
+    Blog post data structure with all pre-computed fields.
 
-    Attributes
-    ----------
-    title : str
-        The title of the blog post.
-    slug : str
-        URL-friendly identifier for the blog post.
-    summary : str
-        Brief summary or excerpt of the blog post.
-    author : str | None
-        Author name, defaults to None if not specified.
-    date : datetime
-        Publication date and time.
-    date_modified : datetime | None
-        Last modification date, defaults to None (uses publication date).
-    formatted_date : str
-        Pre-formatted date string in Dutch locale.
-    thumbnail : str
-        Filename of the thumbnail image.
-    thumbnail_alt : str
-        Alt text for the thumbnail image.
-    content : str
-        Raw markdown content after frontmatter extraction.
-    filename : str
-        Original filename of the blog post source.
-    thumbnail_url : str
-        Full resolved URL to thumbnail with fallback.
-    thumbnail_fallback : str
-        Fallback image URL (JPG or PNG).
-    thumbnail_avif : str
-        AVIF format image URL (empty string if not available).
-    thumbnail_webp : str
-        WebP format image URL (empty string if not available).
-    read_time : int | None
-        Estimated reading time in minutes, defaults to None.
-    content_objects : list[ContentDict]
-        Parsed content as structured dictionaries.
-    tags : list[str]
-        Keywords/tags for the blog post for SEO and categorization.
-    category : str | None
-        Article category/section, defaults to None.
-    url : str
-        Computed URL path for the blog post (read-only property).
+    All dynamic properties (formatted_date, url, datetime) are pre-computed
+    during parsing, so this is a plain dictionary with no methods.
     """
 
     title: str
     slug: str
     summary: str
-    author: str | None = None
-    date: datetime
-    date_modified: datetime | None = None
+    author: str
+    category: str
+    language: str
+    date: str
     formatted_date: str
-    thumbnail: str
-    thumbnail_alt: str = ""
-    content: str = ""
+    datetime_iso: str
+    thumbnail_fallback: str
+    thumbnail_avif: str
+    thumbnail_webp: str
+    thumbnail_alt: str
+    content: str
+    content_objects: list[dict[str, Any]]
+    url: str
     filename: str
-    thumbnail_url: str
-    thumbnail_fallback: str = ""
-    thumbnail_avif: str = ""
-    thumbnail_webp: str = ""
-    read_time: int | None = None
-    content_objects: Any = Field(default_factory=lambda: [])
-    tags: list[str] = Field(default_factory=list)
-    category: str | None = None
     story_number: str
 
-    @field_validator("date", mode="before")
-    @classmethod
-    def parse_date(cls, v: str | datetime) -> datetime:
-        """Parse date from string or datetime."""
-        if isinstance(v, str):
-            return datetime.fromisoformat(v)
-        return v
 
-    @field_validator("date_modified", mode="before")
-    @classmethod
-    def parse_date_modified(cls, v: str | datetime | None) -> datetime | None:
-        """Parse date_modified from string or datetime."""
-        if v is None or v == "":
-            return None
-        if isinstance(v, str):
-            return datetime.fromisoformat(v)
-        return v
+def parse_datetime(date_str: str) -> datetime:
+    """
+    Parse date string to datetime (YYYY-MM-DD, DD-MM-YYYY, or ISO format).
 
-    @field_validator("read_time", mode="before")
-    @classmethod
-    def parse_read_time(cls, v: str | int | None) -> int | None:
-        """Parse read_time from string or int."""
-        if v is None or v == "":
-            return None
-        if isinstance(v, str):
-            return int(v)
-        return v
+    Parameters
+    ----------
+    date_str : str
+        Date string in one of the supported formats
 
-    @field_validator("tags", mode="before")
-    @classmethod
-    def parse_tags(cls, v: str | list[str]) -> list[str]:
-        """Parse tags from string or list."""
-        if isinstance(v, str):
-            if v == "":
-                return []
-            return [tag.strip() for tag in v.split(",")]
-        return v
+    Returns
+    -------
+    datetime
+        Parsed datetime object, or FALLBACK_DATE if parsing fails
+    """
+    try:
+        return datetime.strptime(date_str, "%Y-%m-%d")
+    except ValueError:
+        try:
+            return datetime.strptime(date_str, "%d-%m-%Y")
+        except ValueError:
+            try:
+                return datetime.fromisoformat(date_str)
+            except ValueError:
+                print(f"Warning: Could not parse date '{date_str}'")
+                return FALLBACK_DATE
 
-    @field_validator("thumbnail_alt", mode="before")
-    @classmethod
-    def ensure_thumbnail_alt(cls, v: str | None) -> str:
-        """Ensure thumbnail_alt is never None."""
-        if v is None or v == "":
-            return ""
-        return str(v)
 
-    @property
-    def url(self) -> str:
-        """Get the URL path for this blog post."""
-        return f"/blog/{self.slug}/"
+def format_date(date_str: str, language: str) -> str:
+    """
+    Format date with language-specific month names.
+
+    Parameters
+    ----------
+    date_str : str
+        Date string to format
+    language : str
+        Language code ("nl", "de", or "en")
+
+    Returns
+    -------
+    str
+        Formatted date string with language-specific month names
+    """
+    date_obj = parse_datetime(date_str)
+
+    if language == "de":
+        month_name = MONTHS_DE[date_obj.month]
+        return f"{date_obj.day}. {month_name} {date_obj.year}"
+    elif language == "en":
+        month_name = MONTHS_EN[date_obj.month]
+        return f"{month_name} {date_obj.day}, {date_obj.year}"
+    else:
+        month_name = MONTHS_NL[date_obj.month]
+        return f"{date_obj.day} {month_name} {date_obj.year}"

@@ -9,6 +9,7 @@ def hero_banner(
     alt_text: str,
     image_src_avif: str = "",
     image_src_webp: str = "",
+    dimensions: dict[str, str] | None = None,
     gradient: str = "linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
     content: rx.Component | None = None,
 ) -> rx.Component:
@@ -25,6 +26,9 @@ def hero_banner(
         Path to the AVIF format image (empty string if not available).
     image_src_webp : str, optional
         Path to the WebP format image (empty string if not available).
+    dimensions : dict[str, str], optional
+        Image dimensions dict with 'width' and 'height' keys (e.g., ImageDimensions.hero_banner)
+        Sets HTML attributes for aspect ratio to prevent CLS.
     gradient : str, optional
         CSS gradient overlay applied over the image.
         Default is a white-to-green gradient with screen blend mode.
@@ -45,6 +49,7 @@ def hero_banner(
             src_avif=image_src_avif,
             src_webp=image_src_webp,
             alt=alt_text,
+            dimensions=dimensions,
             object_fit="cover",
             position="absolute",
             inset="0",

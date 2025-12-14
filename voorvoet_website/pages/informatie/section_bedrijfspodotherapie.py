@@ -10,7 +10,7 @@ from ...components import (
     column,
     responsive_image,
 )
-from ...theme import Colors, Layout, Spacing
+from ...theme import Colors, Layout, Spacing, ImageDimensions
 from ...utils import get_translation
 
 
@@ -85,6 +85,7 @@ def section_bedrijfspodotherapie(language: str) -> rx.Component:
             src_avif="/images/page_information/bedrijfs_podotherapie_pijnlijke_voeten_hielpijn_voorvoet_podotherapie_enschede.avif",
             src_webp="/images/page_information/bedrijfs_podotherapie_pijnlijke_voeten_hielpijn_voorvoet_podotherapie_enschede.webp",
             alt=get_translation(TRANSLATIONS, "image_alt", language),
+            dimensions=ImageDimensions.content_landscape,
             width="100%",
             max_width="450px",
             height="auto",

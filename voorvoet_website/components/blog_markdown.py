@@ -8,10 +8,6 @@ def blog_markdown(content: str) -> rx.Component:
     """
     Create a styled markdown block for blog content.
 
-    Renders markdown content blocks that may contain multiple elements like
-    paragraphs, lists, code blocks, blockquotes, etc. Used for larger content
-    sections that don't fit into specific component types.
-
     Parameters
     ----------
     content : str
@@ -25,7 +21,7 @@ def blog_markdown(content: str) -> rx.Component:
         A Reflex markdown component styled for blog content blocks
     """
     return rx.box(
-        rx.markdown(
+        rx.markdown(  # type: ignore[operator]  # Due to missing stubs in Relfex
             content,
             color=Colors.text["content"],
             font_size=FontSizes.regular,

@@ -4,29 +4,57 @@ import reflex as rx
 from typing import Any
 import json
 
-from ..models import BlogPost
+from ..models.blog_post import BlogPostDict
+
+
+def organization_brand_schema() -> rx.Component:
+    """
+    Generate Organization JSON-LD structured data for brand identity.
+
+    Returns
+    -------
+    rx.Component
+        A script tag containing JSON-LD structured data.
+    """
+    org_data: dict[str, Any] = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "VoorVoet",
+        "alternateName": "Praktijk voor podotherapie",
+        "url": "https://voorvoet.nl",
+        "logo": "https://voorvoet.nl/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
+        "description": "VoorVoet is een moderne podotherapiepraktijk in Enschede gespecialiseerd in voetzorg, podotherapie en orthopedische schoentechniek.",
+        "telephone": "+31657750997",
+        "email": "info@voorvoet.nl",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Eeftinksweg 13",
+            "addressLocality": "Enschede",
+            "postalCode": "7541 WE",
+            "addressCountry": "NL",
+        },
+        "founder": {
+            "@type": "Person",
+            "name": "Kim Bakhuis",
+            "jobTitle": "Founder/Podiatrist",
+            "sameAs": "https://www.linkedin.com/in/kimbakhuis/",
+        },
+        "sameAs": [
+            "https://www.linkedin.com/company/voorvoet/",
+        ],
+    }
+
+    json_ld = json.dumps(org_data, ensure_ascii=False, indent=2)
+
+    return rx.el.script(
+        json_ld,
+        type="application/ld+json",
+    )
 
 
 def organization_schema() -> rx.Component:
-    """Generate Organization/Podiatrist JSON-LD structured data.
-
-    Creates a JSON-LD script tag with LocalBusiness/Podiatrist schema markup for VoorVoet.
-    This schema uses the Podiatrist type which extends LocalBusiness and MedicalBusiness,
-    providing optimal SEO for local medical practices.
-
-    The schema includes:
-    - Business name, URL, and logo
-    - Contact information (phone, email)
-    - Physical addresses for both locations (Eeftinksweg and Beethovenlaan)
-    - GPS coordinates (geo) for precise location mapping
-    - Opening hours specification
-    - Area served (Enschede, Overijssel)
-    - Map links for both locations
-    - Payment methods accepted
-    - Medical specialty and services (knowsAbout)
-    - Supported languages
-    - Business registration details (KvK)
-    - Team information (founder and employees)
+    """
+    Generate Organization/Podiatrist JSON-LD structured data.
 
     Returns
     -------
@@ -168,16 +196,14 @@ def organization_schema() -> rx.Component:
     )
 
 
-def article_schema(post: BlogPost, language: str) -> rx.Component:
-    """Generate Article JSON-LD structured data for blog posts.
-
-    Creates schema markup dynamically from blog post data to help
-    search engines understand blog content and display rich snippets in search results.
+def article_schema(post: BlogPostDict, language: str) -> rx.Component:
+    """
+    Generate Article JSON-LD structured data for blog posts.
 
     Parameters
     ----------
-    post : BlogPost
-        The blog post to generate schema for
+    post : dict
+        The blog post dictionary to generate schema for
     language : str
         Language code ("nl", "de", or "en")
 
@@ -188,9 +214,9 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
     """
     base_url = "https://voorvoet.nl"
 
-    full_url = f"{base_url}/{language}/blog/{post.slug}/"
-    image_url = f"{base_url}{post.thumbnail_url}"
-    words = post.content.split()
+    full_url = f"{base_url}/{language}/blog/{post['slug']}/"
+    image_url = f"{base_url}{post['thumbnail_fallback']}"
+    words = post["content"].split()
     snippet_words = words[:200] if len(words) > 200 else words
     article_snippet = " ".join(snippet_words)
     article_snippet = (
@@ -200,21 +226,19 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
     article_data: dict[str, Any] = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": post.title,
-        "description": post.summary,
+        "headline": post["title"],
+        "description": post["summary"],
         "articleBody": article_snippet,
         "image": {
             "@type": "ImageObject",
             "url": image_url,
-            "caption": post.thumbnail_alt if post.thumbnail_alt else post.title,
+            "caption": post["thumbnail_alt"],
         },
-        "datePublished": post.date.isoformat(),
-        "dateModified": post.date_modified.isoformat()
-        if post.date_modified
-        else post.date.isoformat(),
+        "datePublished": post["datetime_iso"],
+        "dateModified": post["datetime_iso"],
         "author": {
             "@type": "Person",
-            "name": post.author if post.author else "Kim Bakhuis",
+            "name": post.get("author", "Kim Bakhuis") or "Kim Bakhuis",
             "url": base_url,
             "sameAs": "https://www.linkedin.com/in/kimbakhuis/",
         },
@@ -232,15 +256,12 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
         "inLanguage": language,
     }
 
-    word_count = len(post.content.split())
+    word_count = len(post["content"].split())
     if word_count > 0:
         article_data["wordCount"] = word_count
 
-    if post.tags and len(post.tags) > 0:
-        article_data["keywords"] = post.tags
-
-    if post.category:
-        article_data["articleSection"] = post.category
+    if post.get("category"):
+        article_data["articleSection"] = post["category"]
 
     json_ld = json.dumps(article_data, ensure_ascii=False, indent=2)
 
@@ -252,9 +273,6 @@ def article_schema(post: BlogPost, language: str) -> rx.Component:
 
 def breadcrumb_schema(items: list[dict[str, str]]) -> rx.Component:
     """Generate BreadcrumbList JSON-LD structured data for navigation hierarchy.
-
-    Creates schema markup that helps search engines understand the site navigation
-    structure and hierarchy. Can lead to breadcrumb rich snippets in search results.
 
     Parameters
     ----------

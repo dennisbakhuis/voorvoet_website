@@ -277,3 +277,43 @@ class Layout:
 
     blog_image_max_width = "800px"
     blog_image_border_radius = "8px"
+
+
+class ImageDimensions:
+    """Image dimension presets for different usage contexts.
+
+    Each preset defines width and height HTML attributes that establish
+    the intrinsic aspect ratio to prevent Cumulative Layout Shift (CLS).
+    Actual display size is controlled by CSS.
+
+    Attributes
+    ----------
+    hero_banner_home : dict
+        Home page hero background (1920x1400, ~1.37:1 aspect ratio).
+    hero_banner : dict
+        Standard hero backgrounds for other pages (1200x900, 4:3 aspect ratio).
+    content_portrait : dict
+        Portrait-oriented content images (486x800, ~0.6:1 aspect ratio).
+    content_landscape : dict
+        Landscape-oriented content images (666x500, ~1.33:1 aspect ratio).
+    content_square : dict
+        Square content images (1024x1024, 1:1 aspect ratio).
+    blog_thumbnail : dict
+        Blog post preview thumbnails (500x500, 1:1 aspect ratio).
+    footer_logo_nvvp : dict
+        NVVP footer logo (224x100, 2.24:1 aspect ratio).
+    footer_logo_krp : dict
+        KRP quality register footer logo (365x100, 3.65:1 aspect ratio).
+    """
+
+    hero_banner_home = {"width": "1920", "height": "1400"}
+    hero_banner = {"width": "1200", "height": "900"}
+
+    content_portrait = {"width": "486", "height": "800"}
+    content_landscape = {"width": "666", "height": "500"}
+    content_square = {"width": "1024", "height": "1024"}
+
+    blog_thumbnail = {"width": "500", "height": "500"}
+
+    footer_logo_nvvp = {"width": "224", "height": "100"}
+    footer_logo_krp = {"width": "365", "height": "100"}
