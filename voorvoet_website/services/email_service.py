@@ -3,15 +3,11 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from typing import TYPE_CHECKING
 import logging
 from datetime import datetime
 
 from ..config import config
 from ..models.contact_form import ContactForm
-
-if TYPE_CHECKING:
-    from ..states.order_insoles_state import OrderInsolesState
 
 logger = logging.getLogger(__name__)
 
@@ -162,14 +158,15 @@ Bericht:
         return False
 
 
-def send_order_insoles_email(order_state: "OrderInsolesState") -> bool:
+def send_order_insoles_email(order_data: dict) -> bool:
     """
     Send an email notification when an order insoles form is submitted.
 
     Parameters
     ----------
-    order_state : OrderInsolesState
-        The OrderInsolesState instance containing order data.
+    order_data : dict
+        Dictionary containing order data with keys: first_name, last_name,
+        email, birth_date, insole_type, quantity, comments.
 
     Returns
     -------
@@ -193,13 +190,19 @@ def send_order_insoles_email(order_state: "OrderInsolesState") -> bool:
     smtp_host = config.smtp_host
     smtp_port = config.smtp_port
 
+    first_name = order_data.get("first_name", "")
+    last_name = order_data.get("last_name", "")
+    email = order_data.get("email", "")
+    birth_date = order_data.get("birth_date", "")
+    insole_type = order_data.get("insole_type", "")
+    quantity = order_data.get("quantity", "")
+    comments = order_data.get("comments", "")
+
     try:
         timestamp = format_dutch_datetime(datetime.now())
 
         msg = MIMEMultipart("alternative")
-        msg["Subject"] = (
-            f"Nieuw bestelling extra paar zolen: {order_state.first_name} {order_state.last_name}"
-        )
+        msg["Subject"] = f"Nieuw bestelling extra paar zolen: {first_name} {last_name}"
         msg["From"] = from_email
         msg["To"] = to_email
 
@@ -208,14 +211,14 @@ Nieuwe zoolbestelling
 
 Ontvangen: {timestamp}
 
-Naam: {order_state.first_name} {order_state.last_name}
-E-mail: {order_state.email}
-Geboortedatum: {order_state.birth_date}
-Soort zolen: {order_state.insole_type}
-Aantal: {order_state.quantity}
+Naam: {first_name} {last_name}
+E-mail: {email}
+Geboortedatum: {birth_date}
+Soort zolen: {insole_type}
+Aantal: {quantity}
 
 Opmerkingen:
-{order_state.comments if order_state.comments.strip() else "(geen opmerkingen)"}
+{comments if comments.strip() else "(geen opmerkingen)"}
 """
 
         html_body = f"""
@@ -225,13 +228,13 @@ Opmerkingen:
     <h2>Nieuwe zoolbestelling</h2>
     <p><em>Ontvangen: {timestamp}</em></p>
     <hr style="border: none; border-top: 1px solid #ddd; margin: 1rem 0;">
-    <p><strong>Naam:</strong> {order_state.first_name} {order_state.last_name}</p>
-    <p><strong>E-mail:</strong> {order_state.email}</p>
-    <p><strong>Geboortedatum:</strong> {order_state.birth_date}</p>
-    <p><strong>Soort zolen:</strong> {order_state.insole_type}</p>
-    <p><strong>Aantal:</strong> {order_state.quantity}</p>
+    <p><strong>Naam:</strong> {first_name} {last_name}</p>
+    <p><strong>E-mail:</strong> {email}</p>
+    <p><strong>Geboortedatum:</strong> {birth_date}</p>
+    <p><strong>Soort zolen:</strong> {insole_type}</p>
+    <p><strong>Aantal:</strong> {quantity}</p>
     <h3>Opmerkingen:</h3>
-    <p>{order_state.comments.replace(chr(10), "<br>") if order_state.comments.strip() else "<em>(geen opmerkingen)</em>"}</p>
+    <p>{comments.replace(chr(10), "<br>") if comments.strip() else "<em>(geen opmerkingen)</em>"}</p>
 </body>
 </html>
 """
