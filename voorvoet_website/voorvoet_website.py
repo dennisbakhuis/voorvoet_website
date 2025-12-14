@@ -3,8 +3,7 @@
 import reflex as rx
 from typing import Any, Callable
 
-from .models.blog_post import BlogPostDict
-
+from .models import BlogPostDict
 from .pages import (
     page_home,
     page_blog,
@@ -13,6 +12,8 @@ from .pages import (
     page_vergoedingen,
     page_contact,
     page_zolen_bestellen,
+    page_credits,
+    page_not_found,
 )
 from .utils import get_translation
 from .translations import (
@@ -52,6 +53,7 @@ PAGE_COMPONENTS = {
     "reimbursements": page_vergoedingen,
     "contact": page_contact,
     "order_insoles": page_zolen_bestellen,
+    "credits": page_credits,
 }
 
 main_pages = []
@@ -66,6 +68,7 @@ default_redirects = [
     ("nl", "reimbursements", "/vergoedingen", page_vergoedingen),
     ("nl", "contact", "/contact", page_contact),
     ("nl", "order_insoles", "/zolen-bestellen", page_zolen_bestellen),
+    ("nl", "credits", "/credits", page_credits),
 ]
 main_pages.extend(default_redirects)
 
@@ -199,3 +202,17 @@ for language, posts in blog_posts.items():
             post_config["image"] = post_image
 
         app.add_page(**post_config)
+
+not_found_image = PAGE_IMAGES.get("not_found")
+full_not_found_image_url = (
+    f"{config.site_url}{not_found_image}" if not_found_image else None
+)
+
+app.add_page(
+    component=page_not_found,
+    route="/404",
+    title="VoorVoet - Pagina niet gevonden",
+    meta=get_page_meta_tags(
+        "not_found", "nl", "/404", image_url=full_not_found_image_url
+    ),
+)

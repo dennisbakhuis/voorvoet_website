@@ -6,6 +6,8 @@ from .informatie import page_informatie
 from .vergoedingen import page_vergoedingen
 from .contact import page_contact
 from .zolen_bestellen import page_zolen_bestellen
+from .credits import page_credits
+from .not_found import page_not_found
 
 __all__ = [
     "page_home",
@@ -15,4 +17,6 @@ __all__ = [
     "page_vergoedingen",
     "page_contact",
     "page_zolen_bestellen",
+    "page_credits",
+    "page_not_found",
 ]

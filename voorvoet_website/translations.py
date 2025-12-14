@@ -14,6 +14,8 @@ PAGE_TITLES = {
         "reimbursements": "VoorVoet - Vergoedingen",
         "contact": "VoorVoet - Contact",
         "order_insoles": "VoorVoet - Steunzolen Bestellen",
+        "credits": "VoorVoet - Credits",
+        "not_found": "VoorVoet - Pagina niet gevonden",
     },
     "de": {
         "home": "VoorVoet - Praxis für Podologie",
@@ -22,6 +24,7 @@ PAGE_TITLES = {
         "reimbursements": "VoorVoet - Erstattungen",
         "contact": "VoorVoet - Kontakt",
         "order_insoles": "VoorVoet - Einlagen Bestellen",
+        "credits": "VoorVoet - Credits",
     },
     "en": {
         "home": "VoorVoet - Podiatry Practice",
@@ -30,6 +33,7 @@ PAGE_TITLES = {
         "reimbursements": "VoorVoet - Reimbursements",
         "contact": "VoorVoet - Contact",
         "order_insoles": "VoorVoet - Order Insoles",
+        "credits": "VoorVoet - Credits",
     },
 }
 
@@ -41,6 +45,8 @@ PAGE_DESCRIPTIONS = {
         "reimbursements": "Informatie over vergoedingen voor podotherapie en steunzolen. Bekijk de tarieven en zorgverzekering vergoedingen voor podotherapie bij VoorVoet Enschede.",
         "contact": "Neem contact op met VoorVoet podotherapie in Enschede. Maak een afspraak of stel uw vraag. Wij helpen u graag met uw voetklachten.",
         "order_insoles": "Bestel steunzolen op maat bij VoorVoet podotherapie Enschede. Professionele podotherapeutische zolen voor optimale ondersteuning en comfort.",
+        "credits": "Credits voor afbeeldingen, Python packages en informatie over de website ontwikkelaar van VoorVoet podotherapie Enschede.",
+        "not_found": "De pagina die u zoekt bestaat niet. Ga terug naar de homepage van VoorVoet podotherapie Enschede.",
     },
     "de": {
         "home": "VoorVoet ist Ihr Podologe in Enschede. Professionelle Behandlung von Fußbeschwerden, maßgefertigte Einlagen und Podologie. Vereinbaren Sie einen Termin.",
@@ -49,6 +55,7 @@ PAGE_DESCRIPTIONS = {
         "reimbursements": "Informationen über Erstattungen für Podologie und Einlagen. Sehen Sie die Tarife und Krankenkassenerstattungen für Podologie bei VoorVoet Enschede.",
         "contact": "Kontaktieren Sie VoorVoet Podologie in Enschede. Vereinbaren Sie einen Termin oder stellen Sie Ihre Frage. Wir helfen Ihnen gerne bei Ihren Fußbeschwerden.",
         "order_insoles": "Bestellen Sie maßgefertigte Einlagen bei VoorVoet Podologie Enschede. Professionelle podologische Einlagen für optimale Unterstützung und Komfort.",
+        "credits": "Credits für Bilder, Python-Pakete und Informationen über den Website-Entwickler von VoorVoet Podologie Enschede.",
     },
     "en": {
         "home": "VoorVoet is your podiatrist in Enschede. Professional treatment of foot complaints, custom insoles and podiatry. Make an appointment for personalized care.",
@@ -57,6 +64,7 @@ PAGE_DESCRIPTIONS = {
         "reimbursements": "Information about reimbursements for podiatry and insoles. View rates and health insurance reimbursements for podiatry at VoorVoet Enschede.",
         "contact": "Contact VoorVoet podiatry in Enschede. Make an appointment or ask your question. We are happy to help you with your foot complaints.",
         "order_insoles": "Order custom insoles at VoorVoet podiatry Enschede. Professional podiatric insoles for optimal support and comfort.",
+        "credits": "Credits for images, Python packages and information about the website developer of VoorVoet podiatry Enschede.",
     },
 }
 
@@ -68,6 +76,8 @@ PAGE_IMAGES = {
     "reimbursements": "/images/voorvoet-vergoedingen.jpg",
     "contact": "/images/voorvoet-contact.jpg",
     "order_insoles": "/images/voorvoet-steunzolen.jpg",
+    "credits": "/images/page_credits/credits_hero_banner.jpg",
+    "not_found": "/images/voorvoet-podotherapie-enschede.jpg",
 }
 
 
@@ -82,6 +92,7 @@ BREADCRUMB_NAMES = {
         "reimbursements": "Vergoedingen",
         "contact": "Contact",
         "order_insoles": "Steunzolen Bestellen",
+        "credits": "Credits",
     },
     "de": {
         "home": "Startseite",
@@ -90,6 +101,7 @@ BREADCRUMB_NAMES = {
         "reimbursements": "Erstattungen",
         "contact": "Kontakt",
         "order_insoles": "Einlagen Bestellen",
+        "credits": "Credits",
     },
     "en": {
         "home": "Home",
@@ -98,6 +110,7 @@ BREADCRUMB_NAMES = {
         "reimbursements": "Reimbursements",
         "contact": "Contact",
         "order_insoles": "Order Insoles",
+        "credits": "Credits",
     },
 }
 
@@ -109,6 +122,7 @@ ROUTE_MAPPINGS = {
         "reimbursements": "/nl/vergoedingen",
         "contact": "/nl/contact",
         "order_insoles": "/nl/zolen-bestellen",
+        "credits": "/nl/credits",
         "blog": "/nl/blog",
     },
     "de": {
@@ -117,6 +131,7 @@ ROUTE_MAPPINGS = {
         "reimbursements": "/de/erstattungen",
         "contact": "/de/kontakt",
         "order_insoles": "/de/einlagen-bestellen",
+        "credits": "/de/credits",
         "blog": "/de/blog",
     },
     "en": {
@@ -125,6 +140,7 @@ ROUTE_MAPPINGS = {
         "reimbursements": "/en/reimbursements",
         "contact": "/en/contact",
         "order_insoles": "/en/order-insoles",
+        "credits": "/en/credits",
         "blog": "/en/blog",
     },
 }
@@ -148,7 +164,34 @@ PAGE_ROUTES = {
         "de": "/de/einlagen-bestellen",
         "en": "/en/order-insoles",
     },
+    "credits": {"nl": "/nl/credits", "de": "/de/credits", "en": "/en/credits"},
 }
+
+
+def get_favicon_links() -> list[rx.Component]:
+    return [
+        rx.el.link(
+            rel="icon",
+            href="/favicon.ico",
+            custom_attrs={"type": "image/x-icon"},
+        ),
+        rx.el.link(
+            rel="icon",
+            href="/favicon-96x96.png",
+            custom_attrs={"type": "image/png", "sizes": "96x96"},
+        ),
+        rx.el.link(
+            rel="icon",
+            href="/favicon.svg",
+            custom_attrs={"type": "image/svg+xml"},
+        ),
+        rx.el.link(
+            rel="apple-touch-icon",
+            href="/apple-touch-icon.png",
+            custom_attrs={"sizes": "180x180"},
+        ),
+        rx.el.link(rel="manifest", href="/site.webmanifest"),
+    ]
 
 
 def get_hreflang_tags(page_key: str) -> list:
@@ -288,6 +331,8 @@ def get_page_meta_tags(
     if image_url:
         meta_tags.append({"name": "twitter:image", "content": image_url})
 
+    meta_tags.append({"name": "apple-mobile-web-app-title", "content": "VoorVoet"})
+
     meta_tags.append(
         rx.el.link(
             rel="canonical",
@@ -297,6 +342,9 @@ def get_page_meta_tags(
 
     hreflang_tags = get_hreflang_tags(page_key)
     meta_tags.extend(hreflang_tags)
+
+    favicon_links = get_favicon_links()
+    meta_tags.extend(favicon_links)
 
     return meta_tags
 
@@ -332,6 +380,8 @@ def get_blog_post_meta_tags(
     if image_url:
         meta_tags.append({"name": "twitter:image", "content": image_url})
 
+    meta_tags.append({"name": "apple-mobile-web-app-title", "content": "VoorVoet"})
+
     meta_tags.append(
         rx.el.link(
             rel="canonical",
@@ -342,5 +392,8 @@ def get_blog_post_meta_tags(
     if story_number:
         hreflang_tags = get_blog_post_hreflang_tags(story_number, all_blog_posts)
         meta_tags.extend(hreflang_tags)
+
+    favicon_links = get_favicon_links()
+    meta_tags.extend(favicon_links)
 
     return meta_tags

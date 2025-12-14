@@ -345,7 +345,15 @@ def footer(language: str) -> rx.Component:
                         rx.box(
                             rx.link(
                                 t("credits"),
-                                href="#",
+                                href=rx.cond(
+                                    language == "nl",
+                                    "/nl/credits",
+                                    rx.cond(
+                                        language == "de",
+                                        "/de/credits",
+                                        "/en/credits",
+                                    ),
+                                ),
                                 color=Colors.text["link"],
                                 text_decoration="underline",
                                 display="block",
