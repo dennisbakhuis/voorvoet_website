@@ -1,16 +1,17 @@
 """Enhanced column component for flexible layout with responsive helpers."""
-import reflex as rx
-from typing import Union, List, Optional
 
-from ..theme import Layout, Spacing
+from typing import Any
+import reflex as rx
+
+from ..theme import Spacing
 
 
 def column(
-    *children,
-    size: Optional[Union[str, List[str]]] = None,
-    spacing_direction: Optional[str] = None,
-    responsive_spacing: Optional[List[str]] = None,
-    **props
+    *children: rx.Component,
+    size: str | list[str] | None = None,
+    spacing_direction: str | None = None,
+    responsive_spacing: list[str] | None = None,
+    **props: Any,
 ) -> rx.Component:
     """
     Create a flexible column with responsive sizing and spacing.
@@ -43,11 +44,10 @@ def column(
         A Reflex box component configured as a flexible column.
     """
 
-    flex_props = {}
+    flex_props: dict[str, Any] = {}
 
     if size:
         if isinstance(size, list):
-            # Responsive sizing: convert each breakpoint size to flex values
             flex_values = []
             width_values = []
             for s in size:
@@ -60,32 +60,25 @@ def column(
             flex_props["flex"] = flex_values
             flex_props["width"] = width_values
         else:
-            # Single size value
             flex_props["flex"] = f"0 0 {size}"
             flex_props["width"] = size
     else:
         flex_props["width"] = "100%"
         flex_props["flex"] = "1"
 
-    # Handle responsive spacing
     if spacing_direction and not responsive_spacing:
         if spacing_direction == "left":
-            flex_props["padding_left"] = ["0", "0", "0", "2rem"]
+            flex_props["padding_left"] = Spacing.responsive_2rem_left
         elif spacing_direction == "right":
-            flex_props["padding_right"] = ["0", "0", "0", "2rem"]
+            flex_props["padding_right"] = Spacing.responsive_2rem_right
         elif spacing_direction == "both":
-            flex_props["padding_left"] = ["0", "0", "0", "2rem"]
-            flex_props["padding_right"] = ["0", "0", "0", "2rem"]
+            flex_props["padding_left"] = Spacing.responsive_2rem_left
+            flex_props["padding_right"] = Spacing.responsive_2rem_right
 
-    # Handle custom responsive spacing
     if responsive_spacing:
         if spacing_direction == "left":
             flex_props["padding_left"] = responsive_spacing
         elif spacing_direction == "right":
             flex_props["padding_right"] = responsive_spacing
 
-    return rx.box(
-        *children,
-        **flex_props,
-        **props
-    )
+    return rx.box(*children, **(props | flex_props))

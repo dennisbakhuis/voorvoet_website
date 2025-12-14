@@ -1,9 +1,10 @@
 """Blog list section displaying grid of blog post cards."""
+
 import reflex as rx
-from ...states import BlogState
+
 from ...theme import Colors, FontSizes
 from ...components import container, blog_card, section
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -19,13 +20,20 @@ TRANSLATIONS = {
 }
 
 
-def section_blog_list() -> rx.Component:
+def section_blog_list(language: str, posts: list[dict] = []) -> rx.Component:
     """
     Display a grid of blog post cards.
 
     Creates a responsive layout that shows all blog posts in a vertical stack.
     Each blog post card alternates its layout (flipped) for visual variety.
     Displays an empty state message when no posts are available.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
+    posts : list[dict]
+        List of blog post dictionaries to display
 
     Returns
     -------
@@ -36,24 +44,26 @@ def section_blog_list() -> rx.Component:
     return section(
         container(
             rx.cond(
-                BlogState.has_posts,
+                len(posts) > 0,
                 rx.vstack(
                     rx.foreach(
-                        BlogState.sorted_posts,
-                        lambda post, index: blog_card(post, flip=index % 2 == 1),
+                        posts,
+                        lambda post, index: blog_card(
+                            post, language=language, flip=index % 2 == 1
+                        ),
                     ),
                     spacing="5",
                     width="100%",
                 ),
                 rx.vstack(
                     rx.text(
-                        get_translation(TRANSLATIONS, "no_posts"),
-                        color=Colors.text['muted'],
+                        get_translation(TRANSLATIONS, "no_posts", language),
+                        color=Colors.text["muted"],
                         font_size=FontSizes.regular,
                     ),
                     align_items="center",
                 ),
             ),
         ),
-        background=Colors.backgrounds['white'],
+        background=Colors.backgrounds["white"],
     )

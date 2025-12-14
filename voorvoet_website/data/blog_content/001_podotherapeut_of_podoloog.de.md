@@ -1,11 +1,13 @@
 ---
 title: "Podotherapeut oder Podologe?"
-slug: "podotherapeut-of-podoloog"
+slug: "podotherapeut-oder-podologe"
 summary: "Neugierig auf den Unterschied zwischen einem Podotherapeuten und einem Podologen? Diese Begriffe scheinen oft verwechselt zu werden, aber es gibt einen wichtigen Unterschied. Während der Podotherapeut eine umfassende HBO-Ausbildung absolviert hat und einen gesetzlich anerkannten - und geschützten Titel trägt, kann und darf sich jeder Podologe nennen, unabhängig von seinem Ausbildungsniveau. Die Auswirkung dieser Wahl auf Ihre Fußpflege kann erheblich sein. Lesen Sie hier über die Unterschiede zwischen Podotherapeut und Podologe."
 author: "Kim Bakhuis"
 date: "2023-11-06"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "Die Podotherapeutin Kim Bakhuis, die eine podotherapeutische Einlage anhand des Fußes kontrolliert."
+tags: ["Podotherapie", "Podologe", "Fußpflege", "Ausbildung", "Enschede"]
+category: "Ausbildung und Fachgebiet"
 ---
 # Was ist der Unterschied zwischen einem Podotherapeuten und einem Podologen?
 Es kann jedem passieren: plötzlich haben Sie schmerzende Füße. Manchmal so schlimm, dass Sie kaum noch stehen oder laufen können. Schnell suchen wir nach einer Lösung und googeln. Aber was geben Sie ein? Podologe Enschede oder Podotherapeut Enschede? Oft werden die Begriffe Podotherapeut und Podologe verwechselt. Was ist nun der Unterschied? Obwohl sich beide Fachgebiete auf Beschwerden der unteren Extremität (d.h.: unterer Rücken und darunter) konzentrieren, gibt es einen deutlichen Unterschied zwischen diesen Berufsgruppen.

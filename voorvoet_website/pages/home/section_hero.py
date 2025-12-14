@@ -1,8 +1,9 @@
 """Hero section for the home page with title, subtitle, and CTA."""
+
 import reflex as rx
-from ...theme import Colors
-from ...components import container, section, hero_banner
-from ...utils.translations import get_translation
+from ...theme import Colors, FontSizes, Layout, ImageDimensions
+from ...components import container, section, hero_banner, header, jumbo_text
+from ...utils.get_translation import get_translation
 from .section_hero_cta import hero_cta_box
 
 
@@ -10,25 +11,29 @@ TRANSLATIONS = {
     "nl": {
         "hero_title": "Voetklachten?",
         "hero_subtitle": "Loop er niet mee door!",
+        "hero_image_alt": "Voeten in bed - podotherapie helpt bij voetklachten in Enschede",
     },
     "de": {
         "hero_title": "Fußbeschwerden?",
         "hero_subtitle": "Laufen Sie nicht damit weiter!",
+        "hero_image_alt": "Füße im Bett - Podotherapie hilft bei Fußbeschwerden in Enschede",
     },
     "en": {
         "hero_title": "Foot complaints?",
         "hero_subtitle": "Don't walk with them!",
+        "hero_image_alt": "Feet in bed - podotherapy helps with foot complaints in Enschede",
     },
 }
 
 
-def section_hero() -> rx.Component:
+def section_hero(language: str) -> rx.Component:
     """
     Create the home page hero section with tagline and call-to-action.
 
-    The hero section displays a full-width background image with a gradient
-    overlay, featuring the main tagline "Voetklachten? Loop er niet mee door!"
-    and a call-to-action box for booking appointments.
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -41,22 +46,19 @@ def section_hero() -> rx.Component:
     hero_content = container(
         rx.box(
             rx.vstack(
-                rx.text(
-                    get_translation(TRANSLATIONS, "hero_title"),
-                    color=Colors.primary["300"],
-                    font_weight="900",
+                jumbo_text(
+                    get_translation(TRANSLATIONS, "hero_title", language),
                     text_align="center",
-                    line_height="1.05",
-                    font_size=["3rem", "4rem", "5rem", "6rem"],
                 ),
-                rx.text(
-                    get_translation(TRANSLATIONS, "hero_subtitle"),
+                header(
+                    get_translation(TRANSLATIONS, "hero_subtitle", language),
+                    level=1,
                     color=Colors.text["heading"],
                     text_align="center",
                     opacity="0.95",
                     font_weight="600",
                     line_height="1.15",
-                    font_size=["2rem", "2.25rem", "2.7rem", "3rem"],
+                    font_size=FontSizes.hero_subtitle,
                 ),
                 spacing="2",
                 align="center",
@@ -66,13 +68,15 @@ def section_hero() -> rx.Component:
             justify_content="center",
             height="100%",
             grid_row="1",
+            padding_top="40px",
         ),
         rx.box(
-            hero_cta_box(),
+            hero_cta_box(language),
             grid_row="2",
-            padding_x=["1rem", "0"],
-            padding_bottom=["0.5rem", "0.75rem", "1rem", "1rem", "1rem"],
-            margin_bottom=["4rem","4rem","4rem","4rem","4rem"]
+            display="flex",
+            justify_content="center",
+            padding_bottom=["0.5rem", "0.75rem", "1rem", "1rem"],
+            margin_bottom="4rem",
         ),
         position="relative",
         z_index="2",
@@ -83,14 +87,18 @@ def section_hero() -> rx.Component:
 
     return section(
         hero_banner(
-            image_src="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpeg",
+            image_src_fallback="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.jpg",
+            image_src_avif="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.avif",
+            image_src_webp="/images/page_home/podotherapeut_enschede_voeten_in_bed_podotherapie_helpt.webp",
+            alt_text=get_translation(TRANSLATIONS, "hero_image_alt", language),
+            dimensions=ImageDimensions.hero_banner_home,
             gradient="linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(16,185,129,.35) 100%)",
             content=hero_content,
         ),
         padding_top="0",
-        padding_bottom=["3rem", "3rem", "3rem", "3rem"],
+        padding_bottom="3rem",
         position="relative",
-        min_height=["calc(56dvh + 6rem)", "calc(62dvh + 6rem)", "calc(69dvh + 6rem)", "calc(74dvh + 6rem)"],
+        min_height=Layout.hero_min_height,
         clip_bottom="gentle_1",
-        divider_color=Colors.backgrounds['white']
+        divider_color=Colors.backgrounds["white"],
     )

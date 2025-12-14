@@ -1,10 +1,10 @@
 """Reusable location map section component."""
-import reflex as rx
-from typing import List, Dict, Any
 
-from ..theme import Colors, FontSizes, Layout, Spacing
+import reflex as rx
+
+from ..theme import Colors, Layout, Spacing
 from .column import column
-from .section_title import section_title
+from .header import header
 from .regular_text import regular_text
 from .button import button
 
@@ -29,6 +29,7 @@ class LocationConfig:
         Whether to reverse the order of map and info columns on desktop.
         Default is False.
     """
+
     def __init__(
         self,
         title: str,
@@ -36,7 +37,7 @@ class LocationConfig:
         description: str,
         map_embed: str,
         route_link: str,
-        reverse_order: bool = False
+        reverse_order: bool = False,
     ):
         self.title = title
         self.address = address
@@ -52,7 +53,7 @@ def location_map_item(
     description: str,
     map_embed: str,
     route_link: str,
-    reverse_order: bool = False
+    reverse_order: bool = False,
 ) -> rx.Component:
     """
     Create a single location section with embedded map and information.
@@ -96,50 +97,61 @@ def location_map_item(
             border_radius="12px",
             overflow="hidden",
             box_shadow="0 4px 12px rgba(0, 0, 0, 0.1)",
-            position="relative"
+            position="relative",
         ),
-        padding_right=["0", "0", "0", Spacing.responsive_2rem[3]] if not reverse_order else ["0", "0", "0", "0"],
-        padding_left=["0", "0", "0", "0"] if not reverse_order else ["0", "0", "0", Spacing.responsive_2rem[3]],
+        padding_right=["0", "0", "0", Spacing.responsive_2rem[3]]
+        if not reverse_order
+        else ["0", "0", "0", "0"],
+        padding_left=["0", "0", "0", "0"]
+        if not reverse_order
+        else ["0", "0", "0", Spacing.responsive_2rem[3]],
         display="flex",
         flex_direction="column",
         justify_content="center",
         align_items="center",
-        margin_bottom=Spacing.image_margin_bottom
+        margin_bottom=Spacing.image_margin_bottom,
     )
 
     info_column = column(
-        section_title(
-            title, 
-            margin_bottom="0.5rem", 
-            text_align=["center", "center", "left", "left", "left"]
+        header(
+            title,
+            level=3,
+            margin_bottom="0.5rem",
+            text_align=["center", "center", "left", "left"],
         ),
         regular_text(
-            address, 
-            font_weight="700", 
-            color=Colors.text["subheading"], 
-            margin_bottom="1rem", 
-            text_align=["center", "center", "left", "left", "left"]
+            address,
+            font_weight="700",
+            color=Colors.text["subheading"],
+            margin_bottom="1rem",
+            text_align=["center", "center", "left", "left"],
         ),
         regular_text(
-            description, 
-            text_align=["center", "center", "left", "left", "left"], 
-            margin_bottom="1.5rem"
+            description,
+            text_align=["center", "center", "left", "left"],
+            margin_bottom="1.5rem",
         ),
         rx.box(
             button("Plan je route", href=route_link),
             display="flex",
             justify_content="center",
-            width="100%"
+            width="100%",
         ),
-        padding_left=["0", "0", "0", Spacing.responsive_2rem[3]] if not reverse_order else ["0", "0", "0", "0"],
-        padding_right=["0", "0", "0", "0"] if not reverse_order else ["0", "0", "0", Spacing.responsive_2rem[3]],
+        padding_left=["0", "0", "0", Spacing.responsive_2rem[3]]
+        if not reverse_order
+        else ["0", "0", "0", "0"],
+        padding_right=["0", "0", "0", "0"]
+        if not reverse_order
+        else ["0", "0", "0", Spacing.responsive_2rem[3]],
         display="flex",
         flex_direction="column",
-        justify_content="center"
+        justify_content="center",
     )
 
     mobile_columns = [map_column, info_column]
-    desktop_columns = [info_column, map_column] if reverse_order else [map_column, info_column]
+    desktop_columns = (
+        [info_column, map_column] if reverse_order else [map_column, info_column]
+    )
 
     return rx.box(
         rx.box(
@@ -161,8 +173,7 @@ def location_map_item(
 def location_section(
     title: str,
     description: str,
-    locations: List[LocationConfig],
-    **section_props
+    locations: list[LocationConfig],
 ) -> rx.Component:
     """
     Create a complete location section with multiple locations.
@@ -179,9 +190,6 @@ def location_section(
         Section description text.
     locations : list[LocationConfig]
         List of LocationConfig objects defining location content and layout.
-    **section_props : dict
-        Additional style properties to apply to the section.
-        These will override the default styles.
 
     Returns
     -------
@@ -197,24 +205,23 @@ def location_section(
                 description=location.description,
                 map_embed=location.map_embed,
                 route_link=location.route_link,
-                reverse_order=location.reverse_order
+                reverse_order=location.reverse_order,
             )
         )
-    
+
     return rx.vstack(
-        section_title(
+        header(
             title,
-            text_align=["center", "center", "left", "left", "left"],
+            level=2,
+            text_align=["center", "center", "left", "left"],
             margin_bottom=Spacing.grid_gap,
-            width="100%"
+            width="100%",
         ),
         regular_text(
-            description,
-            text_align=["center", "center", "left", "left", "left"],
-            width="100%"
+            description, text_align=["center", "center", "left", "left"], width="100%"
         ),
         *location_items,
         spacing="0",
         align="start",
-        width="100%"
+        width="100%",
     )

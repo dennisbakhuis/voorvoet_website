@@ -1,9 +1,10 @@
 """Hero call-to-action box component for appointment booking."""
+
 import reflex as rx
-from ...components import button, section_sub_title, icon_list_item
-from ...theme import Colors
+from ...components import button, header, icon_list_item
+from ...theme import Colors, Layout, Spacing, FontSizes
 from ...config import config
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
@@ -31,14 +32,14 @@ TRANSLATIONS = {
 }
 
 
-def hero_cta_box() -> rx.Component:
+def hero_cta_box(language: str) -> rx.Component:
     """
     Create a call-to-action box for the hero section.
 
-    The CTA box displays a title, list of benefits (no referral needed,
-    quick professional help, fastest route to specialist), and a button
-    to book an appointment. The box has a light green background with
-    rounded corners and shadow.
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -48,35 +49,52 @@ def hero_cta_box() -> rx.Component:
     """
     return rx.box(
         rx.vstack(
-            section_sub_title(get_translation(TRANSLATIONS, "cta_title"), text_align="center"),
+            header(
+                get_translation(TRANSLATIONS, "cta_title", language),
+                level=2,
+                text_align="center",
+                font_size=FontSizes.hero_cta_title,
+            ),
             rx.box(
                 rx.vstack(
-                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "no_referral")),
-                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "quick_help")),
-                    icon_list_item("fa-check-square-o", get_translation(TRANSLATIONS, "fastest_route")),
+                    icon_list_item(
+                        "fa-check-square-o",
+                        get_translation(TRANSLATIONS, "no_referral", language),
+                    ),
+                    icon_list_item(
+                        "fa-check-square-o",
+                        get_translation(TRANSLATIONS, "quick_help", language),
+                    ),
+                    icon_list_item(
+                        "fa-check-square-o",
+                        get_translation(TRANSLATIONS, "fastest_route", language),
+                    ),
                     spacing="3",
                     align="start",
                 ),
                 width="100%",
                 display="flex",
-                justify_content="center"
+                justify_content="center",
             ),
             rx.box(
-                button(get_translation(TRANSLATIONS, "make_appointment"), href=config.link_plan_portal),
+                button(
+                    get_translation(TRANSLATIONS, "make_appointment", language),
+                    href=config.link_plan_portal,
+                ),
                 width="100%",
                 display="flex",
-                justify_content="center"
+                justify_content="center",
             ),
             spacing="4",
             align="center",
         ),
-        width=["95%", "28rem", "32rem", "36rem"],
-        max_width=["95%", "90%", "85%", "38rem"],
+        width=Layout.hero_cta_width,
+        max_width=Layout.hero_cta_max_width,
         bg=Colors.backgrounds["green_light"],
         border_radius="0.75rem",
-        padding=["1rem", "1.5rem", "1.75rem", "2rem"],
+        padding=Spacing.hero_cta_padding,
         box_shadow="0 6px 18px rgba(0,0,0,.12)",
         backdrop_filter="saturate(1.05) blur(1px)",
         margin_left=["auto", "auto", "auto", "auto"],
-        margin_right=["auto", "20px", "20px", "20px"],
+        margin_right=["auto", "auto", "1.25rem", "1.25rem"],
     )

@@ -1,80 +1,25 @@
-"""Blog service for loading and managing blog posts from the file system.
+"""Blog service for loading and managing blog posts from the file system."""
 
-This module handles all I/O operations for blog posts including loading markdown
-files, parsing frontmatter metadata, resolving thumbnail paths, and caching loaded
-posts. Content parsing is delegated to the content_parser module for clean
-separation of concerns.
-"""
-from datetime import datetime
 from pathlib import Path
 import frontmatter
-from typing import Optional
 
-from ..models import BlogPost
+from ..models.blog_post import BlogPostDict, parse_datetime, format_date
 from .content_parser import parse_blog_content
-from ..utils.translations import get_current_language
 
-
-_posts_cache: list[BlogPost] | None = None
-
-FALLBACK_DATE = datetime(2023, 2, 1)
+_posts_cache: dict[str, list[BlogPostDict]] = {}
 
 
 def _get_blog_content_dir() -> Path:
-    """
-    Get the path to the blog content directory.
-
-    Returns
-    -------
-    Path
-        Absolute path to the blog_content directory containing markdown files
-    """
+    """Get the path to the blog content directory."""
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
     return project_root / "voorvoet_website" / "data" / "blog_content"
 
 
-def calculate_read_time(content: str) -> int:
-    """
-    Calculate estimated reading time based on word count.
-
-    Uses average reading speed of 200 words per minute to estimate how long
-    it takes to read the blog post content.
-
-    Parameters
-    ----------
-    content : str
-        Markdown content text to analyze
-
-    Returns
-    -------
-    int
-        Estimated reading time in minutes (minimum 1)
-    """
-    words = len(content.split())
-    minutes = max(1, round(words / 200))
-    return minutes
-
-
 def _resolve_thumbnail_path(filename: str, thumbnail_filename: str) -> str:
-    """
-    Resolve thumbnail path with fallback to default image.
-
-    Parameters
-    ----------
-    filename : str
-        Blog post filename without extension
-    thumbnail_filename : str
-        Thumbnail filename from frontmatter metadata
-
-    Returns
-    -------
-    str
-        Resolved absolute URL path to thumbnail image
-    """
+    """Resolve thumbnail path with fallback to default image."""
     current_file = Path(__file__)
     project_root = current_file.parent.parent.parent
-
     thumbnail_path = f"/images/page_blog/{filename}/{thumbnail_filename}"
     file_system_path = project_root / f"assets{thumbnail_path}"
 
@@ -84,168 +29,97 @@ def _resolve_thumbnail_path(filename: str, thumbnail_filename: str) -> str:
     return thumbnail_path
 
 
-def _parse_date(date_str: str, filename: str) -> datetime:
+def _build_thumbnail_paths(
+    thumbnail_url: str,
+) -> tuple[str, str, str]:
     """
-    Parse date string from frontmatter with multiple format support.
+    Build thumbnail paths for fallback, AVIF, and WebP formats.
 
-    Parameters
-    ----------
-    date_str : str
-        Date string from frontmatter metadata
-    filename : str
-        Blog post filename for error reporting
-
-    Returns
-    -------
-    datetime
-        Parsed datetime object or FALLBACK_DATE if parsing fails
+    Returns tuple of (fallback, avif, webp). Empty string if format doesn't exist.
     """
+    current_file = Path(__file__)
+    project_root = current_file.parent.parent.parent
+
+    url_path = Path(thumbnail_url)
+    base_path = str(url_path.with_suffix(""))
+    asset_base = base_path.lstrip("/")
+
+    avif_path = ""
+    if (project_root / f"assets/{asset_base}.avif").exists():
+        avif_path = f"{base_path}.avif"
+
+    webp_path = ""
+    if (project_root / f"assets/{asset_base}.webp").exists():
+        webp_path = f"{base_path}.webp"
+
+    return thumbnail_url, avif_path, webp_path
+
+
+def parse_blog_post(file_path: Path) -> BlogPostDict | None:
+    """Parse a single blog post markdown file into a BlogPostDict."""
     try:
-        return datetime.strptime(date_str, '%Y-%m-%d')
-    except ValueError:
-        try:
-            return datetime.strptime(date_str, '%d-%m-%Y')
-        except ValueError:
-            print(f"Warning: Could not parse date '{date_str}' in {filename}")
-            return FALLBACK_DATE
+        with open(file_path, "r", encoding="utf-8") as f:
+            metadata_raw, content = frontmatter.parse(f.read())
+        metadata = {str(key): str(value) for key, value in metadata_raw.items()}
 
+        filename, language = (part for part in file_path.stem.rsplit(".", 1))
+        story_number = filename.split("_")[0]
+        slug = metadata.get("slug", filename)
 
-def _format_date_dutch(date: datetime) -> str:
-    """
-    Format datetime as Dutch locale date string.
-
-    Parameters
-    ----------
-    date : datetime
-        Date to format
-
-    Returns
-    -------
-    str
-        Formatted date string like "15 maart 2024"
-    """
-    months_nl = {
-        1: "januari", 2: "februari", 3: "maart", 4: "april",
-        5: "mei", 6: "juni", 7: "juli", 8: "augustus",
-        9: "september", 10: "oktober", 11: "november", 12: "december"
-    }
-    return f"{date.day} {months_nl[date.month]} {date.year}"
-
-
-def parse_blog_post(file_path: Path) -> Optional[BlogPost]:
-    """
-    Parse a single blog post markdown file into a BlogPost object.
-
-    Reads the markdown file, extracts frontmatter metadata, resolves asset paths,
-    and delegates content parsing to the content_parser module. Handles errors
-    gracefully and returns None if parsing fails.
-
-    Parameters
-    ----------
-    file_path : Path
-        Absolute path to the markdown file to parse
-
-    Returns
-    -------
-    Optional[BlogPost]
-        BlogPost object with all metadata and parsed content, or None if
-        parsing fails due to invalid file format or I/O errors
-
-    Notes
-    -----
-    - Expects frontmatter with fields: title, slug, summary, date, author (optional),
-      thumbnail (optional), thumbnail_alt (optional), read_time (optional)
-    - Falls back to calculated read time if not specified in frontmatter
-    - Resolves thumbnail paths with fallback to default images
-    - Content parsing is handled by content_parser.parse_blog_content()
-    """
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            post = frontmatter.load(f)
-
-        metadata = post.metadata
-        content = post.content
-        # Remove language suffix from filename (e.g., "001_post.nl" -> "001_post")
-        filename = file_path.stem
-        if '.' in filename:
-            filename = filename.rsplit('.', 1)[0]
-
-        date_str = str(metadata.get('date', ''))
-        date = _parse_date(date_str, filename)
-        formatted_date = _format_date_dutch(date)
-
-        try:
-            read_time = int(str(metadata.get('read_time', "")))
-            if read_time <= 0:
-                raise ValueError("Invalid read_time value")
-        except (ValueError, TypeError):
-            read_time = calculate_read_time(content)
-
-        author = metadata.get('author')
-        thumbnail_filename = metadata.get('thumbnail', 'thumbnail.jpg')
+        thumbnail_filename = metadata.get("thumbnail", "thumbnail.jpg")
         thumbnail_url = _resolve_thumbnail_path(filename, thumbnail_filename)
+        thumbnail_fallback, thumbnail_avif, thumbnail_webp = _build_thumbnail_paths(
+            thumbnail_url
+        )
 
         content_objects = parse_blog_content(content, filename)
 
-        blog_post = BlogPost(
-            title=str(metadata.get('title', 'Untitled')),
-            slug=str(metadata.get('slug', filename)),
-            summary=str(metadata.get('summary', '')),
-            author=str(author) if author else None,
-            date=date,
-            formatted_date=formatted_date,
-            thumbnail=str(thumbnail_filename),
-            thumbnail_alt=str(metadata.get('thumbnail_alt', '')),
-            content=content,
-            filename=filename,
-            thumbnail_url=thumbnail_url,
-            read_time=read_time,
-            content_objects=content_objects,
-        )
+        date_str = metadata.get("date", "2023-02-01")
+        dt_obj = parse_datetime(date_str)
+        formatted_date = format_date(date_str, language)
+        datetime_iso = dt_obj.isoformat()
+
+        url = f"/blog/{slug}/"
+
+        blog_post: BlogPostDict = {
+            "title": metadata.get("title", ""),
+            "slug": slug,
+            "summary": metadata.get("summary", ""),
+            "author": metadata.get("author", ""),
+            "date": date_str,
+            "formatted_date": formatted_date,
+            "datetime_iso": datetime_iso,
+            "thumbnail_alt": metadata.get("thumbnail_alt", ""),
+            "thumbnail_fallback": thumbnail_fallback,
+            "thumbnail_avif": thumbnail_avif,
+            "thumbnail_webp": thumbnail_webp,
+            "content": content,
+            "content_objects": content_objects,
+            "category": metadata.get("category", ""),
+            "filename": filename,
+            "story_number": story_number,
+            "language": language,
+            "url": url,
+        }
 
         return blog_post
 
     except Exception as e:
-        print(f"Error parsing blog post {file_path}: {e}")
-        return None
+        raise ValueError(f"Failed to parse blog post {file_path}: {e}") from e
 
 
-def load_all_posts(force_reload: bool = False, language: Optional[str] = None) -> list[BlogPost]:
-    """
-    Load all blog posts from the blog_content directory for a specific language.
-
-    Scans the blog content directory for markdown files matching the current language
-    and parses each one into BlogPost objects. Results are cached for performance unless
-    force_reload is specified.
-
-    Parameters
-    ----------
-    force_reload : bool, optional
-        If True, bypass cache and reload all posts from disk (default: False)
-    language : Optional[str], optional
-        Language code to load posts for (e.g., "nl", "en", "de").
-        If None, uses the current language from get_current_language()
-
-    Returns
-    -------
-    list[BlogPost]
-        List of BlogPost objects sorted by date in descending order (newest first)
-        for the specified language
-
-    Notes
-    -----
-    - Posts are cached globally after first load
-    - Only .{language}.md files in the blog_content directory are processed
-    - Invalid or malformed posts are skipped with warnings
-    - Falls back to Dutch (nl) if the requested language is not available
-    """
+def load_all_posts(
+    force_reload: bool = False,
+    language: str | None = None,
+) -> list[BlogPostDict]:
+    """Load all blog posts for a specific language, sorted by date (newest first)."""
     global _posts_cache
 
-    if _posts_cache is not None and not force_reload:
-        return _posts_cache
-
     if language is None:
-        language = get_current_language()
+        language = "nl"
+
+    if language in _posts_cache and not force_reload:
+        return _posts_cache[language]
 
     posts = []
     blog_dir = _get_blog_content_dir()
@@ -254,55 +128,24 @@ def load_all_posts(force_reload: bool = False, language: Optional[str] = None) -
         print(f"Warning: Blog content directory not found: {blog_dir}")
         return []
 
-    # Load posts for the specified language
     pattern = f"*.{language}.md"
     for file_path in blog_dir.glob(pattern):
         post = parse_blog_post(file_path)
         if post:
             posts.append(post)
 
-    posts.sort(key=lambda p: p.date, reverse=True)
-
-    _posts_cache = posts
+    posts.sort(key=lambda p: p["datetime_iso"], reverse=True)
+    _posts_cache[language] = posts
 
     return posts
 
 
-def get_post_by_slug(slug: str, language: Optional[str] = None) -> Optional[BlogPost]:
-    """
-    Get a single blog post by its URL slug for a specific language.
+def load_all_blog_posts_dict() -> dict[str, list[BlogPostDict]]:
+    """Load all blog posts for all languages as BlogPostDict dictionaries."""
+    languages = ["nl", "en", "de"]
+    result: dict[str, list[BlogPostDict]] = {}
 
-    Parameters
-    ----------
-    slug : str
-        The URL-friendly slug identifier for the post
-    language : Optional[str], optional
-        Language code to load the post for (e.g., "nl", "en", "de").
-        If None, uses the current language from get_current_language()
+    for lang in languages:
+        result[lang] = load_all_posts(force_reload=False, language=lang)
 
-    Returns
-    -------
-    Optional[BlogPost]
-        BlogPost object matching the slug in the specified language, or None if not found
-    """
-    if language is None:
-        language = get_current_language()
-
-    all_posts = load_all_posts(language=language)
-
-    for post in all_posts:
-        if post.slug == slug:
-            return post
-
-    return None
-
-
-def clear_cache():
-    """
-    Clear the posts cache.
-
-    Useful during development when blog content changes and needs to be reloaded
-    without restarting the application.
-    """
-    global _posts_cache
-    _posts_cache = None
+    return result

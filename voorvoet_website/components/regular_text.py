@@ -1,10 +1,14 @@
 """Regular text component for body content."""
+
+from typing import Any
 import reflex as rx
-from typing import Union
 from ..theme import Colors, FontSizes, Spacing
 
 
-def regular_text(text: Union[str, list[str], rx.Var], **props) -> rx.Component:
+def regular_text(
+    text: str | list[str] | rx.Var,
+    **props: Any,
+) -> rx.Component:
     """
     Create regular body text with consistent styling.
 
@@ -35,19 +39,18 @@ def regular_text(text: Union[str, list[str], rx.Var], **props) -> rx.Component:
     receive margin_bottom spacing. The last paragraph has no bottom margin
     unless specified in props.
     """
-    defaults = {
+    defaults: dict[str, Any] = {
         "font_size": FontSizes.regular,
         "line_height": "1.6",
         "color": Colors.text["heading"],
     }
     defaults.update(props)
 
-    # Handle rx.Var (e.g., from translations with rx.cond)
     if isinstance(text, rx.Var):
-        return rx.text(text, **defaults)  # type: ignore
+        return rx.text(text, **defaults)
 
     if isinstance(text, str):
-        return rx.text(text, **defaults)  # type: ignore
+        return rx.text(text, **defaults)
 
     paragraphs = []
     for i, paragraph in enumerate(text):

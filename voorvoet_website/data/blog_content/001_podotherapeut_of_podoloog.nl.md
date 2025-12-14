@@ -6,6 +6,8 @@ author: "Kim Bakhuis"
 date: "2023-11-06"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "De podotherapeut Kim Bakhuis die een podotherapeutische zool controleert aan de hand van de voet."
+tags: ["podotherapie", "podoloog", "voetzorg", "opleiding", "Enschede"]
+category: "Opleiding en vakgebied"
 ---
 # Het verschil tussen een podotherapeut en een podoloog?
 Het kan iedereen gebeuren: opeens heb je zere voeten. Soms zo erg dat je er haast niet meer op kan staan of lopen. Al snel gaan we op zoek naar en oplossing en gaan we op zoek bij Google. Maar wat type je nou in? Podoloog Enschede of Podotherapeut Enschede? Vaak worden de termen podotherapeut en podoloog door elkaar gebruikt. Wat is nu het verschil? Hoewel allebei de vakgebieden zich richten op klachten aan de onderste extremiteit (lees: lage rug en daaronder), bestaat er een zeker een verschil tussen deze beroepsgroepen.

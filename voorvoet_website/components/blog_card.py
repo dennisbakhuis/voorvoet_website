@@ -1,23 +1,28 @@
 """Blog card component for displaying blog post previews."""
+
 import reflex as rx
-from ..models import BlogPost
-from ..theme import Colors, FontSizes, Layout
+
+from ..models.blog_post import BlogPostDict
+from ..theme import Colors, FontSizes, Layout, ImageDimensions
 from ..config import config
-from ..states import BlogState
+
+from .responsive_image import responsive_image
 
 
-def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
+def blog_card(
+    post: BlogPostDict,
+    language: str = "nl",
+    flip: bool = False,
+) -> rx.Component:
     """
     Display a blog post card in landscape layout with thumbnail and content.
 
-    Creates a clickable card component that displays blog post information
-    including title, summary, metadata (author, date, reading time), and
-    thumbnail image. The thumbnail position can be flipped to alternate sides.
-
     Parameters
     ----------
-    post : BlogPost
-        BlogPost object containing all post data and metadata.
+    post : dict
+        Dictionary containing all post data and metadata.
+    language : str
+        Current language code ("nl", "de", or "en")
     flip : bool, optional
         If True, thumbnail appears on the right side; if False, on the left.
         Default is False.
@@ -26,52 +31,40 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
     -------
     rx.Component
         A Reflex link component wrapping the styled blog card.
-
-    Notes
-    -----
-    - Card displays metadata based on config settings (author, date, reading time)
-    - Summary text is clamped to 3 lines with ellipsis
-    - Card has hover effects (shadow and lift)
-    - Thumbnail is a fixed 250x250px square with rounded corners
     """
+
     content_area = rx.vstack(
         rx.heading(
-            post.title,
+            post["title"],
             size="6",
-            color=Colors.text['heading'],
-            margin_bottom="0.5rem",
+            color=Colors.text["heading"],
+            margin_top="1.0rem",
+            margin_bottom="-0.2rem",
             line_height="1.3",
         ),
         rx.text(
-            post.summary,
-            color=Colors.text['content'],
+            post["summary"],
+            color=Colors.text["content"],
             font_size=FontSizes.regular,
             line_height="1.6",
-            margin_bottom="1rem",
-            overflow="hidden",
-            text_overflow="ellipsis",
-            display="-webkit-box",
-            style={
-                "-webkit-line-clamp": "3",
-                "-webkit-box-orient": "vertical",
-            },
+            margin_bottom="0.5rem",
         ),
         rx.cond(
-            config.blog_show_author | config.blog_show_publication_date | config.blog_show_reading_time,
+            config.blog_show_author | config.blog_show_publication_date,
             rx.hstack(
                 rx.cond(
                     config.blog_show_author,
                     rx.cond(
-                        post.author,
+                        post["author"],
                         rx.fragment(
                             rx.text(
-                                post.author,
-                                color=Colors.text['muted'],
+                                post["author"],
+                                color=Colors.text["muted"],
                                 font_size="0.85rem",
                             ),
                             rx.text(
                                 "•",
-                                color=Colors.text['muted'],
+                                color=Colors.text["muted"],
                                 font_size="0.85rem",
                             ),
                         ),
@@ -80,30 +73,9 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
                 rx.cond(
                     config.blog_show_publication_date,
                     rx.text(
-                        post.formatted_date,
-                        color=Colors.text['muted'],
+                        post["formatted_date"],
+                        color=Colors.text["muted"],
                         font_size="0.85rem",
-                    ),
-                ),
-                rx.cond(
-                    config.blog_show_reading_time,
-                    rx.cond(
-                        post.read_time,
-                        rx.fragment(
-                            rx.cond(
-                                config.blog_show_publication_date,
-                                rx.text(
-                                    "•",
-                                    color=Colors.text['muted'],
-                                    font_size="0.85rem",
-                                ),
-                            ),
-                            rx.text(
-                                post.read_time.to(str) + " min leestijd",  # type: ignore
-                                color=Colors.text['muted'],
-                                font_size="0.85rem",
-                            ),
-                        ),
                     ),
                 ),
                 spacing="2",
@@ -112,25 +84,30 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
         ),
         rx.text(
             "Lees meer →",
-            color=Colors.primary['500'],
+            color=Colors.primary["500"],
             font_weight="600",
             font_size=FontSizes.regular,
             margin_top="auto",
         ),
-        spacing="3",
         align_items="start",
         justify_content="center",
-        padding="2.5rem",
+        padding_top="4",
         flex="1",
     )
 
     thumbnail = rx.box(
-        rx.image(
-            src=post.thumbnail_url,
-            alt=post.thumbnail_alt,
+        responsive_image(
+            src_fallback=post["thumbnail_fallback"],
+            src_avif=post["thumbnail_avif"],
+            src_webp=post["thumbnail_webp"],
+            # alt=post["thumbnail_alt"],
+            alt="",
+            dimensions=ImageDimensions.blog_thumbnail,
             width="100%",
             height="100%",
             object_fit="cover",
+            object_position="center",
+            loading="lazy",
         ),
         width="250px",
         height="250px",
@@ -142,21 +119,23 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
 
     card_content = rx.cond(
         flip,
-        rx.hstack(
-            content_area,
+        rx.flex(
             thumbnail,
+            content_area,
             width="100%",
-            height="250px",
-            spacing="0",
-            align_items="center",
+            height="auto",
+            gap=["8", "8", "1.5rem", "1.5rem"],
+            align_items=["center", "center", "center", "center"],
+            flex_direction=["column", "column", "row-reverse", "row-reverse"],
         ),
-        rx.hstack(
+        rx.flex(
             thumbnail,
             content_area,
             width="100%",
-            height="250px",
-            spacing="0",
-            align_items="center",
+            height="auto",
+            gap=["8", "8", "1.5rem", "1.5rem"],
+            align_items=["center", "center", "center", "center"],
+            flex_direction=["column", "column", "row", "row"],
         ),
     )
 
@@ -164,16 +143,17 @@ def blog_card(post: BlogPost, flip: bool = False) -> rx.Component:
         rx.box(
             card_content,
             border_radius="8px",
-            background=Colors.backgrounds['white'],
+            background=Colors.backgrounds["white"],
             padding="1.5rem",
             margin_y="1rem",
+            box_shadow="0 8px 24px rgba(0, 0, 0, 0.12)",
             transition="all 0.3s ease",
             _hover={
-                "box_shadow": "0 8px 24px rgba(0, 0, 0, 0.12)",
+                "box_shadow": f"0 8px 24px {Colors.primary['300']}66",
                 "transform": "translateY(-2px)",
             },
         ),
-        href=f"/{BlogState.current_language}/blog/" + post.slug,
+        href=f"/{language}/blog/{post['slug']}/",
         text_decoration="none",
         _hover={"text_decoration": "none"},
     )

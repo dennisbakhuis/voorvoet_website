@@ -1,37 +1,44 @@
 """Order insoles section promoting extra insole purchases."""
+
 import reflex as rx
-from ...components import container, section, image_text_section
+from ...components import container, section, image_text_section, button
 from ...theme import Colors
-from ...utils.translations import get_translation
+from ...utils.get_translation import get_translation
 
 
 TRANSLATIONS = {
     "nl": {
-        "title": "Bestel een extra paar zolen online",
-        "paragraph1": "Een extra paar steunzolen kan handig zijn om bijvoorbeeld met een ander paar schoenen te gebruiken, bijvoorbeeld in sport- of wandelschoenen. Dit scheelt niet alleen gedoe met wisselen maar verlengt ook de levensduur van de podotherapeutische zolen.",
-        "paragraph2": "Wij werken samen met andere medische disciplines zoals bijvoorbeeld huisartsen, medisch pedicures en fysiotherapeuten om de beste zorg te bieden aan onze patiënten. Onze praktijk is toegankelijk voor iedereen - van kinderen tot actievelingen met blessures en ouderen met voet- of voetgerelateerde klachten.",
+        "title": "Extra paar podotherapeutische zolen",
+        "paragraph1": "Een extra paar zolen kan handig zijn om bijvoorbeeld met een ander paar schoenen te gebruiken, bijvoorbeeld in uw sport- of wandelschoenen. Dit scheelt niet alleen gedoe met wisselen maar verlengt ook de levensduur van de zolen.",
+        "paragraph2": "Een extra paar zolen kan alleen als u al eens eerder bij VoorVoet bent geweest en wij een digitale scan van de voet hebben. Als het langer dan een jaar geleden is dat u een scan van u voet heeft laten maken is het raadzaam om een controle in te plannen.",
+        "button": "Bestel een extra paar",
+        "image_alt": "Outdoor wandelschoenen - geschikt voor podotherapeutische steunzolen",
     },
     "de": {
-        "title": "Bestellen Sie online ein zusätzliches Paar Einlagen",
-        "paragraph1": "Ein zusätzliches Paar Stützeinlagen kann praktisch sein, um sie beispielsweise mit einem anderen Paar Schuhen zu verwenden, etwa in Sport- oder Wanderschuhen. Dies erspart nicht nur den Aufwand des Wechselns, sondern verlängert auch die Lebensdauer der podotherapeutischen Einlagen.",
-        "paragraph2": "Wir arbeiten mit anderen medizinischen Disziplinen wie Hausärzten, medizinischen Fußpflegern und Physiotherapeuten zusammen, um unseren Patienten die beste Versorgung zu bieten. Unsere Praxis ist für jeden zugänglich - von Kindern bis zu aktiven Menschen mit Verletzungen und Senioren mit Fuß- oder fußbezogenen Beschwerden.",
+        "title": "Zusätzliches Paar podotherapeutische Einlagen",
+        "paragraph1": "Ein zusätzliches Paar Einlagen kann praktisch sein, um sie beispielsweise mit einem anderen Paar Schuhen zu verwenden, etwa in Ihren Sport- oder Wanderschuhen. Dies erspart nicht nur den Aufwand des Wechselns, sondern verlängert auch die Lebensdauer der Einlagen.",
+        "paragraph2": "Ein zusätzliches Paar Einlagen ist nur möglich, wenn Sie bereits bei VoorVoet waren und wir einen digitalen Scan Ihres Fußes haben. Wenn der Scan Ihres Fußes länger als ein Jahr zurückliegt, ist es ratsam, eine Kontrolle zu vereinbaren.",
+        "button": "Bestellen Sie ein zusätzliches Paar",
+        "image_alt": "Outdoor-Wanderschuhe - geeignet für podotherapeutische Einlagen",
     },
     "en": {
-        "title": "Order an extra pair of insoles online",
-        "paragraph1": "An extra pair of support insoles can be handy to use with a different pair of shoes, for example in sports or hiking shoes. This not only saves the hassle of switching but also extends the lifespan of the podotherapeutic insoles.",
-        "paragraph2": "We work together with other medical disciplines such as general practitioners, medical pedicurists and physiotherapists to provide the best care to our patients. Our practice is accessible to everyone - from children to active people with injuries and elderly with foot or foot-related complaints.",
+        "title": "Extra pair of podotherapeutic insoles",
+        "paragraph1": "An extra pair of insoles can be handy to use with a different pair of shoes, for example in your sports or hiking shoes. This not only saves the hassle of switching but also extends the lifespan of the insoles.",
+        "paragraph2": "An extra pair of insoles is only possible if you have been to VoorVoet before and we have a digital scan of your foot. If it has been longer than a year since you had a scan of your foot, it is advisable to schedule a check-up.",
+        "button": "Order an extra pair",
+        "image_alt": "Outdoor hiking shoes - suitable for podotherapeutic insoles",
     },
 }
 
 
-def section_order_insoles() -> rx.Component:
+def section_order_insoles(language: str) -> rx.Component:
     """
     Create the section for ordering extra pairs of insoles.
 
-    This section promotes the option to order additional pairs of orthopedic
-    insoles online for use with different shoes. It features an image-text
-    layout with outdoor shoes imagery and explains the benefits of having
-    multiple pairs and the practice's collaborative approach.
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
 
     Returns
     -------
@@ -41,23 +48,34 @@ def section_order_insoles() -> rx.Component:
         text on the left, with a call-to-action button.
     """
     paragraphs = [
-        get_translation(TRANSLATIONS, "paragraph1"),
-        get_translation(TRANSLATIONS, "paragraph2")
+        get_translation(TRANSLATIONS, "paragraph1", language),
+        get_translation(TRANSLATIONS, "paragraph2", language),
     ]
 
-    # Create section without button to avoid reactive variable issue with if statement
     return section(
         container(
             image_text_section(
-                image_src="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.jpg",
-                title=get_translation(TRANSLATIONS, "title"),
+                image_fallback="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.jpg",
+                image_avif="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.avif",
+                image_webp="/images/page_home/podoloog_enschede_outdoor_schoenen_voorvoet_praktijk_voor_podotherapie.webp",
+                image_alt=get_translation(TRANSLATIONS, "image_alt", language),
+                title=get_translation(TRANSLATIONS, "title", language),
                 paragraphs=paragraphs,
-                image_position="right"
-            )
+                image_position="right",
+            ),
+            rx.box(
+                button(
+                    label=get_translation(TRANSLATIONS, "button", language),
+                    href=f"/{language}/zolen-bestellen/",
+                ),
+                display="flex",
+                justify_content="center",
+                margin_top="2rem",
+            ),
         ),
         id="order-insoles",
         background_color=Colors.backgrounds["green_light"],
         divider_color=Colors.backgrounds["white"],
         clip_top="gentle_2",
-        clip_bottom="gentle_3"
+        clip_bottom="gentle_3",
     )

@@ -4,18 +4,8 @@ This module defines the application configuration using Pydantic settings,
 loading values from environment variables and .env file. Configuration includes
 Cloudflare Turnstile settings, SMTP email settings, external links, and blog
 display preferences.
-
-Examples
---------
-Configuration values are loaded from environment variables:
-
-    TURNSTILE_SITE_KEY=your_site_key
-    TURNSTILE_SECRET_KEY=your_secret_key
-    SMTP_HOST=smtp.protonmail.ch
-    SMTP_PORT=587
 """
 
-from typing import Optional
 from pathlib import Path
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -33,7 +23,7 @@ class Config(BaseSettings):
     turnstile_site_key : str
         Site key for client-side Turnstile widget rendering.
         Get from: https://dash.cloudflare.com/
-    turnstile_secret_key : Optional[str]
+    turnstile_secret_key : str | None
         Secret key for server-side token verification.
         Required for production use.
     turnstile_enabled : bool
@@ -43,32 +33,22 @@ class Config(BaseSettings):
         SMTP server hostname for sending emails.
     smtp_port : int
         SMTP server port number (587 for STARTTLS).
-    smtp_username : Optional[str]
+    smtp_username : str | None
         Username for SMTP authentication.
         Typically your email address.
-    smtp_password : Optional[str]
+    smtp_password : str | None
         Password for SMTP authentication.
         Use app-specific password for Proton Mail.
-    smtp_from_email : Optional[str]
+    smtp_from_email : str | None
         Email address to use in the 'From' field.
-    smtp_to_email : Optional[str]
+    smtp_to_email : str | None
         Email address where contact form submissions are sent.
-    link_plan_portal : Optional[str]
+    link_plan_portal : str | None
         URL to the external planning portal.
     blog_show_author : bool
         Show author name on blog posts.
     blog_show_publication_date : bool
         Show publication date on blog posts.
-    blog_show_reading_time : bool
-        Show estimated reading time on blog posts.
-
-    Examples
-    --------
-    Access configuration values through the singleton instance:
-
-        >>> from voorvoet_website.config import config
-        >>> config.smtp_host
-        'smtp.protonmail.ch'
     """
 
     model_config = SettingsConfigDict(
@@ -78,11 +58,11 @@ class Config(BaseSettings):
         extra="ignore",
     )
 
-    turnstile_site_key: Optional[str] = Field(
+    turnstile_site_key: str | None = Field(
         default=None,
         description="Site key for client-side Turnstile widget rendering. Get from: https://dash.cloudflare.com/",
     )
-    turnstile_secret_key: Optional[str] = Field(
+    turnstile_secret_key: str | None = Field(
         default=None,
         description="Secret key for server-side token verification. Keep secret!",
     )
@@ -99,24 +79,24 @@ class Config(BaseSettings):
         default=587,
         description="SMTP server port number (587 for STARTTLS)",
     )
-    smtp_username: Optional[str] = Field(
+    smtp_username: str | None = Field(
         default=None,
         description="Username for SMTP authentication (typically your email address)",
     )
-    smtp_password: Optional[str] = Field(
+    smtp_password: str | None = Field(
         default=None,
         description="Password for SMTP authentication (use app-specific password for Proton Mail)",
     )
-    smtp_from_email: Optional[str] = Field(
+    smtp_from_email: str | None = Field(
         default=None,
         description="Email address to use in the 'From' field",
     )
-    smtp_to_email: Optional[str] = Field(
+    smtp_to_email: str | None = Field(
         default=None,
         description="Email address where contact form submissions should be sent",
     )
 
-    link_plan_portal: Optional[str] = Field(
+    link_plan_portal: str | None = Field(
         default=None,
         description="URL to the planning portal",
     )
@@ -129,11 +109,11 @@ class Config(BaseSettings):
         default=False,
         description="Show publication date on blog posts",
     )
-    blog_show_reading_time: bool = Field(
-        default=False,
-        description="Show estimated reading time on blog posts",
+
+    site_url: str = Field(
+        default="https://voorvoet.nl",
+        description="Base URL of the website for Open Graph and canonical URLs",
     )
 
 
-# Singleton instance
 config = Config()

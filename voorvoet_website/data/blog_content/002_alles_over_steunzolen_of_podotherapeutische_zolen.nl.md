@@ -6,6 +6,8 @@ author: "Kim Bakhuis"
 date: "2023-11-26"
 thumbnail: "thumbnail.jpg"
 thumbnail_alt: "Voor de perfecte steunzool wordt een 3D scan gemaakt van de voet."
+tags: ["steunzolen", "podotherapeutische zolen", "inlegzolen", "voetklachten", "maatwerk"]
+category: "Behandelingen"
 ---
 # De basis: wat zijn steunzolen of podotherapeutische zolen?
 Podotherapeutische zolen, worden ook wel steunzolen, inlegzolen of inlays genoemd en zijn speciaal ontworpen om de stand en de beweging van de voeten te corrigeren of de voeten te ondersteunen. Ze worden op maat gemaakt door podotherapeuten, paramedische specialisten die gespecialiseerd zijn in het onderzoeken en behandelen van voetproblemen. Steunzolen worden tegenwoordig vaak digitaal aangemeten, en worden ontworpen voor de individuele behoeften van de patiënt.

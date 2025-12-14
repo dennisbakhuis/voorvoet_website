@@ -1,15 +1,17 @@
 """Form input component with consistent styling and error states."""
+
 import reflex as rx
+from typing import Any
 from ..theme import Colors, FontSizes
 
 
 def form_input(
     placeholder: str | rx.Var,
-    value: str,
-    on_change,
+    value: str | rx.Var,
+    on_change: Any,
     input_type: str = "text",
-    on_blur=None,
-    show_error: bool = False,
+    on_blur: Any | None = None,
+    show_error: bool | rx.Var = False,
     custom_attrs: dict | None = None,
     input_mode: str | None = None,
     max_length: int | None = None,
@@ -21,7 +23,7 @@ def form_input(
     ----------
     placeholder : str | rx.Var
         Placeholder text for the input field.
-    value : str
+    value : str | rx.Var
         Current value of the input (bound to state).
     on_change : callable
         Event handler for value changes.
@@ -29,7 +31,7 @@ def form_input(
         HTML input type (text, email, tel, etc.). Default is "text".
     on_blur : callable | None, optional
         Event handler for blur events. Default is None.
-    show_error : bool, optional
+    show_error : bool | rx.Var, optional
         Whether to show error styling (red border). Default is False.
     custom_attrs : dict | None, optional
         Custom HTML attributes for the input. Default is None.
@@ -43,22 +45,20 @@ def form_input(
     rx.Component
         A styled input component with consistent theming and optional
         error state.
-
-    Examples
-    --------
-    Basic text input:
-        >>> form_input("Enter name", value=state.name, on_change=state.set_name)
-
-    Email input with error state:
-        >>> form_input(
-        ...     "email@example.com",
-        ...     value=state.email,
-        ...     on_change=state.set_email,
-        ...     input_type="email",
-        ...     show_error=state.email_error
-        ... )
     """
-    base_props = {
+    border_value: str | rx.Var
+    if isinstance(show_error, bool):
+        border_value = (
+            "3px solid red" if show_error else f"1px solid {Colors.borders['light']}"
+        )
+    else:
+        border_value = rx.cond(
+            show_error,
+            "3px solid red",
+            f"1px solid {Colors.borders['light']}",
+        )
+
+    base_props: dict[str, Any] = {
         "placeholder": placeholder,
         "value": value,
         "on_change": on_change,
@@ -71,6 +71,18 @@ def form_input(
         "background": "white",
         "color": Colors.text["content"],
         "type": input_type,
+        "border": border_value,
+        "style": {
+            "::placeholder": {
+                "color": f"{Colors.text['muted']}",
+                "opacity": "1",
+            },
+            "&:focus": {
+                "outline": "none",
+                "border_color": f"{Colors.primary['300']}",
+                "box_shadow": f"0 0 0 3px {Colors.primary['300']}40",
+            },
+        },
     }
 
     if on_blur:
@@ -82,20 +94,7 @@ def form_input(
     if max_length:
         base_props["max_length"] = max_length
 
-    # Handle error border conditionally
-    if isinstance(show_error, bool):
-        base_props["border"] = "3px solid red" if show_error else f"1px solid {Colors.borders['light']}"
-    else:
-        # show_error is a reactive Var
-        base_props["border"] = rx.cond(
-            show_error,
-            "3px solid red",
-            f"1px solid {Colors.borders['light']}",
-        )
-
-    # Use rx.el.input for custom attributes support
     if custom_attrs:
         base_props["custom_attrs"] = custom_attrs
-        return rx.el.input(**base_props)
 
-    return rx.input(**base_props)
+    return rx.el.input(**base_props)
