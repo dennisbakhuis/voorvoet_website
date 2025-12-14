@@ -23,7 +23,6 @@ from .information_card import information_card
 from .information_cards_section import information_cards_grid, CardConfig
 from .language_switcher import language_switcher
 from .location_map_section import location_section, LocationConfig
-from .markdown_content import markdown_content
 from .regular_text import regular_text
 from .responsive_grid import responsive_grid
 from .responsive_image import responsive_image
@@ -70,7 +69,6 @@ __all__ = [
     "language_switcher",
     "location_section",
     "LocationConfig",
-    "markdown_content",
     "organization_brand_schema",
     "organization_schema",
     "regular_text",

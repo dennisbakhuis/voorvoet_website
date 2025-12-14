@@ -1,11 +1,4 @@
-"""Content parser for blog posts - transforms markdown into structured content objects.
-
-This module provides markdown parsing functionality that converts raw markdown
-text into a structured list of content objects suitable for dynamic rendering
-in blog post pages. Uses mistletoe for proper AST-based markdown parsing instead
-of regex, enabling support for various content types including headings,
-paragraphs, images, buttons, and lists.
-"""
+"""Content parser for blog posts - transforms markdown into structured content objects."""
 
 import re
 from typing import Any

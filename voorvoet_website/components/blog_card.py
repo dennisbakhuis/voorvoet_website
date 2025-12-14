@@ -2,14 +2,15 @@
 
 import reflex as rx
 
-from .responsive_image import responsive_image
-
+from ..models.blog_post import BlogPostDict
 from ..theme import Colors, FontSizes, Layout, ImageDimensions
 from ..config import config
 
+from .responsive_image import responsive_image
+
 
 def blog_card(
-    post: dict,
+    post: BlogPostDict,
     language: str = "nl",
     flip: bool = False,
 ) -> rx.Component:
@@ -99,7 +100,8 @@ def blog_card(
             src_fallback=post["thumbnail_fallback"],
             src_avif=post["thumbnail_avif"],
             src_webp=post["thumbnail_webp"],
-            alt=post["thumbnail_alt"],
+            # alt=post["thumbnail_alt"],
+            alt="",
             dimensions=ImageDimensions.blog_thumbnail,
             width="100%",
             height="100%",
