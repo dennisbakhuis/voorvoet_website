@@ -1,8 +1,7 @@
-# VoorVoet - Praktijk voor podotherapie
+# Website for VoorVoet - Praktijk voor podotherapie
+Multi-language website for VoorVoet podiatry practice built with Reflex (Python web framework). Supports Dutch (primary), German, and English.
 
 ![Website Preview](documents/website_screenshot.webp)
-
-Multi-language website for VoorVoet podiatry practice built with Reflex (Python web framework). Supports Dutch (primary), German, and English.
 
 ## Key Features
 - 🌍 Multi-language support (NL/DE/EN)
@@ -20,12 +19,12 @@ uv run reflex compile      # Test compilation
 ```
 
 ## Documentation
+- **[Development Setup](documents/development.md)** - Local development environment setup
 - **[Deployment Guide](documents/deployment.md)** - Production deployment instructions
 - **[SMTP Setup](documents/smpt_server_setup.md)** - Email server configuration
 - **[Image Guidelines](documents/image_guidelines.md)** - Image optimization and usage
 
 ## Configuration
-
 Copy `.env.example` to `.env` and configure:
 - Cloudflare Turnstile keys
 - SMTP credentials
