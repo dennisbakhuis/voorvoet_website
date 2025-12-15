@@ -6,6 +6,7 @@ from ...theme import Colors, FontSizes, Layout
 from ...states import WebsiteState
 from ...components import container, language_switcher
 from ...translations import ROUTE_MAPPINGS
+from ...utils import get_translation
 
 
 TRANSLATIONS = {
@@ -38,22 +39,10 @@ TRANSLATIONS = {
     },
 }
 
-PAGE_KEY_MAPPING = {
-    "home": "home",
-    "blog": "blog",
-    "informatie": "information",
-    "vergoedingen": "reimbursements",
-    "contact": "contact",
-}
-
 
 def header(language: str, page_key: str | None = None) -> rx.Component:
     """
     Create the site-wide header with navigation and mobile menu.
-
-    The header includes the logo, desktop navigation links, and a mobile menu
-    toggle button. Navigation items are conditionally displayed based on the
-    current page to avoid showing links to the current page.
 
     Parameters
     ----------
@@ -67,77 +56,14 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
     -------
     rx.Component
         A fragment containing the fixed header bar and mobile menu overlay.
-
-    Notes
-    -----
-    The header uses Reflex state (WebsiteState) to:
-    - Handle navigation between pages
-    - Toggle the mobile menu visibility
     """
-
-    def get_translation(key: str, lang: str) -> rx.Var:
-        """
-        Get translation for a key based on provided language.
-
-        Parameters
-        ----------
-        key : str
-            Translation key to look up in TRANSLATIONS dict.
-        lang : str
-            Language code (nl, de, or en).
-
-        Returns
-        -------
-        rx.Var
-            Reactive variable containing the translated text for the specified language.
-        """
-        return rx.cond(
-            lang == "nl",
-            TRANSLATIONS["nl"][key],
-            rx.cond(lang == "de", TRANSLATIONS["de"][key], TRANSLATIONS["en"][key]),
-        )
-
-    def get_route(page_key: str, lang: str) -> str:
-        """
-        Get the route path for a page in the specified language.
-
-        Parameters
-        ----------
-        page_key : str
-            Page key ('home', 'blog', 'informatie', 'vergoedingen', 'contact').
-        lang : str
-            Language code (nl, de, or en).
-
-        Returns
-        -------
-        str
-            The full route path for the page in the specified language.
-        """
-        mapped_key = PAGE_KEY_MAPPING.get(page_key, page_key)
-        return ROUTE_MAPPINGS[lang][mapped_key]
-
-    def is_not_on_page(check_page_key: str) -> bool:
-        """
-        Check if current page does not match the given page key.
-
-        Parameters
-        ----------
-        check_page_key : str
-            Page key to check against current page ('home', 'blog', etc.).
-
-        Returns
-        -------
-        bool
-            True if not on the specified page, False otherwise.
-        """
-        return page_key != check_page_key
 
     nav_items = [
         rx.cond(
-            is_not_on_page("home"),
+            page_key != "home",
             rx.link(
-                get_translation("home", language),
-                href=get_route("home", language),
+                get_translation(TRANSLATIONS, "home", language),
+                href=ROUTE_MAPPINGS[language]["home"],
                 color=Colors.text["heading"],
                 font_size=FontSizes.nav_link,
                 font_weight="600",
@@ -146,10 +72,10 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("blog"),
+            page_key != "blog",
             rx.link(
-                get_translation("blog", language),
-                href=get_route("blog", language),
+                get_translation(TRANSLATIONS, "blog", language),
+                href=ROUTE_MAPPINGS[language]["blog"],
                 color=Colors.text["heading"],
                 font_size=FontSizes.nav_link,
                 font_weight="600",
@@ -158,10 +84,10 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("informatie"),
+            page_key != "information",
             rx.link(
-                get_translation("informatie", language),
-                href=get_route("informatie", language),
+                get_translation(TRANSLATIONS, "informatie", language),
+                href=ROUTE_MAPPINGS[language]["information"],
                 color=Colors.text["heading"],
                 font_size=FontSizes.nav_link,
                 font_weight="600",
@@ -170,10 +96,10 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("vergoedingen"),
+            page_key != "reimbursements",
             rx.link(
-                get_translation("vergoedingen", language),
-                href=get_route("vergoedingen", language),
+                get_translation(TRANSLATIONS, "vergoedingen", language),
+                href=ROUTE_MAPPINGS[language]["reimbursements"],
                 color=Colors.text["heading"],
                 font_size=FontSizes.nav_link,
                 font_weight="600",
@@ -182,10 +108,10 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("contact"),
+            page_key != "contact",
             rx.link(
-                get_translation("contact", language),
-                href=get_route("contact", language),
+                get_translation(TRANSLATIONS, "contact", language),
+                href=ROUTE_MAPPINGS[language]["contact"],
                 color=Colors.text["heading"],
                 font_size=FontSizes.nav_link,
                 font_weight="600",
@@ -197,10 +123,10 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
 
     mobile_nav_items = [
         rx.cond(
-            is_not_on_page("home"),
+            page_key != "home",
             rx.link(
-                get_translation("home", language),
-                href=get_route("home", language),
+                get_translation(TRANSLATIONS, "home", language),
+                href=ROUTE_MAPPINGS[language]["home"],
                 color=Colors.primary["700"],
                 font_size=FontSizes.nav_link,
                 font_weight="500",
@@ -218,10 +144,10 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("blog"),
+            page_key != "blog",
             rx.link(
-                get_translation("blog", language),
-                href=get_route("blog", language),
+                get_translation(TRANSLATIONS, "blog", language),
+                href=ROUTE_MAPPINGS[language]["blog"],
                 color=Colors.primary["700"],
                 font_size=FontSizes.nav_link,
                 font_weight="500",
@@ -239,10 +165,10 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("informatie"),
+            page_key != "information",
             rx.link(
-                get_translation("informatie", language),
-                href=get_route("informatie", language),
+                get_translation(TRANSLATIONS, "informatie", language),
+                href=ROUTE_MAPPINGS[language]["information"],
                 color=Colors.primary["700"],
                 font_size=FontSizes.nav_link,
                 font_weight="500",
@@ -260,10 +186,10 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("vergoedingen"),
+            page_key != "reimbursements",
             rx.link(
-                get_translation("vergoedingen", language),
-                href=get_route("vergoedingen", language),
+                get_translation(TRANSLATIONS, "vergoedingen", language),
+                href=ROUTE_MAPPINGS[language]["reimbursements"],
                 color=Colors.primary["700"],
                 font_size=FontSizes.nav_link,
                 font_weight="500",
@@ -281,10 +207,10 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
             rx.fragment(),
         ),
         rx.cond(
-            is_not_on_page("contact"),
+            page_key != "contact",
             rx.link(
-                get_translation("contact", language),
-                href=get_route("contact", language),
+                get_translation(TRANSLATIONS, "contact", language),
+                href=ROUTE_MAPPINGS[language]["contact"],
                 color=Colors.primary["700"],
                 font_size=FontSizes.nav_link,
                 font_weight="500",
@@ -307,7 +233,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
         rx.hstack(
             rx.image(
                 src="/images/shared/podotherapeut_enschede_voorvoet_praktijk_voor_podotherapie_logo.svg",
-                alt=get_translation("logo_alt", language),
+                alt=get_translation(TRANSLATIONS, "logo_alt", language),
                 width=[
                     "66%",
                     "66%",
@@ -424,7 +350,7 @@ def header(language: str, page_key: str | None = None) -> rx.Component:
     )
 
     skip_link = rx.link(
-        get_translation("skip_to_content", language),
+        get_translation(TRANSLATIONS, "skip_to_content", language),
         href="#main-content",
         position="fixed",
         top="0",

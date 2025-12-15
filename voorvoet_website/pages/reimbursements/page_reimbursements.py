@@ -13,11 +13,11 @@ from ...translations import BREADCRUMB_NAMES
 from ...config import config
 
 
-def page_vergoedingen(language: str = "nl") -> rx.Component:
+def page_reimbursements(language: str = "nl") -> rx.Component:
     """
-    Create the complete vergoedingen page with all sections.
+    Create the complete reimbursements page with all sections.
 
-    The vergoedingen page provides information about insurance coverage
+    The reimbursements page provides information about insurance coverage
     and costs for podiatry services, including a comprehensive searchable
     table of insurance providers and their reimbursement amounts for 2025,
     as well as VoorVoet's pricing information.
@@ -25,7 +25,7 @@ def page_vergoedingen(language: str = "nl") -> rx.Component:
     Returns
     -------
     rx.Component
-        A fragment containing all sections of the vergoedingen page
+        A fragment containing all sections of the reimbursements page
         including header, hero, starter text, reimbursement table,
         pricing table, footer components.
     """

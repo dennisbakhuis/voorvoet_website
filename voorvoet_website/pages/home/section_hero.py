@@ -3,7 +3,7 @@
 import reflex as rx
 from ...theme import Colors, FontSizes, Layout, ImageDimensions
 from ...components import container, section, hero_banner, header, jumbo_text
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 from .section_hero_cta import hero_cta_box
 
 

@@ -38,4 +38,55 @@ The website uses a multi-format approach for optimal performance:
 
 ## Performance
 
-- Modern browsers: ~1.6 MB total (AVIF delivery) - **58% reduction from
+- Modern browsers: ~1.6 MB total (AVIF delivery) - **58% reduction from original**
+
+## Image Optimization on Mac
+
+### Install Tools
+```bash
+brew install imagemagick webp libavif
+```
+
+### Resize Images
+```bash
+# Resize to specific width (maintains aspect ratio)
+magick input.jpg -resize 1920x output.jpg
+
+# Resize to exact dimensions (may distort)
+magick input.jpg -resize 1920x1080! output.jpg
+
+# Resize to fit within dimensions (maintains aspect ratio)
+magick input.jpg -resize 1920x1080 output.jpg
+```
+
+### Convert to WebP
+```bash
+# Basic conversion
+cwebp input.jpg -o output.webp
+
+# With quality control (0-100, default 75)
+cwebp -q 85 input.jpg -o output.webp
+
+# Batch convert all JPGs in directory
+for f in *.jpg; do cwebp -q 85 "$f" -o "${f%.jpg}.webp"; done
+```
+
+### Convert to AVIF
+```bash
+# Basic conversion
+magick input.jpg output.avif
+
+# With quality control (0-100)
+magick input.jpg -quality 85 output.avif
+
+# Batch convert all JPGs in directory
+for f in *.jpg; do magick "$f" -quality 85 "${f%.jpg}.avif"; done
+```
+
+### Combined Workflow
+```bash
+# Resize and convert to all formats
+magick original.jpg -resize 1920x1080 -quality 85 resized.jpg
+cwebp -q 85 resized.jpg -o resized.webp
+magick resized.jpg -quality 85 resized.avif
+```

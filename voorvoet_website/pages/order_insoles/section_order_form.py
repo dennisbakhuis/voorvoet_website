@@ -5,6 +5,7 @@ Form data is collected via FormData on submit, not via per-keystroke on_change h
 """
 
 import reflex as rx
+
 from ...components import (
     container,
     section,
@@ -16,8 +17,8 @@ from ...components import (
     form_select,
 )
 from ...theme import Colors, Spacing
-from ...utils.get_translation import get_translation
-from ...states.order_insoles_state import OrderInsolesState
+from ...utils import get_translation
+from ...states import OrderInsolesState
 
 
 TRANSLATIONS = {

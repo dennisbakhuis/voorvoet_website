@@ -8,7 +8,6 @@ from .section_order_insoles import section_order_insoles
 from .section_introduction import section_introduction
 from .section_information import section_information
 from .section_locations import section_locations
-
 from ..shared_sections import footer, header
 from ...components import organization_brand_schema, organization_schema
 
