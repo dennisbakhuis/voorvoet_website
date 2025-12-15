@@ -3,6 +3,8 @@
 import reflex as rx
 from typing import Any
 
+from .section_hero import section_hero
+from ..shared_sections import footer, header
 from ...models import BlogPostDict
 from ...theme import Colors, FontSizes, Spacing
 from ...components import (
@@ -17,12 +19,9 @@ from ...components import (
     blog_list,
     button,
 )
-from ..shared_sections import footer, header
 from ...config import config
 from ...utils import get_translation
 from ...translations import BREADCRUMB_NAMES
-
-from .section_hero import section_hero
 
 
 TRANSLATIONS = {

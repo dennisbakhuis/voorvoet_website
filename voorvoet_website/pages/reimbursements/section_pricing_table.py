@@ -6,7 +6,7 @@ from pathlib import Path
 
 from ...theme import Colors
 from ...components import section, container, header
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {

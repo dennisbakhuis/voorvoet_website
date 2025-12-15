@@ -4,7 +4,6 @@ import reflex as rx
 
 from .section_hero import section_hero
 from .section_content import section_content
-
 from ..shared_sections import footer, header
 from ...components import breadcrumb_schema
 from ...translations import BREADCRUMB_NAMES

@@ -397,7 +397,9 @@ def footer(language: str) -> rx.Component:
                                 src_fallback="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png",
                                 src_avif="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.avif",
                                 src_webp="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.webp",
-                                alt=TRANSLATIONS[language]["nvvp_logo_alt"],
+                                alt=get_translation(
+                                    TRANSLATIONS, "nvvp_logo_alt", language
+                                ),
                                 dimensions=ImageDimensions.footer_logo_nvvp,
                                 width="auto",
                                 max_height="60px",
@@ -420,7 +422,9 @@ def footer(language: str) -> rx.Component:
                                 src_fallback="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png",
                                 src_avif="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.avif",
                                 src_webp="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.webp",
-                                alt=TRANSLATIONS[language]["krp_logo_alt"],
+                                alt=get_translation(
+                                    TRANSLATIONS, "krp_logo_alt", language
+                                ),
                                 dimensions=ImageDimensions.footer_logo_krp,
                                 width="auto",
                                 max_height="60px",

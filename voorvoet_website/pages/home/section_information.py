@@ -4,7 +4,7 @@ import reflex as rx
 
 from ...components import container, section, information_cards_grid, CardConfig
 from ...theme import Colors
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {

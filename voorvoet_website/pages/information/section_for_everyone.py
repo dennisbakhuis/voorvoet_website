@@ -1,6 +1,7 @@
 """Section explaining podiatry services for different age groups."""
 
 import reflex as rx
+
 from ...components import (
     container,
     section,
@@ -10,7 +11,7 @@ from ...components import (
     icon_list_item,
 )
 from ...theme import Colors, ImageDimensions
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {

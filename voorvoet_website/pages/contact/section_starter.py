@@ -4,7 +4,7 @@ import reflex as rx
 
 from ...theme import Colors
 from ...components import section, container, header, regular_text
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {
@@ -26,11 +26,6 @@ TRANSLATIONS = {
 def section_starter(language: str) -> rx.Component:
     """
     Create the contact page starter section with introductory text.
-
-    This section provides a brief introduction to the contact page,
-    explaining that visitors can ask questions about podotherapy or
-    schedule an appointment through the contact form or provided
-    contact details.
 
     Parameters
     ----------

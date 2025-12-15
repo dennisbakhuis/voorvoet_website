@@ -1,6 +1,7 @@
 """Section explaining risk foot classification and care."""
 
 import reflex as rx
+
 from ...components import (
     container,
     section,
@@ -11,7 +12,7 @@ from ...components import (
     risk_level_card,
 )
 from ...theme import Colors, ImageDimensions
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {
