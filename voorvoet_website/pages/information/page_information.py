@@ -17,18 +17,18 @@ from ...translations import BREADCRUMB_NAMES
 from ...config import config
 
 
-def page_informatie(language: str = "nl") -> rx.Component:
+def page_information(language: str = "nl") -> rx.Component:
     """
-    Create the complete informatie page with all sections.
+    Create the complete information page with all sections.
 
-    The informatie page provides comprehensive details about podiatry services,
+    The information page provides comprehensive details about podiatry services,
     including what podiatry is, who it's for, treatment processes, common
     complaints, company podiatry services, and risk foot classifications.
 
     Returns
     -------
     rx.Component
-        A fragment containing all sections of the informatie page including
+        A fragment containing all sections of the information page including
         header, hero, informational sections, footer components.
     """
     breadcrumb_items = [

@@ -12,17 +12,17 @@ from ...translations import BREADCRUMB_NAMES
 from ...config import config
 
 
-def page_zolen_bestellen(language: str = "nl") -> rx.Component:
+def page_order_insoles(language: str = "nl") -> rx.Component:
     """
-    Create the complete zolen bestellen page with all sections.
+    Create the complete order insoles page with all sections.
 
-    The zolen bestellen page is composed of: header, hero banner, starter text,
+    The order insoles page is composed of: header, hero banner, starter text,
     order form, footer, and toast notification components.
 
     Returns
     -------
     rx.Component
-        A fragment containing all sections of the zolen bestellen page in order.
+        A fragment containing all sections of the order insoles page in order.
     """
     breadcrumb_items = [
         {

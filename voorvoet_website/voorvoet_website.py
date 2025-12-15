@@ -8,10 +8,10 @@ from .pages import (
     page_home,
     page_blog,
     page_blog_post,
-    page_informatie,
-    page_vergoedingen,
+    page_information,
+    page_reimbursements,
     page_contact,
-    page_zolen_bestellen,
+    page_order_insoles,
     page_credits,
     page_not_found,
 )
@@ -49,10 +49,10 @@ def _wrap_with_lang_script(language: str, content: rx.Component) -> rx.Component
 
 PAGE_COMPONENTS = {
     "home": page_home,
-    "information": page_informatie,
-    "reimbursements": page_vergoedingen,
+    "information": page_information,
+    "reimbursements": page_reimbursements,
     "contact": page_contact,
-    "order_insoles": page_zolen_bestellen,
+    "order_insoles": page_order_insoles,
     "credits": page_credits,
 }
 
@@ -64,10 +64,10 @@ for lang in ["nl", "en", "de"]:
 
 default_redirects = [
     ("nl", "home", "/", page_home),
-    ("nl", "information", "/informatie", page_informatie),
-    ("nl", "reimbursements", "/vergoedingen", page_vergoedingen),
+    ("nl", "information", "/informatie", page_information),
+    ("nl", "reimbursements", "/vergoedingen", page_reimbursements),
     ("nl", "contact", "/contact", page_contact),
-    ("nl", "order_insoles", "/zolen-bestellen", page_zolen_bestellen),
+    ("nl", "order_insoles", "/zolen-bestellen", page_order_insoles),
     ("nl", "credits", "/credits", page_credits),
 ]
 main_pages.extend(default_redirects)
