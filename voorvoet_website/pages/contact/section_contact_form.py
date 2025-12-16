@@ -14,6 +14,7 @@ from ...components import (
 from ...theme import Colors, Spacing
 from ...states import ContactState
 from ...utils import get_translation
+from ...config import config
 
 
 TRANSLATIONS = {
@@ -93,110 +94,178 @@ def section_contact_form(language: str) -> rx.Component:
         },
     }
 
-    return section(
-        rx.script(src="/form-validation.js"),
-        container(
-            rx.el.form(
-                rx.box(
-                    rx.box(
-                        form_label(
-                            get_translation(TRANSLATIONS, "first_name", language),
-                            required=True,
-                        ),
-                        form_input(
-                            name="first_name",
-                            placeholder=get_translation(
-                                TRANSLATIONS, "first_name_placeholder", language
-                            ),
-                            required=True,
-                        ),
-                        flex="1",
-                    ),
-                    rx.box(
-                        form_label(
-                            get_translation(TRANSLATIONS, "last_name", language),
-                            required=True,
-                        ),
-                        form_input(
-                            name="last_name",
-                            placeholder=get_translation(
-                                TRANSLATIONS, "last_name_placeholder", language
-                            ),
-                            required=True,
-                        ),
-                        flex="1",
-                    ),
-                    display="flex",
-                    gap="1rem",
-                    margin_bottom="1.5rem",
-                    flex_direction=["column", "column", "row", "row"],
+    turnstile_scripts = []
+    if config.turnstile_enabled:
+        turnstile_scripts = [
+            rx.script(
+                f"""
+                // Define callbacks first
+                window.turnstileToken = null;
+
+                function onTurnstileSuccess(token) {{
+                    console.log('Turnstile verification successful');
+                    window.turnstileToken = token;
+                    const hiddenInput = document.getElementById('turnstile-token');
+                    if (hiddenInput) {{
+                        hiddenInput.value = token;
+                    }}
+                }}
+
+                function onTurnstileError(error) {{
+                    console.error('Turnstile verification failed:', error);
+                    window.turnstileToken = null;
+                    const hiddenInput = document.getElementById('turnstile-token');
+                    if (hiddenInput) {{
+                        hiddenInput.value = '';
+                    }}
+                }}
+
+                // Load and render Turnstile
+                (function() {{
+                    if (!window.turnstileLoaded) {{
+                        var script = document.createElement('script');
+                        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad&_=' + Date.now();
+                        script.async = true;
+                        document.head.appendChild(script);
+                        window.turnstileLoaded = true;
+                    }}
+                }})();
+
+                // Callback when Turnstile API loads
+                window.onTurnstileLoad = function() {{
+                    console.log('Turnstile API loaded');
+                    const container = document.getElementById('turnstile-widget-container');
+                    if (container && window.turnstile) {{
+                        window.turnstile.render('#turnstile-widget-container', {{
+                            sitekey: '{config.turnstile_site_key}',
+                            theme: 'light',
+                            callback: onTurnstileSuccess,
+                            'error-callback': onTurnstileError
+                        }});
+                        console.log('Turnstile widget rendered');
+                    }}
+                }};
+                """
+            ),
+        ]
+
+    form_fields = [
+        rx.box(
+            rx.box(
+                form_label(
+                    get_translation(TRANSLATIONS, "first_name", language),
+                    required=True,
                 ),
+                form_input(
+                    name="first_name",
+                    placeholder=get_translation(
+                        TRANSLATIONS, "first_name_placeholder", language
+                    ),
+                    required=True,
+                ),
+                flex="1",
+            ),
+            rx.box(
+                form_label(
+                    get_translation(TRANSLATIONS, "last_name", language),
+                    required=True,
+                ),
+                form_input(
+                    name="last_name",
+                    placeholder=get_translation(
+                        TRANSLATIONS, "last_name_placeholder", language
+                    ),
+                    required=True,
+                ),
+                flex="1",
+            ),
+            display="flex",
+            gap="1rem",
+            margin_bottom="1.5rem",
+            flex_direction=["column", "column", "row", "row"],
+        ),
+        rx.box(
+            form_label(
+                get_translation(TRANSLATIONS, "request_type", language),
+                required=True,
+            ),
+            form_radio(
+                items=[
+                    get_translation(TRANSLATIONS, "call_back", language),
+                    get_translation(TRANSLATIONS, "email_question", language),
+                ],
+                value=ContactState.request_type,
+                on_change=ContactState.set_request_type,
+            ),
+            rx.el.input(
+                type="hidden",
+                name="request_type",
+                value=ContactState.request_type,
+            ),
+            margin_bottom="1.5rem",
+        ),
+        rx.box(
+            form_label(
+                get_translation(TRANSLATIONS, "phone_label", language),
+                required=True,
+            ),
+            form_input(
+                name="phone",
+                placeholder=get_translation(
+                    TRANSLATIONS, "phone_placeholder", language
+                ),
+                input_type="tel",
+                input_mode="numeric",
+                required=True,
+                pattern=r"^[0-9+\-\s]+$",
+            ),
+            margin_bottom="1.5rem",
+        ),
+        rx.box(
+            form_label(
+                get_translation(TRANSLATIONS, "email_label", language),
+                required=True,
+            ),
+            form_input(
+                name="email",
+                placeholder=get_translation(
+                    TRANSLATIONS, "email_placeholder", language
+                ),
+                input_type="email",
+                required=True,
+                pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+            ),
+            margin_bottom="1.5rem",
+        ),
+        rx.box(
+            form_label(
+                get_translation(TRANSLATIONS, "description_label", language),
+                required=True,
+            ),
+            form_textarea(
+                name="description",
+                placeholder=get_translation(
+                    TRANSLATIONS, "description_placeholder", language
+                ),
+                required=True,
+            ),
+            margin_bottom="1.5rem",
+        ),
+    ]
+
+    if config.turnstile_enabled:
+        form_fields.append(
+            rx.box(
                 rx.box(
-                    form_label(
-                        get_translation(TRANSLATIONS, "request_type", language),
-                        required=True,
-                    ),
-                    form_radio(
-                        items=[
-                            get_translation(TRANSLATIONS, "call_back", language),
-                            get_translation(TRANSLATIONS, "email_question", language),
-                        ],
-                        value=ContactState.request_type,
-                        on_change=ContactState.set_request_type,
-                    ),
+                    rx.box(id="turnstile-widget-container"),
                     rx.el.input(
                         type="hidden",
-                        name="request_type",
-                        value=ContactState.request_type,
+                        id="turnstile-token",
+                        name="turnstile_token",
+                        value="",
                     ),
-                    margin_bottom="1.5rem",
-                ),
-                rx.box(
-                    form_label(
-                        get_translation(TRANSLATIONS, "phone_label", language),
-                        required=True,
-                    ),
-                    form_input(
-                        name="phone",
-                        placeholder=get_translation(
-                            TRANSLATIONS, "phone_placeholder", language
-                        ),
-                        input_type="tel",
-                        input_mode="numeric",
-                        required=True,
-                        pattern=r"^[0-9+\-\s]+$",
-                    ),
-                    margin_bottom="1.5rem",
-                ),
-                rx.box(
-                    form_label(
-                        get_translation(TRANSLATIONS, "email_label", language),
-                        required=True,
-                    ),
-                    form_input(
-                        name="email",
-                        placeholder=get_translation(
-                            TRANSLATIONS, "email_placeholder", language
-                        ),
-                        input_type="email",
-                        required=True,
-                        pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-                    ),
-                    margin_bottom="1.5rem",
-                ),
-                rx.box(
-                    form_label(
-                        get_translation(TRANSLATIONS, "description_label", language),
-                        required=True,
-                    ),
-                    form_textarea(
-                        name="description",
-                        placeholder=get_translation(
-                            TRANSLATIONS, "description_placeholder", language
-                        ),
-                        required=True,
-                    ),
-                    margin_bottom="1.5rem",
+                    display="flex",
+                    align_items="flex-end",
                 ),
                 rx.box(
                     form_button(
@@ -204,10 +273,34 @@ def section_contact_form(language: str) -> rx.Component:
                         is_loading=ContactState.form_submitting,
                         button_type="submit",
                     ),
-                    display="flex",
-                    justify_content=["center", "center", "flex-end", "flex-end"],
-                    width="100%",
                 ),
+                display="flex",
+                justify_content="space-between",
+                align_items="flex-end",
+                gap="1rem",
+                flex_direction=["column", "column", "row", "row"],
+            )
+        )
+    else:
+        form_fields.append(
+            rx.box(
+                form_button(
+                    label=get_translation(TRANSLATIONS, "submit_button", language),
+                    is_loading=ContactState.form_submitting,
+                    button_type="submit",
+                ),
+                display="flex",
+                justify_content=["center", "center", "flex-end", "flex-end"],
+                width="100%",
+            )
+        )
+
+    return section(
+        rx.script(src="/form-validation.js"),
+        *turnstile_scripts,
+        container(
+            rx.el.form(
+                *form_fields,
                 id="contact-form",
                 on_submit=ContactState.handle_form_submit,
                 reset_on_submit=True,

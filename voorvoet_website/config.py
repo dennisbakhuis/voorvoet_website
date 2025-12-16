@@ -59,15 +59,15 @@ class Config(BaseSettings):
     )
 
     turnstile_site_key: str | None = Field(
-        default=None,
+        default="1x00000000000000000000AA",  # Dummy key that always succeeds and is visible
         description="Site key for client-side Turnstile widget rendering. Get from: https://dash.cloudflare.com/",
     )
     turnstile_secret_key: str | None = Field(
-        default=None,
+        default="1x0000000000000000000000000000000AA",
         description="Secret key for server-side token verification. Keep secret!",
     )
     turnstile_enabled: bool = Field(
-        default=True,
+        default=False,
         description="Enable/disable Turnstile verification. Useful for local development.",
     )
 

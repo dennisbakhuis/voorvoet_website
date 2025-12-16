@@ -10,7 +10,8 @@ import asyncio
 from typing import AsyncGenerator
 
 from ..models import ContactForm, PhoneNumber, EmailAddress
-from ..services import send_contact_form_email
+from ..services import send_contact_form_email, verify_turnstile_token
+from ..config import config
 
 
 class ContactState(rx.State):
@@ -30,7 +31,7 @@ class ContactState(rx.State):
         Loading state flag for preventing duplicate submissions
     """
 
-    request_type: str = ""
+    request_type: str = "Bel mij terug"
     form_submitting: bool = False
 
     @rx.event
@@ -60,6 +61,25 @@ class ContactState(rx.State):
         email = form_data.get("email", "").strip()
         description = form_data.get("description", "").strip()
         request_type = form_data.get("request_type", "").strip()
+        turnstile_token = form_data.get("turnstile_token", "").strip()
+
+        from .website_state import WebsiteState
+
+        website_state = await self.get_state(WebsiteState)
+
+        if config.turnstile_enabled:
+            is_valid = await verify_turnstile_token(turnstile_token)
+            if not is_valid:
+                self.form_submitting = False
+                website_state.show_toast(  # type: ignore[operator]
+                    "Bot verificatie mislukt. Probeer de pagina te vernieuwen.",
+                    "error",
+                )
+                yield
+
+                await asyncio.sleep(5)
+                website_state.hide_toast()  # type: ignore[operator]
+                return
 
         contact_form = ContactForm(
             first_name=first_name,
@@ -73,10 +93,6 @@ class ContactState(rx.State):
         email_sent = send_contact_form_email(contact_form)
 
         self.form_submitting = False
-
-        from .website_state import WebsiteState
-
-        website_state = await self.get_state(WebsiteState)
 
         if email_sent:
             website_state.show_toast(  # type: ignore[operator]
