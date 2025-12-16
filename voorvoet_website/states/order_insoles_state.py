@@ -32,7 +32,7 @@ class OrderInsolesState(rx.State):
         Loading state flag for preventing duplicate submissions
     """
 
-    insole_type: str = ""
+    insole_type: str = "Dagelijkse zolen"
     quantity: str = "1"
     form_submitting: bool = False
 

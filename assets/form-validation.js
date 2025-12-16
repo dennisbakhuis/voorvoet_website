@@ -82,6 +82,21 @@
             return ageYears >= 4 && ageYears <= 120 && date <= today;
         }
 
+        function updateBirthDateVisualFeedback() {
+            if (!birthDateInput) return;
+
+            var isValid = isValidBirthDate(birthDateInput.value);
+            var isEmpty = !birthDateInput.value.trim();
+
+            if (isEmpty) {
+                birthDateInput.style.border = '';
+            } else if (!isValid) {
+                birthDateInput.style.border = '3px solid red';
+            } else {
+                birthDateInput.style.border = '';
+            }
+        }
+
         function isFormValid() {
             var htmlValid = form.checkValidity();
             var insoleSelected = insoleTypeInput && insoleTypeInput.value.trim() !== '';
@@ -117,6 +132,7 @@
                         e.target.value = filtered;
                         e.target.setSelectionRange(cursorPos - diff, cursorPos - diff);
                     }
+                    updateBirthDateVisualFeedback();
                 });
             }
 
