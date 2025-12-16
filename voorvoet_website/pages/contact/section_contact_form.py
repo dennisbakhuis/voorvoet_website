@@ -27,8 +27,10 @@ TRANSLATIONS = {
         "call_back": "Bel mij terug",
         "email_question": "Contact per email",
         "phone_label": "Telefoonnummer",
+        "phone_tooltip": "Beide contactgegevens zijn vereist voor het geval we de andere methode moeten gebruiken",
         "phone_placeholder": "0612345678",
         "email_label": "E-mailadres",
+        "email_tooltip": "Beide contactgegevens zijn vereist voor het geval we de andere methode moeten gebruiken",
         "email_placeholder": "voorbeeld@email.nl",
         "description_label": "Beschrijving van je vraag",
         "description_placeholder": "Jouw beschrijving...",
@@ -44,8 +46,10 @@ TRANSLATIONS = {
         "call_back": "Rufen Sie mich zurück",
         "email_question": "Kontakt per E-Mail",
         "phone_label": "Telefonnummer",
+        "phone_tooltip": "Beide Kontaktdaten sind erforderlich, falls wir die andere Methode verwenden müssen",
         "phone_placeholder": "0612345678",
         "email_label": "E-Mail-Adresse",
+        "email_tooltip": "Beide Kontaktdaten sind erforderlich, falls wir die andere Methode verwenden müssen",
         "email_placeholder": "beispiel@email.de",
         "description_label": "Beschreibung Ihrer Frage",
         "description_placeholder": "Ihre Beschreibung...",
@@ -61,8 +65,10 @@ TRANSLATIONS = {
         "call_back": "Call me back",
         "email_question": "Contact via email",
         "phone_label": "Phone Number",
+        "phone_tooltip": "Both contact details are required in case we need to use the other method",
         "phone_placeholder": "0612345678",
         "email_label": "Email Address",
+        "email_tooltip": "Both contact details are required in case we need to use the other method",
         "email_placeholder": "example@email.com",
         "description_label": "Description of your question",
         "description_placeholder": "Your description...",
@@ -204,6 +210,51 @@ def section_contact_form(language: str) -> rx.Component:
             flex_direction=["column", "column", "row", "row"],
         ),
         rx.box(
+            rx.box(
+                form_label(
+                    get_translation(TRANSLATIONS, "phone_label", language),
+                    required=True,
+                    tooltip_text=get_translation(
+                        TRANSLATIONS, "phone_tooltip", language
+                    ),
+                ),
+                form_input(
+                    name="phone",
+                    placeholder=get_translation(
+                        TRANSLATIONS, "phone_placeholder", language
+                    ),
+                    input_type="tel",
+                    input_mode="numeric",
+                    required=True,
+                    pattern=r"^[0-9+\-\s]+$",
+                ),
+                flex="1",
+            ),
+            rx.box(
+                form_label(
+                    get_translation(TRANSLATIONS, "email_label", language),
+                    required=True,
+                    tooltip_text=get_translation(
+                        TRANSLATIONS, "email_tooltip", language
+                    ),
+                ),
+                form_input(
+                    name="email",
+                    placeholder=get_translation(
+                        TRANSLATIONS, "email_placeholder", language
+                    ),
+                    input_type="email",
+                    required=True,
+                    pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+                ),
+                flex="1",
+            ),
+            display="flex",
+            gap="1rem",
+            margin_bottom="1.5rem",
+            flex_direction=["column", "column", "row", "row"],
+        ),
+        rx.box(
             form_label(
                 get_translation(TRANSLATIONS, "request_type", language),
                 required=True,
@@ -215,44 +266,12 @@ def section_contact_form(language: str) -> rx.Component:
                 ],
                 value=ContactState.request_type,
                 on_change=ContactState.set_request_type,
+                direction=["column", "column", "row", "row"],
             ),
             rx.el.input(
                 type="hidden",
                 name="request_type",
                 value=ContactState.request_type,
-            ),
-            margin_bottom="1.5rem",
-        ),
-        rx.box(
-            form_label(
-                get_translation(TRANSLATIONS, "phone_label", language),
-                required=True,
-            ),
-            form_input(
-                name="phone",
-                placeholder=get_translation(
-                    TRANSLATIONS, "phone_placeholder", language
-                ),
-                input_type="tel",
-                input_mode="numeric",
-                required=True,
-                pattern=r"^[0-9+\-\s]+$",
-            ),
-            margin_bottom="1.5rem",
-        ),
-        rx.box(
-            form_label(
-                get_translation(TRANSLATIONS, "email_label", language),
-                required=True,
-            ),
-            form_input(
-                name="email",
-                placeholder=get_translation(
-                    TRANSLATIONS, "email_placeholder", language
-                ),
-                input_type="email",
-                required=True,
-                pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
             ),
             margin_bottom="1.5rem",
         ),
