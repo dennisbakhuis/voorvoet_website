@@ -12,7 +12,16 @@
         function isFormValid() {
             var htmlValid = form.checkValidity();
             var radioSelected = requestTypeInput && requestTypeInput.value.trim() !== '';
-            return htmlValid && radioSelected;
+            var turnstileValid = true;
+
+            // Check if Turnstile is enabled by looking for the widget container
+            var turnstileContainer = form.querySelector('#turnstile-widget-container');
+            if (turnstileContainer) {
+                var turnstileToken = form.querySelector('#turnstile-token');
+                turnstileValid = turnstileToken && turnstileToken.value.trim() !== '';
+            }
+
+            return htmlValid && radioSelected && turnstileValid;
         }
 
         function updateButtonState() {
@@ -73,12 +82,36 @@
             return ageYears >= 4 && ageYears <= 120 && date <= today;
         }
 
+        function updateBirthDateVisualFeedback() {
+            if (!birthDateInput) return;
+
+            var isValid = isValidBirthDate(birthDateInput.value);
+            var isEmpty = !birthDateInput.value.trim();
+
+            if (isEmpty) {
+                birthDateInput.style.border = '';
+            } else if (!isValid) {
+                birthDateInput.style.border = '3px solid red';
+            } else {
+                birthDateInput.style.border = '';
+            }
+        }
+
         function isFormValid() {
             var htmlValid = form.checkValidity();
             var insoleSelected = insoleTypeInput && insoleTypeInput.value.trim() !== '';
             var quantitySelected = quantityInput && quantityInput.value.trim() !== '';
             var birthDateValid = !birthDateInput || isValidBirthDate(birthDateInput.value);
-            return htmlValid && insoleSelected && quantitySelected && birthDateValid;
+            var turnstileValid = true;
+
+            // Check if Turnstile is enabled by looking for the widget container
+            var turnstileContainer = form.querySelector('#turnstile-widget-container-insole');
+            if (turnstileContainer) {
+                var turnstileToken = form.querySelector('#turnstile-token-insole');
+                turnstileValid = turnstileToken && turnstileToken.value.trim() !== '';
+            }
+
+            return htmlValid && insoleSelected && quantitySelected && birthDateValid && turnstileValid;
         }
 
         function updateButtonState() {
@@ -99,6 +132,7 @@
                         e.target.value = filtered;
                         e.target.setSelectionRange(cursorPos - diff, cursorPos - diff);
                     }
+                    updateBirthDateVisualFeedback();
                 });
             }
 

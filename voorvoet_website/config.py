@@ -7,7 +7,8 @@ display preferences.
 """
 
 from pathlib import Path
-from pydantic import Field
+from typing import Literal
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -20,15 +21,19 @@ class Config(BaseSettings):
 
     Attributes
     ----------
-    turnstile_site_key : str
+    turnstile_site_key : str | None
         Site key for client-side Turnstile widget rendering.
         Get from: https://dash.cloudflare.com/
+        If not set, uses dummy key based on turnstile_dummy_mode.
     turnstile_secret_key : str | None
         Secret key for server-side token verification.
-        Required for production use.
+        If not set, uses dummy key based on turnstile_dummy_mode.
     turnstile_enabled : bool
         Enable/disable Turnstile verification.
         Set to False for local development.
+    turnstile_dummy_mode : str
+        Dummy mode for testing (always_pass, always_fail, always_pass_invisible,
+        always_fail_invisible, interactive). Used when no real keys are set.
     smtp_host : str
         SMTP server hostname for sending emails.
     smtp_port : int
@@ -67,9 +72,56 @@ class Config(BaseSettings):
         description="Secret key for server-side token verification. Keep secret!",
     )
     turnstile_enabled: bool = Field(
-        default=True,
+        default=False,
         description="Enable/disable Turnstile verification. Useful for local development.",
     )
+    turnstile_dummy_mode: Literal[
+        "always_pass",
+        "always_fail",
+        "always_pass_invisible",
+        "always_fail_invisible",
+        "interactive",
+    ] = Field(
+        default="always_pass",
+        description="Dummy mode for testing when no real keys are set",
+    )
+
+    @model_validator(mode="after")
+    def set_dummy_keys(self) -> "Config":
+        """Set dummy keys based on dummy_mode if no real keys are provided."""
+        site_key_map = {
+            "always_pass": "1x00000000000000000000AA",
+            "always_fail": "2x00000000000000000000AB",
+            "always_pass_invisible": "1x00000000000000000000BB",
+            "always_fail_invisible": "2x00000000000000000000BB",
+            "interactive": "3x00000000000000000000FF",
+        }
+
+        secret_key_map = {
+            "always_pass": "1x0000000000000000000000000000000AA",
+            "always_fail": "2x0000000000000000000000000000000AB",
+            "always_pass_invisible": "1x0000000000000000000000000000000BB",
+            "always_fail_invisible": "2x0000000000000000000000000000000BB",
+            "interactive": "3x0000000000000000000000000000000FF",
+        }
+
+        if (
+            not self.turnstile_site_key
+            or self.turnstile_site_key == "your_site_key_here"
+        ):
+            self.turnstile_site_key = site_key_map.get(
+                self.turnstile_dummy_mode, "1x00000000000000000000AA"
+            )
+
+        if (
+            not self.turnstile_secret_key
+            or self.turnstile_secret_key == "your_secret_key_here"
+        ):
+            self.turnstile_secret_key = secret_key_map.get(
+                self.turnstile_dummy_mode, "1x0000000000000000000000000000000AA"
+            )
+
+        return self
 
     smtp_host: str = Field(
         default="smtp.protonmail.ch",
