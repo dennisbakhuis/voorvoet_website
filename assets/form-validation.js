@@ -12,7 +12,16 @@
         function isFormValid() {
             var htmlValid = form.checkValidity();
             var radioSelected = requestTypeInput && requestTypeInput.value.trim() !== '';
-            return htmlValid && radioSelected;
+            var turnstileValid = true;
+
+            // Check if Turnstile is enabled by looking for the widget container
+            var turnstileContainer = form.querySelector('#turnstile-widget-container');
+            if (turnstileContainer) {
+                var turnstileToken = form.querySelector('#turnstile-token');
+                turnstileValid = turnstileToken && turnstileToken.value.trim() !== '';
+            }
+
+            return htmlValid && radioSelected && turnstileValid;
         }
 
         function updateButtonState() {

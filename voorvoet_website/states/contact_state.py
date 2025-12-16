@@ -55,13 +55,13 @@ class ContactState(rx.State):
         self.form_submitting = True
         yield
 
-        first_name = form_data.get("first_name", "").strip()
-        last_name = form_data.get("last_name", "").strip()
-        phone = form_data.get("phone", "").strip()
-        email = form_data.get("email", "").strip()
-        description = form_data.get("description", "").strip()
-        request_type = form_data.get("request_type", "").strip()
-        turnstile_token = form_data.get("turnstile_token", "").strip()
+        first_name = (form_data.get("first_name") or "").strip()
+        last_name = (form_data.get("last_name") or "").strip()
+        phone = (form_data.get("phone") or "").strip()
+        email = (form_data.get("email") or "").strip()
+        description = (form_data.get("description") or "").strip()
+        request_type = (form_data.get("request_type") or "").strip()
+        turnstile_token = (form_data.get("turnstile_token") or "").strip()
 
         from .website_state import WebsiteState
 

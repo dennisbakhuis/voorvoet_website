@@ -32,6 +32,7 @@ TRANSLATIONS = {
         "email_placeholder": "voorbeeld@email.nl",
         "description_label": "Beschrijving van je vraag",
         "description_placeholder": "Jouw beschrijving...",
+        "turnstile_label": "Automatische robot beveiliging",
         "submit_button": "Verstuur verzoek",
     },
     "de": {
@@ -48,6 +49,7 @@ TRANSLATIONS = {
         "email_placeholder": "beispiel@email.de",
         "description_label": "Beschreibung Ihrer Frage",
         "description_placeholder": "Ihre Beschreibung...",
+        "turnstile_label": "Automatischer Roboterschutz",
         "submit_button": "Anfrage senden",
     },
     "en": {
@@ -64,6 +66,7 @@ TRANSLATIONS = {
         "email_placeholder": "example@email.com",
         "description_label": "Description of your question",
         "description_placeholder": "Your description...",
+        "turnstile_label": "Automatic robot protection",
         "submit_button": "Submit Request",
     },
 }
@@ -108,6 +111,11 @@ def section_contact_form(language: str) -> rx.Component:
                     const hiddenInput = document.getElementById('turnstile-token');
                     if (hiddenInput) {{
                         hiddenInput.value = token;
+                        // Trigger validation update
+                        const form = document.getElementById('contact-form');
+                        if (form) {{
+                            form.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        }}
                     }}
                 }}
 
@@ -117,6 +125,11 @@ def section_contact_form(language: str) -> rx.Component:
                     const hiddenInput = document.getElementById('turnstile-token');
                     if (hiddenInput) {{
                         hiddenInput.value = '';
+                        // Trigger validation update
+                        const form = document.getElementById('contact-form');
+                        if (form) {{
+                            form.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        }}
                     }}
                 }}
 
@@ -143,6 +156,12 @@ def section_contact_form(language: str) -> rx.Component:
                             'error-callback': onTurnstileError
                         }});
                         console.log('Turnstile widget rendered');
+
+                        // Trigger validation to update button state
+                        const form = document.getElementById('contact-form');
+                        if (form) {{
+                            form.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        }}
                     }}
                 }};
                 """
@@ -257,6 +276,10 @@ def section_contact_form(language: str) -> rx.Component:
         form_fields.append(
             rx.box(
                 rx.box(
+                    form_label(
+                        get_translation(TRANSLATIONS, "turnstile_label", language),
+                        required=False,
+                    ),
                     rx.box(id="turnstile-widget-container"),
                     rx.el.input(
                         type="hidden",
@@ -265,7 +288,8 @@ def section_contact_form(language: str) -> rx.Component:
                         value="",
                     ),
                     display="flex",
-                    align_items="flex-end",
+                    flex_direction="column",
+                    gap="0.5rem",
                 ),
                 rx.box(
                     form_button(
