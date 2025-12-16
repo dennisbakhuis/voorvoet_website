@@ -25,6 +25,7 @@ def button(
         The text to display on the button.
     href : str | None, optional
         URL to navigate to when clicked. If provided, renders as a link.
+        Automatically detects internal (starts with /) vs external links.
         Default is None.
     on_click : callable, optional
         Event handler function to call when button is clicked.
@@ -62,9 +63,13 @@ def button(
     button_content = rx.text(label)
 
     if href is not None:
+        is_external = isinstance(href, str) and (
+            href.startswith("http://") or href.startswith("https://")
+        )
         return rx.link(
             button_content,
             href=href,
+            is_external=is_external,
             **base_styles,
         )
     else:
