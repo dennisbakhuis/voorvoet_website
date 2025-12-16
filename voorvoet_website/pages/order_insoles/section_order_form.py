@@ -1,8 +1,4 @@
-"""Order form section for ordering extra insoles.
-
-Uses HTML5 validation and client-side JavaScript for zero-lag input experience.
-Form data is collected via FormData on submit, not via per-keystroke on_change handlers.
-"""
+"""Order form section for ordering extra insoles."""
 
 import reflex as rx
 
@@ -32,6 +28,7 @@ TRANSLATIONS = {
         "email_tooltip": "Vul een geldig e-mailadres in",
         "email_placeholder": "voorbeeld@email.nl",
         "birth_date_label": "Geboortedatum",
+        "birth_date_tooltip": "Leeftijd tussen 4 en 120 jaar",
         "birth_date_placeholder": "dd-mm-jjjj",
         "insole_type_label": "Soort zolen",
         "insole_type_daily": "Dagelijkse zolen",
@@ -53,6 +50,7 @@ TRANSLATIONS = {
         "email_tooltip": "Geben Sie eine gültige E-Mail-Adresse ein",
         "email_placeholder": "beispiel@email.de",
         "birth_date_label": "Geburtsdatum",
+        "birth_date_tooltip": "Alter zwischen 4 und 120 Jahren",
         "birth_date_placeholder": "tt-mm-jjjj",
         "insole_type_label": "Art der Einlagen",
         "insole_type_daily": "Tägliche Einlagen",
@@ -74,6 +72,7 @@ TRANSLATIONS = {
         "email_tooltip": "Enter a valid email address",
         "email_placeholder": "example@email.com",
         "birth_date_label": "Birth Date",
+        "birth_date_tooltip": "Age between 4 and 120 years",
         "birth_date_placeholder": "dd-mm-yyyy",
         "insole_type_label": "Type of insoles",
         "insole_type_daily": "Daily insoles",
@@ -92,10 +91,6 @@ TRANSLATIONS = {
 def section_order_form(language: str) -> rx.Component:
     """
     Create the order form section for ordering extra insoles.
-
-    The form collects patient information including name, email, birth date,
-    insole type, quantity, and any comments. Uses HTML5 validation for
-    instant client-side feedback without server round-trips during typing.
 
     Parameters
     ----------
@@ -232,21 +227,49 @@ def section_order_form(language: str) -> rx.Component:
             margin_bottom="1.5rem",
         ),
         rx.box(
-            form_label(
-                get_translation(TRANSLATIONS, "birth_date_label", language),
-                required=True,
-            ),
-            form_input(
-                name="birth_date",
-                placeholder=get_translation(
-                    TRANSLATIONS, "birth_date_placeholder", language
+            rx.box(
+                form_label(
+                    get_translation(TRANSLATIONS, "birth_date_label", language),
+                    required=True,
+                    tooltip_text=get_translation(
+                        TRANSLATIONS, "birth_date_tooltip", language
+                    ),
                 ),
-                input_type="text",
-                required=True,
-                pattern=r"^\d{1,2}[-/]\d{1,2}[-/]\d{4}$",
+                form_input(
+                    name="birth_date",
+                    placeholder=get_translation(
+                        TRANSLATIONS, "birth_date_placeholder", language
+                    ),
+                    input_type="text",
+                    required=True,
+                    pattern=r"^\d{1,2}[-/]\d{1,2}[-/]\d{4}$",
+                ),
+                flex="1",
             ),
+            rx.box(
+                form_label(
+                    get_translation(TRANSLATIONS, "quantity_label", language),
+                    required=True,
+                ),
+                form_select(
+                    items=["1", "2", "3"],
+                    value=OrderInsolesState.quantity,
+                    on_change=OrderInsolesState.set_quantity,
+                    placeholder=get_translation(
+                        TRANSLATIONS, "quantity_placeholder", language
+                    ),
+                ),
+                rx.el.input(
+                    type="hidden",
+                    name="quantity",
+                    value=OrderInsolesState.quantity,
+                ),
+                flex="1",
+            ),
+            display="flex",
+            gap="1rem",
             margin_bottom="1.5rem",
-            max_width="250px",
+            flex_direction=["column", "column", "row", "row"],
         ),
         rx.box(
             form_label(
@@ -261,6 +284,7 @@ def section_order_form(language: str) -> rx.Component:
                 ],
                 value=OrderInsolesState.insole_type,
                 on_change=OrderInsolesState.set_insole_type,
+                direction=["column", "column", "row", "row"],
             ),
             rx.el.input(
                 type="hidden",
@@ -268,27 +292,6 @@ def section_order_form(language: str) -> rx.Component:
                 value=OrderInsolesState.insole_type,
             ),
             margin_bottom="1.5rem",
-        ),
-        rx.box(
-            form_label(
-                get_translation(TRANSLATIONS, "quantity_label", language),
-                required=True,
-            ),
-            form_select(
-                items=["1", "2", "3"],
-                value=OrderInsolesState.quantity,
-                on_change=OrderInsolesState.set_quantity,
-                placeholder=get_translation(
-                    TRANSLATIONS, "quantity_placeholder", language
-                ),
-            ),
-            rx.el.input(
-                type="hidden",
-                name="quantity",
-                value=OrderInsolesState.quantity,
-            ),
-            margin_bottom="1.5rem",
-            max_width="250px",
         ),
         rx.box(
             form_label(
