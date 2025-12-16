@@ -1,6 +1,7 @@
 """Contact form section with form fields for user inquiries."""
 
 import reflex as rx
+
 from ...components import (
     container,
     section,
@@ -11,8 +12,8 @@ from ...components import (
     form_radio,
 )
 from ...theme import Colors, Spacing
-from ...states.contact_state import ContactState
-from ...utils.get_translation import get_translation
+from ...states import ContactState
+from ...utils import get_translation
 
 
 TRANSLATIONS = {

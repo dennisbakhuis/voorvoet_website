@@ -1,6 +1,7 @@
 """Section explaining company podiatry services."""
 
 import reflex as rx
+
 from ...components import (
     container,
     section,

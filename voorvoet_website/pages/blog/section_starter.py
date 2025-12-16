@@ -4,7 +4,7 @@ import reflex as rx
 
 from ...theme import Colors
 from ...components import section, container, header, regular_text
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {

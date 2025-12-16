@@ -13,10 +13,6 @@ def responsive_grid(
     """
     Create a responsive grid that adapts to different screen sizes.
 
-    Creates a grid layout that automatically adjusts the number of columns
-    based on breakpoints. Uses Reflex's breakpoint system to define
-    different column counts for different screen sizes.
-
     Parameters
     ----------
     *children : rx.Component
@@ -35,17 +31,12 @@ def responsive_grid(
     -------
     rx.Component
         A Reflex grid component with responsive column configuration.
-
-    Notes
-    -----
-    Breakpoint labels are: initial, sm, md, lg, xl, 2xl.
-    Only the first len(columns) breakpoints are configured.
     """
     labels = ["initial", "sm", "md", "lg", "xl", "2xl"]
     bp: dict[str, Any] = {
         labels[i]: str(c) for i, c in enumerate(columns) if i < len(labels)
     }
     cols = rx.breakpoints(**bp)
-    props = dict(columns=cols, gap=spacing)
-    props.update(props)
-    return rx.grid(*children, **props)
+    grid_props: dict[str, Any] = dict(columns=cols, gap=spacing)
+    grid_props.update(props)
+    return rx.grid(*children, **grid_props)

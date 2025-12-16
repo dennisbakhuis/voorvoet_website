@@ -5,7 +5,6 @@ import reflex as rx
 from .section_hero import section_hero
 from .section_blog_list import section_blog_list
 from .section_starter import section_starter
-
 from ..shared_sections import footer, header
 from ...components import breadcrumb_schema
 from ...translations import BREADCRUMB_NAMES

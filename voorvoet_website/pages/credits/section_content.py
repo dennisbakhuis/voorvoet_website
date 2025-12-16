@@ -5,7 +5,7 @@ import reflex as rx
 from ...components import container, section, header, regular_text, image_text_section
 from ...data.credits import PYTHON_PACKAGES, IMAGES
 from ...theme import Colors, Spacing, ImageDimensions, FontSizes
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {

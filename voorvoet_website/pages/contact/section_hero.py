@@ -4,7 +4,7 @@ import reflex as rx
 
 from ...theme import Colors, ImageDimensions
 from ...components import section, hero_banner
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {

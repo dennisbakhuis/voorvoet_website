@@ -4,7 +4,7 @@ import reflex as rx
 
 from ...theme import Colors, FontSizes
 from ...components import container, blog_card, section
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {

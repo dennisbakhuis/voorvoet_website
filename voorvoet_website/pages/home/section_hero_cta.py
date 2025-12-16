@@ -4,7 +4,7 @@ import reflex as rx
 from ...components import button, header, icon_list_item
 from ...theme import Colors, Layout, Spacing, FontSizes
 from ...config import config
-from ...utils.get_translation import get_translation
+from ...utils import get_translation
 
 
 TRANSLATIONS = {

@@ -1,6 +1,7 @@
 """Section listing common foot and related complaints."""
 
 import reflex as rx
+
 from ...components import (
     container,
     section,

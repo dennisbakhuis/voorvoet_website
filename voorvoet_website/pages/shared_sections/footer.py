@@ -4,6 +4,7 @@ import reflex as rx
 
 from ...components import container, section, regular_text, fa_icon, responsive_image
 from ...theme import Colors, FontSizes, Layout, ImageDimensions
+from ...utils import get_translation
 
 
 TRANSLATIONS = {
@@ -68,15 +69,6 @@ def footer(language: str) -> rx.Component:
     """
     Create the site-wide footer with practice information and links.
 
-    The footer displays comprehensive practice information including:
-    - Logo
-    - Two location addresses with opening hours
-    - Contact information (phone and email)
-    - Business details (KvK, practice code, bank account)
-    - Professional affiliations (logos)
-    - Legal links (privacy policy, terms)
-    - Copyright notice
-
     Parameters
     ----------
     language : str
@@ -87,22 +79,7 @@ def footer(language: str) -> rx.Component:
     rx.Component
         A section component containing the complete footer layout with
         responsive design for mobile, tablet, and desktop viewports.
-
-    Notes
-    -----
-    The footer uses a responsive layout that:
-    - Stacks vertically on mobile devices
-    - Transitions to side-by-side layout on larger screens
-    - Includes gentle wave clip-path styling at the top
     """
-
-    def t(key: str) -> rx.Var:
-        """Get translation for current language."""
-        return rx.cond(
-            language == "nl",
-            TRANSLATIONS["nl"][key],
-            rx.cond(language == "de", TRANSLATIONS["de"][key], TRANSLATIONS["en"][key]),
-        )
 
     return section(
         container(
@@ -129,7 +106,9 @@ def footer(language: str) -> rx.Component:
                 rx.box(
                     rx.box(
                         regular_text(
-                            t("location_eeftinksweg"),
+                            get_translation(
+                                TRANSLATIONS, "location_eeftinksweg", language
+                            ),
                             color=Colors.text["muted"],
                             font_weight="700",
                             text_decoration="underline",
@@ -144,7 +123,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             regular_text(
-                                t("monday"),
+                                get_translation(TRANSLATIONS, "monday", language),
                                 color=Colors.text["secondary"],
                                 display="inline-block",
                                 width="100px",
@@ -158,7 +137,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             regular_text(
-                                t("thursday"),
+                                get_translation(TRANSLATIONS, "thursday", language),
                                 color=Colors.text["secondary"],
                                 display="inline-block",
                                 width="100px",
@@ -172,7 +151,9 @@ def footer(language: str) -> rx.Component:
                             margin_bottom="0.15rem",
                         ),
                         regular_text(
-                            t("location_beethovenlaan"),
+                            get_translation(
+                                TRANSLATIONS, "location_beethovenlaan", language
+                            ),
                             color=Colors.text["muted"],
                             font_weight="700",
                             text_decoration="underline",
@@ -190,7 +171,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             regular_text(
-                                t("tuesday"),
+                                get_translation(TRANSLATIONS, "tuesday", language),
                                 color=Colors.text["secondary"],
                                 display="inline-block",
                                 width="100px",
@@ -204,7 +185,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             regular_text(
-                                t("wednesday"),
+                                get_translation(TRANSLATIONS, "wednesday", language),
                                 color=Colors.text["secondary"],
                                 display="inline-block",
                                 width="100px",
@@ -218,7 +199,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             regular_text(
-                                t("friday"),
+                                get_translation(TRANSLATIONS, "friday", language),
                                 color=Colors.text["secondary"],
                                 display="inline-block",
                                 width="100px",
@@ -295,7 +276,9 @@ def footer(language: str) -> rx.Component:
                         rx.box(
                             rx.box(
                                 regular_text(
-                                    t("kvk_number"),
+                                    get_translation(
+                                        TRANSLATIONS, "kvk_number", language
+                                    ),
                                     color=Colors.text["muted"],
                                     font_weight="600",
                                     display="inline-block",
@@ -310,7 +293,9 @@ def footer(language: str) -> rx.Component:
                             ),
                             rx.box(
                                 regular_text(
-                                    t("practice_code"),
+                                    get_translation(
+                                        TRANSLATIONS, "practice_code", language
+                                    ),
                                     color=Colors.text["muted"],
                                     font_weight="600",
                                     display="inline-block",
@@ -325,7 +310,9 @@ def footer(language: str) -> rx.Component:
                             ),
                             rx.box(
                                 regular_text(
-                                    t("bank_account"),
+                                    get_translation(
+                                        TRANSLATIONS, "bank_account", language
+                                    ),
                                     color=Colors.text["muted"],
                                     font_weight="600",
                                     display="inline-block",
@@ -344,7 +331,7 @@ def footer(language: str) -> rx.Component:
                         ),
                         rx.box(
                             rx.link(
-                                t("credits"),
+                                get_translation(TRANSLATIONS, "credits", language),
                                 href=rx.cond(
                                     language == "nl",
                                     "/nl/credits",
@@ -362,7 +349,9 @@ def footer(language: str) -> rx.Component:
                                 text_align=["center", "center", "left", "left"],
                             ),
                             rx.link(
-                                t("privacy_policy"),
+                                get_translation(
+                                    TRANSLATIONS, "privacy_policy", language
+                                ),
                                 href="/documents/Privacy_beleid_v0.1.1.pdf",
                                 color=Colors.text["link"],
                                 text_decoration="underline",
@@ -373,7 +362,9 @@ def footer(language: str) -> rx.Component:
                                 is_external=True,
                             ),
                             rx.link(
-                                t("terms_conditions"),
+                                get_translation(
+                                    TRANSLATIONS, "terms_conditions", language
+                                ),
                                 href="/documents/Algemene_voorwaarden_v0.1.0.pdf",
                                 color=Colors.text["link"],
                                 text_decoration="underline",
@@ -406,7 +397,9 @@ def footer(language: str) -> rx.Component:
                                 src_fallback="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.png",
                                 src_avif="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.avif",
                                 src_webp="/images/shared/podotherapeut_enschede_nederlandse_vereniging_van_podotherapeuten_voorvoet.webp",
-                                alt=TRANSLATIONS[language]["nvvp_logo_alt"],
+                                alt=get_translation(
+                                    TRANSLATIONS, "nvvp_logo_alt", language
+                                ),
                                 dimensions=ImageDimensions.footer_logo_nvvp,
                                 width="auto",
                                 max_height="60px",
@@ -429,7 +422,9 @@ def footer(language: str) -> rx.Component:
                                 src_fallback="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.png",
                                 src_avif="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.avif",
                                 src_webp="/images/shared/podotherapeut_enschede_kwaliteit_register_paramedici_kim_bakhuis_geregistreerd.webp",
-                                alt=TRANSLATIONS[language]["krp_logo_alt"],
+                                alt=get_translation(
+                                    TRANSLATIONS, "krp_logo_alt", language
+                                ),
                                 dimensions=ImageDimensions.footer_logo_krp,
                                 width="auto",
                                 max_height="60px",
@@ -448,7 +443,10 @@ def footer(language: str) -> rx.Component:
                 ),
                 rx.box(
                     rx.link(
-                        rx.text("© ", t("made_with_love")),
+                        rx.text(
+                            "© ",
+                            get_translation(TRANSLATIONS, "made_with_love", language),
+                        ),
                         href="https://linkedin.com/in/dennisbakhuis",
                         color=Colors.text["muted"],
                         font_size=FontSizes.regular,
