@@ -87,7 +87,16 @@
             var insoleSelected = insoleTypeInput && insoleTypeInput.value.trim() !== '';
             var quantitySelected = quantityInput && quantityInput.value.trim() !== '';
             var birthDateValid = !birthDateInput || isValidBirthDate(birthDateInput.value);
-            return htmlValid && insoleSelected && quantitySelected && birthDateValid;
+            var turnstileValid = true;
+
+            // Check if Turnstile is enabled by looking for the widget container
+            var turnstileContainer = form.querySelector('#turnstile-widget-container-insole');
+            if (turnstileContainer) {
+                var turnstileToken = form.querySelector('#turnstile-token-insole');
+                turnstileValid = turnstileToken && turnstileToken.value.trim() !== '';
+            }
+
+            return htmlValid && insoleSelected && quantitySelected && birthDateValid && turnstileValid;
         }
 
         function updateButtonState() {

@@ -9,7 +9,8 @@ import reflex as rx
 import asyncio
 from typing import AsyncGenerator
 
-from ..services import send_order_insoles_email
+from ..services import send_order_insoles_email, verify_turnstile_token
+from ..config import config
 
 
 class OrderInsolesState(rx.State):
@@ -61,13 +62,32 @@ class OrderInsolesState(rx.State):
         self.form_submitting = True
         yield
 
-        first_name = form_data.get("first_name", "").strip()
-        last_name = form_data.get("last_name", "").strip()
-        email = form_data.get("email", "").strip()
-        birth_date = form_data.get("birth_date", "").strip()
-        insole_type = form_data.get("insole_type", "").strip()
-        quantity = form_data.get("quantity", "1").strip()
-        comments = form_data.get("comments", "").strip()
+        first_name = (form_data.get("first_name") or "").strip()
+        last_name = (form_data.get("last_name") or "").strip()
+        email = (form_data.get("email") or "").strip()
+        birth_date = (form_data.get("birth_date") or "").strip()
+        insole_type = (form_data.get("insole_type") or "").strip()
+        quantity = (form_data.get("quantity") or "1").strip()
+        comments = (form_data.get("comments") or "").strip()
+        turnstile_token = (form_data.get("turnstile_token") or "").strip()
+
+        from .website_state import WebsiteState
+
+        website_state = await self.get_state(WebsiteState)
+
+        if config.turnstile_enabled:
+            is_valid = await verify_turnstile_token(turnstile_token)
+            if not is_valid:
+                self.form_submitting = False
+                website_state.show_toast(  # type: ignore[operator]
+                    "Bot verificatie mislukt. Probeer de pagina te vernieuwen.",
+                    "error",
+                )
+                yield
+
+                await asyncio.sleep(5)
+                website_state.hide_toast()  # type: ignore[operator]
+                return
 
         order_data = {
             "first_name": first_name,
@@ -82,10 +102,6 @@ class OrderInsolesState(rx.State):
         email_sent = send_order_insoles_email(order_data)
 
         self.form_submitting = False
-
-        from .website_state import WebsiteState
-
-        website_state = await self.get_state(WebsiteState)
 
         if email_sent:
             website_state.show_toast(  # type: ignore[operator]
