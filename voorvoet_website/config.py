@@ -1,10 +1,4 @@
-"""Configuration management for the VoorVoet website application.
-
-This module defines the application configuration using Pydantic settings,
-loading values from environment variables and .env file. Configuration includes
-Cloudflare Turnstile settings, SMTP email settings, external links, and blog
-display preferences.
-"""
+"""Configuration management for the VoorVoet website application."""
 
 from pathlib import Path
 from typing import Literal
@@ -13,11 +7,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Config(BaseSettings):
-    """Application configuration loaded from environment variables.
-
-    This class uses Pydantic settings to manage application configuration,
-    automatically loading values from environment variables and a .env file.
-    All field names are case-insensitive when loading from environment.
+    """
+    Application configuration loaded from environment variables.
 
     Attributes
     ----------
@@ -54,6 +45,10 @@ class Config(BaseSettings):
         Show author name on blog posts.
     blog_show_publication_date : bool
         Show publication date on blog posts.
+    reimbursements_data_file : str
+        Filename of the reimbursements data JSON file.
+    pricing_data_file : str
+        Filename of the pricing data CSV file.
     """
 
     model_config = SettingsConfigDict(
@@ -165,6 +160,15 @@ class Config(BaseSettings):
     site_url: str = Field(
         default="https://voorvoet.nl",
         description="Base URL of the website for Open Graph and canonical URLs",
+    )
+
+    reimbursements_data_file: str = Field(
+        default="reimbursements_2025.json",
+        description="Filename of the reimbursements data JSON file in data/reimbursements/",
+    )
+    pricing_data_file: str = Field(
+        default="pricing_2025.csv",
+        description="Filename of the pricing data CSV file in data/reimbursements/",
     )
 
 

@@ -16,11 +16,11 @@ TRANSLATIONS = {
         "images_intro": "Deze website gebruikt afbeeldingen van de volgende bronnen:",
         "packages_title": "Gebouwd met",
         "packages_intro": "Deze website draait op de volgende technologieën en open-source packages:",
-        "about_title": "De Bouwer",
+        "about_title": "Ontwikkelaar",
         "about_intro": "Dennis Bakhuis - Data Scientist",
-        "about_text_p1": "Dennis is een data scientist met een Ph.D. van de Universiteit Twente. Zijn achtergrond zit 'm in fluid dynamics, deep learning en natural language processing - kortom, hij vindt het leuk om met data te spelen en er inzichten uit te halen.",
-        "about_text_p2": "Buiten zijn werk bij TenneT als data scientist, is Dennis het liefst buiten te vinden. Meerdaagse trekkings met tent, grotten verkennen (speleologie), en duiken in zowel open water als grotten staan regelmatig op het programma. Die liefde voor avontuur en technische uitdagingen zie je ook terug in hoe hij data science en webontwikkeling aanpakt.",
-        "about_text_p3": "Nieuwsgierig naar zijn werk? Check zijn LinkedIn voor de professionele kant, of zijn GitHub voor code en projecten.",
+        "about_text_p1": "Dennis is een data scientist met een Ph.D. van de Universiteit Twente. Hij is gespecialiseerd in Natural Language Processing, Large Language Models en Agentic AI systemen. Zijn academische achtergrond in fluid dynamics en deep learning heeft geleid tot een unieke benadering van complexe data science uitdagingen.",
+        "about_text_p2": "Naast zijn professionele werk als data scientist bij TenneT, brengt Dennis veel tijd door met outdoor activiteiten. Meerdaagse trekkings, speleologie en duiken in zowel open water als grotten zijn regelmatige bezigheden. Deze passie voor technische uitdagingen en probleemoplossing komt ook tot uiting in zijn werk op het gebied van AI en webontwikkeling.",
+        "about_text_p3": "Voor meer informatie over zijn professionele achtergrond, zie zijn LinkedIn profiel. Code en projecten zijn te vinden op zijn GitHub pagina.",
         "connect": "Verbinden:",
         "github": "GitHub",
         "linkedin": "LinkedIn",
@@ -54,11 +54,11 @@ TRANSLATIONS = {
         "images_intro": "Diese Website verwendet Bilder aus den folgenden Quellen:",
         "packages_title": "Gebaut mit",
         "packages_intro": "Diese Website läuft auf den folgenden Technologien und Open-Source-Paketen:",
-        "about_title": "Der Entwickler",
+        "about_title": "Entwickler",
         "about_intro": "Dennis Bakhuis - Data Scientist",
-        "about_text_p1": "Dennis ist ein Data Scientist mit einem Ph.D. von der Universität Twente. Sein Hintergrund liegt in Strömungsdynamik, Deep Learning und Natural Language Processing - kurz gesagt, er liebt es, mit Daten zu spielen und Erkenntnisse daraus zu gewinnen.",
-        "about_text_p2": "Außerhalb seiner Arbeit als Data Scientist bei TenneT ist Dennis am liebsten draußen unterwegs. Mehrtägige Trekkingtouren mit Zelt, Höhlen erkunden (Speläologie) und Tauchen in offenen Gewässern und Höhlen stehen regelmäßig auf dem Programm. Diese Liebe zu Abenteuer und technischen Herausforderungen spiegelt sich auch in seinem Ansatz zu Data Science und Webentwicklung wider.",
-        "about_text_p3": "Neugierig auf seine Arbeit? Schau dir sein LinkedIn für die professionelle Seite an, oder sein GitHub für Code und Projekte.",
+        "about_text_p1": "Dennis ist ein Data Scientist mit einem Ph.D. von der Universität Twente. Er ist spezialisiert auf Natural Language Processing, Large Language Models und Agentic AI-Systeme. Sein akademischer Hintergrund in Strömungsdynamik und Deep Learning hat zu einem einzigartigen Ansatz für komplexe Data Science-Herausforderungen geführt.",
+        "about_text_p2": "Neben seiner professionellen Arbeit als Data Scientist bei TenneT verbringt Dennis viel Zeit mit Outdoor-Aktivitäten. Mehrtägige Trekkingtouren, Speläologie und Tauchen in offenen Gewässern sowie Höhlen sind regelmäßige Beschäftigungen. Diese Leidenschaft für technische Herausforderungen und Problemlösung zeigt sich auch in seiner Arbeit im Bereich AI und Webentwicklung.",
+        "about_text_p3": "Weitere Informationen zu seinem professionellen Hintergrund finden Sie auf seinem LinkedIn-Profil. Code und Projekte sind auf seiner GitHub-Seite verfügbar.",
         "connect": "Verbinden:",
         "github": "GitHub",
         "linkedin": "LinkedIn",
@@ -92,11 +92,11 @@ TRANSLATIONS = {
         "images_intro": "This website uses images from the following sources:",
         "packages_title": "Built With",
         "packages_intro": "This website runs on the following technologies and open-source packages:",
-        "about_title": "The Builder",
+        "about_title": "Developer",
         "about_intro": "Dennis Bakhuis - Data Scientist",
-        "about_text_p1": "Dennis is a data scientist with a Ph.D. from the University of Twente. His background is in fluid dynamics, deep learning, and natural language processing - in short, he loves playing with data and extracting insights from it.",
-        "about_text_p2": "Outside his work as a data scientist at TenneT, you'll most likely find Dennis outdoors. Multi-day treks with a tent, exploring caves (speleology), and diving in both open water and caves are regular activities. That love for adventure and technical challenges shows in how he approaches data science and web development too.",
-        "about_text_p3": "Curious about his work? Check out his LinkedIn for the professional side, or his GitHub for code and projects.",
+        "about_text_p1": "Dennis is a data scientist with a Ph.D. from the University of Twente. He specializes in Natural Language Processing, Large Language Models, and Agentic AI systems. His academic background in fluid dynamics and deep learning has led to a unique approach to complex data science challenges.",
+        "about_text_p2": "Beyond his professional work as a data scientist at TenneT, Dennis spends considerable time on outdoor activities. Multi-day treks, speleology, and diving in both open water and caves are regular pursuits. This passion for technical challenges and problem-solving is also reflected in his work in AI and web development.",
+        "about_text_p3": "For more information about his professional background, visit his LinkedIn profile. Code and projects can be found on his GitHub page.",
         "connect": "Connect:",
         "github": "GitHub",
         "linkedin": "LinkedIn",
@@ -177,6 +177,40 @@ def _get_category_translation_key(category: str) -> str:
     return category_map.get(category, "cat_shared")
 
 
+def _create_image_table_header(
+    miniature_header: str,
+    category_header: str,
+    attribution_header: str,
+) -> rx.Component:
+    return rx.hstack(
+        rx.box(
+            regular_text(
+                miniature_header, font_weight="700", color=Colors.text["heading"]
+            ),
+            width=["80px", "100px", "120px", "140px"],
+            flex_shrink="0",
+        ),
+        rx.box(
+            regular_text(
+                category_header, font_weight="700", color=Colors.text["heading"]
+            ),
+            width=["100px", "120px", "140px", "160px"],
+            flex_shrink="0",
+        ),
+        rx.box(
+            regular_text(
+                attribution_header, font_weight="700", color=Colors.text["heading"]
+            ),
+            flex="1",
+            min_width="0",
+        ),
+        spacing="3",
+        padding="0.5rem",
+        border_bottom=f"2px solid {Colors.text['muted']}",
+        width="100%",
+    )
+
+
 def _create_image_table_row(
     image_path: str,
     name: str,
@@ -185,30 +219,7 @@ def _create_image_table_row(
     author_url: str | None,
     source: str,
     source_url: str | None,
-    is_header: bool = False,
 ) -> rx.Component:
-    if is_header:
-        return rx.hstack(
-            rx.box(width="64px"),
-            rx.box(
-                regular_text(name, font_weight="700", color=Colors.text["heading"]),
-                width="200px",
-                flex_shrink="0",
-            ),
-            rx.box(
-                regular_text(category, font_weight="700", color=Colors.text["heading"]),
-                width="120px",
-                flex_shrink="0",
-            ),
-            rx.box(
-                regular_text(source, font_weight="700", color=Colors.text["heading"]),
-                flex="1",
-            ),
-            spacing="3",
-            padding="0.5rem",
-            border_bottom=f"2px solid {Colors.text['muted']}",
-        )
-
     if author is None:
         attribution = regular_text(source, color=Colors.text["secondary"])
     else:
@@ -235,29 +246,32 @@ def _create_image_table_row(
             rx.image(
                 src=image_path,
                 alt=name,
-                height="48px",
-                width="64px",
+                height=["40px", "44px", "48px", "48px"],
+                width=["53px", "59px", "64px", "64px"],
                 object_fit="cover",
                 border_radius="4px",
             ),
-            width="64px",
+            width=["80px", "100px", "120px", "140px"],
             flex_shrink="0",
-        ),
-        rx.box(
-            regular_text(name, color=Colors.text["content"]),
-            width="200px",
-            flex_shrink="0",
+            display="flex",
+            justify_content="center",
         ),
         rx.box(
             regular_text(category, color=Colors.text["secondary"]),
-            width="120px",
+            width=["100px", "120px", "140px", "160px"],
             flex_shrink="0",
         ),
-        rx.box(attribution, flex="1"),
+        rx.box(
+            attribution,
+            flex="1",
+            min_width="0",
+            overflow="hidden",
+        ),
         spacing="3",
         padding="0.5rem",
         border_bottom=f"1px solid {Colors.borders['light']}",
         align="center",
+        width="100%",
     )
 
 
@@ -375,15 +389,10 @@ def section_content(language: str) -> rx.Component:
                 ),
                 rx.box(
                     rx.box(
-                        _create_image_table_row(
-                            "",
-                            get_translation(TRANSLATIONS, "name_col", language),
+                        _create_image_table_header(
+                            get_translation(TRANSLATIONS, "image_col", language),
                             get_translation(TRANSLATIONS, "category_col", language),
-                            None,
-                            None,
                             get_translation(TRANSLATIONS, "attribution_col", language),
-                            None,
-                            is_header=True,
                         ),
                         *[
                             _create_image_table_row(

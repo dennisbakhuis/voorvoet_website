@@ -8,6 +8,7 @@ from ...theme import Colors
 from ...components import section, container, header
 from ...utils import get_translation
 from ...states import WebsiteState
+from ...config import config
 
 
 TRANSLATIONS = {
@@ -99,7 +100,7 @@ def load_reimbursement_data() -> tuple[list[str], list[list[str]]]:
         Path(__file__).parent.parent.parent
         / "data"
         / "reimbursements"
-        / "reimbursements_2025.json"
+        / config.reimbursements_data_file
     )
     with open(data_path, "r", encoding="utf-8") as f:
         data = json.load(f)

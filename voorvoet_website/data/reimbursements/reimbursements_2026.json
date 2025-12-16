@@ -1,0 +1,782 @@
+[
+    {
+        "verzekeraar": "Verzekeraar",
+        "pakket": "Pakket",
+        "vergoeding": "Vergoeding"
+    },
+    {
+        "verzekeraar": "Aevitae",
+        "pakket": "Laef!1",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Aevitae",
+        "pakket": "Laef!2",
+        "vergoeding": "\u20ac\u202f70,- (inclusief steunzolen) per kalenderjaar"
+    },
+    {
+        "verzekeraar": "Aevitae",
+        "pakket": "Laef!3",
+        "vergoeding": "\u20ac\u202f100,- (inclusief steunzolen) per kalenderjaar"
+    },
+    {
+        "verzekeraar": "Aevitae",
+        "pakket": "Laef!4",
+        "vergoeding": "\u20ac\u202f150,- (inclusief steunzolen) per kalenderjaar"
+    },
+    {
+        "verzekeraar": "Anderzorg",
+        "pakket": "Flex",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Anderzorg",
+        "pakket": "Extra",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Aon Vitaal (Zilveren Kruis)",
+        "pakket": "Basis Vitaal",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Aon Vitaal (Zilveren Kruis)",
+        "pakket": "Vitaal 1",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Aon Vitaal (Zilveren Kruis)",
+        "pakket": "Vitaal 2",
+        "vergoeding": "Max. \u20ac 150,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "Aon Vitaal (Zilveren Kruis)",
+        "pakket": "Vitaal 3",
+        "vergoeding": "Max. \u20ac 200,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "Aon Vitaal (Zilveren Kruis)",
+        "pakket": "Vitaal Premium",
+        "vergoeding": "Max. \u20ac 250,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "Aon Vitaal (Zilveren Kruis)",
+        "pakket": "Vitaal Senior",
+        "vergoeding": "Max. \u20ac 400,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "a.s.r.",
+        "pakket": "Start",
+        "vergoeding": "Podotherapie max. \u20ac 100,- per jaar Steunzolen* krijg je vergoed tot maximaal \u20ac 50 per jaar\n* Steunzolen: Je hebt een verwijzing van de behandelend arts, podotherapeut, registerpodoloog of podoposturaal therapeut. Steunzolen of therapeutische zolen worden geleverd door een orthopedisch schoenmaker, podotherapeut, registerpodoloog of podoposturaal therapeut.\u00a0Steunzolen geleverd via internet worden niet vergoed."
+    },
+    {
+        "verzekeraar": "a.s.r.",
+        "pakket": "Extra",
+        "vergoeding": "Podotherapie max. \u20ac 250,- per jaar Steunzolen* krijg je vergoed tot maximaal \u20ac 100 per jaar\n* Steunzolen: Je hebt een verwijzing van de behandelend arts, podotherapeut, registerpodoloog of podoposturaal therapeut. Steunzolen of therapeutische zolen worden geleverd door een orthopedisch schoenmaker, podotherapeut, registerpodoloog of podoposturaal therapeut.\u00a0Steunzolen geleverd via internet worden niet vergoed."
+    },
+    {
+        "verzekeraar": "a.s.r.",
+        "pakket": "Uitgebreid",
+        "vergoeding": "Podotherapie max. \u20ac 500,- per jaar Steunzolen* krijg je vergoed tot maximaal \u20ac 150 per jaar\n* Steunzolen: Je hebt een verwijzing van de behandelend arts, podotherapeut, registerpodoloog of podoposturaal therapeut. Steunzolen of therapeutische zolen worden geleverd door een orthopedisch schoenmaker, podotherapeut, registerpodoloog of podoposturaal therapeut.\u00a0Steunzolen geleverd via internet worden niet vergoed."
+    },
+    {
+        "verzekeraar": "a.s.r.",
+        "pakket": "Optimaal",
+        "vergoeding": "Podotherapie krijg je volledig vergoed, zonder maximumbedrag per jaar Steunzolen* krijg je vergoed tot maximaal \u20ac 200 per jaar\n* Steunzolen: Je hebt een verwijzing van de behandelend arts, podotherapeut, registerpodoloog of podoposturaal therapeut. Steunzolen of therapeutische zolen worden geleverd door een orthopedisch schoenmaker, podotherapeut, registerpodoloog of podoposturaal therapeut.\u00a0Steunzolen geleverd via internet worden niet vergoed."
+    },
+    {
+        "verzekeraar": "a.s.r.",
+        "pakket": "ZorgBasis, ZorgBewust,\u00a0 ZorgGoed, ZorgBeter,\u00a0 ZorgBest",
+        "vergoeding": "Geen vergoeding voor podotherapie en steunzolen\n* Steunzolen: Je hebt een verwijzing van de behandelend arts, podotherapeut, registerpodoloog of podoposturaal therapeut. Steunzolen of therapeutische zolen worden geleverd door een orthopedisch schoenmaker, podotherapeut, registerpodoloog of podoposturaal therapeut.\u00a0Steunzolen geleverd via internet worden niet vergoed."
+    },
+    {
+        "verzekeraar": "CZ",
+        "pakket": "Start",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "CZ",
+        "pakket": "Basis",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "CZ",
+        "pakket": "50+",
+        "vergoeding": "\u20ac 115,- (en \u20ac 60,- Voetzorg hulpmiddelen zoals zooltjes, tape, drukverband, nagelprotheses en nagelbeugels)"
+    },
+    {
+        "verzekeraar": "CZ",
+        "pakket": "Jongeren",
+        "vergoeding": "\u20ac 70,- (en \u20ac 60,- Voetzorg hulpmiddelen zoals zooltjes, tape, drukverband, nagelprotheses en nagelbeugels)"
+    },
+    {
+        "verzekeraar": "CZ",
+        "pakket": "Plus",
+        "vergoeding": "\u20ac 115,- (en \u20ac 75,- Voetzorg hulpmiddelen zoals zooltjes, tape, drukverband, nagelprotheses en nagelbeugels)"
+    },
+    {
+        "verzekeraar": "CZ",
+        "pakket": "Top",
+        "vergoeding": "\u20ac 115,- (en \u20ac 75,- Voetzorg hulpmiddelen zoals zooltjes, tape, drukverband, nagelprotheses en nagelbeugels)"
+    },
+    {
+        "verzekeraar": "CZ Direct",
+        "pakket": "-",
+        "vergoeding": "Geen vergoeding voor podotherapie in de aanvullende verzekeringen."
+    },
+    {
+        "verzekeraar": "DSW",
+        "pakket": "AV Compact",
+        "vergoeding": "Podotherapie: maximaal \u20ac\u00a027,50\u00a0per behandeldatum, maximaal 6 consulten per kalenderjaar, voor zover u geen recht heeft op vergoeding uit de basisverzekering.Steunzolen: geen vergoeding."
+    },
+    {
+        "verzekeraar": "DSW",
+        "pakket": "AV Student",
+        "vergoeding": "Podotherapie en steunzolen worden samen vergoed tot maximaal \u20ac\u00a0100,- per kalenderjaar.Podotherapie: maximaal \u20ac\u00a027,50\u00a0per behandeldatum, voor zover u geen recht heeft op vergoeding uit de basisverzekering.Steunzolen: maximaal \u20ac 100,- per kalenderjaar."
+    },
+    {
+        "verzekeraar": "DSW",
+        "pakket": "AV Standaard",
+        "vergoeding": "Podotherapie en steunzolen worden samen vergoed tot maximaal \u20ac 125,- per kalenderjaar.Podotherapie: maximaal \u20ac\u00a027,50\u00a0per behandeldatum, voor zover u geen recht heeft op vergoeding uit de basisverzekering.Steunzolen: maximaal \u20ac 125,- per kalenderjaar."
+    },
+    {
+        "verzekeraar": "DSW",
+        "pakket": "AV Top",
+        "vergoeding": "Podotherapie en steunzolen worden samen vergoed tot maximaal \u20ac\u00a0150,- per kalenderjaar.Podotherapie: maximaal \u20ac\u00a027,50\u00a0per behandeldatum, voor zover u geen recht heeft op vergoeding uit de basisverzekering.Steunzolen: maximaal \u20ac 150,- per kalenderjaar."
+    },
+    {
+        "verzekeraar": "De christelijke zorgverzekeraar",
+        "pakket": "Smallpolis",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "De christelijke zorgverzekeraar",
+        "pakket": "Mediumpolis",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "De christelijke zorgverzekeraar",
+        "pakket": "Largepolis",
+        "vergoeding": "\u20ac 150 per kalenderjaar inclusief steunzolen"
+    },
+    {
+        "verzekeraar": "De christelijke zorgverzekeraar",
+        "pakket": "Extra Largepolis",
+        "vergoeding": "\u20ac 200 per kalenderjaar inclusief steunzolen"
+    },
+    {
+        "verzekeraar": "De Friesland",
+        "pakket": "AV Instap/Budget/Standaard",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "De Friesland",
+        "pakket": "AV Extra",
+        "vergoeding": "Max. \u20ac 150 per kalenderjaar; steunzolen max. \u20ac 125 per 2 kalenderjaren"
+    },
+    {
+        "verzekeraar": "De Friesland",
+        "pakket": "AV Optimaal",
+        "vergoeding": "Max. \u20ac 250 per kalenderjaar; steunzolen max. \u20ac 125 per 2 kalenderjaren"
+    },
+    {
+        "verzekeraar": "De Friesland",
+        "pakket": "AV Frieso Compleet",
+        "vergoeding": "Max. \u20ac 250 per kalenderjaar; steunzolen 100% max. 1x per kalenderjaar"
+    },
+    {
+        "verzekeraar": "FBTO",
+        "pakket": "-",
+        "vergoeding": "Deze zorgverzekeraar biedt vanuit de aanvullende verzekering geen vergoeding voor podotherapie (en steunzolen)."
+    },
+    {
+        "verzekeraar": "Gemeente Amsterdam (Zilveren Kruis)",
+        "pakket": "AV Amsterdam 1",
+        "vergoeding": "Max. \u20ac 150,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "Gemeente Amsterdam (Zilveren Kruis)",
+        "pakket": "AV Amsterdam 2",
+        "vergoeding": "Max. \u20ac 150,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "Gemeente Amsterdam (Zilveren Kruis)",
+        "pakket": "AV Amsterdam 3",
+        "vergoeding": "Max. \u20ac 200,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "Gemeenten Optimaal (Zilveren Kruis)",
+        "pakket": "Optimaal Aanvullend 1",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Gemeenten Optimaal (Zilveren Kruis)",
+        "pakket": "Optimaal Aanvullend 2",
+        "vergoeding": "Max. \u20ac 150,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "Gemeenten Optimaal (Zilveren Kruis)",
+        "pakket": "Optimaal Aanvullend 3",
+        "vergoeding": "Max. \u20ac 200,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "IZA",
+        "pakket": "IZA Extra Zorg 1",
+        "vergoeding": "\u20ac 100,- per jaar voor podotherapie en voetbehandelingen en \u20ac 125,- voor aanmeten en kosten van steunzolen en therapiezolen"
+    },
+    {
+        "verzekeraar": "IZA",
+        "pakket": "IZA Extra Zorg 2",
+        "vergoeding": "\u20ac 200,- per jaar voor podotherapie en voetbehandelingen en \u20ac 125,- voor aanmeten en kosten van steunzolen en therapiezolen"
+    },
+    {
+        "verzekeraar": "IZA",
+        "pakket": "IZA Extra Zorg 3",
+        "vergoeding": "\u20ac 300,- per jaar voor podotherapie en voetbehandelingen en \u20ac 225,- voor aanmeten en kosten van steunzolen en therapiezolen"
+    },
+    {
+        "verzekeraar": "IZA",
+        "pakket": "IZA Extra Zorg Basis en Instap",
+        "vergoeding": "Geen vergoeding voor voetzorg en steunzolen"
+    },
+    {
+        "verzekeraar": "IZA",
+        "pakket": "IZA Classic Comfort",
+        "vergoeding": "\u20ac 200,- per jaar voor podotherapie en voetbehandelingen en \u20ac 225,- voor aanmeten en kosten van steunzolen en therapiezolen"
+    },
+    {
+        "verzekeraar": "IZZ Zorgverzekering (door VGZ)",
+        "pakket": "Fit, IZZ Zorg voor de Zorg Instap",
+        "vergoeding": "Geen vergoeding voor podotherapie en steunzolen"
+    },
+    {
+        "verzekeraar": "IZZ Zorgverzekering (door VGZ)",
+        "pakket": "IZZ Zorg voor de Zorg",
+        "vergoeding": "Geen vergoeding voor podotherapie en steunzolen"
+    },
+    {
+        "verzekeraar": "IZZ Zorgverzekering (door VGZ)",
+        "pakket": "IZZ Zorg voor de Zorg + Extra 1",
+        "vergoeding": "Geen vergoeding voor podotherapie en steunzolen"
+    },
+    {
+        "verzekeraar": "IZZ Zorgverzekering (door VGZ)",
+        "pakket": "IZZ Zorg voor de Zorg + Extra 2",
+        "vergoeding": "\u20ac 100,- per jaar voor podotherapie en voetbehandelingen en \u20ac 125,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "IZZ Zorgverzekering (door VGZ)",
+        "pakket": "IZZ Zorg voor de Zorg + Extra 3",
+        "vergoeding": "\u20ac 200,- per jaar voor podotherapie en voetbehandelingen en \u20ac 125,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "IZZ Zorgverzekering (door VGZ)",
+        "pakket": "Bijzonder Bewust",
+        "vergoeding": "Geen vergoeding voor podotherapie en steunzolen"
+    },
+    {
+        "verzekeraar": "Interpolis",
+        "pakket": "ZorgActief",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Interpolis",
+        "pakket": "ZonderMeer",
+        "vergoeding": "\u20ac 200 inclusief 1 paar steunzolen"
+    },
+    {
+        "verzekeraar": "Interpolis",
+        "pakket": "MeerZeker",
+        "vergoeding": "\u20ac 200 inclusief 1 paar steunzolen"
+    },
+    {
+        "verzekeraar": "Interpolis",
+        "pakket": "ZonderZorgen",
+        "vergoeding": "\u20ac 200 inclusief 1 paar steunzolen"
+    },
+    {
+        "verzekeraar": "Just",
+        "pakket": "-",
+        "vergoeding": "Deze zorgverzekeraar biedt vanuit de aanvullende verzekering geen vergoeding voor podotherapie en steunzolen."
+    },
+    {
+        "verzekeraar": "Menzis",
+        "pakket": "ExtraVerzorgd 1",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Menzis",
+        "pakket": "ExtraVerzorgd 2",
+        "vergoeding": "Max. \u20ac 150,- per kalenderjaar voor voetzorg (inclusief steunzolen)"
+    },
+    {
+        "verzekeraar": "Menzis",
+        "pakket": "ExtraVerzorgd 3",
+        "vergoeding": "Max. \u20ac 200,- per kalenderjaar voor voetzorg (inclusief steunzolen)"
+    },
+    {
+        "verzekeraar": "Menzis",
+        "pakket": "JongerenVerzorgd",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Menzis",
+        "pakket": "Aanvullend",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Menzis",
+        "pakket": "Extra Aanvullend",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Nationale Nederlanden",
+        "pakket": "Instap en Start",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Nationale Nederlanden",
+        "pakket": "Extra",
+        "vergoeding": "\u20ac 100,- vergoeding voetbehandeling en \u20ac 100,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Nationale Nederlanden",
+        "pakket": "Compleet",
+        "vergoeding": "\u20ac 150,- vergoeding voetbehandeling en \u20ac 150,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Nationale Nederlanden",
+        "pakket": "Comfort",
+        "vergoeding": "\u20ac 150,- vergoeding voetbehandeling en \u20ac 200,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Nationale Nederlanden",
+        "pakket": "Top",
+        "vergoeding": "\u20ac 150,- vergoeding voetbehandeling en 100% voor steunzolen"
+    },
+    {
+        "verzekeraar": "Nationale Nederlanden",
+        "pakket": "Jij & Compact",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Nationale Nederlanden",
+        "pakket": "Jij & Gemak",
+        "vergoeding": "\u20ac 70,- vergoeding voetbehandeling en \u20ac 60,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Nationale Nederlanden",
+        "pakket": "Jij & Vitaal",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Ohra",
+        "pakket": "Aanvullend/Aanvullend Fysio Meenemen",
+        "vergoeding": "Maximaal \u20ac 50,- voor voetbehandelingen"
+    },
+    {
+        "verzekeraar": "Ohra",
+        "pakket": "Extra aanvullend/Extra Aanvullend Fysio Meenemen",
+        "vergoeding": "Maximaal \u20ac 100,- voor voetbehandelingen en \u20ac 100,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Ohra",
+        "pakket": "Uitgebreid/Uitgebreid Fysio Meenemen",
+        "vergoeding": "Maximaal \u20ac 150,- voor voetbehandelingen en \u20ac 150,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Ohra",
+        "pakket": "Uitgebreid Vitaal",
+        "vergoeding": "Max. \u20ac 150,- voor voetbehandelingen en \u20ac 200,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Ohra",
+        "pakket": "Extra Uitgebreid",
+        "vergoeding": "Max. \u20ac 150,- voor voetbehandelingen en \u20ac 200,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Ohra",
+        "pakket": "Compleet",
+        "vergoeding": "Max. \u20ac 150,- voor voetbehandelingen en volledige vergoeding voor steunzolen"
+    },
+    {
+        "verzekeraar": "Ohra",
+        "pakket": "Zelfverzekerd Compact",
+        "vergoeding": "Max. \u20ac 50,- voor voetbehandelingen en geen vergoeding voor steunzolen"
+    },
+    {
+        "verzekeraar": "ONVZ",
+        "pakket": "Startfit",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "ONVZ",
+        "pakket": "Benfit",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "ONVZ",
+        "pakket": "Optifit",
+        "vergoeding": "Max. \u20ac 200 voor andere voetzorg (inclusief steunzolen) per kalenderjaar"
+    },
+    {
+        "verzekeraar": "ONVZ",
+        "pakket": "Topfit",
+        "vergoeding": "Max. \u20ac 500 voor andere voetzorg (inclusief steunzolen) per kalenderjaar"
+    },
+    {
+        "verzekeraar": "ONVZ",
+        "pakket": "Superfit",
+        "vergoeding": "100% voor andere voetzorg, \u20ac 500 voor steunzolen"
+    },
+    {
+        "verzekeraar": "Politie Zorg Polis",
+        "pakket": "Jongeren PZP",
+        "vergoeding": "\u20ac 70,- voor voetbehandelingen, \u20ac 55,- per jaar voor steunzolen"
+    },
+    {
+        "verzekeraar": "Politie Zorg Polis",
+        "pakket": "Basis PZP",
+        "vergoeding": "\u20ac 70,- voor voetbehandelingen, \u20ac 55,- per jaar voor steunzolen"
+    },
+    {
+        "verzekeraar": "Politie Zorg Polis",
+        "pakket": "Plus PZP",
+        "vergoeding": "\u20ac 115,- voor voetbehandelingen, \u20ac 55,- per jaar voor steunzolen"
+    },
+    {
+        "verzekeraar": "Politie Zorg Polis",
+        "pakket": "Top Collectief",
+        "vergoeding": "\u20ac 115,- voor voetbehandelingen, \u20ac 75,- per jaar voor steunzolen"
+    },
+    {
+        "verzekeraar": "Politie Zorg Polis",
+        "pakket": "Start en Compact PZP",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Salland Zorgverzekeringen",
+        "pakket": "Start",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Salland Zorgverzekeringen",
+        "pakket": "Extra",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Salland Zorgverzekeringen",
+        "pakket": "Plus",
+        "vergoeding": "75% tot maximaal \u20ac 125,- per kalenderjaar (inclusief steunzolen)"
+    },
+    {
+        "verzekeraar": "Salland Zorgverzekeringen",
+        "pakket": "Top",
+        "vergoeding": "75% tot maximaal \u20ac 250,- per kalenderjaar (inclusief steunzolen)"
+    },
+    {
+        "verzekeraar": "Stad Holland",
+        "pakket": "Compact AV",
+        "vergoeding": "Podotherapie: maximaal \u20ac\u00a027,50\u00a0per behandeldatum, maximaal 6 consulten per kalenderjaar, voor zover u geen recht heeft op vergoeding uit de basisverzekering.Steunzolen: geen vergoeding."
+    },
+    {
+        "verzekeraar": "Stad Holland",
+        "pakket": "Jongeren AV",
+        "vergoeding": "Podotherapie en steunzolen worden samen vergoed tot maximaal \u20ac\u00a0100,- per kalenderjaar.Podotherapie: maximaal \u20ac\u00a027,50\u00a0per behandeldatum, voor zover u geen recht heeft op vergoeding uit de basisverzekering.Steunzolen: maximaal \u20ac 100,- per kalenderjaar."
+    },
+    {
+        "verzekeraar": "Stad Holland",
+        "pakket": "Standaard AV",
+        "vergoeding": "Podotherapie en steunzolen worden samen vergoed tot maximaal \u20ac\u00a0125,- per kalenderjaar.Podotherapie: maximaal \u20ac\u00a027,50\u00a0per behandeldatum, voor zover u geen recht heeft op vergoeding uit de basisverzekering.Steunzolen: maximaal \u20ac 125,- per kalenderjaar."
+    },
+    {
+        "verzekeraar": "Stad Holland",
+        "pakket": "Uitgebreide AV",
+        "vergoeding": "Podotherapie en steunzolen worden samen vergoed tot maximaal \u20ac\u00a0150,- per kalenderjaar.Podotherapie: maximaal \u20ac\u00a027,50\u00a0per behandeldatum, voor zover u geen recht heeft op vergoeding uit de basisverzekering.Steunzolen: maximaal \u20ac 150,- per kalenderjaar."
+    },
+    {
+        "verzekeraar": "Stad Holland",
+        "pakket": "Extra Uitgebreide AV",
+        "vergoeding": "Podotherapie en steunzolen worden samen vergoed tot maximaal \u20ac\u00a0150,- per kalenderjaar.Podotherapie: maximaal \u20ac\u00a027,50\u00a0per behandeldatum, voor zover u geen recht heeft op vergoeding uit de basisverzekering.Steunzolen: maximaal \u20ac 150,- per kalenderjaar."
+    },
+    {
+        "verzekeraar": "UMC Zorgverzekering",
+        "pakket": "Extra Zorg Basis en Instap",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "UMC Zorgverzekering",
+        "pakket": "Extra Zorg 1",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "UMC Zorgverzekering",
+        "pakket": "Extra Zorg 2",
+        "vergoeding": "\u20ac 100,- per jaar en \u20ac 125,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "UMC Zorgverzekering",
+        "pakket": "Extra Zorg 3",
+        "vergoeding": "\u20ac 100,- per jaar en \u20ac 125,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "United Consumers",
+        "pakket": "ZorgZeker 1",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "United Consumers",
+        "pakket": "ZorgZeker 2",
+        "vergoeding": "\u20ac 100,- budget voor voetbehandelingen; \u20ac 70,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "United Consumers",
+        "pakket": "ZorgZeker 3",
+        "vergoeding": "\u20ac 200,- budget voor voetbehandelingen; \u20ac 125,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Univ\u00e9",
+        "pakket": "Zorg BudgetZorg Budget PlusAanvullend Goed",
+        "vergoeding": "Geen vergoeding voor podotherapie en voetbehandelingen"
+    },
+    {
+        "verzekeraar": "Univ\u00e9",
+        "pakket": "Aanvullend Beter",
+        "vergoeding": "\u20ac 100 per jaar voor podotherapie en voetbehandelingen en \u20ac 70 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "Univ\u00e9",
+        "pakket": "Aanvullend Best",
+        "vergoeding": "\u20ac 200 per jaar voor podotherapie en voetbehandelingen en \u20ac 100 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "Univ\u00e9",
+        "pakket": "Collectief Aanvullend Goed",
+        "vergoeding": "\u20ac 100 per jaar voor podotherapie en voetbehandelingen en \u20ac 70 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "Univ\u00e9",
+        "pakket": "Collectief Aanvullend Beter",
+        "vergoeding": "\u20ac 300 per jaar voor podotherapie en voetbehandelingen en \u20ac 125 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "Univ\u00e9",
+        "pakket": "Collectief Aanvullend Best",
+        "vergoeding": "\u20ac 500 per jaar voor podotherapie en voetbehandelingen \u20ac 180 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "Univ\u00e9 Zorg Gemeentepakket",
+        "pakket": "Slim",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Univ\u00e9 Zorg Gemeentepakket",
+        "pakket": "Compact",
+        "vergoeding": "\u20ac 100 per jaar voor podotherapie en voetbehandelingen en \u20ac 70 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "Univ\u00e9 Zorg Gemeentepakket",
+        "pakket": "Compleet",
+        "vergoeding": "\u20ac 300 per jaar voor podotherapie en voetbehandelingen en \u20ac 125 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ",
+        "pakket": "Instap",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "VGZ",
+        "pakket": "Aanvullend Goed",
+        "vergoeding": "\u20ac 100 per jaar voor podotherapie en voetbehandelingen en \u20ac 70 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ",
+        "pakket": "Aanvullend Beter",
+        "vergoeding": "\u20ac 300 per jaar voor podotherapie en voetbehandelingen en \u20ac 125 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ",
+        "pakket": "Aanvullend Best",
+        "vergoeding": "\u20ac 500 per jaar voor podotherapie en voetbehandelingen en \u20ac 180 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ",
+        "pakket": "Alles-in-1 VGZ Jongpakket",
+        "vergoeding": "Geen vergoeding voor podotherapie en steunzolen"
+    },
+    {
+        "verzekeraar": "VGZ",
+        "pakket": "Alles-in-1 VGZ Gezinpakket",
+        "vergoeding": "\u20ac 300 per jaar voor podotherapie en voetbehandelingen en \u20ac 125 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ Werkt",
+        "pakket": "Werkt Basis en Instap",
+        "vergoeding": "Geen vergoeding voor podotherapie en steunzolen"
+    },
+    {
+        "verzekeraar": "VGZ Werkt",
+        "pakket": "Werkt Goed",
+        "vergoeding": "\u20ac 100 per jaar voor podotherapie en voetbehandelingen en \u20ac 70 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ Werkt",
+        "pakket": "Werkt Beter",
+        "vergoeding": "\u20ac 300 per jaar voor podotherapie en voetbehandelingen en \u20ac 125 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ Werkt",
+        "pakket": "Werkt Best",
+        "vergoeding": "\u20ac 500 per jaar voor podotherapie en voetbehandelingen en \u20ac 180 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ Zorgt",
+        "pakket": "VGZ Zorgt Instap",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "VGZ Zorgt",
+        "pakket": "VGZ Zorgt Goed",
+        "vergoeding": "\u20ac 100 per jaar voor podotherapie en voetbehandelingen en \u20ac 70 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ Zorgt",
+        "pakket": "VGZ Zorgt Beter",
+        "vergoeding": "\u20ac 300 per jaar voor podotherapie en voetbehandelingen en \u20ac 125 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ Zorgt",
+        "pakket": "VGZ Zorgt Best",
+        "vergoeding": "\u20ac 500 per jaar voor podotherapie en voetbehandelingen en \u20ac 180 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ Collectief",
+        "pakket": "VGZ Primair",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "VGZ Collectief",
+        "pakket": "VGZ Royaal",
+        "vergoeding": "\u20ac 100 per jaar voor podotherapie en voetbehandelingen en \u20ac 125 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ Collectief",
+        "pakket": "VGZ Optimaal",
+        "vergoeding": "\u20ac 200 per jaar voor podotherapie en voetbehandelingen en \u20ac 125 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VGZ Collectief",
+        "pakket": "VGZ Excellent",
+        "vergoeding": "\u20ac 300 per jaar voor podotherapie en voetbehandelingen en \u20ac 225 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "VinkVink",
+        "pakket": "-",
+        "vergoeding": "Deze zorgverzekeraar biedt vanuit de aanvullende verzekering geen vergoeding voor podotherapie en steunzolen."
+    },
+    {
+        "verzekeraar": "VvAA",
+        "pakket": "Start",
+        "vergoeding": "Geen vergoeding voor voetzorg en steunzolen"
+    },
+    {
+        "verzekeraar": "VvAA",
+        "pakket": "Plus",
+        "vergoeding": "Geen vergoeding voor voetzorg en steunzolen"
+    },
+    {
+        "verzekeraar": "VvAA",
+        "pakket": "Optimaal",
+        "vergoeding": "\u20ac 200,- per jaar voor voetzorg (inclusief steunzolen)"
+    },
+    {
+        "verzekeraar": "VvAA",
+        "pakket": "Top",
+        "vergoeding": "\u20ac 500,- per jaar voor voetzorg (inclusief steunzolen)"
+    },
+    {
+        "verzekeraar": "VvAA",
+        "pakket": "Excellent",
+        "vergoeding": "100% voor voetzorg, \u20ac 500 euro voor steunzolen"
+    },
+    {
+        "verzekeraar": "ZEKUR",
+        "pakket": "Extra ZEKUR",
+        "vergoeding": "\u20ac 200 per jaar voor podotherapie en voetbehandelingen; \u20ac 125 per jaar voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "ZieZo van Zilveren Kruis",
+        "pakket": "-",
+        "vergoeding": "Deze zorgverzekeraar biedt vanuit de aanvullende verzekering geen vergoeding voor podotherapie (en steunzolen)."
+    },
+    {
+        "verzekeraar": "Zilveren Kruis",
+        "pakket": "Aanvullend 1 Ster",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Zilveren Kruis",
+        "pakket": "Aanvullend 2 Sterren",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Zilveren Kruis",
+        "pakket": "Aanvullend 3 Sterren",
+        "vergoeding": "Max. \u20ac 150,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "Zilveren Kruis",
+        "pakket": "Aanvullend 4 Sterren",
+        "vergoeding": "Max. \u20ac 200,- per kalenderjaar (inclusief 1 paar steunzolen)"
+    },
+    {
+        "verzekeraar": "Zorg en Zekerheid",
+        "pakket": "AV Basis",
+        "vergoeding": "Max. \u20ac 50,- vergoeding per kalenderjaar en 50% voor steunzolen tot maximaal \u20ac 35,-"
+    },
+    {
+        "verzekeraar": "Zorg en Zekerheid",
+        "pakket": "AV Standaard",
+        "vergoeding": "Max. \u20ac 50,- vergoeding per kalenderjaar en 50% voor steunzolen tot maximaal \u20ac 35,-"
+    },
+    {
+        "verzekeraar": "Zorg en Zekerheid",
+        "pakket": "AV Top",
+        "vergoeding": "Max. \u20ac 100,- vergoeding per kalenderjaar en tot max. \u20ac 70,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Zorg en Zekerheid",
+        "pakket": "AV Plus",
+        "vergoeding": "Max. \u20ac 100,- vergoeding per kalenderjaar en tot max. \u20ac 70,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Zorg en Zekerheid",
+        "pakket": "AV GeZZin",
+        "vergoeding": "Max. \u20ac 100,- vergoeding per kalenderjaar en tot max. \u20ac 70,- voor steunzolen"
+    },
+    {
+        "verzekeraar": "Zorgzaam",
+        "pakket": "Zorgzaam Aanvullend Ster 1",
+        "vergoeding": "Geen vergoeding"
+    },
+    {
+        "verzekeraar": "Zorgzaam",
+        "pakket": "Zorgzaam Aanvullend Ster 2",
+        "vergoeding": "\u20ac 100 per jaar voor podotherapie en voetbehandelingen, geen vergoeding voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "Zorgzaam",
+        "pakket": "Zorgzaam Aanvullend Ster 3",
+        "vergoeding": "\u20ac 100 per jaar voor podotherapie en voetbehandelingen, geen vergoeding voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "Zorgzaam",
+        "pakket": "Zorgzaam Aanvullend Ster 4",
+        "vergoeding": "\u20ac 200 per jaar voor podotherapie en voetbehandelingen, geen vergoeding voor aanmeten en kosten van steunzolen en therapiezolen."
+    },
+    {
+        "verzekeraar": "Zorgzaam",
+        "pakket": "Zorgzaam Aanvullend Ster 5",
+        "vergoeding": "\u20ac 200 per jaar voor podotherapie en voetbehandelingen \u20ac 70 voor aanmeten en kosten van steunzolen en therapiezolen."
+    }
+]
