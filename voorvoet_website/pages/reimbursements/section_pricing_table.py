@@ -7,6 +7,7 @@ from pathlib import Path
 from ...theme import Colors
 from ...components import section, container, header
 from ...utils import get_translation
+from ...config import config
 
 
 TRANSLATIONS = {
@@ -56,7 +57,7 @@ def load_pricing_data() -> tuple[list[str], list[list[str]]]:
         Path(__file__).parent.parent.parent
         / "data"
         / "reimbursements"
-        / "pricing_2025.csv"
+        / config.pricing_data_file
     )
 
     with open(data_path, "r", encoding="utf-8") as f:
