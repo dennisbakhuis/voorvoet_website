@@ -90,3 +90,61 @@ magick original.jpg -resize 1920x1080 -quality 85 resized.jpg
 cwebp -q 85 resized.jpg -o resized.webp
 magick resized.jpg -quality 85 resized.avif
 ```
+
+## Page images (Image representing the page)
+
+For best results, provide multiple images in these ratios:
+16:9 - 1200 x 675 pixels
+4:3 - 1200 x 900 pixels
+1:1 - 1200 x 1200 pixels
+
+i.e.
+```
+https://voorvoet.nl/images/home/page-image-16x9.jpg
+https://voorvoet.nl/images/home/page-image-4x3.jpg
+https://voorvoet.nl/images/home/page-image-1x1.jpg
+```
+
+## Optimized Page Preview Images
+
+All page preview images are available in two aspect ratios:
+- **16:9** (1200x675): Default for social media sharing (Twitter, Facebook, LinkedIn)
+- **1:1** (1200x1200): Square format for Instagram, WhatsApp
+
+Each ratio is provided in three formats:
+- `.jpg` - Base format (universal compatibility)
+- `.webp` - Optimized format (98% browser support)
+- `.avif` - Maximum compression (97% browser support)
+
+Naming convention: `page-preview-<description>-<ratio>.<format>`
+
+Example:
+- `page-preview-blog-16x9.jpg`
+- `page-preview-blog-16x9.webp`
+- `page-preview-blog-16x9.avif`
+- `page-preview-blog-1x1.jpg`
+- `page-preview-blog-1x1.webp`
+- `page-preview-blog-1x1.avif`
+
+### Cropping Behavior
+
+**16:9 ratio (1200x675):**
+- Uses `-gravity north` to preserve logos at the top
+- Vertical: Anchored to top, crops from bottom
+- Horizontal: Centered, crops equally from both sides
+
+**1:1 ratio (1200x1200):**
+- First crops 10% from the left side (removes left 10%, keeps right 90%)
+- Then uses `-gravity northwest` to anchor top-left
+- Vertical: Crops from bottom
+- Horizontal: Crops from right
+- This approach preserves the logo area while removing UI elements typically on the left
+
+**Commands used:**
+```bash
+# 16:9 from original PNG
+magick input.png -resize 1200x675^ -gravity north -extent 1200x675 -quality 85 output-16x9.jpg
+
+# 1:1 from 16:9 (with 10% left crop)
+magick input-16x9.jpg -gravity east -crop 90%x100%+0+0 +repage -resize 1200x1200^ -gravity northwest -extent 1200x1200 -quality 85 output-1x1.jpg
+```

@@ -70,14 +70,14 @@ PAGE_DESCRIPTIONS = {
 
 
 PAGE_IMAGES = {
-    "home": "/images/voorvoet-podotherapie-enschede.jpg",
-    "blog": "/images/voorvoet-blog.jpg",
-    "information": "/images/voorvoet-informatie.jpg",
-    "reimbursements": "/images/voorvoet-vergoedingen.jpg",
-    "contact": "/images/voorvoet-contact.jpg",
-    "order_insoles": "/images/voorvoet-steunzolen.jpg",
-    "credits": "/images/page_credits/credits_hero_banner.jpg",
-    "not_found": "/images/voorvoet-podotherapie-enschede.jpg",
+    "home": "/images/page_home/page-preview-podotherapie-enschede-16x9.jpg",
+    "blog": "/images/page_blog/page-preview-blog-16x9.jpg",
+    "information": "/images/page_information/page-preview-informatie-16x9.jpg",
+    "reimbursements": "/images/page_reimbursements/page-preview-vergoedingen-16x9.jpg",
+    "contact": "/images/page_contact/page-preview-contact-16x9.jpg",
+    "order_insoles": "/images/page_order_insoles/page-preview-steunzolen-16x9.jpg",
+    "credits": "/images/page_credits/page-preview-credits-16x9.jpg",
+    "not_found": "/images/page_not_found/page-preview-not-found-16x9.jpg",
 }
 
 
