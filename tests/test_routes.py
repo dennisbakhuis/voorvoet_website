@@ -51,6 +51,6 @@ def test_all_main_routes_accessible(server_url: str) -> None:
     for lang in ROUTE_MAPPINGS:
         for page_key, route in ROUTE_MAPPINGS[lang].items():
             response = requests.get(f"{server_url}{route}", timeout=10)
-            assert (
-                response.status_code == 200
-            ), f"Route {route} ({lang}/{page_key}) failed"
+            assert response.status_code == 200, (
+                f"Route {route} ({lang}/{page_key}) failed"
+            )
