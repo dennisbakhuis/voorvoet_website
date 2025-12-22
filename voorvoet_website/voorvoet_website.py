@@ -24,6 +24,7 @@ from .translations import (
     get_blog_post_meta_tags,
 )
 from .services.blog_service import load_all_blog_posts_dict
+from .services.pricing_service import load_pricing_data
 from .config import config
 
 
@@ -39,6 +40,8 @@ app = rx.App(
     },
 )
 
+pricing_data = load_pricing_data()
+
 
 def _wrap_with_lang_script(language: str, content: rx.Component) -> rx.Component:
     return rx.fragment(
@@ -47,7 +50,7 @@ def _wrap_with_lang_script(language: str, content: rx.Component) -> rx.Component
     )
 
 
-PAGE_COMPONENTS = {
+PAGE_COMPONENTS: dict[str, Callable] = {
     "home": page_home,
     "information": page_information,
     "reimbursements": page_reimbursements,
@@ -56,13 +59,13 @@ PAGE_COMPONENTS = {
     "credits": page_credits,
 }
 
-main_pages = []
+main_pages: list[tuple[str, str, str, Callable]] = []
 for lang in ["nl", "en", "de"]:
     for page_key, route in ROUTE_MAPPINGS[lang].items():
         if page_key in PAGE_COMPONENTS:
             main_pages.append((lang, page_key, route, PAGE_COMPONENTS[page_key]))
 
-default_redirects = [
+default_redirects: list[tuple[str, str, str, Callable]] = [
     ("nl", "home", "/", page_home),
     ("nl", "information", "/informatie", page_information),
     ("nl", "reimbursements", "/vergoedingen", page_reimbursements),
@@ -79,10 +82,33 @@ for language, page_key, page_route, page in main_pages:
     priority = 1.0 if page_key == "home" else 0.6
     changefreq = "weekly" if page_key == "home" else "monthly"
 
+    if page_key in ["reimbursements", "order_insoles"]:
+
+        def make_page_with_pricing(
+            page_func: Callable[..., rx.Component], lang: str, pricing: Any
+        ) -> Callable[[], rx.Component]:
+            def _component() -> rx.Component:
+                return _wrap_with_lang_script(
+                    lang, page_func(language=lang, pricing=pricing)
+                )
+
+            return _component
+
+        component_func = make_page_with_pricing(page, language, pricing_data)
+    else:
+
+        def make_page_without_pricing(
+            page_func: Callable[..., rx.Component], lang: str
+        ) -> Callable[[], rx.Component]:
+            def _component() -> rx.Component:
+                return _wrap_with_lang_script(lang, page_func(language=lang))
+
+            return _component
+
+        component_func = make_page_without_pricing(page, language)
+
     page_config: dict[str, Any] = {
-        "component": lambda page_func=page, lang=language: _wrap_with_lang_script(
-            lang, page_func(language=lang)
-        ),
+        "component": component_func,
         "route": page_route,
         "title": get_translation(PAGE_TITLES, page_key, language),
         "meta": get_page_meta_tags(
