@@ -38,7 +38,7 @@ TRANSLATIONS = {
         "quantity_placeholder": "1",
         "comments_label": "Opmerkingen",
         "comments_placeholder": "Eventuele opmerkingen...",
-        "turnstile_label": "Automatische robot beveiliging",
+        "turnstile_label": "Verificatie",
         "submit_button": "Bestel zolen",
     },
     "de": {
@@ -60,7 +60,7 @@ TRANSLATIONS = {
         "quantity_placeholder": "1",
         "comments_label": "Anmerkungen",
         "comments_placeholder": "Eventuelle Anmerkungen...",
-        "turnstile_label": "Automatischer Roboterschutz",
+        "turnstile_label": "Verifizierung",
         "submit_button": "Einlagen bestellen",
     },
     "en": {
@@ -82,7 +82,7 @@ TRANSLATIONS = {
         "quantity_placeholder": "1",
         "comments_label": "Comments",
         "comments_placeholder": "Any comments...",
-        "turnstile_label": "Automatic robot protection",
+        "turnstile_label": "Verification",
         "submit_button": "Order insoles",
     },
 }

@@ -34,7 +34,7 @@ TRANSLATIONS = {
         "email_placeholder": "voorbeeld@email.nl",
         "description_label": "Beschrijving van je vraag",
         "description_placeholder": "Jouw beschrijving...",
-        "turnstile_label": "Automatische robot beveiliging",
+        "turnstile_label": "Verificatie",
         "submit_button": "Verstuur verzoek",
     },
     "de": {
@@ -53,7 +53,7 @@ TRANSLATIONS = {
         "email_placeholder": "beispiel@email.de",
         "description_label": "Beschreibung Ihrer Frage",
         "description_placeholder": "Ihre Beschreibung...",
-        "turnstile_label": "Automatischer Roboterschutz",
+        "turnstile_label": "Verifizierung",
         "submit_button": "Anfrage senden",
     },
     "en": {
@@ -72,7 +72,7 @@ TRANSLATIONS = {
         "email_placeholder": "example@email.com",
         "description_label": "Description of your question",
         "description_placeholder": "Your description...",
-        "turnstile_label": "Automatic robot protection",
+        "turnstile_label": "Verification",
         "submit_button": "Submit Request",
     },
 }

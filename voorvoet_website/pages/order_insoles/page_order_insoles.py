@@ -10,14 +10,22 @@ from ..shared_sections import footer, header
 from ...components import toast, breadcrumb_schema
 from ...translations import BREADCRUMB_NAMES
 from ...config import config
+from ...models.pricing import PricingData
 
 
-def page_order_insoles(language: str = "nl") -> rx.Component:
+def page_order_insoles(language: str, pricing: PricingData) -> rx.Component:
     """
     Create the complete order insoles page with all sections.
 
     The order insoles page is composed of: header, hero banner, starter text,
     order form, footer, and toast notification components.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
+    pricing : PricingData
+        Pricing data loaded at app startup
 
     Returns
     -------
@@ -46,7 +54,7 @@ def page_order_insoles(language: str = "nl") -> rx.Component:
         header(language, page_key="order_insoles"),
         rx.box(
             section_hero(language),
-            section_starter(language),
+            section_starter(language, pricing),
             section_order_form(language),
             id="main-content",
             role="main",

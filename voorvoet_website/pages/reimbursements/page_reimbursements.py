@@ -11,9 +11,10 @@ from ..shared_sections import footer, header
 from ...components import breadcrumb_schema
 from ...translations import BREADCRUMB_NAMES
 from ...config import config
+from ...models.pricing import PricingData
 
 
-def page_reimbursements(language: str = "nl") -> rx.Component:
+def page_reimbursements(language: str, pricing: PricingData) -> rx.Component:
     """
     Create the complete reimbursements page with all sections.
 
@@ -21,6 +22,13 @@ def page_reimbursements(language: str = "nl") -> rx.Component:
     and costs for podiatry services, including a comprehensive searchable
     table of insurance providers and their reimbursement amounts for 2025,
     as well as VoorVoet's pricing information.
+
+    Parameters
+    ----------
+    language : str
+        Current language code ("nl", "de", or "en")
+    pricing : PricingData
+        Pricing data loaded at app startup
 
     Returns
     -------
@@ -53,7 +61,7 @@ def page_reimbursements(language: str = "nl") -> rx.Component:
             section_hero(language),
             section_starter(language),
             section_reimbursement_table(language),
-            section_pricing_table(language),
+            section_pricing_table(language, pricing),
             id="main-content",
             role="main",
         ),
