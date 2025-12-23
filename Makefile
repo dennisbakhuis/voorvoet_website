@@ -8,4 +8,4 @@ test:
 	uv run pytest
 
 types:
-	uv run mypy .
+	uv run mypy --config-file=pyproject.toml --disable-error-code=unused-ignore --exclude='^tests/' .

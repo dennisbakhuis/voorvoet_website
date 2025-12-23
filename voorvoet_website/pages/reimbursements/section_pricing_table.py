@@ -1,13 +1,11 @@
 """Section displaying VoorVoet pricing information in a searchable table."""
 
 import reflex as rx
-import csv
-from pathlib import Path
 
 from ...theme import Colors
 from ...components import section, container, header
 from ...utils import get_translation
-from ...config import config
+from ...models.pricing import PricingData
 
 
 TRANSLATIONS = {
@@ -32,45 +30,7 @@ TRANSLATIONS = {
 }
 
 
-def load_pricing_data() -> tuple[list[str], list[list[str]]]:
-    """
-    Load pricing data from CSV file and convert to table format.
-
-    Reads the 2025 pricing data from the data directory and transforms
-    it from CSV format to a list of lists suitable for display
-    in a data table component.
-
-    Parameters
-    ----------
-    language : str
-        Current language code ("nl", "de", or "en")
-
-    Returns
-    -------
-    tuple[list[str], list[list[str]]]
-        A tuple containing:
-        - Column headers as a list of strings
-        - Table rows as a list of lists, where each inner list represents
-          one row with [behandeling, prijs]
-    """
-    data_path = (
-        Path(__file__).parent.parent.parent
-        / "data"
-        / "reimbursements"
-        / config.pricing_data_file
-    )
-
-    with open(data_path, "r", encoding="utf-8") as f:
-        reader = csv.reader(f)
-        rows = list(reader)
-
-    columns = rows[0]
-    data_rows = [row for row in rows[1:] if row and row[0].strip()]
-
-    return columns, data_rows
-
-
-def section_pricing_table(language: str) -> rx.Component:
+def section_pricing_table(language: str, pricing: PricingData) -> rx.Component:
     """
     Create the pricing table section.
 
@@ -83,6 +43,8 @@ def section_pricing_table(language: str) -> rx.Component:
     ----------
     language : str
         Current language code ("nl", "de", or "en")
+    pricing : PricingData
+        Pricing data loaded at app startup
 
     Returns
     -------
@@ -90,7 +52,8 @@ def section_pricing_table(language: str) -> rx.Component:
         A section component containing a data table with pricing
         information and a note about the pricing.
     """
-    columns, data = load_pricing_data()
+    columns = ["Behandeling", "Prijs"]
+    data = [[item["treatment"], item["price_formatted"]] for item in pricing["items"]]
 
     table_styles = {
         ".gridjs-th": {
