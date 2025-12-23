@@ -28,6 +28,20 @@ from .services.pricing_service import load_pricing_data
 from .config import config
 
 
+def get_analytics_components() -> list[rx.Component]:
+    """Build list of analytics components to inject in head."""
+    if not config.umami_script_url or not config.umami_website_id:
+        return []
+
+    return [
+        rx.script(
+            src=config.umami_script_url,
+            defer=True,
+            custom_attrs={"data-website-id": config.umami_website_id},
+        )
+    ]
+
+
 app = rx.App(
     html_lang="nl",
     stylesheets=[
@@ -38,6 +52,7 @@ app = rx.App(
     style={
         "font-family": "Lato, ui-sans-serif, system-ui, sans-serif",
     },
+    head_components=get_analytics_components(),
 )
 
 pricing_data = load_pricing_data()

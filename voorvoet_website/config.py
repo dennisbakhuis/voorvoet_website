@@ -162,6 +162,15 @@ class Config(BaseSettings):
         description="Base URL of the website for Open Graph and canonical URLs",
     )
 
+    umami_script_url: str | None = Field(
+        default=None,
+        description="URL to the Umami analytics script",
+    )
+    umami_website_id: str | None = Field(
+        default=None,
+        description="Website ID for Umami analytics tracking",
+    )
+
     reimbursements_data_file: str = Field(
         default="reimbursements_2025.json",
         description="Filename of the reimbursements data JSON file in data/reimbursements/",
