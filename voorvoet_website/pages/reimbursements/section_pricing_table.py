@@ -11,20 +11,17 @@ from ...models.pricing import PricingData
 TRANSLATIONS = {
     "nl": {
         "title": "Tarieven bij VoorVoet",
-        "intro": "VoorVoet hanteert eerlijke tarieven om zorg voor iedereen toegankelijk te maken. Hieronder staat een overzicht van de kosten van alle behandelingen en hulpmiddelen. De bedragen zijn, indien nodig, inclusief BTW. De tarieven kunt u ook als ",
-        "pdf_link": "PDF bestand downloaden",
+        "intro": "VoorVoet hanteert eerlijke tarieven om zorg voor iedereen toegankelijk te maken. Hieronder staat een overzicht van de kosten van alle behandelingen en hulpmiddelen. De bedragen zijn, indien nodig, inclusief BTW.",
         "disclaimer": "We houden deze lijst zo nauwkeurig mogelijk bij. Mochten er onverhoopt fouten optreden dan houdt VoorVoet - Praktijk voor podotherapie het recht om de prijs te corrigeren. Aan deze lijst kunnen geen rechten worden ontleend.",
     },
     "de": {
         "title": "Tarife bei VoorVoet",
-        "intro": "VoorVoet wendet faire Tarife an, um die Versorgung für alle zugänglich zu machen. Unten finden Sie eine Übersicht über die Kosten aller Behandlungen und Hilfsmittel. Die Beträge verstehen sich, sofern erforderlich, inklusive MwSt. Die Tarife können Sie auch als ",
-        "pdf_link": "PDF-Datei herunterladen",
+        "intro": "VoorVoet wendet faire Tarife an, um die Versorgung für alle zugänglich zu machen. Unten finden Sie eine Übersicht über die Kosten aller Behandlungen und Hilfsmittel. Die Beträge verstehen sich, sofern erforderlich, inklusive MwSt.",
         "disclaimer": "Wir halten diese Liste so genau wie möglich. Sollten dennoch Fehler auftreten, behält sich VoorVoet - Praxis für Podotherapie das Recht vor, den Preis zu korrigieren. Aus dieser Liste können keine Rechte abgeleitet werden.",
     },
     "en": {
         "title": "Rates at VoorVoet",
-        "intro": "VoorVoet applies fair rates to make care accessible to everyone. Below is an overview of the costs of all treatments and aids. The amounts include VAT where applicable. You can also ",
-        "pdf_link": "download the rates as a PDF file",
+        "intro": "VoorVoet applies fair rates to make care accessible to everyone. Below is an overview of the costs of all treatments and aids. The amounts include VAT where applicable.",
         "disclaimer": "We keep this list as accurate as possible. Should errors occur, VoorVoet - Practice for Podotherapy reserves the right to correct the price. No rights can be derived from this list.",
     },
 }
@@ -109,14 +106,6 @@ def section_pricing_table(language: str, pricing: PricingData) -> rx.Component:
             ),
             rx.text(
                 get_translation(TRANSLATIONS, "intro", language),
-                rx.link(
-                    get_translation(TRANSLATIONS, "pdf_link", language),
-                    href="/documents/voorvoet_praktijk_voor_podotherapie_tarieven_2025.pdf",
-                    color=Colors.text["link"],
-                    text_decoration="underline",
-                    is_external=True,
-                ),
-                ".",
                 color=Colors.text["content"],
                 font_size="1.125rem",
                 margin_bottom="1rem",

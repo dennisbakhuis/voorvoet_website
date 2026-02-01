@@ -172,11 +172,11 @@ class Config(BaseSettings):
     )
 
     reimbursements_data_file: str = Field(
-        default="reimbursements_2025.json",
+        default="reimbursements_2026.json",
         description="Filename of the reimbursements data JSON file in data/reimbursements/",
     )
     pricing_data_file: str = Field(
-        default="pricing_2025.csv",
+        default="pricing_2026.csv",
         description="Filename of the pricing data CSV file in data/reimbursements/",
     )
 
