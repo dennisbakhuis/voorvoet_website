@@ -9,15 +9,15 @@ from ...utils import get_translation
 
 TRANSLATIONS = {
     "nl": {
-        "title": "Vergoedingen en tarieven 2025",
+        "title": "Vergoedingen en tarieven",
         "intro": "Op deze pagina is een overzicht te vinden van de mogelijke vergoedingen van zorgverzekeraars en de tarieven die VoorVoet - Praktijk voor podotherapie hanteert.",
     },
     "de": {
-        "title": "Erstattungen und Tarife 2025",
+        "title": "Erstattungen und Tarife",
         "intro": "Auf dieser Seite finden Sie eine Übersicht über die möglichen Erstattungen von Krankenversicherungen und die Tarife, die VoorVoet - Praxis für Podotherapie anwendet.",
     },
     "en": {
-        "title": "Reimbursements and Rates 2025",
+        "title": "Reimbursements and Rates",
         "intro": "On this page you can find an overview of possible reimbursements from health insurers and the rates that VoorVoet - Practice for Podotherapy applies.",
     },
 }
