@@ -10,7 +10,7 @@ import asyncio
 from typing import AsyncGenerator
 
 from ..models import ContactForm, PhoneNumber, EmailAddress
-from ..services import send_contact_form_email, verify_turnstile_token
+from ..services import send_contact_form_email, track_event, verify_turnstile_token
 from ..config import config
 
 
@@ -95,6 +95,13 @@ class ContactState(rx.State):
         self.form_submitting = False
 
         if email_sent:
+            lang = website_state.current_language
+            await track_event(
+                url=f"/{lang}/contact",
+                event_name="contact-form-submitted",
+                language=lang,
+                custom_data={"request_type": request_type},
+            )
             website_state.show_toast(  # type: ignore[operator]
                 "Bedankt voor je bericht! We nemen zo snel mogelijk contact met je op.",
                 "success",

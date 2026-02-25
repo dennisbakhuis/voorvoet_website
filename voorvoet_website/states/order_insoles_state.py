@@ -9,7 +9,7 @@ import reflex as rx
 import asyncio
 from typing import AsyncGenerator
 
-from ..services import send_order_insoles_email, verify_turnstile_token
+from ..services import send_order_insoles_email, track_event, verify_turnstile_token
 from ..config import config
 
 
@@ -104,6 +104,13 @@ class OrderInsolesState(rx.State):
         self.form_submitting = False
 
         if email_sent:
+            lang = website_state.current_language
+            await track_event(
+                url=f"/{lang}/zolen-bestellen",
+                event_name="insole-order-submitted",
+                language=lang,
+                custom_data={"insole_type": insole_type, "quantity": quantity},
+            )
             website_state.show_toast(  # type: ignore[operator]
                 "Bedankt voor je bestelling! We nemen zo snel mogelijk contact met je op.",
                 "success",
