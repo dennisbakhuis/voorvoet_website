@@ -26,20 +26,7 @@ from .translations import (
 from .services.blog_service import load_all_blog_posts_dict
 from .services.pricing_service import load_pricing_data
 from .config import config
-
-
-def get_analytics_components() -> list[rx.Component]:
-    """Build list of analytics components to inject in head."""
-    if not config.umami_script_url or not config.umami_website_id:
-        return []
-
-    return [
-        rx.script(
-            src=config.umami_script_url,
-            defer=True,
-            custom_attrs={"data-website-id": config.umami_website_id},
-        )
-    ]
+from .states.website_state import WebsiteState
 
 
 app = rx.App(
@@ -52,7 +39,6 @@ app = rx.App(
     style={
         "font-family": "Lato, ui-sans-serif, system-ui, sans-serif",
     },
-    head_components=get_analytics_components(),
 )
 
 pricing_data = load_pricing_data()
@@ -129,6 +115,7 @@ for language, page_key, page_route, page in main_pages:
         "meta": get_page_meta_tags(
             page_key, language, page_route, image_url=full_image_url
         ),
+        "on_load": WebsiteState.track_page_view,
         "context": {
             "sitemap": {
                 "changefreq": changefreq,
@@ -166,6 +153,7 @@ for language in ["nl", "en", "de"]:
         "meta": get_page_meta_tags(
             "blog", language, blog_route, image_url=full_blog_image_url
         ),
+        "on_load": WebsiteState.track_page_view,
         "context": {
             "sitemap": {
                 "changefreq": "weekly",
@@ -186,6 +174,7 @@ app.add_page(
     route="/blog",
     title=get_translation(PAGE_TITLES, "blog", "nl"),
     meta=get_page_meta_tags("blog", "nl", "/blog", image_url=full_blog_image_url),
+    on_load=WebsiteState.track_page_view,
     context={
         "sitemap": {
             "changefreq": "weekly",
@@ -231,6 +220,7 @@ for language, posts in blog_posts.items():
                 all_blog_posts=blog_posts,
                 image_url=post_image,
             ),
+            "on_load": WebsiteState.track_page_view,
             "context": {
                 "sitemap": {
                     "changefreq": "monthly",
@@ -256,4 +246,5 @@ app.add_page(
     meta=get_page_meta_tags(
         "not_found", "nl", "/404", image_url=full_not_found_image_url
     ),
+    on_load=WebsiteState.track_page_view,
 )

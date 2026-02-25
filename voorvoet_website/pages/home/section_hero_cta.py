@@ -3,7 +3,7 @@
 import reflex as rx
 from ...components import button, header, icon_list_item
 from ...theme import Colors, Layout, Spacing, FontSizes
-from ...config import config
+from ...states.website_state import WebsiteState
 from ...utils import get_translation
 
 
@@ -79,7 +79,7 @@ def hero_cta_box(language: str) -> rx.Component:
             rx.box(
                 button(
                     get_translation(TRANSLATIONS, "make_appointment", language),
-                    href=config.link_plan_portal,
+                    on_click=WebsiteState.handle_appointment_click,
                 ),
                 width="100%",
                 display="flex",
