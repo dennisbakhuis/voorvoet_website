@@ -44,7 +44,7 @@ class WebsiteState(rx.State):
             event_name="appointment-click",
             language=lang,
         )
-        return rx.redirect(config.link_plan_portal or "", is_external=True)  # type: ignore[return-value]
+        return rx.redirect(config.link_plan_portal or "", is_external=False)  # type: ignore[return-value]
 
     @rx.event
     def toggle_nav(self) -> None:
