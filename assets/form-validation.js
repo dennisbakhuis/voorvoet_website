@@ -8,25 +8,36 @@
         var phoneInput = form.querySelector('input[name="phone"]');
         var submitBtn = form.querySelector('button[type="submit"]');
         var requestTypeInput = form.querySelector('input[name="request_type"]');
+        var hintEl = document.getElementById('contact-form-hint');
 
-        function isFormValid() {
+        function getInvalidReason() {
             var htmlValid = form.checkValidity();
             var radioSelected = requestTypeInput && requestTypeInput.value.trim() !== '';
-            var turnstileValid = true;
+            if (!htmlValid || !radioSelected) return 'fields';
 
-            // Check if Turnstile is enabled by looking for the widget container
             var turnstileContainer = form.querySelector('#turnstile-widget-container');
             if (turnstileContainer) {
                 var turnstileToken = form.querySelector('#turnstile-token');
-                turnstileValid = turnstileToken && turnstileToken.value.trim() !== '';
+                if (!turnstileToken || turnstileToken.value.trim() === '') {
+                    return 'verification';
+                }
             }
-
-            return htmlValid && radioSelected && turnstileValid;
+            return '';
         }
 
         function updateButtonState() {
+            var reason = getInvalidReason();
             if (submitBtn) {
-                submitBtn.disabled = !isFormValid();
+                submitBtn.disabled = reason !== '';
+            }
+            if (hintEl) {
+                if (reason === 'fields') {
+                    hintEl.textContent = hintEl.dataset.msgFields || '';
+                } else if (reason === 'verification') {
+                    hintEl.textContent = hintEl.dataset.msgVerification || '';
+                } else {
+                    hintEl.textContent = '';
+                }
             }
         }
 
@@ -35,7 +46,7 @@
 
             if (phoneInput) {
                 phoneInput.addEventListener('input', function(e) {
-                    var filtered = e.target.value.replace(/[^0-9+\-\s]/g, '');
+                    var filtered = e.target.value.replace(/[^0-9+\-\s().\/]/g, '');
                     if (filtered !== e.target.value) {
                         var cursorPos = e.target.selectionStart;
                         var diff = e.target.value.length - filtered.length;
@@ -60,6 +71,7 @@
         var submitBtn = form.querySelector('button[type="submit"]');
         var insoleTypeInput = form.querySelector('input[name="insole_type"]');
         var quantityInput = form.querySelector('input[name="quantity"]');
+        var hintEl = document.getElementById('insole-form-hint');
 
         function isValidBirthDate(value) {
             if (!value || !value.trim()) return false;
@@ -97,26 +109,38 @@
             }
         }
 
-        function isFormValid() {
+        function getInvalidReason() {
             var htmlValid = form.checkValidity();
             var insoleSelected = insoleTypeInput && insoleTypeInput.value.trim() !== '';
             var quantitySelected = quantityInput && quantityInput.value.trim() !== '';
             var birthDateValid = !birthDateInput || isValidBirthDate(birthDateInput.value);
-            var turnstileValid = true;
+            if (!htmlValid || !insoleSelected || !quantitySelected || !birthDateValid) {
+                return 'fields';
+            }
 
-            // Check if Turnstile is enabled by looking for the widget container
             var turnstileContainer = form.querySelector('#turnstile-widget-container-insole');
             if (turnstileContainer) {
                 var turnstileToken = form.querySelector('#turnstile-token-insole');
-                turnstileValid = turnstileToken && turnstileToken.value.trim() !== '';
+                if (!turnstileToken || turnstileToken.value.trim() === '') {
+                    return 'verification';
+                }
             }
-
-            return htmlValid && insoleSelected && quantitySelected && birthDateValid && turnstileValid;
+            return '';
         }
 
         function updateButtonState() {
+            var reason = getInvalidReason();
             if (submitBtn) {
-                submitBtn.disabled = !isFormValid();
+                submitBtn.disabled = reason !== '';
+            }
+            if (hintEl) {
+                if (reason === 'fields') {
+                    hintEl.textContent = hintEl.dataset.msgFields || '';
+                } else if (reason === 'verification') {
+                    hintEl.textContent = hintEl.dataset.msgVerification || '';
+                } else {
+                    hintEl.textContent = '';
+                }
             }
         }
 
