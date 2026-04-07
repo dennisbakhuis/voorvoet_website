@@ -21,7 +21,7 @@ class WebsiteState(rx.State):
 
     def _get_language_from_path(self) -> str:
         """Extract language code from the current URL path."""
-        path = self.router.page.path
+        path = self.router.url.path
         parts = path.strip("/").split("/")
         if parts and parts[0] in ("nl", "en", "de"):
             return parts[0]
@@ -30,7 +30,7 @@ class WebsiteState(rx.State):
     @rx.event
     async def track_page_view(self) -> None:
         """Track a page view via server-side Umami."""
-        path = self.router.page.path
+        path = self.router.url.path
         lang = self._get_language_from_path()
         self.current_language = lang
         await track_event(url=path, language=lang)
