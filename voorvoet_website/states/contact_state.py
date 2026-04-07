@@ -21,14 +21,16 @@ logger = logging.getLogger(__name__)
 
 
 TURNSTILE_RESET_SCRIPT = (
-    "if (window.turnstile && document.getElementById('turnstile-widget-container')) {"
-    "  try { window.turnstile.reset('#turnstile-widget-container'); } catch (e) {}"
-    "  const t = document.getElementById('turnstile-token');"
+    "(function() {"
+    "  var c = document.getElementById('turnstile-widget-container');"
+    "  if (c && window.turnstile && c.dataset.widgetId != null) {"
+    "    try { window.turnstile.reset(c); } catch (e) {}"
+    "  }"
+    "  var t = document.getElementById('turnstile-token');"
     "  if (t) { t.value = ''; }"
-    "  window.turnstileToken = null;"
-    "  const form = document.getElementById('contact-form');"
+    "  var form = document.getElementById('contact-form');"
     "  if (form) { form.dispatchEvent(new Event('change', { bubbles: true })); }"
-    "}"
+    "})();"
 )
 
 
