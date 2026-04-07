@@ -1,7 +1,5 @@
 """Order form section for ordering extra insoles."""
 
-import json
-
 import reflex as rx
 
 from ...components import (
@@ -129,97 +127,7 @@ def section_order_form(language: str) -> rx.Component:
     """
     turnstile_scripts = []
     if config.turnstile_enabled:
-        blocked_message_json = json.dumps(
-            get_translation(TRANSLATIONS, "turnstile_blocked", language)
-        )
-        turnstile_scripts = [
-            rx.script(
-                f"""
-                window.turnstileTokenInsole = null;
-
-                function showTurnstileFallbackInsole() {{
-                    const container = document.getElementById('turnstile-widget-container-insole');
-                    if (container && !container.dataset.fallbackShown) {{
-                        container.dataset.fallbackShown = 'true';
-                        container.innerHTML = '';
-                        var msg = document.createElement('div');
-                        msg.textContent = {blocked_message_json};
-                        msg.style.border = '2px solid red';
-                        msg.style.background = '#fff5f5';
-                        msg.style.color = '#a00';
-                        msg.style.padding = '0.75rem';
-                        msg.style.borderRadius = '4px';
-                        msg.style.fontSize = '1rem';
-                        msg.setAttribute('role', 'alert');
-                        container.appendChild(msg);
-                    }}
-                    const hiddenInput = document.getElementById('turnstile-token-insole');
-                    if (hiddenInput) {{ hiddenInput.value = ''; }}
-                    window.turnstileTokenInsole = null;
-                    const form = document.getElementById('insole-order-form');
-                    if (form) {{
-                        form.dataset.turnstileBlocked = 'true';
-                        form.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                    }}
-                }}
-
-                function onTurnstileSuccessInsole(token) {{
-                    window.turnstileTokenInsole = token;
-                    const hiddenInput = document.getElementById('turnstile-token-insole');
-                    if (hiddenInput) {{
-                        hiddenInput.value = token;
-                        const form = document.getElementById('insole-order-form');
-                        if (form) {{
-                            delete form.dataset.turnstileBlocked;
-                            form.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                        }}
-                    }}
-                }}
-
-                function onTurnstileErrorInsole(error) {{
-                    console.error('Turnstile verification failed (insole form):', error);
-                    showTurnstileFallbackInsole();
-                }}
-
-                (function() {{
-                    if (!window.turnstileLoadedInsole) {{
-                        var script = document.createElement('script');
-                        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoadInsole&_=' + Date.now();
-                        script.async = true;
-                        script.onerror = function() {{
-                            console.error('Turnstile script failed to load (insole form)');
-                            showTurnstileFallbackInsole();
-                        }};
-                        document.head.appendChild(script);
-                        window.turnstileLoadedInsole = true;
-
-                        setTimeout(function() {{
-                            if (!window.turnstile) {{
-                                showTurnstileFallbackInsole();
-                            }}
-                        }}, 8000);
-                    }}
-                }})();
-
-                window.onTurnstileLoadInsole = function() {{
-                    const container = document.getElementById('turnstile-widget-container-insole');
-                    if (container && window.turnstile && !container.dataset.fallbackShown) {{
-                        window.turnstile.render('#turnstile-widget-container-insole', {{
-                            sitekey: '{config.turnstile_site_key}',
-                            theme: 'light',
-                            callback: onTurnstileSuccessInsole,
-                            'error-callback': onTurnstileErrorInsole
-                        }});
-
-                        const form = document.getElementById('insole-order-form');
-                        if (form) {{
-                            form.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                        }}
-                    }}
-                }};
-                """
-            ),
-        ]
+        turnstile_scripts = [rx.script(src="/turnstile-init.js")]
 
     form_fields = [
         rx.box(
@@ -378,7 +286,17 @@ def section_order_form(language: str) -> rx.Component:
                         get_translation(TRANSLATIONS, "turnstile_label", language),
                         required=False,
                     ),
-                    rx.box(id="turnstile-widget-container-insole"),
+                    rx.box(
+                        id="turnstile-widget-container-insole",
+                        custom_attrs={
+                            "data-turnstile-sitekey": config.turnstile_site_key,
+                            "data-token-input-id": "turnstile-token-insole",
+                            "data-form-id": "insole-order-form",
+                            "data-fallback-msg": get_translation(
+                                TRANSLATIONS, "turnstile_blocked", language
+                            ),
+                        },
+                    ),
                     rx.el.input(
                         type="hidden",
                         id="turnstile-token-insole",
