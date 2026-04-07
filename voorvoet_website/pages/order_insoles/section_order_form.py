@@ -1,5 +1,7 @@
 """Order form section for ordering extra insoles."""
 
+import json
+
 import reflex as rx
 
 from ...components import (
@@ -12,10 +14,13 @@ from ...components import (
     form_radio,
     form_select,
 )
-from ...theme import Colors, Spacing
+from ...theme import Colors, FontSizes, Spacing
 from ...utils import get_translation
 from ...states import OrderInsolesState
 from ...config import config
+
+
+PRACTICE_PHONE_DISPLAY = "+31 (0) 6 577 509 97"
 
 
 TRANSLATIONS = {
@@ -39,6 +44,12 @@ TRANSLATIONS = {
         "comments_label": "Opmerkingen",
         "comments_placeholder": "Eventuele opmerkingen...",
         "turnstile_label": "Verificatie",
+        "turnstile_blocked": (
+            "De verificatie kon niet laden. Schakel je adblocker uit voor "
+            f"deze pagina, of bel ons direct op {PRACTICE_PHONE_DISPLAY}."
+        ),
+        "hint_fields": "Vul alle verplichte velden in.",
+        "hint_verification": "Voltooi de verificatie hierboven.",
         "submit_button": "Bestel zolen",
     },
     "de": {
@@ -61,6 +72,13 @@ TRANSLATIONS = {
         "comments_label": "Anmerkungen",
         "comments_placeholder": "Eventuelle Anmerkungen...",
         "turnstile_label": "Verifizierung",
+        "turnstile_blocked": (
+            "Die Verifizierung konnte nicht geladen werden. Deaktivieren Sie "
+            "Ihren Adblocker für diese Seite oder rufen Sie uns direkt an: "
+            f"{PRACTICE_PHONE_DISPLAY}."
+        ),
+        "hint_fields": "Bitte füllen Sie alle Pflichtfelder aus.",
+        "hint_verification": "Bitte schließen Sie die Verifizierung oben ab.",
         "submit_button": "Einlagen bestellen",
     },
     "en": {
@@ -83,6 +101,12 @@ TRANSLATIONS = {
         "comments_label": "Comments",
         "comments_placeholder": "Any comments...",
         "turnstile_label": "Verification",
+        "turnstile_blocked": (
+            "Verification could not load. Please disable your ad-blocker for "
+            f"this page, or call us directly at {PRACTICE_PHONE_DISPLAY}."
+        ),
+        "hint_fields": "Please fill in all required fields.",
+        "hint_verification": "Please complete the verification above.",
         "submit_button": "Order insoles",
     },
 }
@@ -105,21 +129,48 @@ def section_order_form(language: str) -> rx.Component:
     """
     turnstile_scripts = []
     if config.turnstile_enabled:
+        blocked_message_json = json.dumps(
+            get_translation(TRANSLATIONS, "turnstile_blocked", language)
+        )
         turnstile_scripts = [
             rx.script(
                 f"""
-                // Define callbacks first
                 window.turnstileTokenInsole = null;
 
+                function showTurnstileFallbackInsole() {{
+                    const container = document.getElementById('turnstile-widget-container-insole');
+                    if (container && !container.dataset.fallbackShown) {{
+                        container.dataset.fallbackShown = 'true';
+                        container.innerHTML = '';
+                        var msg = document.createElement('div');
+                        msg.textContent = {blocked_message_json};
+                        msg.style.border = '2px solid red';
+                        msg.style.background = '#fff5f5';
+                        msg.style.color = '#a00';
+                        msg.style.padding = '0.75rem';
+                        msg.style.borderRadius = '4px';
+                        msg.style.fontSize = '1rem';
+                        msg.setAttribute('role', 'alert');
+                        container.appendChild(msg);
+                    }}
+                    const hiddenInput = document.getElementById('turnstile-token-insole');
+                    if (hiddenInput) {{ hiddenInput.value = ''; }}
+                    window.turnstileTokenInsole = null;
+                    const form = document.getElementById('insole-order-form');
+                    if (form) {{
+                        form.dataset.turnstileBlocked = 'true';
+                        form.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                    }}
+                }}
+
                 function onTurnstileSuccessInsole(token) {{
-                    console.log('Turnstile verification successful (insole form)');
                     window.turnstileTokenInsole = token;
                     const hiddenInput = document.getElementById('turnstile-token-insole');
                     if (hiddenInput) {{
                         hiddenInput.value = token;
-                        // Trigger validation update
                         const form = document.getElementById('insole-order-form');
                         if (form) {{
+                            delete form.dataset.turnstileBlocked;
                             form.dispatchEvent(new Event('change', {{ bubbles: true }}));
                         }}
                     }}
@@ -127,43 +178,39 @@ def section_order_form(language: str) -> rx.Component:
 
                 function onTurnstileErrorInsole(error) {{
                     console.error('Turnstile verification failed (insole form):', error);
-                    window.turnstileTokenInsole = null;
-                    const hiddenInput = document.getElementById('turnstile-token-insole');
-                    if (hiddenInput) {{
-                        hiddenInput.value = '';
-                        // Trigger validation update
-                        const form = document.getElementById('insole-order-form');
-                        if (form) {{
-                            form.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                        }}
-                    }}
+                    showTurnstileFallbackInsole();
                 }}
 
-                // Load and render Turnstile
                 (function() {{
                     if (!window.turnstileLoadedInsole) {{
                         var script = document.createElement('script');
                         script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoadInsole&_=' + Date.now();
                         script.async = true;
+                        script.onerror = function() {{
+                            console.error('Turnstile script failed to load (insole form)');
+                            showTurnstileFallbackInsole();
+                        }};
                         document.head.appendChild(script);
                         window.turnstileLoadedInsole = true;
+
+                        setTimeout(function() {{
+                            if (!window.turnstile) {{
+                                showTurnstileFallbackInsole();
+                            }}
+                        }}, 8000);
                     }}
                 }})();
 
-                // Callback when Turnstile API loads
                 window.onTurnstileLoadInsole = function() {{
-                    console.log('Turnstile API loaded (insole form)');
                     const container = document.getElementById('turnstile-widget-container-insole');
-                    if (container && window.turnstile) {{
+                    if (container && window.turnstile && !container.dataset.fallbackShown) {{
                         window.turnstile.render('#turnstile-widget-container-insole', {{
                             sitekey: '{config.turnstile_site_key}',
                             theme: 'light',
                             callback: onTurnstileSuccessInsole,
                             'error-callback': onTurnstileErrorInsole
                         }});
-                        console.log('Turnstile widget rendered (insole form)');
 
-                        // Trigger validation to update button state
                         const form = document.getElementById('insole-order-form');
                         if (form) {{
                             form.dispatchEvent(new Event('change', {{ bubbles: true }}));
@@ -222,7 +269,6 @@ def section_order_form(language: str) -> rx.Component:
                 ),
                 input_type="email",
                 required=True,
-                pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
             ),
             margin_bottom="1.5rem",
         ),
@@ -308,6 +354,22 @@ def section_order_form(language: str) -> rx.Component:
         ),
     ]
 
+    hint_span = rx.el.span(
+        id="insole-form-hint",
+        custom_attrs={
+            "data-msg-fields": get_translation(TRANSLATIONS, "hint_fields", language),
+            "data-msg-verification": get_translation(
+                TRANSLATIONS, "hint_verification", language
+            ),
+            "aria-live": "polite",
+        },
+        color=Colors.text["muted"],
+        font_size=FontSizes.small,
+        display="block",
+        min_height="1.5rem",
+        margin_top="0.5rem",
+    )
+
     if config.turnstile_enabled:
         form_fields.append(
             rx.box(
@@ -333,6 +395,10 @@ def section_order_form(language: str) -> rx.Component:
                         is_loading=OrderInsolesState.form_submitting,
                         button_type="submit",
                     ),
+                    hint_span,
+                    display="flex",
+                    flex_direction="column",
+                    align_items=["center", "center", "flex-end", "flex-end"],
                 ),
                 display="flex",
                 justify_content="space-between",
@@ -349,8 +415,10 @@ def section_order_form(language: str) -> rx.Component:
                     is_loading=OrderInsolesState.form_submitting,
                     button_type="submit",
                 ),
+                hint_span,
                 display="flex",
-                justify_content=["center", "center", "flex-end", "flex-end"],
+                flex_direction="column",
+                align_items=["center", "center", "flex-end", "flex-end"],
                 width="100%",
             )
         )

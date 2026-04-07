@@ -1,5 +1,7 @@
 """Contact form section with form fields for user inquiries."""
 
+import json
+
 import reflex as rx
 
 from ...components import (
@@ -11,10 +13,13 @@ from ...components import (
     form_button,
     form_radio,
 )
-from ...theme import Colors, Spacing
+from ...theme import Colors, FontSizes, Spacing
 from ...states import ContactState
 from ...utils import get_translation
 from ...config import config
+
+
+PRACTICE_PHONE_DISPLAY = "+31 (0) 6 577 509 97"
 
 
 TRANSLATIONS = {
@@ -35,6 +40,12 @@ TRANSLATIONS = {
         "description_label": "Beschrijving van je vraag",
         "description_placeholder": "Jouw beschrijving...",
         "turnstile_label": "Verificatie",
+        "turnstile_blocked": (
+            "De verificatie kon niet laden. Schakel je adblocker uit voor "
+            f"deze pagina, of bel ons direct op {PRACTICE_PHONE_DISPLAY}."
+        ),
+        "hint_fields": "Vul alle verplichte velden in.",
+        "hint_verification": "Voltooi de verificatie hierboven.",
         "submit_button": "Verstuur verzoek",
     },
     "de": {
@@ -54,6 +65,13 @@ TRANSLATIONS = {
         "description_label": "Beschreibung Ihrer Frage",
         "description_placeholder": "Ihre Beschreibung...",
         "turnstile_label": "Verifizierung",
+        "turnstile_blocked": (
+            "Die Verifizierung konnte nicht geladen werden. Deaktivieren Sie "
+            "Ihren Adblocker für diese Seite oder rufen Sie uns direkt an: "
+            f"{PRACTICE_PHONE_DISPLAY}."
+        ),
+        "hint_fields": "Bitte füllen Sie alle Pflichtfelder aus.",
+        "hint_verification": "Bitte schließen Sie die Verifizierung oben ab.",
         "submit_button": "Anfrage senden",
     },
     "en": {
@@ -73,6 +91,12 @@ TRANSLATIONS = {
         "description_label": "Description of your question",
         "description_placeholder": "Your description...",
         "turnstile_label": "Verification",
+        "turnstile_blocked": (
+            "Verification could not load. Please disable your ad-blocker for "
+            f"this page, or call us directly at {PRACTICE_PHONE_DISPLAY}."
+        ),
+        "hint_fields": "Please fill in all required fields.",
+        "hint_verification": "Please complete the verification above.",
         "submit_button": "Submit Request",
     },
 }
@@ -105,21 +129,49 @@ def section_contact_form(language: str) -> rx.Component:
 
     turnstile_scripts = []
     if config.turnstile_enabled:
+        blocked_message_json = json.dumps(
+            get_translation(TRANSLATIONS, "turnstile_blocked", language)
+        )
         turnstile_scripts = [
             rx.script(
                 f"""
                 // Define callbacks first
                 window.turnstileToken = null;
 
+                function showTurnstileFallback() {{
+                    const container = document.getElementById('turnstile-widget-container');
+                    if (container && !container.dataset.fallbackShown) {{
+                        container.dataset.fallbackShown = 'true';
+                        container.innerHTML = '';
+                        var msg = document.createElement('div');
+                        msg.textContent = {blocked_message_json};
+                        msg.style.border = '2px solid red';
+                        msg.style.background = '#fff5f5';
+                        msg.style.color = '#a00';
+                        msg.style.padding = '0.75rem';
+                        msg.style.borderRadius = '4px';
+                        msg.style.fontSize = '1rem';
+                        msg.setAttribute('role', 'alert');
+                        container.appendChild(msg);
+                    }}
+                    const hiddenInput = document.getElementById('turnstile-token');
+                    if (hiddenInput) {{ hiddenInput.value = ''; }}
+                    window.turnstileToken = null;
+                    const form = document.getElementById('contact-form');
+                    if (form) {{
+                        form.dataset.turnstileBlocked = 'true';
+                        form.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                    }}
+                }}
+
                 function onTurnstileSuccess(token) {{
-                    console.log('Turnstile verification successful');
                     window.turnstileToken = token;
                     const hiddenInput = document.getElementById('turnstile-token');
                     if (hiddenInput) {{
                         hiddenInput.value = token;
-                        // Trigger validation update
                         const form = document.getElementById('contact-form');
                         if (form) {{
+                            delete form.dataset.turnstileBlocked;
                             form.dispatchEvent(new Event('change', {{ bubbles: true }}));
                         }}
                     }}
@@ -127,16 +179,7 @@ def section_contact_form(language: str) -> rx.Component:
 
                 function onTurnstileError(error) {{
                     console.error('Turnstile verification failed:', error);
-                    window.turnstileToken = null;
-                    const hiddenInput = document.getElementById('turnstile-token');
-                    if (hiddenInput) {{
-                        hiddenInput.value = '';
-                        // Trigger validation update
-                        const form = document.getElementById('contact-form');
-                        if (form) {{
-                            form.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                        }}
-                    }}
+                    showTurnstileFallback();
                 }}
 
                 // Load and render Turnstile
@@ -145,25 +188,33 @@ def section_contact_form(language: str) -> rx.Component:
                         var script = document.createElement('script');
                         script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad&_=' + Date.now();
                         script.async = true;
+                        script.onerror = function() {{
+                            console.error('Turnstile script failed to load');
+                            showTurnstileFallback();
+                        }};
                         document.head.appendChild(script);
                         window.turnstileLoaded = true;
+
+                        // Fallback timeout: if Turnstile hasn't initialized in 8s, show message
+                        setTimeout(function() {{
+                            if (!window.turnstile) {{
+                                showTurnstileFallback();
+                            }}
+                        }}, 8000);
                     }}
                 }})();
 
                 // Callback when Turnstile API loads
                 window.onTurnstileLoad = function() {{
-                    console.log('Turnstile API loaded');
                     const container = document.getElementById('turnstile-widget-container');
-                    if (container && window.turnstile) {{
+                    if (container && window.turnstile && !container.dataset.fallbackShown) {{
                         window.turnstile.render('#turnstile-widget-container', {{
                             sitekey: '{config.turnstile_site_key}',
                             theme: 'light',
                             callback: onTurnstileSuccess,
                             'error-callback': onTurnstileError
                         }});
-                        console.log('Turnstile widget rendered');
 
-                        // Trigger validation to update button state
                         const form = document.getElementById('contact-form');
                         if (form) {{
                             form.dispatchEvent(new Event('change', {{ bubbles: true }}));
@@ -224,9 +275,9 @@ def section_contact_form(language: str) -> rx.Component:
                         TRANSLATIONS, "phone_placeholder", language
                     ),
                     input_type="tel",
-                    input_mode="numeric",
+                    input_mode="tel",
                     required=True,
-                    pattern=r"^[0-9+\-\s]+$",
+                    pattern=r"^[0-9+\-\s().\/]{8,}$",
                 ),
                 flex="1",
             ),
@@ -245,7 +296,6 @@ def section_contact_form(language: str) -> rx.Component:
                     ),
                     input_type="email",
                     required=True,
-                    pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
                 ),
                 flex="1",
             ),
@@ -291,6 +341,22 @@ def section_contact_form(language: str) -> rx.Component:
         ),
     ]
 
+    hint_span = rx.el.span(
+        id="contact-form-hint",
+        custom_attrs={
+            "data-msg-fields": get_translation(TRANSLATIONS, "hint_fields", language),
+            "data-msg-verification": get_translation(
+                TRANSLATIONS, "hint_verification", language
+            ),
+            "aria-live": "polite",
+        },
+        color=Colors.text["muted"],
+        font_size=FontSizes.small,
+        display="block",
+        min_height="1.5rem",
+        margin_top="0.5rem",
+    )
+
     if config.turnstile_enabled:
         form_fields.append(
             rx.box(
@@ -316,6 +382,10 @@ def section_contact_form(language: str) -> rx.Component:
                         is_loading=ContactState.form_submitting,
                         button_type="submit",
                     ),
+                    hint_span,
+                    display="flex",
+                    flex_direction="column",
+                    align_items=["center", "center", "flex-end", "flex-end"],
                 ),
                 display="flex",
                 justify_content="space-between",
@@ -332,8 +402,10 @@ def section_contact_form(language: str) -> rx.Component:
                     is_loading=ContactState.form_submitting,
                     button_type="submit",
                 ),
+                hint_span,
                 display="flex",
-                justify_content=["center", "center", "flex-end", "flex-end"],
+                flex_direction="column",
+                align_items=["center", "center", "flex-end", "flex-end"],
                 width="100%",
             )
         )

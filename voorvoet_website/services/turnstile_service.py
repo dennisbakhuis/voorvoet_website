@@ -4,11 +4,14 @@ This module provides server-side verification of Turnstile tokens
 against Cloudflare's API to validate bot protection challenges.
 """
 
+import logging
 import httpx
 from typing import Dict, Any
 
 from ..config import config
 
+
+logger = logging.getLogger(__name__)
 
 TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
 
@@ -36,7 +39,7 @@ async def verify_turnstile_token(token: str, remote_ip: str | None = None) -> bo
         return False
 
     if not config.turnstile_secret_key:
-        print("WARNING: Turnstile is enabled but secret key is not configured")
+        logger.warning("Turnstile is enabled but secret key is not configured")
         return False
 
     payload = {
@@ -56,8 +59,9 @@ async def verify_turnstile_token(token: str, remote_ip: str | None = None) -> bo
             )
 
             if response.status_code != 200:
-                print(
-                    f"Turnstile verification failed with status {response.status_code}"
+                logger.warning(
+                    "Turnstile verification failed with status %s",
+                    response.status_code,
                 )
                 return False
 
@@ -67,16 +71,16 @@ async def verify_turnstile_token(token: str, remote_ip: str | None = None) -> bo
 
             if not success:
                 error_codes = result.get("error-codes", [])
-                print(f"Turnstile verification failed: {error_codes}")
+                logger.warning("Turnstile verification failed: %s", error_codes)
 
             return bool(success)
 
     except httpx.TimeoutException:
-        print("Turnstile verification timed out")
+        logger.warning("Turnstile verification timed out")
         return False
     except httpx.RequestError as e:
-        print(f"Turnstile verification request error: {e}")
+        logger.warning("Turnstile verification request error: %s", e)
         return False
     except Exception as e:
-        print(f"Unexpected error during Turnstile verification: {e}")
+        logger.exception("Unexpected error during Turnstile verification: %s", e)
         return False

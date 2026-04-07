@@ -5,13 +5,31 @@ contact form submission with email notifications and toast feedback.
 Form validation is handled client-side via HTML5 validation.
 """
 
+import logging
 import reflex as rx
 import asyncio
 from typing import AsyncGenerator
 
+from reflex.event import EventSpec
+
 from ..models import ContactForm, PhoneNumber, EmailAddress
 from ..services import send_contact_form_email, track_event, verify_turnstile_token
 from ..config import config
+
+
+logger = logging.getLogger(__name__)
+
+
+TURNSTILE_RESET_SCRIPT = (
+    "if (window.turnstile && document.getElementById('turnstile-widget-container')) {"
+    "  try { window.turnstile.reset('#turnstile-widget-container'); } catch (e) {}"
+    "  const t = document.getElementById('turnstile-token');"
+    "  if (t) { t.value = ''; }"
+    "  window.turnstileToken = null;"
+    "  const form = document.getElementById('contact-form');"
+    "  if (form) { form.dispatchEvent(new Event('change', { bubbles: true })); }"
+    "}"
+)
 
 
 class ContactState(rx.State):
@@ -40,7 +58,9 @@ class ContactState(rx.State):
         self.request_type = value
 
     @rx.event
-    async def handle_form_submit(self, form_data: dict) -> AsyncGenerator[None, None]:
+    async def handle_form_submit(
+        self, form_data: dict
+    ) -> AsyncGenerator[EventSpec | None, None]:
         """
         Handle form submission with all field data at once.
 
@@ -53,7 +73,7 @@ class ContactState(rx.State):
             return
 
         self.form_submitting = True
-        yield
+        yield None
 
         first_name = (form_data.get("first_name") or "").strip()
         last_name = (form_data.get("last_name") or "").strip()
@@ -67,15 +87,33 @@ class ContactState(rx.State):
 
         website_state = await self.get_state(WebsiteState)
 
+        lang = website_state.current_language
+
         if config.turnstile_enabled:
             is_valid = await verify_turnstile_token(turnstile_token)
             if not is_valid:
                 self.form_submitting = False
+                reason = (
+                    "turnstile_blocked" if not turnstile_token else "turnstile_invalid"
+                )
+                logger.warning(
+                    "contact form rejected: %s (name=%s %s)",
+                    reason,
+                    first_name,
+                    last_name,
+                )
+                await track_event(
+                    url=f"/{lang}/contact",
+                    event_name="contact-form-failed",
+                    language=lang,
+                    custom_data={"reason": reason},
+                )
                 website_state.show_toast(  # type: ignore[operator]
                     "Bot verificatie mislukt. Probeer de pagina te vernieuwen.",
                     "error",
                 )
-                yield
+                yield rx.call_script(TURNSTILE_RESET_SCRIPT)
+                yield None
 
                 await asyncio.sleep(5)
                 website_state.hide_toast()  # type: ignore[operator]
@@ -95,7 +133,6 @@ class ContactState(rx.State):
         self.form_submitting = False
 
         if email_sent:
-            lang = website_state.current_language
             await track_event(
                 url=f"/{lang}/contact",
                 event_name="contact-form-submitted",
@@ -106,16 +143,29 @@ class ContactState(rx.State):
                 "Bedankt voor je bericht! We nemen zo snel mogelijk contact met je op.",
                 "success",
             )
-            yield
+            yield rx.call_script(TURNSTILE_RESET_SCRIPT)
+            yield None
 
             await asyncio.sleep(5)
             website_state.hide_toast()  # type: ignore[operator]
         else:
+            logger.warning(
+                "contact form email send failed (name=%s %s)",
+                first_name,
+                last_name,
+            )
+            await track_event(
+                url=f"/{lang}/contact",
+                event_name="contact-form-failed",
+                language=lang,
+                custom_data={"reason": "email_send_failed"},
+            )
             website_state.show_toast(  # type: ignore[operator]
                 "Het verzenden is mislukt. Probeer het later opnieuw of neem telefonisch contact op.",
                 "error",
             )
-            yield
+            yield rx.call_script(TURNSTILE_RESET_SCRIPT)
+            yield None
 
             await asyncio.sleep(5)
             website_state.hide_toast()  # type: ignore[operator]

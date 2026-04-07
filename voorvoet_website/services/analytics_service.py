@@ -1,10 +1,14 @@
 """Server-side Umami analytics tracking service."""
 
+import logging
 from typing import Any
 
 import httpx
 
 from ..config import config
+
+
+logger = logging.getLogger(__name__)
 
 USER_AGENT = "VoorVoet-Website/1.0"
 
@@ -84,17 +88,19 @@ async def track_event(
             )
 
             if response.status_code not in (200, 201, 204):
-                print(f"Umami tracking returned status {response.status_code}")
+                logger.warning(
+                    "Umami tracking returned status %s", response.status_code
+                )
                 return False
 
             return True
 
     except httpx.TimeoutException:
-        print("Umami tracking request timed out")
+        logger.warning("Umami tracking request timed out")
         return False
     except httpx.RequestError as e:
-        print(f"Umami tracking request error: {e}")
+        logger.warning("Umami tracking request error: %s", e)
         return False
     except Exception as e:
-        print(f"Unexpected error during Umami tracking: {e}")
+        logger.exception("Unexpected error during Umami tracking: %s", e)
         return False
